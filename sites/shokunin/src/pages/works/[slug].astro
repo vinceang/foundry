@@ -1,0 +1,340 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { works } from '../../data/works';
+
+export function getStaticPaths() {
+  return works.map((w) => ({ params: { slug: w.slug }, props: { work: w } }));
+}
+
+const { work } = Astro.props;
+const idx = works.findIndex((w) => w.slug === work.slug);
+const next = works[(idx + 1) % works.length];
+---
+
+<Layout
+  title={`${work.name} ${work.kanji} — Work ${work.no} · Shokunin`}
+  description={work.lede}
+>
+  <article class="dossier">
+    <!-- ===== inspection stage ===== -->
+    <section class="stage">
+      <figure class={`stage-media ${work.portrait ? 'is-portrait' : 'is-wide'}`} data-cursor>
+        <img src={work.image} alt={work.imageAlt} fetchpriority="high" />
+        {work.hotspots.map((h, i) => (
+          <button
+            class="spot"
+            style={`left:${h.x}%; top:${h.y}%; --d:${i + 3}`}
+            data-spot={i}
+            aria-expanded="false"
+            aria-label={`Detail: ${h.title}`}
+          >
+            <span class="spot-ring rv" aria-hidden="true"></span>
+          </button>
+        ))}
+        {work.hotspots.map((h, i) => (
+          <div class="spot-card" data-card={i} hidden>
+            <h3 class="display">{h.title}</h3>
+            <p>{h.note}</p>
+          </div>
+        ))}
+        <figcaption class="stage-hint label label--dim">Touch the marks to inspect</figcaption>
+      </figure>
+
+      <header class="stage-meta">
+        <p class="meta-no display rv">Work {work.no} <span>/ XII · {work.year}</span></p>
+        <h1 class="display meta-name rv" style="--d:1">{work.name}</h1>
+        <p class="meta-kanji kanji rv" style="--d:2">{work.kanji} <span>{work.reading}</span></p>
+        <p class="meta-cat label label--dim rv" style="--d:3">{work.category}</p>
+        <p class="meta-lede rv" style="--d:4">{work.lede}</p>
+
+        <dl class="meta-facts rv" style="--d:5">
+          <div><dt class="label label--dim">Atelier</dt><dd>{work.atelier}</dd></div>
+          <div><dt class="label label--dim">Lineage</dt><dd>{work.atelierNote}</dd></div>
+          <div><dt class="label label--dim">Acquisition</dt><dd class="meta-price display">{work.price}</dd></div>
+        </dl>
+
+        <div class="meta-actions rv" style="--d:6">
+          <a class="btn-gold" href="mailto:register@shokunin.example?subject=Petition%20—%20Work%20{work.no}">
+            Petition to acquire
+          </a>
+          <span class={`work-status ${work.status === 'Under petition' ? 'is-pending' : ''}`}>{work.status}</span>
+        </div>
+      </header>
+    </section>
+
+    <!-- ===== craft record ===== -->
+    <section class="record">
+      <div class="record-grid">
+        <div class="record-notes">
+          <p class="label rv">Craft record</p>
+          <h2 class="display rv" style="--d:1">Notes from the bench</h2>
+          {work.body.map((p, i) => (
+            <p class="rv" style={`--d:${i + 2}`}>{p}</p>
+          ))}
+        </div>
+        <aside class="record-specs rv" style="--d:2">
+          <h3 class="label">Specification</h3>
+          <dl>
+            {work.specs.map((s) => (
+              <div><dt>{s.k}</dt><dd>{s.v}</dd></div>
+            ))}
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== provenance ===== -->
+    <section class="provenance">
+      <div class="prov-inner">
+        <p class="label rv">Provenance</p>
+        <h2 class="display rv" style="--d:1">The record of its making</h2>
+        <ol class="prov-line">
+          {work.provenance.map((p, i) => (
+            <li class="rv" style={`--d:${i + 2}`}>
+              <span class="prov-dot" aria-hidden="true"></span>
+              <h3 class="display">{p.stage}</h3>
+              <p>{p.detail}</p>
+              <span class="label label--dim">{p.when}</span>
+            </li>
+          ))}
+        </ol>
+
+        <div class="seal rv" style="--d:6" aria-label={`Register seal: Work ${work.no} of twelve, sealed ${work.year}`}>
+          <span class="seal-mark" aria-hidden="true"><span class="kanji">証</span></span>
+          <p class="label">Entered into the Register · Work {work.no} of XII · {work.year}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== next work ===== -->
+    <a class="next-work" href={`/works/${next.slug}/`}>
+      <span class="label label--dim">Next in the Register</span>
+      <span class="display next-name">{next.name} <span class="kanji">{next.kanji}</span></span>
+      <span class="label next-cue">Open the dossier →</span>
+    </a>
+  </article>
+</Layout>
+
+<script>
+  // hotspot inspection
+  const spots = document.querySelectorAll<HTMLButtonElement>('.spot');
+  const cards = document.querySelectorAll<HTMLElement>('.spot-card');
+  const closeAll = () => {
+    spots.forEach((s) => s.setAttribute('aria-expanded', 'false'));
+    cards.forEach((c) => (c.hidden = true));
+  };
+  spots.forEach((s) => {
+    s.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const i = s.dataset.spot;
+      const card = document.querySelector<HTMLElement>(`[data-card="${i}"]`);
+      const open = s.getAttribute('aria-expanded') === 'true';
+      closeAll();
+      if (!open && card) {
+        s.setAttribute('aria-expanded', 'true');
+        card.hidden = false;
+        // place the card near its spot, clamped to the figure
+        const fig = s.closest('.stage-media') as HTMLElement;
+        const fr = fig.getBoundingClientRect();
+        const sr = s.getBoundingClientRect();
+        const cw = Math.min(300, fr.width - 32);
+        card.style.width = cw + 'px';
+        let left = sr.left - fr.left + 28;
+        if (left + cw > fr.width - 16) left = sr.left - fr.left - cw - 28;
+        if (left < 16) left = 16;
+        let top = sr.top - fr.top - 12;
+        card.style.left = left + 'px';
+        card.style.top = Math.max(16, top) + 'px';
+      }
+    });
+  });
+  document.addEventListener('click', closeAll);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+</script>
+
+<style>
+  .dossier { background: var(--urushi); }
+
+  /* ===== stage ===== */
+  .stage {
+    min-height: 100svh;
+    display: grid;
+    gap: var(--s5);
+    padding: calc(var(--frame) + 96px) var(--gutter) var(--s7);
+    align-items: center;
+    max-width: 1440px;
+    margin-inline: auto;
+  }
+  @media (min-width: 980px) {
+    .stage { grid-template-columns: 6fr 5fr; gap: var(--s7); }
+  }
+
+  .stage-media {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line-soft);
+    background: var(--void);
+  }
+  .stage-media img { width: 100%; height: 100%; object-fit: cover; }
+  .stage-media.is-portrait { aspect-ratio: 3 / 3.8; }
+  .stage-media.is-wide { aspect-ratio: 16 / 10; }
+
+  .stage-hint {
+    position: absolute; left: 20px; bottom: 16px;
+    letter-spacing: .3em;
+  }
+
+  .spot {
+    position: absolute;
+    width: 40px; height: 40px;
+    margin: -20px 0 0 -20px;
+    display: grid; place-items: center;
+    z-index: 3;
+  }
+  .spot-ring {
+    width: 14px; height: 14px;
+    border: 1px solid var(--kin);
+    transform: rotate(45deg);
+    position: relative;
+    transition: transform .5s var(--ease), background .4s;
+  }
+  .spot-ring::after {
+    content: ""; position: absolute; inset: 0; margin: auto;
+    width: 4px; height: 4px; background: var(--kin-bright);
+  }
+  .spot:hover .spot-ring, .spot[aria-expanded="true"] .spot-ring {
+    transform: rotate(225deg) scale(1.25);
+    background: rgba(194,160,97,.18);
+  }
+  .spot::before {
+    content: ""; position: absolute; inset: 4px;
+    border: 1px solid var(--kin-faint);
+    transform: rotate(45deg);
+    opacity: 0;
+    animation: spotPulse 3s var(--ease) infinite;
+  }
+  @keyframes spotPulse {
+    0% { opacity: .7; transform: rotate(45deg) scale(.5); }
+    70% { opacity: 0; transform: rotate(45deg) scale(1.15); }
+    100% { opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .spot::before { animation: none; } }
+
+  .spot-card {
+    position: absolute; z-index: 4;
+    background: rgba(10, 7, 5, .92);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--line);
+    padding: 20px 22px;
+  }
+  .spot-card h3 { font-size: 16px; letter-spacing: .12em; color: var(--kin-bright); margin-bottom: 8px; }
+  .spot-card p { font-size: 13.5px; line-height: 1.65; color: var(--silk-dim); }
+
+  /* ===== meta panel ===== */
+  .meta-no { font-size: 14px; letter-spacing: .3em; color: var(--kin); }
+  .meta-no span { color: var(--silk-faint); }
+  .meta-name { font-size: clamp(52px, 7vw, 96px); margin: 12px 0 6px; }
+  .meta-kanji { font-size: 21px; color: var(--kin-faint); }
+  .meta-kanji span {
+    font-family: var(--body); font-size: 12px; letter-spacing: .14em;
+    color: var(--silk-faint); margin-left: 14px;
+  }
+  .meta-cat { margin-top: 18px; }
+  .meta-lede { color: var(--silk-dim); margin-top: 22px; max-width: 48ch; font-size: 15.5px; }
+
+  .meta-facts { margin-top: var(--s5); border-top: 1px solid var(--line-soft); }
+  .meta-facts div {
+    display: grid; grid-template-columns: 130px 1fr; gap: var(--s3);
+    padding: 14px 0; border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .meta-facts dd { font-size: 14.5px; }
+  .meta-price { font-size: 22px; letter-spacing: .05em; color: var(--silk); }
+
+  .meta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: var(--s5); }
+  .btn-gold {
+    display: inline-block; padding: 15px 34px;
+    background: var(--kin); color: #14100a;
+    font-size: 11px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase;
+    transition: background .4s var(--ease);
+  }
+  .btn-gold:hover { background: var(--kin-bright); }
+  .work-status {
+    font-size: 10.5px; font-weight: 600; letter-spacing: .28em; text-transform: uppercase;
+    color: var(--kin); padding: 8px 14px; border: 1px solid var(--line);
+  }
+  .work-status.is-pending { color: var(--silk-dim); border-color: var(--line-soft); }
+
+  /* ===== craft record ===== */
+  .record { background: var(--void); padding: var(--s8) var(--gutter); }
+  .record-grid {
+    max-width: 1280px; margin-inline: auto;
+    display: grid; gap: var(--s6);
+  }
+  @media (min-width: 960px) { .record-grid { grid-template-columns: 7fr 4fr; } }
+  .record-notes h2 { font-size: clamp(30px, 4vw, 48px); margin: 16px 0 30px; }
+  .record-notes p:not(.label) {
+    color: var(--silk-dim); max-width: 58ch; margin-bottom: 22px; font-size: 16px;
+  }
+  .record-specs {
+    border: 1px solid var(--line-soft);
+    padding: var(--s4);
+    align-self: start;
+    background: var(--urushi);
+  }
+  .record-specs h3 { margin-bottom: var(--s3); }
+  .record-specs div {
+    display: grid; grid-template-columns: 1fr; gap: 2px;
+    padding: 13px 0; border-bottom: 1px solid var(--line-soft);
+  }
+  .record-specs div:last-child { border-bottom: 0; }
+  .record-specs dt { font-size: 10.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--silk-faint); }
+  .record-specs dd { font-size: 14px; color: var(--silk); }
+
+  /* ===== provenance ===== */
+  .provenance { padding: var(--s8) var(--gutter); background: var(--kon); }
+  .prov-inner { max-width: 880px; margin-inline: auto; }
+  .prov-inner h2 { font-size: clamp(30px, 4vw, 48px); margin: 16px 0 var(--s6); }
+  .prov-line { list-style: none; position: relative; padding-left: 34px; }
+  .prov-line::before {
+    content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px;
+    width: 1px; background: var(--line);
+  }
+  .prov-line li { position: relative; padding-bottom: var(--s5); }
+  .prov-line li:last-child { padding-bottom: 0; }
+  .prov-dot {
+    position: absolute; left: -34px; top: 7px;
+    width: 11px; height: 11px;
+    border: 1px solid var(--kin); background: var(--kon);
+    transform: rotate(45deg);
+  }
+  .prov-line h3 { font-size: 20px; letter-spacing: .1em; margin-bottom: 6px; }
+  .prov-line p { color: var(--silk-dim); font-size: 14.5px; margin-bottom: 6px; }
+
+  .seal {
+    margin-top: var(--s7);
+    display: flex; align-items: center; gap: var(--s3);
+  }
+  .seal-mark {
+    width: 58px; height: 58px; flex: 0 0 auto;
+    display: grid; place-items: center;
+    border: 1px solid var(--kin);
+    transform: rotate(45deg);
+  }
+  .seal-mark .kanji { transform: rotate(-45deg); font-size: 24px; color: var(--kin); }
+
+  /* ===== next ===== */
+  .next-work {
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    padding: var(--s8) var(--gutter);
+    background: var(--urushi);
+    text-align: center;
+    border-top: 1px solid var(--line-soft);
+  }
+  .next-name { font-size: clamp(36px, 5.4vw, 64px); transition: color .4s; }
+  .next-name .kanji { font-size: .5em; color: var(--kin-faint); }
+  .next-work:hover .next-name { color: var(--kin-bright); }
+  .next-cue { transition: letter-spacing .5s var(--ease); }
+  .next-work:hover .next-cue { letter-spacing: .55em; }
+</style>
