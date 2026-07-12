@@ -1,0 +1,142 @@
+---
+import "../../styles/global.css";
+import { smiths } from "../../data/smiths";
+
+export function getStaticPaths() {
+  return smiths.map((s) => ({ params: { slug: s.slug }, props: { smith: s } }));
+}
+
+const { smith } = Astro.props;
+const idx = smiths.findIndex((s) => s.slug === smith.slug);
+const prev = smiths[(idx + smiths.length - 1) % smiths.length];
+const next = smiths[(idx + 1) % smiths.length];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{smith.nameEn} — 鍛冶 KAJI</title>
+    <meta name="description" content={`${smith.nameEn} (${smith.nameJp}), ${smith.role.toLowerCase()} at Munetsugu Hamono. ${smith.specialty}.`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="/">
+        <span class="mark jp">鍛冶</span>
+        <span class="word">Kaji</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/#collection">Knives</a>
+        <a href="/#smiths">Smiths</a>
+        <a href="/#lineage">Lineage</a>
+        <a href="/#process">Forging</a>
+        <a href="/#commission">Commission</a>
+      </nav>
+    </header>
+
+    <!-- SMITH HERO -->
+    <section class="smith-hero">
+      <div class="smith-hero-media">
+        <img src={smith.portrait} alt={`${smith.nameEn}, ${smith.role.toLowerCase()} at Munetsugu Hamono`} />
+      </div>
+      <div class="smith-hero-body">
+        <span class="jp-vert jp" aria-hidden="true">{smith.nameJp}</span>
+        <p class="eyebrow reveal">{smith.role} · {smith.roleJp} · {smith.generation}</p>
+        <h1 class="reveal" style="--i:1">{smith.nameEn}</h1>
+        <blockquote class="smith-quote reveal" style="--i:2">“{smith.quote}”</blockquote>
+        <p class="smith-quote-jp jp reveal" style="--i:3">{smith.quoteJp}</p>
+        <div class="smith-bio reveal" style="--i:4">
+          {smith.bio.map((p) => <p>{p}</p>)}
+        </div>
+        <div class="smith-facts reveal" style="--i:5">
+          {smith.facts.map((f) => (
+            <div class="f"><span class={`fv${f.value.length > 8 ? " long" : ""}`}>{f.value}</span><span class="fl">{f.label}</span></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKS -->
+    <section class="smith-works">
+      <div class="container">
+        <div class="collection-head">
+          <h2 class="reveal">The work of {smith.nameEn.split(" ")[0]}.</h2>
+          <p class="reveal" style="--i:1">{smith.specialty} · signed with the {smith.slug === "goro" ? "Tanabe" : "Munetsugu"} mei.</p>
+        </div>
+        <div class="smith-works-grid">
+          {smith.works.map((w, i) => (
+            <article class="knife-card reveal" style={`--i:${i}`}>
+              <div class="knife-figure">
+                <span class="knife-index">{String(i + 1).padStart(2, "0")} / {String(smith.works.length).padStart(2, "0")}</span>
+                <span class="knife-tag">Made to order</span>
+                <img src={w.img} alt={`${w.en} by ${smith.nameEn}`} loading="lazy" />
+              </div>
+              <div class="knife-info">
+                <div class="knife-name"><span class="jp">{w.jp}</span><span class="en">{w.en}</span></div>
+                <div class="knife-spec" set:html={w.spec.split(" · ").join("<br />")} />
+              </div>
+              <div class="knife-price" style="margin-top:8px">{w.price}</div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <nav class="smith-nav" aria-label="Other smiths">
+      <a href={`/smith/${prev.slug}/`}>
+        <span class="dir">← Previous smith</span>
+        <span class="who">{prev.nameEn} · <span class="jp">{prev.nameJp}</span></span>
+      </a>
+      <a href={`/smith/${next.slug}/`}>
+        <span class="dir">Next smith →</span>
+        <span class="who">{next.nameEn} · <span class="jp">{next.nameJp}</span></span>
+      </a>
+    </nav>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-base" style="margin-top:0; padding-top:0; border-top:none">
+          <span><i class="seal" aria-hidden="true"></i>© 2026 Munetsugu Hamono</span>
+          <span>一鍛一刀 · One fire, one blade</span>
+          <span><a href="/">← Back to the atelier</a></span>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      const header = document.querySelector(".site-header");
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle("scrolled", y > 60);
+        if (y > 260 && y > lastY + 4) header.classList.add("hidden");
+        else if (y < lastY - 4 || y <= 260) header.classList.remove("hidden");
+        lastY = y;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>

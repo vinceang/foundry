@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { smiths } from "../data/smiths";
 ---
 
 <!doctype html>
@@ -26,6 +27,7 @@ import "../styles/global.css";
       </a>
       <nav class="nav-links">
         <a href="#collection">Knives</a>
+        <a href="#smiths">Smiths</a>
         <a href="#lineage">Lineage</a>
         <a href="#process">Forging</a>
         <a href="#commission">Commission</a>
@@ -82,6 +84,38 @@ import "../styles/global.css";
       </div>
     </section>
 
+    <!-- SMITHS -->
+    <section class="smiths" id="smiths">
+      <div class="container">
+        <div class="smiths-head">
+          <div>
+            <p class="eyebrow reveal">The smiths · 三人の鍛冶</p>
+            <h2 class="reveal" style="--i:1; margin-top: var(--s3)">Three hands,<br />one <em>fire</em>.</h2>
+          </div>
+          <p class="reveal" style="--i:2">Every Munetsugu blade is carried start to finish by one of three smiths. Learn whose hands made yours — each signs with their own mei.</p>
+        </div>
+        <div class="smiths-grid">
+          {smiths.map((s, i) => (
+            <a class="smith-card reveal" style={`--i:${i}`} href={`/smith/${s.slug}/`}>
+              <div class="smith-figure">
+                <img src={s.portrait} alt={`${s.nameEn}, ${s.role.toLowerCase()} at Munetsugu Hamono`} loading="lazy" />
+                <span class="smith-name-vert jp" aria-hidden="true">{s.nameJp}</span>
+                <div class="smith-overlay">
+                  <div class="role">{s.role} · {s.generation}</div>
+                  <div class="name">{s.nameEn}</div>
+                  <div class="spec">{s.specialty}</div>
+                </div>
+              </div>
+              <div class="smith-meta">
+                <span class="q">“{s.quote}”</span>
+                <span class="go">Meet →</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
     <!-- COLLECTION -->
     <section class="collection" id="collection">
       <div class="container">
@@ -101,6 +135,7 @@ import "../styles/global.css";
               <div class="knife-spec">Aogami #2<br />Kasumi<br />63 HRC</div>
             </div>
             <div class="knife-price" style="margin-top:8px">¥68,000</div>
+            <a class="forged-by" href="/smith/naoki/">Forged by Naoki Munetsugu</a>
           </article>
           <article class="knife-card reveal" style="--i:1">
             <div class="knife-figure">
@@ -113,6 +148,7 @@ import "../styles/global.css";
               <div class="knife-spec">Shirogami #1<br />Kasumi<br />62 HRC</div>
             </div>
             <div class="knife-price" style="margin-top:8px">¥54,000</div>
+            <a class="forged-by" href="/smith/rin/">Forged by Rin Munetsugu</a>
           </article>
           <article class="knife-card reveal" style="--i:2">
             <div class="knife-figure">
@@ -125,6 +161,7 @@ import "../styles/global.css";
               <div class="knife-spec">Shirogami #2<br />Kurouchi<br />61 HRC</div>
             </div>
             <div class="knife-price" style="margin-top:8px">¥49,000</div>
+            <a class="forged-by" href="/smith/goro/">Forged by Goro Tanabe</a>
           </article>
         </div>
       </div>
