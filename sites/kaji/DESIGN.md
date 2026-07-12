@@ -75,7 +75,7 @@ Shared grammar — near-black or washi ground, ONE warm light source, "editorial
 - **Portraits:** "lit by warm ember forge-light from one side with a faint cool rim light, half the face falling into deep shadow, near-black smoky background, editorial documentary craft portrait, Dutch-master chiaroscuro" — half-shadow is both the look *and* the uncanny-valley hedge. Wardrobe: indigo/charcoal workwear only. **Vince has veto on every face.**
 - Explore at `--quality medium`, finalize heroes at `high`. Budget lives in `doctor/HANDOFF.md`.
 
-**Video (Higgsfield, planned hero):** motion must obey pillar 5 — a cinemagraph, not a showreel. Slow ember drift, breathing forge glow, near-imperceptible camera. Prefer image-to-video from the approved `/hero-01.png`. Ship as muted looping `<video>` with `/hero-01.png` poster; reduced-motion users get the still.
+**Video (hero, shipped):** the hero film's job is to *showcase the blade* — a slow, locked-and-smooth macro camera glide along the steel that reveals hamon/grain detail, then returns to the exact opening framing so the loop closes (out-and-back structure). Vince's direction: near-still cinemagraphs are NOT enough — the camera must move and the steel must perform; the calm lives in the pace, not in stillness. Scene content itself stays quiet (no scene changes, no people, background stays dark). Generated via Higgsfield Seedance 2.0 image-to-video from the approved `/hero-01.png` start frame. Ship as muted looping `<video>` at full opacity with a long crossfade from the poster; `/hero-01.png` is the poster and the `prefers-reduced-motion` truth.
 
 ## Content voice
 
