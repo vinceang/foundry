@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# build output
+dist/
+build/
+.next/
+.astro/
+.output/
+.vercel/
+
+# secrets — keys live in ~/.config/site-assets, never here, but stay defensive
+.env
+.env.*
+*.key
+tools/.cache/
+
+# os / editor
+.DS_Store
+*.log
