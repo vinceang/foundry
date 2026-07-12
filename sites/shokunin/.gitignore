@@ -21,3 +21,5 @@ pnpm-debug.log*
 
 # raw generated originals (kept local)
 assets-src/
+.vercel
+.env*
