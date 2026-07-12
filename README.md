@@ -5,7 +5,7 @@ Four award-caliber websites, built as separate showcases of range — deliberate
 | Site | What it is | Lives in |
 |------|-----------|----------|
 | Shokunin | Bespoke samurai ateliers — lacquer dark, smoked gold, Marcellus/Manrope | [`sites/shokunin`](sites/shokunin) |
-| Kaji | Hand-forged kitchen knife atelier — sumi ink, washi paper, vermilion, Shippori Mincho | [`sites/kaji`](sites/kaji) |
+| Suntoku (寸徳) | Hand-forged kitchen knife atelier — sumi ink, washi paper, vermilion, Shippori Mincho; ships to suntoku.com | [`sites/kaji`](sites/kaji) |
 | Roster (SaaS) | Hire AI teammates in plain English — warm, human, calm-premium (in planning) | [`sites/saas`](sites/saas) |
 | SIGNAL (Event) | Experimental music + light-art festival — loud, maximal (concept TBD) | [`sites/event`](sites/event) |
 

@@ -1,5 +1,5 @@
 /* ============================================================
-   KAJI — design system
+   SUNTOKU (寸徳) — design system
    sumi black · washi off-white · vermilion (朱)
    Type: Shippori Mincho (JP/display) · Newsreader (serif body) · IBM Plex Mono (specs)
    ============================================================ */
@@ -354,7 +354,7 @@ html:not(.js) .meter b, .is-in .meter b { transform: scaleX(1); }
    FOOTER
    ============================================================ */
 .site-footer { background: var(--sumi); color: var(--on-dark); padding: var(--s8) 0 var(--s5); border-top: 1px solid var(--line-dark); position: relative; overflow: hidden; }
-.site-footer::after { content: "鍛冶"; position: absolute; right: -20px; bottom: -60px; font-family: var(--serif-jp); font-size: clamp(160px,22vw,320px); line-height: 1; color: rgba(239,233,221,.03); pointer-events: none; }
+.site-footer::after { content: "寸徳"; position: absolute; right: -20px; bottom: -60px; font-family: var(--serif-jp); font-size: clamp(160px,22vw,320px); line-height: 1; color: rgba(239,233,221,.03); pointer-events: none; }
 .footer-base .seal { display: inline-block; width: 9px; height: 9px; background: var(--shu); margin-right: 10px; vertical-align: baseline; }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--s5); align-items: start; }
 .footer-brand .mark { font-family: var(--serif-jp); font-size: 40px; }

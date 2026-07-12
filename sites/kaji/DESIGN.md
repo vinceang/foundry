@@ -1,7 +1,9 @@
-# KAJI — Design System
+# SUNTOKU — Design System
 
-鍛冶 · Hand-forged kitchen knives, Munetsugu Hamono, Sakai lineage est. 1782.
+寸徳 · Hand-forged kitchen knives, Munetsugu Hamono, Sakai lineage est. 1782. Live domain: suntoku.com (owned).
 This document is the aesthetic source of truth. Extend the site *from* it; don't restyle around it.
+
+**Brand naming:** the storefront brand is **SUNTOKU / 寸徳** — *sun* (寸, the traditional unit blade lengths are measured in) + *toku* (徳, virtue): "the virtue of the measure." It also echoes *santoku* (三徳), rhyming with the site's three-smiths / three-shapes structure. The mark 寸徳 is the ONLY brand mark (header, footer, watermark). 鍛冶 ("smithing/forge" — the site's former name) is demoted to a **craft motif**: it may appear in atmospheric phrases (e.g. the hero's vertical 鍛冶 — 一鍛一刀) where it means the craft, never the brand. The maker fiction (Munetsugu Hamono, the family *mei*) is unchanged and sits beneath the brand. The repo folder remains `sites/kaji` — plumbing, not brand.
 
 ## The one-line brief
 
