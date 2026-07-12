@@ -20,6 +20,14 @@ import { works, sealedWorks } from '../data/works';
   <section class="hero" id="top">
     <div class="hero-media" aria-hidden="true">
       <img src="/works/hero.jpg" alt="" fetchpriority="high" />
+      <video
+        class="hero-video"
+        src="/works/hero-loop.mp4"
+        poster="/works/hero.jpg"
+        muted
+        playsinline
+        preload="none"
+      ></video>
       <div class="hero-shade"></div>
       <canvas class="hero-dust" aria-hidden="true"></canvas>
     </div>
@@ -211,9 +219,36 @@ import { works, sealedWorks } from '../data/works';
     setActive();
   }
 
+  // ---- hero video loop (desktop, motion-tolerant, data-saver off) ----
+  const vid = document.querySelector<HTMLVideoElement>('.hero-video');
+  const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wide = matchMedia('(min-width: 900px)').matches;
+  // @ts-expect-error - saveData is not yet in all TS lib DOMs
+  const saveData = navigator.connection?.saveData === true;
+  if (vid && !noMotion && wide && !saveData && !location.search.includes('nofx')) {
+    vid.preload = 'auto';
+    vid.addEventListener('canplaythrough', () => {
+      vid.play().then(() => vid.classList.add('is-playing')).catch(() => {});
+    }, { once: true });
+    vid.addEventListener('timeupdate', () => {
+      if (vid.duration && vid.duration - vid.currentTime < 1) {
+        vid.classList.add('is-dipping');
+      }
+    });
+    vid.addEventListener('ended', () => {
+      vid.currentTime = 0;
+      // hold on the still a beat before the light breathes again
+      setTimeout(() => {
+        vid.classList.remove('is-dipping');
+        vid.play().catch(() => {});
+      }, 1600);
+    });
+    vid.load();
+  }
+
   // ---- hero dust motes ----
   const canvas = document.querySelector<HTMLCanvasElement>('.hero-dust');
-  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const still = noMotion;
   if (canvas && !still) {
     const ctx = canvas.getContext('2d')!;
     let w = 0, h = 0, visible = true;
@@ -273,6 +308,18 @@ import { works, sealedWorks } from '../data/works';
     to   { transform: scale(1.02); }
   }
   @media (prefers-reduced-motion: reduce) { .hero-media img { animation: none; } }
+
+  /* video layer sits over the still; fades in only once it can actually play.
+     Near the end of each pass it dips back to the still (its own first frame)
+     so the restart reads as breathing light, not a loop seam. */
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0;
+    transition: opacity 2.2s var(--ease);
+  }
+  .hero-video.is-playing { opacity: 1; }
+  .hero-video.is-dipping { opacity: 0; transition-duration: .9s; }
   .hero-shade {
     position: absolute; inset: 0;
     background:
