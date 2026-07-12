@@ -41,7 +41,7 @@
   --s6: 64px; --s7: 96px;  --s8: 128px; --s9: 192px;
 
   --gutter: clamp(20px, 5vw, 96px);
-  --frame: clamp(10px, 1.4vw, 20px);   /* HUD frame inset */
+  --frame: clamp(12px, 1.6vw, 24px);   /* HUD frame inset */
 
   --ease: cubic-bezier(.19, 1, .22, 1);
 }
@@ -137,12 +137,32 @@ html.js .rv-line.in > span { transform: none; }
 .hud-frame i:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
 @media (max-width: 760px) { .hud-frame i { width: 16px; height: 16px; } }
 
-/* ---------- header ---------- */
+/* ---------- header ----------
+   Fixed and transparent over the hero; once the page scrolls it takes a
+   lacquer veil (backdrop + hairline). Scrolling down it withdraws entirely;
+   scrolling up it returns. The content is never read through the header. */
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: calc(var(--frame) + 14px) calc(var(--frame) + 22px);
-  transition: opacity .5s var(--ease);
+  transition:
+    transform .7s var(--ease),
+    background .5s var(--ease),
+    padding .5s var(--ease),
+    border-color .5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-veiled {
+  background: rgba(10, 7, 5, .88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--line-soft);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.site-header.is-withdrawn { transform: translateY(-102%); }
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
 }
 .brand { display: flex; align-items: center; gap: 14px; pointer-events: auto; }
 .brand-seal {

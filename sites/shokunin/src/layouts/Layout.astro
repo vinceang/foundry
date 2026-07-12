@@ -111,6 +111,19 @@ const { title, description } = Astro.props;
       );
       document.querySelectorAll('.rv, .rv-line').forEach((el) => io.observe(el));
 
+      // ---- header veil / withdraw ----
+      const header = document.querySelector('.site-header') as HTMLElement;
+      let lastY = scrollY;
+      const headerTick = () => {
+        const y = scrollY;
+        header.classList.toggle('is-veiled', y > 40);
+        if (y > 240 && y > lastY + 4) header.classList.add('is-withdrawn');
+        else if (y < lastY - 4 || y <= 240) header.classList.remove('is-withdrawn');
+        lastY = y;
+      };
+      addEventListener('scroll', headerTick, { passive: true });
+      headerTick();
+
       // ---- custom cursor ----
       const fine = matchMedia('(pointer: fine)').matches;
       const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;

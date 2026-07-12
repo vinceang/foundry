@@ -221,8 +221,35 @@ material layers) — the collector's gesture — not gamification.
 | **Spec sheet** (`.record-specs`) | Bordered panel, label-over-value rows | The "museum placard". |
 | **Provenance timeline** (`.prov-line`) | Vertical hairline, diamond nodes | Stage / detail / date triplets. |
 | **Register seal** (`.seal`) | Bordered diamond + kanji 証 + attestation line | Closes every dossier; the house's signature block. |
-| **Chapter rail** (`.chapters`) | Fixed left diamonds + labels, scroll-spy | Desktop ≥1180px only. |
+| **Chapter rail** (`.chapters`) | Fixed left diamonds, scroll-spy, **vertical** labels | Desktop >1320px only. Labels are set `writing-mode: vertical-rl` so the whole rail stays a ~26px column — see "Fixed chrome never touches content" below. |
 | **Brand seal** | 職 in a bordered diamond | The favicon/avatar mark. |
+
+### Fixed chrome never touches content
+
+Decided 2026-07 after both fixed elements collided with body text in the wild:
+
+1. **The header veils and withdraws.** Transparent only over the hero. Past
+   ~40px of scroll it takes the *veil* (`.is-veiled`: `rgba(10,7,5,.88)` +
+   12px backdrop blur + hairline bottom border, tightened padding) so text
+   is never read through it. Scrolling **down** past ~240px it withdraws
+   entirely (`.is-withdrawn`, translateY(-102%)); scrolling **up** it
+   returns immediately, veiled. Rationale: while reading/descending, the
+   reader needs nothing from the chrome — darkness is the luxury; the
+   moment they scroll up they are looking for the way somewhere, so the
+   nav meets them. (Same behavior as the kaji site; a 4px hysteresis
+   prevents jitter.)
+2. **Rail labels are vertical.** Horizontal labels grew rightward into the
+   content column at common laptop widths. Set vertically
+   (`writing-mode: vertical-rl` — the site's vertical-writing motif), the
+   rail's total width is ~26px and lives inside the gutter at every width
+   where it renders (>1320px; verified rail-right < content-left at 1366,
+   1440, 1680). Only one vertical label shows at a time (active yields to
+   hover).
+
+The generalized rule for future chrome (toasts, cart drawer, back-to-top):
+**fixed elements live in the frame margins or on the veil — never bare over
+content.** If a fixed element must cross the content column, it carries the
+lacquer veil treatment.
 
 Forms (future petition flow): underline-only inputs on darkness, floating
 gold labels in tracked caps, generous vertical rhythm. A petition should
