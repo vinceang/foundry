@@ -417,9 +417,12 @@ import { works, sealedWorks } from '../data/works';
     transition: background .4s, border-color .4s, box-shadow .4s;
   }
   .chapters span {
-    position: absolute; left: 19px; top: 50%;
+    position: absolute; right: 19px; top: 50%;
     translate: 0 -50%;
+    /* bottom-to-top: the left-spine convention for rotated Latin.
+       (Top-to-bottom tategaki is reserved for the upright kanji rails.) */
     writing-mode: vertical-rl;
+    transform: rotate(180deg);
     white-space: nowrap;
     font-size: 9.5px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase;
     color: var(--silk-dim);

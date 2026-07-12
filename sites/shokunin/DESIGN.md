@@ -238,13 +238,16 @@ Decided 2026-07 after both fixed elements collided with body text in the wild:
    moment they scroll up they are looking for the way somewhere, so the
    nav meets them. (Same behavior as the kaji site; a 4px hysteresis
    prevents jitter.)
-2. **Rail labels are vertical.** Horizontal labels grew rightward into the
-   content column at common laptop widths. Set vertically
-   (`writing-mode: vertical-rl` — the site's vertical-writing motif), the
-   rail's total width is ~26px and lives inside the gutter at every width
-   where it renders (>1320px; verified rail-right < content-left at 1366,
-   1440, 1680). Only one vertical label shows at a time (active yields to
-   hover).
+2. **Rail labels are vertical, outside the diamonds, reading bottom-to-top.**
+   Horizontal labels grew rightward into the content column at common laptop
+   widths. The label now sits *between the screen edge and the diamond
+   column* — spine text — so the diamonds are the outermost boundary of the
+   chrome and the content keeps the full gutter as breathing room (≥24px
+   clearance at every width where the rail renders, >1320px). Orientation is
+   **bottom-to-top** (`vertical-rl` + 180° rotation): the left-spine
+   convention for rotated Latin. Top-to-bottom vertical writing is reserved
+   for the upright kanji rails (tategaki); rotated Latin follows the Latin
+   rule. Only one vertical label shows at a time (active yields to hover).
 
 The generalized rule for future chrome (toasts, cart drawer, back-to-top):
 **fixed elements live in the frame margins or on the veil — never bare over
