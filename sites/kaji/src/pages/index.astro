@@ -36,7 +36,10 @@ import { smiths } from "../data/smiths";
 
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-media"><img src="/hero-01.png" alt="A hand-forged kasumi gyuto resting on dark slate" /></div>
+      <div class="hero-media">
+        <img src="/hero-01.png" alt="A hand-forged kasumi gyuto resting on dark slate" />
+        <video class="hero-video" muted loop playsinline preload="none" poster="/hero-01.png" aria-hidden="true" data-src="/hero-loop.mp4"></video>
+      </div>
       <div class="hero-light" aria-hidden="true"></div>
       <span class="hero-vert jp">鍛冶 — 一鍛一刀</span>
       <div class="hero-content container">
@@ -266,6 +269,18 @@ import { smiths } from "../data/smiths";
           const r = hero.getBoundingClientRect();
           light.style.transform = `translate(${e.clientX - r.left - 260}px, ${e.clientY - r.top - 260}px)`;
         });
+      }
+
+      // hero cinemagraph: only load/play for users who accept motion;
+      // the still underneath is the poster and the reduced-motion truth.
+      const hv = document.querySelector(".hero-video");
+      if (hv && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        hv.src = hv.dataset.src;
+        hv.addEventListener("canplay", () => {
+          hv.classList.add("is-playing");
+          hv.play().catch(() => {});
+        });
+        hv.load();
       }
 
       // header: transparent over the hero; solid bar once scrolled;

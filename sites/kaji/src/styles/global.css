@@ -131,6 +131,11 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .hero { position: relative; height: 100svh; min-height: 640px; overflow: hidden; background: var(--sumi); }
 .hero-media { position: absolute; inset: 0; }
 .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+/* The cinemagraph rides ON TOP of the identical still at partial opacity:
+   every frame is averaged toward the approved baseline, damping the
+   generated light-swell so the loop whispers instead of pulsing. */
+.hero-media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 0; transition: opacity 2.2s var(--ease); }
+.hero-media video.is-playing { opacity: .62; }
 .hero-media::after {
   content: ""; position: absolute; inset: 0;
   background:
@@ -183,7 +188,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 }
 .hero-meta b { color: var(--on-dark); font-weight: 500; }
 .scroll-cue {
-  position: absolute; bottom: var(--s4); left: 50%; transform: translateX(-50%);
+  position: absolute; bottom: var(--s4); right: var(--gutter);
   font-family: var(--mono); font-size: 10px; letter-spacing: .3em; color: var(--on-dark-faint);
   text-transform: uppercase; display: flex; flex-direction: column; align-items: center; gap: 8px;
 }
