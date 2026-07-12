@@ -170,12 +170,20 @@ image.
 
 ### Motion imagery
 
-Video is rare by policy — that is what makes it premium. Rules: locked-off
-or near-imperceptible push-in only; something *ambient* moves (dust, light
-breathing), never the subject; generated from the exact still it will layer
-over (start-frame = the still) so it can dip back to the image seamlessly;
+Video is rare by policy — that is what makes it premium, and it must earn its
+place: if the shot could be faked with a CSS transform on the still (a zoom,
+a pan), use the still. Video exists for what only a camera can do — parallax,
+revealed geometry, light raking across a surface.
+
+Rules: **the camera may move as a visitor would** — a slow constant-speed
+arc around the vitrine, or near-imperceptible drift; never a full turntable
+revolution (that is product-configurator language), never handheld, never a
+crash move. **The subject never moves.** Ambient life (dust, breathing
+light) is welcome. Generated from the exact still it layers over
+(start-frame = the still) so the loop can dip back to the image seamlessly;
 desktop-only, lazy-loaded, `prefers-reduced-motion` and Save-Data respected.
-One video per page, maximum.
+One video per page, maximum. Compress before shipping (x264 crf ~24 — the
+dark footage compresses extremely well; target ≤4MB).
 
 ---
 
