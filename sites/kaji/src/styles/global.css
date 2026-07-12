@@ -105,7 +105,18 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   display: flex; align-items: center; justify-content: space-between;
   padding: clamp(18px,2.4vw,30px) var(--gutter);
   mix-blend-mode: difference; color: #fff;
+  transition: transform .5s var(--ease), background .4s var(--ease), padding .4s var(--ease);
 }
+/* scrolled: solid ink bar, no blend trickery, compact */
+.site-header.scrolled {
+  mix-blend-mode: normal;
+  background: rgba(11,11,12,.82);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line-dark);
+  padding-top: 14px; padding-bottom: 14px;
+}
+/* hidden while scrolling down */
+.site-header.hidden { transform: translateY(-101%); }
 .brand { display: flex; align-items: baseline; gap: 12px; }
 .brand .mark { font-family: var(--serif-jp); font-size: 26px; font-weight: 700; letter-spacing: .04em; }
 .brand .word { font-family: var(--mono); font-size: 12px; letter-spacing: .5em; text-transform: uppercase; padding-left: 2px; }
@@ -139,7 +150,12 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .hero-content {
   position: absolute; inset: 0; z-index: 3;
   display: flex; flex-direction: column; justify-content: flex-end;
-  padding: var(--gutter); padding-bottom: clamp(72px,9vw,132px);
+  padding: var(--gutter); padding-bottom: clamp(56px, 8svh, 132px);
+}
+/* short viewports: tighten the non-headline pieces too */
+@media (max-height: 800px) {
+  .hero-sub { margin-top: var(--s3); max-width: 52ch; }
+  .hero-meta { margin-top: var(--s3); }
 }
 .hero-vert {
   position: absolute; top: clamp(96px,14vh,180px); right: var(--gutter); z-index: 2;
@@ -149,7 +165,8 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 }
 .hero h1 {
   font-family: var(--serif-jp); font-weight: 600;
-  font-size: clamp(56px, 12vw, 190px); line-height: .92; letter-spacing: -.01em;
+  /* sized by width AND height so the stack never climbs into the header on short viewports */
+  font-size: clamp(48px, min(12vw, 17.5svh), 190px); line-height: .92; letter-spacing: -.01em;
   color: #fff; max-width: 14ch;
   text-shadow: 0 2px 40px rgba(11,11,12,.75);
 }

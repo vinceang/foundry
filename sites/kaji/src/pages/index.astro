@@ -230,6 +230,20 @@ import "../styles/global.css";
           light.style.transform = `translate(${e.clientX - r.left - 260}px, ${e.clientY - r.top - 260}px)`;
         });
       }
+
+      // header: transparent over the hero; solid bar once scrolled;
+      // hides scrolling down, returns scrolling up.
+      const header = document.querySelector(".site-header");
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle("scrolled", y > 60);
+        if (y > 260 && y > lastY + 4) header.classList.add("hidden");
+        else if (y < lastY - 4 || y <= 260) header.classList.remove("hidden");
+        lastY = y;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
     </script>
   </body>
 </html>
