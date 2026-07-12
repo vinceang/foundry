@@ -4,7 +4,8 @@ Three award-caliber websites, built as separate showcases of range — deliberat
 
 | Site | What it is | Lives in |
 |------|-----------|----------|
-| Ecommerce | (concept TBD) | [`sites/ecommerce`](sites/ecommerce) |
+| Ecommerce | Shokunin — bespoke samurai ateliers (lacquer dark, smoked gold, Marcellus/Manrope) | [`sites/shokunin`](sites/shokunin) |
+| Kaji | Knife atelier (sumi ink, washi paper, vermilion, Shippori Mincho) | [`sites/kaji`](sites/kaji) |
 | SaaS landing | (concept TBD) | [`sites/saas`](sites/saas) |
 | Event | (concept TBD) | [`sites/event`](sites/event) |
 
@@ -25,6 +26,14 @@ Non-design engineering scaffolds, shared across all three sites.
 - **`shot.mjs`** — screenshots a live render for the design critique loop (headless Chrome, no deps).
   ```
   node tools/shot.mjs http://localhost:5173 shots/pass1.png 1440 900
+  ```
+- **`shot-full.mjs`** — full-page (scrolled) capture via playwright-core + installed Chrome; scrolls first so reveal animations fire.
+  ```
+  node tools/shot-full.mjs http://localhost:4321/?nofx shots/full.png 1440
+  ```
+- **`shot-clip.mjs`** — full-resolution horizontal band of a page (section-by-section review).
+  ```
+  node tools/shot-clip.mjs http://localhost:4321/?nofx shots/sec.png 1800 900 1440
   ```
 
 ## Deploy

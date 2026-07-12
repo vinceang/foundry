@@ -109,7 +109,8 @@ html.js .rv {
 html.js .rv.in { opacity: 1; transform: none; }
 
 /* masked line reveal for display headings */
-html.js .rv-line { display: block; overflow: hidden; }
+.rv-line { display: block; }
+html.js .rv-line { overflow: hidden; }
 html.js .rv-line > span {
   display: block;
   transform: translateY(110%);
@@ -173,8 +174,12 @@ html.js .rv-line.in > span { transform: none; }
 }
 .nav-cta:hover { border-color: var(--kin); background: rgba(194,160,97,.08); }
 @media (max-width: 760px) {
+  .site-header { padding: calc(var(--frame) + 10px) calc(var(--frame) + 12px); }
   .site-nav a:not(.nav-cta) { display: none; }
+  .nav-cta { padding: 8px 14px; letter-spacing: .22em; }
   .brand-word { font-size: 13px; letter-spacing: .38em; }
+  .brand-seal { width: 28px; height: 28px; }
+  .brand-seal span { font-size: 13px; }
 }
 
 /* ---------- footer ---------- */

@@ -7,11 +7,21 @@ import { works, sealedWorks } from '../data/works';
   title="Shokunin — Bespoke Samurai Ateliers"
   description="A private house of master ateliers. Twelve works of samurai armor and blade a year, entered into the Register and released by petition."
 >
+  <!-- chapter rail — desktop wayfinding -->
+  <nav class="chapters" aria-label="Chapters">
+    <a href="#top" data-ch="top"><i></i><span>Entrance</span></a>
+    <a href="#doctrine" data-ch="doctrine"><i></i><span>Doctrine</span></a>
+    <a href="#register" data-ch="register"><i></i><span>The Register</span></a>
+    <a href="#ateliers" data-ch="ateliers"><i></i><span>Ateliers</span></a>
+    <a href="#commission" data-ch="commission"><i></i><span>Commission</span></a>
+  </nav>
+
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
     <div class="hero-media" aria-hidden="true">
       <img src="/works/hero.jpg" alt="" fetchpriority="high" />
       <div class="hero-shade"></div>
+      <canvas class="hero-dust" aria-hidden="true"></canvas>
     </div>
 
     <p class="hero-rail kanji vertical-rl" aria-hidden="true">一芸一生</p>
@@ -64,8 +74,13 @@ import { works, sealedWorks } from '../data/works';
   <!-- ============ THE REGISTER ============ -->
   <section class="register" id="register">
     <div class="register-head">
-      <p class="label rv">The Register · 2026</p>
-      <h2 class="display rv" style="--d: 1">Works of the year</h2>
+      <div class="register-title">
+        <div>
+          <p class="label rv">The Register · MMXXVI</p>
+          <h2 class="display rv" style="--d: 1">Works of the year</h2>
+        </div>
+        <p class="register-year kanji vertical-rl rv" style="--d: 2" aria-hidden="true">二〇二六年 銘鑑</p>
+      </div>
       <p class="register-note rv" style="--d: 2">
         Three works currently stand open. The remainder of the year is sealed.
       </p>
@@ -151,18 +166,22 @@ import { works, sealedWorks } from '../data/works';
         <li class="rv" style="--d: 3">
           <span class="rite-no display">01</span>
           <div><h3 class="display">Petition</h3><p>A letter to the Register stating who you are and what you ask the house to make.</p></div>
+          <span class="rite-when label label--dim">One letter</span>
         </li>
         <li class="rv" style="--d: 4">
           <span class="rite-no display">02</span>
           <div><h3 class="display">Audience</h3><p>A meeting with the three masters, in Kyōto or where you stand. Measures are taken; the crest is drawn.</p></div>
+          <span class="rite-when label label--dim">One day</span>
         </li>
         <li class="rv" style="--d: 5">
           <span class="rite-no display">03</span>
-          <div><h3 class="display">The making</h3><p>Fourteen months. You receive the forge record as it is written — plate by plate, ground by ground.</p></div>
+          <div><h3 class="display">The making</h3><p>You receive the forge record as it is written — plate by plate, ground by ground.</p></div>
+          <span class="rite-when label label--dim">Fourteen months</span>
         </li>
         <li class="rv" style="--d: 6">
           <span class="rite-no display">04</span>
           <div><h3 class="display">Investiture</h3><p>The finished work is presented, sealed into the Register, and released into your keeping.</p></div>
+          <span class="rite-when label label--dim">One evening</span>
         </li>
       </ol>
 
@@ -173,6 +192,65 @@ import { works, sealedWorks } from '../data/works';
     </div>
   </section>
 </Layout>
+
+<script>
+  // ---- chapter rail scroll-spy ----
+  const links = document.querySelectorAll<HTMLAnchorElement>('.chapters a');
+  if (links.length) {
+    const targets = ['top', 'doctrine', 'register', 'ateliers', 'commission']
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    const setActive = () => {
+      let current = targets[0];
+      for (const t of targets) {
+        if (t.getBoundingClientRect().top <= innerHeight * 0.45) current = t;
+      }
+      links.forEach((a) => a.classList.toggle('on', a.dataset.ch === current.id));
+    };
+    addEventListener('scroll', setActive, { passive: true });
+    setActive();
+  }
+
+  // ---- hero dust motes ----
+  const canvas = document.querySelector<HTMLCanvasElement>('.hero-dust');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (canvas && !still) {
+    const ctx = canvas.getContext('2d')!;
+    let w = 0, h = 0, visible = true;
+    const size = () => {
+      w = canvas.width = canvas.offsetWidth;
+      h = canvas.height = canvas.offsetHeight;
+    };
+    size();
+    addEventListener('resize', size);
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(canvas);
+
+    type Mote = { x: number; y: number; r: number; vx: number; vy: number; tw: number; ph: number };
+    const motes: Mote[] = Array.from({ length: 42 }, () => ({
+      x: Math.random(), y: Math.random(), r: .5 + Math.random() * 1.4,
+      vx: -.00003 - Math.random() * .00007,
+      vy: -.00006 - Math.random() * .00009,
+      tw: .6 + Math.random() * 2.2, ph: Math.random() * Math.PI * 2,
+    }));
+    const tick = (t: number) => {
+      requestAnimationFrame(tick);
+      if (!visible) return;
+      ctx.clearRect(0, 0, w, h);
+      for (const m of motes) {
+        m.x = (m.x + m.vx + 1) % 1;
+        m.y = (m.y + m.vy + 1) % 1;
+        const a = .12 + .3 * Math.abs(Math.sin(m.ph + t / (1400 * m.tw)));
+        // brighter inside the light shaft (upper middle)
+        const shaft = Math.max(0, 1 - Math.abs(m.x - .52) * 3.4) * (1 - m.y * .55);
+        ctx.beginPath();
+        ctx.arc(m.x * w, m.y * h, m.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(230, 205, 147, ${(a * (0.25 + shaft)).toFixed(3)})`;
+        ctx.fill();
+      }
+    };
+    requestAnimationFrame(tick);
+  }
+</script>
 
 <style>
   /* ============ HERO ============ */
@@ -201,6 +279,13 @@ import { works, sealedWorks } from '../data/works';
       linear-gradient(to top, var(--urushi) 4%, rgba(18,13,10,.44) 34%, transparent 62%),
       linear-gradient(to right, rgba(10,7,5,.62), transparent 55%);
   }
+  @media (max-width: 760px) {
+    .hero-shade {
+      background:
+        linear-gradient(to top, var(--urushi) 12%, rgba(18,13,10,.72) 44%, rgba(18,13,10,.18) 70%),
+        linear-gradient(to right, rgba(10,7,5,.5), transparent 70%);
+    }
+  }
   .hero-rail {
     position: absolute; top: 50%; right: calc(var(--frame) + 26px);
     transform: translateY(-50%);
@@ -214,14 +299,15 @@ import { works, sealedWorks } from '../data/works';
   .hero-inner {
     position: relative; z-index: 2;
     padding: 0 var(--gutter) clamp(72px, 12vh, 140px);
-    max-width: 880px;
+    width: 100%;
   }
   .hero-title {
-    font-size: clamp(56px, 10.5vw, 152px);
-    letter-spacing: .1em;
+    font-size: clamp(48px, 9.4vw, 138px);
+    letter-spacing: .08em;
     text-transform: uppercase;
     color: var(--silk);
     margin: 14px 0 20px -4px;
+    white-space: nowrap;
   }
   .hero-sub {
     max-width: 44ch;
@@ -258,6 +344,36 @@ import { works, sealedWorks } from '../data/works';
   @media (prefers-reduced-motion: reduce) { .scroll-cue i::after { animation: none; } }
   @media (max-width: 760px) { .scroll-cue { display: none; } }
 
+  .hero-dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* ============ CHAPTER RAIL ============ */
+  .chapters {
+    position: fixed; z-index: 95;
+    left: calc(var(--frame) + 18px); top: 50%;
+    translate: 0 -50%;
+    display: flex; flex-direction: column; gap: 26px;
+  }
+  @media (max-width: 1180px) { .chapters { display: none; } }
+  .chapters a { display: flex; align-items: center; gap: 12px; }
+  .chapters i {
+    width: 7px; height: 7px; flex: 0 0 auto;
+    border: 1px solid var(--kin-faint);
+    transform: rotate(45deg);
+    transition: background .4s, border-color .4s, box-shadow .4s;
+  }
+  .chapters span {
+    font-size: 10px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--silk-dim);
+    opacity: 0; translate: -6px 0;
+    transition: opacity .4s var(--ease), translate .4s var(--ease), color .4s;
+  }
+  .chapters a:hover span { opacity: 1; translate: 0 0; }
+  .chapters a.on i {
+    background: var(--kin); border-color: var(--kin-bright);
+    box-shadow: 0 0 10px rgba(194,160,97,.5);
+  }
+  .chapters a.on span { opacity: 1; translate: 0 0; color: var(--kin-bright); }
+
   /* ============ DOCTRINE ============ */
   .doctrine {
     position: relative;
@@ -292,6 +408,9 @@ import { works, sealedWorks } from '../data/works';
   /* ============ REGISTER ============ */
   .register { padding: var(--s9) var(--gutter); background: var(--urushi); }
   .register-head { max-width: 1280px; margin: 0 auto var(--s8); }
+  .register-title { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--s4); }
+  .register-year { font-size: 15px; letter-spacing: .5em; color: var(--kin-faint); }
+  @media (max-width: 760px) { .register-year { display: none; } }
   .register-head h2 { font-size: clamp(38px, 5.6vw, 76px); margin-top: 18px; }
   .register-note { color: var(--silk-dim); margin-top: 16px; max-width: 46ch; }
 
@@ -305,6 +424,8 @@ import { works, sealedWorks } from '../data/works';
   @media (min-width: 900px) {
     .work--portrait { grid-template-columns: 5fr 6fr; }
     .work--wide { grid-template-columns: 7fr 4fr; }
+    .work--wide:nth-of-type(even) { grid-template-columns: 4fr 7fr; }
+    .work--portrait:nth-of-type(even) { grid-template-columns: 6fr 5fr; }
     .work:nth-of-type(even) .work-media { order: 2; }
   }
   .work-media {
@@ -315,11 +436,11 @@ import { works, sealedWorks } from '../data/works';
   .work-media img {
     width: 100%; height: 100%; object-fit: cover;
     transform: scale(1.06);
-    transition: transform 1.4s var(--ease), filter 1.4s var(--ease);
+    transition: filter 1.2s var(--ease);
     filter: brightness(.92);
     will-change: transform;
   }
-  .work:hover .work-media img { filter: brightness(1.04); }
+  .work:hover .work-media img { filter: brightness(1.05); }
   .work--portrait .work-media { aspect-ratio: 3 / 3.6; }
   .work--wide .work-media { aspect-ratio: 16 / 10; }
 
@@ -411,14 +532,19 @@ import { works, sealedWorks } from '../data/works';
 
   .rite { list-style: none; margin-top: var(--s7); }
   .rite li {
-    display: grid; grid-template-columns: 88px 1fr; gap: var(--s4);
+    display: grid; grid-template-columns: 88px 1fr auto; gap: var(--s4);
+    align-items: start;
     padding: var(--s5) 0;
     border-top: 1px solid var(--line-soft);
   }
   .rite-no { font-size: 15px; letter-spacing: .3em; color: var(--kin); padding-top: 6px; }
   .rite h3 { font-size: 24px; letter-spacing: .08em; margin-bottom: 10px; }
   .rite p { color: var(--silk-dim); max-width: 52ch; font-size: 15px; }
-  @media (max-width: 640px) { .rite li { grid-template-columns: 1fr; gap: 12px; } }
+  .rite-when { padding-top: 9px; white-space: nowrap; }
+  @media (max-width: 640px) {
+    .rite li { grid-template-columns: 1fr; gap: 12px; }
+    .rite-when { padding-top: 0; }
+  }
 
   .commission-cta {
     margin-top: var(--s7);

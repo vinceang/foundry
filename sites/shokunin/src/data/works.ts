@@ -21,6 +21,7 @@ export type Work = {
   imageAlt: string;
   portrait: boolean;
   lede: string;
+  detail?: { src: string; alt: string; caption: string };
   body: string[];
   specs: { k: string; v: string }[];
   provenance: { stage: string; detail: string; when: string }[];
@@ -44,6 +45,11 @@ export const works: Work[] = [
     imageAlt: 'Lacquered kabuto helmet with a gold crescent-moon crest, lit by a single warm light against darkness',
     portrait: true,
     lede: 'A sixty-two-plate russet iron bowl, raised and lacquered over eleven months, crowned with a crescent of hammered gold. Made to be worn once, and kept for three hundred years.',
+    detail: {
+      src: '/works/lacing.jpg',
+      alt: 'Macro view of lacquered armor scales bound with indigo silk cords',
+      caption: 'Kachi-iro silk over lacquered scales — the house lacing standard',
+    },
     body: [
       'The bowl is raised from sixty-two individual iron plates, each hand-forged, riveted and filed until the seams read as a single curve. House Mizuno lacquers in the old Kaga manner: eight grounds of black urushi, each cured in a cedar chamber for nineteen days before the next is laid.',
       'The maedate crest is not cast. It is a single sheet of copper, hammered over horn forms and fired with gold in the mercury-free kaga-mekki method the house has guarded since the seventeenth century. Under candlelight it does not glitter — it glows.',
@@ -116,39 +122,39 @@ export const works: Work[] = [
     name: 'Kuronami',
     kanji: '黒波',
     reading: 'kuronami — the black wave',
-    category: 'Menpō · war mask',
+    category: 'Sōmen · full war mask',
     atelier: 'Shirakawa Studio, Wajima',
     atelierNote: 'Urushi masters, eleventh generation',
     year: '2026',
     price: '¥9,700,000',
     status: 'Open to petition',
     image: '/works/kuronami.jpg',
-    imageAlt: 'Russet-lacquered samurai half-mask with gold repair lines along one cheek, mounted in darkness',
+    imageAlt: 'Lifelike russet-lacquered full face mask with gold repair beads above the left brow, mounted in darkness',
     portrait: true,
-    lede: 'A russet iron half-mask whose left cheek carries a seam of gold — not decoration, but an honest repair in the kintsugi manner, marking the single flaw the studio chose to keep.',
+    lede: 'A full sōmen of russet lacquered iron, its left brow carrying beads of gold — not decoration, but an honest repair in the kintsugi manner, marking the single flaw the studio chose to keep.',
     body: [
-      'The mask is raised from one plate of russet iron, its expression cut and chased to the studio’s severe standard: fierce at ten paces, serene at two. The interior is lacquered in vermilion-free black so it disappears against the wearer’s shadow.',
-      'During the final curing a hairline stress mark opened along the left cheek. The studio’s custom in such cases is absolute: the flaw is not hidden. It was stabilized and dressed in gold lacquer, entered into the record, and the work was renamed for it — the black wave, broken once.',
+      'The mask is raised from one plate of russet iron and chased to the studio’s severe standard: fierce at ten paces, serene at two. Sōmen are the rarest of war masks — the full face, ears and all, worked until the iron reads as flesh. The interior is lacquered in matte black so it disappears against the wearer’s shadow.',
+      'During the final curing a run of hairline stress marks opened above the left brow. The studio’s custom in such cases is absolute: the flaw is not hidden. Each mark was stabilized and dressed in a bead of gold lacquer, entered into the record, and the work was renamed for it — the black wave, broken once.',
       'The horsehair mustache is set strand by strand into lacquer while it cures, a full week of work in a room kept at the humidity of a sea cave.',
     ],
     specs: [
-      { k: 'Construction', v: 'Single-plate russet iron, chased' },
-      { k: 'Repair', v: 'Gold urushi seam, documented, named' },
+      { k: 'Construction', v: 'Single-plate russet iron sōmen, chased' },
+      { k: 'Repair', v: 'Gold urushi beads, documented, named' },
       { k: 'Interior', v: 'Black urushi, matte-cured' },
       { k: 'Mustache', v: 'Horsehair, set strand by strand' },
-      { k: 'Weight', v: '640 g' },
+      { k: 'Weight', v: '840 g' },
       { k: 'Documentation', v: 'Register deed, repair record, studio oath' },
     ],
     provenance: [
       { stage: 'Raised', detail: 'Single plate, chased by Shirakawa Iori', when: 'August — October 2025' },
-      { stage: 'Broken', detail: 'Hairline opened in final curing; kept', when: 'December 2025' },
-      { stage: 'Dressed', detail: 'Gold urushi seam laid over nine days', when: 'January 2026' },
+      { stage: 'Broken', detail: 'Hairlines opened in final curing; kept', when: 'December 2025' },
+      { stage: 'Dressed', detail: 'Gold urushi beads laid over nine days', when: 'January 2026' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work IX of XII', when: 'February 2026' },
     ],
     hotspots: [
-      { x: 36, y: 55, title: 'The gold seam', note: 'A stress mark opened in the final cure. The studio’s custom is absolute: the flaw is kept, dressed in gold, and named.' },
-      { x: 60, y: 40, title: 'Chased expression', note: 'Fierce at ten paces, serene at two. The studio adjusts the brow line by fractions of a millimetre until both readings hold.' },
-      { x: 52, y: 72, title: 'Yodare-kake', note: 'The throat guard’s indigo lacing matches the kachi-iro standard of the house armories.' },
+      { x: 38, y: 30, title: 'The gold beads', note: 'Stress marks opened in the final cure. The studio’s custom is absolute: the flaw is kept, dressed in gold, and named.' },
+      { x: 56, y: 52, title: 'Chased expression', note: 'Fierce at ten paces, serene at two. The studio adjusts the brow and mouth by fractions of a millimetre until both readings hold.' },
+      { x: 50, y: 82, title: 'Yodare-kake', note: 'The throat guard’s indigo lacing matches the kachi-iro standard of the house armories.' },
     ],
   },
 ];

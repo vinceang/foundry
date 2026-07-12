@@ -71,6 +71,12 @@ const next = works[(idx + 1) % works.length];
           {work.body.map((p, i) => (
             <p class="rv" style={`--d:${i + 2}`}>{p}</p>
           ))}
+          {work.detail && (
+            <figure class="record-detail rv" style="--d:5">
+              <img src={work.detail.src} alt={work.detail.alt} loading="lazy" data-parallax="18" />
+              <figcaption class="label label--dim">{work.detail.caption}</figcaption>
+            </figure>
+          )}
         </div>
         <aside class="record-specs rv" style="--d:2">
           <h3 class="label">Specification</h3>
@@ -160,7 +166,7 @@ const next = works[(idx + 1) % works.length];
     min-height: 100svh;
     display: grid;
     gap: var(--s5);
-    padding: calc(var(--frame) + 96px) var(--gutter) var(--s7);
+    padding: calc(var(--frame) + 84px) var(--gutter) var(--s6);
     align-items: center;
     max-width: 1440px;
     margin-inline: auto;
@@ -176,7 +182,11 @@ const next = works[(idx + 1) % works.length];
     background: var(--void);
   }
   .stage-media img { width: 100%; height: 100%; object-fit: cover; }
-  .stage-media.is-portrait { aspect-ratio: 3 / 3.8; }
+  .stage-media.is-portrait {
+    aspect-ratio: 3 / 3.6;
+    width: min(100%, calc(78svh * .833));
+    margin-inline: auto;
+  }
   .stage-media.is-wide { aspect-ratio: 16 / 10; }
 
   .stage-hint {
@@ -192,8 +202,9 @@ const next = works[(idx + 1) % works.length];
     z-index: 3;
   }
   .spot-ring {
-    width: 14px; height: 14px;
-    border: 1px solid var(--kin);
+    width: 18px; height: 18px;
+    border: 1px solid var(--kin-bright);
+    box-shadow: 0 0 14px rgba(230, 205, 147, .35);
     transform: rotate(45deg);
     position: relative;
     transition: transform .5s var(--ease), background .4s;
@@ -234,7 +245,7 @@ const next = works[(idx + 1) % works.length];
   /* ===== meta panel ===== */
   .meta-no { font-size: 14px; letter-spacing: .3em; color: var(--kin); }
   .meta-no span { color: var(--silk-faint); }
-  .meta-name { font-size: clamp(52px, 7vw, 96px); margin: 12px 0 6px; }
+  .meta-name { font-size: clamp(44px, 5.6vw, 78px); margin: 10px 0 6px; }
   .meta-kanji { font-size: 21px; color: var(--kin-faint); }
   .meta-kanji span {
     font-family: var(--body); font-size: 12px; letter-spacing: .14em;
@@ -243,16 +254,16 @@ const next = works[(idx + 1) % works.length];
   .meta-cat { margin-top: 18px; }
   .meta-lede { color: var(--silk-dim); margin-top: 22px; max-width: 48ch; font-size: 15.5px; }
 
-  .meta-facts { margin-top: var(--s5); border-top: 1px solid var(--line-soft); }
+  .meta-facts { margin-top: var(--s4); border-top: 1px solid var(--line-soft); }
   .meta-facts div {
     display: grid; grid-template-columns: 130px 1fr; gap: var(--s3);
-    padding: 14px 0; border-bottom: 1px solid var(--line-soft);
+    padding: 11px 0; border-bottom: 1px solid var(--line-soft);
     align-items: baseline;
   }
   .meta-facts dd { font-size: 14.5px; }
   .meta-price { font-size: 22px; letter-spacing: .05em; color: var(--silk); }
 
-  .meta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: var(--s5); }
+  .meta-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin-top: var(--s4); }
   .btn-gold {
     display: inline-block; padding: 15px 34px;
     background: var(--kin); color: #14100a;
@@ -277,6 +288,10 @@ const next = works[(idx + 1) % works.length];
   .record-notes p:not(.label) {
     color: var(--silk-dim); max-width: 58ch; margin-bottom: 22px; font-size: 16px;
   }
+  .record-detail { margin-top: var(--s6); overflow: hidden; }
+  .record-detail img { width: 100%; border: 1px solid var(--line-soft); transform: scale(1.06); }
+  .record-detail figcaption { margin-top: 16px; }
+
   .record-specs {
     border: 1px solid var(--line-soft);
     padding: var(--s4);
