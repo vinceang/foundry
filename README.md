@@ -1,19 +1,21 @@
 # Foundry
 
-Four award-caliber websites, built as separate showcases of range — deliberately **not** a matched set. Different palettes, different type, different energy. Shokunin and Kaji share an ancestry (Japanese craft, built by two parallel sessions) and are kept as a deliberate diptych — same reverence, different materials, type, and mechanics. The other two go somewhere else entirely.
+A collection of bespoke, ultra-refined **heritage-craft atelier** sites — each one an ancestral family business, in a culture and craft Vince genuinely loves, built with the same reverence, restraint, and material honesty. Not a range-of-categories portfolio; a range of *cultures and crafts*, all in one register: quiet luxury, real domain authenticity, no pastiche. Distinctiveness comes from palette, type, and imagery drawn from the specific craft and place — not from breaking the register.
 
-| Site | What it is | Lives in |
-|------|-----------|----------|
-| Shokunin | Bespoke samurai ateliers — lacquer dark, smoked gold, Marcellus/Manrope | [`sites/shokunin`](sites/shokunin) |
-| Suntoku (寸徳) | Hand-forged kitchen knife atelier — sumi ink, washi paper, vermilion, Shippori Mincho; ships to suntoku.com | [`sites/kaji`](sites/kaji) |
-| Roster (SaaS) | Hire AI teammates in plain English — warm, human, calm-premium (in planning) | [`sites/saas`](sites/saas) |
-| SIGNAL (Event) | Experimental music + light-art festival — loud, maximal (concept TBD) | [`sites/event`](sites/event) |
+> This repo's original brief was three unrelated categories (ecommerce/SaaS/event) proving generic range. It pivoted after Suntoku and Shokunin — see [`docs/2026-07-12-repositioning-luxury-ateliers.md`](docs/2026-07-12-repositioning-luxury-ateliers.md) for the full history, including the two concepts (Roster, SIGNAL) retired in the move.
 
-Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps distinct identities from collapsing into one house style.
+| Site | What it is | Culture / craft | Lives in |
+|------|-----------|------------------|----------|
+| Suntoku (寸徳) | Hand-forged kitchen knife atelier — sumi ink, washi paper, vermilion, Shippori Mincho; ships to suntoku.com | Japan · Sakai | [`sites/kaji`](sites/kaji) |
+| Shokunin | Bespoke samurai ateliers — lacquer dark, smoked gold, Marcellus/Manrope | Japan | [`sites/shokunin`](sites/shokunin) |
+| Vicente *(Lutier)* | Family-owned boutique guitar atelier, the Vicente family — planned EN/ES language switching | Spain · Andalusia (Córdoba) | [`sites/vicente`](sites/vicente) — not started |
+| *(name TBD)* | Cuckoo clock house — planned EN/DE language switching | Germany · Black Forest / Bavaria | [`sites/schwarzwald`](sites/schwarzwald) — not started |
+
+Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 
 ## Why no shared design system
 
-The value of this collection is range. A shared token set / component library would pull the three toward a single look — the exact "generic template" failure to avoid. The only thing shared here is **build tooling**, never design.
+Even within one register, a shared token set / component library would pull every site toward the same look — the "generic template" failure the original brief warned against, just relocated. Each atelier's palette, type, and imagery come from its own culture and craft. The only thing shared here is **build tooling**, never design.
 
 ## tools/
 
