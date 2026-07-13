@@ -384,10 +384,16 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
    LUTHIER DETAIL PAGE
    ============================================================ */
 .luthier-hero { background: var(--nogal); color: var(--on-dark); display: grid; grid-template-columns: minmax(320px, 42%) 1fr; min-height: 100svh; }
-.luthier-hero-media { position: relative; display: flex; align-items: flex-end; justify-content: center; padding: clamp(96px,12vh,150px) clamp(24px,3.5vw,56px) 0; background: var(--nogal-2); }
-.luthier-hero-media .arch-frame { width: 100%; max-width: 470px; aspect-ratio: 3/4.1; border-radius: var(--arch); overflow: hidden; border: 1px solid var(--line-dark); position: relative; }
-.luthier-hero-media img { width: 100%; height: 100%; object-fit: cover; }
-.luthier-hero-media .arch-frame::after { content: ""; position: absolute; inset: 0; border-radius: var(--arch); background: linear-gradient(180deg, transparent 70%, rgba(28,17,10,.55) 100%); }
+/* portrait runs full-bleed in its column (Vince, 2026-07-13) — the arch
+   stays on home-page cards and product mats, not here */
+.luthier-hero-media { position: relative; background: var(--nogal-2); overflow: hidden; }
+.luthier-hero-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; }
+.luthier-hero-media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(28,17,10,.42) 0%, transparent 26%, transparent 62%, rgba(28,17,10,.5) 100%),
+    linear-gradient(90deg, transparent 70%, rgba(28,17,10,.4) 100%);
+}
 .luthier-hero-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(110px,13vh,160px) clamp(32px,5.5vw,96px) clamp(56px,7vw,90px); }
 .luthier-hero-body h1 { font-family: var(--display); font-weight: 500; font-size: clamp(40px,5.2vw,78px); line-height: 1.02; color: #fff; margin: var(--s3) 0 var(--s4); }
 .luthier-quote { border-left: 2px solid var(--naranja); padding-left: var(--s3); font-family: var(--display); font-style: italic; font-size: clamp(19px,1.8vw,25px); line-height: 1.45; max-width: 40ch; margin-bottom: var(--s5); }
@@ -396,7 +402,7 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
 .luthier-facts .f { display: flex; flex-direction: column; gap: 5px; }
 .luthier-facts .fv { font-family: var(--display); font-size: clamp(19px,1.9vw,26px); color: #fff; }
 .luthier-facts .fl { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--on-dark-faint); }
-@media (max-width: 860px){ .luthier-hero { grid-template-columns: 1fr; } .luthier-hero-media { padding-top: 110px; } }
+@media (max-width: 860px){ .luthier-hero { grid-template-columns: 1fr; } .luthier-hero-media { min-height: 68svh; } }
 
 .luthier-works { background: var(--paper); color: var(--on-light); padding: clamp(80px,10vw,132px) 0; }
 .luthier-works-grid { display: grid; grid-template-columns: minmax(0,420px) 1fr; gap: clamp(32px,5vw,88px); align-items: center; }

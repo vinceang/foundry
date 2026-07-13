@@ -35,7 +35,7 @@ Never let an accent drift back toward red, and never introduce a monospace — t
 
 ## Signature elements
 
-- **Horseshoe arch frames** — all people and product imagery. Product images `mix-blend-mode: multiply` onto `--marfil-2` mats.
+- **Horseshoe arch frames** — people and product imagery on cards and mats. Product images `mix-blend-mode: multiply` onto `--marfil-2` mats. *Exception (Vince, 2026-07-13): luthier-page hero portraits run full-bleed in their column — the arch read timid at that scale.*
 - **Lacería divider** — drawn-on-scroll double zigzag (naranja over ivory echo) at the process seam. One per page maximum.
 - **La etiqueta composite** (`public/etiqueta.png`) — Vince's REAL wordmark composited in-browser onto a generated blank-label soundhole macro (multiply at .88; the photo's bright strings read over the ink naturally). Recipe in `docs` history / scratchpad `etiqueta-shot*.mjs`. **Never ask an image model to render the logo** — it will garble it; composite the SVG.
 - **Language toggle** EN·ES — every page, both locales authored by hand in `src/i18n.ts` (Spanish is the house's first language; never machine-translate).

@@ -58,8 +58,8 @@ const guitar = t.collection.guitars.find((g) => g.maker === person.name);
 
     <!-- LUTHIER HERO -->
     <section class="luthier-hero">
-      <div class="luthier-hero-media">
-        <div class="arch-frame reveal"><img src={person.img} alt={person.name} /></div>
+      <div class="luthier-hero-media reveal">
+        <img src={person.img} alt={person.name} />
       </div>
       <div class="luthier-hero-body">
         <p class="label reveal">{person.role} · {person.spec}</p>
