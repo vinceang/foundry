@@ -2,7 +2,7 @@
    VICENTE · LUTIER — design system
    nogal café-tobacco · aged ivory · Seville naranja (#ff5600 range)
    (the pomegranate survives as exactly ONE garnet seed, in the footer)
-   Type: Bodoni Moda (Didone display, Spanish theater-poster energy)
+   Type: Averia Serif Libre (warm, worn, hand-touched display)
          · EB Garamond (body). NO monospace — letterspaced caps serif.
    Signature geometry: the Moorish horseshoe arch; lacería interlace.
    ============================================================ */
@@ -36,7 +36,7 @@
   --line-light: rgba(36,26,18,.16);
 
   /* type — serif only, no mono anywhere */
-  --display: "Bodoni Moda", "Bodoni 72", Didot, Georgia, serif;
+  --display: "Averia Serif Libre", Georgia, serif;
   --body:    "EB Garamond", Georgia, serif;
 
   /* rhythm (8pt) */
