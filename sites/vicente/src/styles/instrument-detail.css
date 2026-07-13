@@ -1,0 +1,147 @@
+/* Casa Vicente — instrument detail page */
+
+.instrument-header {
+  background: rgba(28,17,10,.9);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line-dark);
+}
+.detail-back { color: var(--on-dark-dim); transition: color .3s; }
+.detail-back:hover { color: var(--on-dark); }
+
+.instrument-hero {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(360px, 48%) 1fr;
+  background: var(--nogal);
+}
+.instrument-hero-media {
+  min-height: 100svh;
+  padding: clamp(110px,12vw,156px) clamp(28px,5vw,80px) clamp(48px,6vw,88px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background: var(--marfil-2);
+  overflow: hidden;
+}
+.instrument-hero-media img {
+  width: 100%;
+  height: 100%;
+  max-height: 780px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.instrument-hero-copy {
+  padding: clamp(132px,14vw,184px) clamp(28px,6vw,96px) clamp(64px,8vw,112px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.instrument-hero-copy h1,
+.instrument-prose-grid h2,
+.instrument-wood-copy h2,
+.instrument-commission h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  line-height: 1.04;
+}
+.instrument-hero-copy h1 {
+  font-size: clamp(44px,5.7vw,84px);
+  margin: var(--s3) 0 var(--s4);
+  max-width: 12ch;
+  color: #fff;
+}
+.instrument-hero-copy h1 em,
+.instrument-prose-grid h2 em,
+.instrument-wood-copy h2 em { color: var(--naranja-bright); font-style: italic; }
+.instrument-intro { max-width: 50ch; color: var(--on-dark-dim); }
+.instrument-purchase {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: var(--s4);
+  margin-top: var(--s5);
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line-dark);
+}
+.instrument-price { font-family: var(--display); font-size: clamp(30px,3vw,44px); color: #fff; }
+.instrument-availability { margin-top: 5px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--on-dark-faint); }
+.instrument-maker {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-top: var(--s5);
+  width: fit-content;
+}
+.instrument-maker img { width: 52px; height: 52px; object-fit: cover; border-radius: 50%; }
+.instrument-maker span { display: flex; flex-direction: column; }
+.instrument-maker small { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--on-dark-faint); }
+.instrument-maker strong { font-family: var(--display); font-size: 20px; font-weight: 500; color: var(--on-dark); }
+
+.instrument-voice { background: var(--nogal-2); padding: clamp(88px,12vw,152px) 0; }
+.instrument-prose-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(48px,8vw,128px); align-items: start; }
+.instrument-prose-grid h2 { margin-top: var(--s3); font-size: clamp(36px,4.7vw,66px); }
+.instrument-copy { color: var(--on-dark-dim); max-width: 52ch; }
+.instrument-copy p + p { margin-top: var(--s4); }
+
+.instrument-specs { background: var(--paper); color: var(--on-light); padding: clamp(88px,11vw,144px) 0; }
+.spec-list { margin-top: var(--s5); border-top: 1px solid var(--line-light); }
+.spec-row {
+  display: grid;
+  grid-template-columns: minmax(140px, .7fr) 1.3fr;
+  gap: var(--s4);
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-light);
+}
+.spec-row span { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--on-light-dim); }
+.spec-row strong { font-weight: 500; }
+
+.instrument-wood { display: grid; grid-template-columns: 1.15fr .85fr; min-height: 78vh; background: var(--nogal); }
+.instrument-wood-image { min-height: 60vh; overflow: hidden; }
+.instrument-wood-image img { width: 100%; height: 100%; object-fit: cover; }
+.instrument-wood-copy { padding: clamp(64px,8vw,120px); display: flex; flex-direction: column; justify-content: center; }
+.instrument-wood-copy h2 { margin: var(--s3) 0 var(--s4); font-size: clamp(34px,4.2vw,60px); }
+.instrument-wood-copy p:last-child { color: var(--on-dark-dim); max-width: 44ch; }
+
+.instrument-commission { background: var(--marfil); color: var(--on-light); text-align: center; padding: clamp(96px,14vw,190px) var(--gutter); }
+.instrument-commission h2 { font-size: clamp(38px,5.6vw,80px); max-width: 18ch; margin: var(--s4) auto; }
+.instrument-commission h2 em { color: var(--naranja-deep); font-style: italic; }
+.instrument-commission > p { max-width: 46ch; margin: 0 auto var(--s5); color: var(--on-light-dim); }
+.instrument-note { margin-top: var(--s4); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--on-light-dim); }
+
+.instrument-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding: var(--s5) var(--gutter);
+  background: var(--nogal);
+  color: var(--on-dark-faint);
+  border-top: 1px solid var(--line-dark);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+.instrument-footer .brand-mark { width: 116px; }
+.instrument-footer a:last-child { color: var(--on-dark-dim); }
+
+@media (max-width: 900px) {
+  .instrument-hero,
+  .instrument-prose-grid,
+  .instrument-wood { grid-template-columns: 1fr; }
+  .instrument-hero-media { min-height: 64svh; padding-top: 104px; }
+  .instrument-hero-copy { padding-top: var(--s6); }
+  .instrument-wood-copy { min-height: 52vh; }
+}
+
+@media (max-width: 620px) {
+  .detail-back { display: none; }
+  .instrument-header { justify-content: space-between; }
+  .instrument-hero-media { min-height: 58svh; padding-inline: var(--s3); }
+  .instrument-hero-copy { padding: var(--s6) var(--gutter) var(--s7); }
+  .instrument-hero-copy h1 { font-size: clamp(40px,12vw,58px); }
+  .instrument-purchase { align-items: flex-start; flex-direction: column; }
+  .instrument-purchase .btn { width: 100%; justify-content: center; }
+  .spec-row { grid-template-columns: 1fr; gap: 6px; }
+  .instrument-footer { align-items: flex-start; flex-direction: column; }
+}
