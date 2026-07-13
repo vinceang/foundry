@@ -1,0 +1,151 @@
+---
+import "../styles/global.css";
+import { strings, type Locale } from "../i18n";
+import mark from "../assets/mark.svg?raw";
+
+interface Props { locale: Locale; slug: string }
+const { locale, slug } = Astro.props;
+const t = strings[locale];
+const home = locale === "en" ? "/" : "/es/";
+
+const people = t.luthiers.people;
+const idx = people.findIndex((p) => p.slug === slug);
+const person = people[idx];
+const page = t.luthierPages.pages[slug as keyof typeof t.luthierPages.pages];
+const prev = people[(idx + people.length - 1) % people.length];
+const next = people[(idx + 1) % people.length];
+const guitar = t.collection.guitars.find((g) => g.maker === person.name);
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{person.name} — VICENTE · Lutier</title>
+    <meta name="description" content={`${person.name}, ${person.role}. ${person.spec}. Casa Vicente, Granada.`} />
+    <link rel="alternate" hreflang="en" href={`/luthier/${slug}/`} />
+    <link rel="alternate" hreflang="es" href={`/es/luthier/${slug}/`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500;1,6..96,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand-mark" href={home} set:html={mark} aria-label="Vicente · Lutier" />
+      <div class="header-right">
+        <nav class="nav-links">
+          <a href={`${home}#guitarras`}>{t.nav.guitars}</a>
+          <a href={`${home}#familia`}>{t.nav.family}</a>
+          <a href={`${home}#taller`}>{t.nav.workshop}</a>
+          <a href={`${home}#oficio`}>{t.nav.process}</a>
+          <a href={`${home}#encargo`}>{t.nav.commission}</a>
+        </nav>
+        <div class="lang-toggle small-caps" aria-label="Language">
+          <a href={`/luthier/${slug}/`} class={locale === "en" ? "active" : ""} lang="en">EN</a>
+          <span class="sep">·</span>
+          <a href={`/es/luthier/${slug}/`} class={locale === "es" ? "active" : ""} lang="es">ES</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- LUTHIER HERO -->
+    <section class="luthier-hero">
+      <div class="luthier-hero-media">
+        <div class="arch-frame reveal"><img src={person.img} alt={person.name} /></div>
+      </div>
+      <div class="luthier-hero-body">
+        <p class="label reveal">{person.role} · {person.spec}</p>
+        <h1 class="reveal" style="--i:1">{person.name}</h1>
+        <blockquote class="luthier-quote reveal" style="--i:2">“{page.quote}”</blockquote>
+        <div class="luthier-bio reveal" style="--i:3">
+          {page.bio.map((p) => <p>{p}</p>)}
+        </div>
+        <div class="luthier-facts reveal" style="--i:4">
+          {page.facts.map(([v, l]) => (
+            <div class="f"><span class="fv">{v}</span><span class="fl">{l}</span></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- HIS WORK -->
+    <section class="luthier-works">
+      <div class="container">
+        <p class="label on-light reveal">{t.luthierPages.hisWork}</p>
+        <div class="luthier-works-grid" style="margin-top: var(--s6)">
+          {guitar && (
+            <article class="guitar-card reveal">
+              <div class="guitar-figure"><img src={guitar.img} alt={guitar.name} loading="lazy" /></div>
+              <div class="guitar-info">
+                <div class="gname">{guitar.name}</div>
+                <div class="gspec">{guitar.spec}</div>
+                <div class="gprice">{guitar.price}</div>
+              </div>
+            </article>
+          )}
+          <div>
+            <p class="note reveal" style="--i:1">{t.luthierPages.signedLabel}</p>
+            <div class="etiqueta-img reveal" style="--i:2; margin-top: var(--s4); max-width: 560px">
+              <img src="/etiqueta.png" alt={t.etiqueta.alt} loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <nav class="luthier-nav" aria-label="Other luthiers">
+      <a href={`${home}luthier/${prev.slug}/`}>
+        <span class="dir">← {t.luthierPages.prevL}</span>
+        <span class="who">{prev.name}</span>
+      </a>
+      <a href={`${home}luthier/${next.slug}/`}>
+        <span class="dir">{t.luthierPages.nextL} →</span>
+        <span class="who">{next.name}</span>
+      </a>
+    </nav>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <span class="ghost" aria-hidden="true">Vicente</span>
+      <div class="container">
+        <div class="footer-base" style="margin-top:0; padding-top:0; border-top:none">
+          <span><i class="seed" aria-hidden="true"></i>{t.footer.base[0]}</span>
+          <span class="script" style="text-transform:none; letter-spacing:.02em">{t.footer.base[1]}</span>
+          <span><a href={home}>← {t.luthierPages.backHome}</a></span>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+
+      const header = document.querySelector(".site-header");
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle("scrolled", y > 60);
+        if (y > 260 && y > lastY + 4) header.classList.add("hidden");
+        else if (y < lastY - 4 || y <= 260) header.classList.remove("hidden");
+        lastY = y;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>

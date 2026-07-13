@@ -365,3 +365,45 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
 .footer-base { display: flex; justify-content: space-between; margin-top: var(--s7); padding-top: var(--s4); border-top: 1px solid var(--line-dark); font-size: 12px; letter-spacing: .16em; color: var(--on-dark-faint); text-transform: uppercase; flex-wrap: wrap; gap: var(--s2); position: relative; }
 .footer-base .seed { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--seed-garnet); margin-right: 10px; }
 @media (max-width: 720px){ .footer-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   LUTHIER DETAIL PAGE
+   ============================================================ */
+.luthier-hero { background: var(--nogal); color: var(--on-dark); display: grid; grid-template-columns: minmax(320px, 42%) 1fr; min-height: 100svh; }
+.luthier-hero-media { position: relative; display: flex; align-items: flex-end; justify-content: center; padding: clamp(96px,12vh,150px) clamp(24px,3.5vw,56px) 0; background: var(--nogal-2); }
+.luthier-hero-media .arch-frame { width: 100%; max-width: 470px; aspect-ratio: 3/4.1; border-radius: var(--arch); overflow: hidden; border: 1px solid var(--line-dark); position: relative; }
+.luthier-hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.luthier-hero-media .arch-frame::after { content: ""; position: absolute; inset: 0; border-radius: var(--arch); background: linear-gradient(180deg, transparent 70%, rgba(28,17,10,.55) 100%); }
+.luthier-hero-body { display: flex; flex-direction: column; justify-content: center; padding: clamp(110px,13vh,160px) clamp(32px,5.5vw,96px) clamp(56px,7vw,90px); }
+.luthier-hero-body h1 { font-family: var(--display); font-weight: 500; font-size: clamp(40px,5.2vw,78px); line-height: 1.02; color: #fff; margin: var(--s3) 0 var(--s4); }
+.luthier-quote { border-left: 2px solid var(--naranja); padding-left: var(--s3); font-family: var(--display); font-style: italic; font-size: clamp(19px,1.8vw,25px); line-height: 1.45; max-width: 40ch; margin-bottom: var(--s5); }
+.luthier-bio p { color: var(--on-dark-dim); max-width: 54ch; margin-bottom: var(--s3); }
+.luthier-facts { display: flex; gap: var(--s6); margin-top: var(--s4); flex-wrap: wrap; }
+.luthier-facts .f { display: flex; flex-direction: column; gap: 5px; }
+.luthier-facts .fv { font-family: var(--display); font-size: clamp(19px,1.9vw,26px); color: #fff; }
+.luthier-facts .fl { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--on-dark-faint); }
+@media (max-width: 860px){ .luthier-hero { grid-template-columns: 1fr; } .luthier-hero-media { padding-top: 110px; } }
+
+.luthier-works { background: var(--paper); color: var(--on-light); padding: clamp(80px,10vw,132px) 0; }
+.luthier-works-grid { display: grid; grid-template-columns: minmax(0,420px) 1fr; gap: clamp(32px,5vw,88px); align-items: center; }
+@media (max-width: 820px){ .luthier-works-grid { grid-template-columns: 1fr; } }
+.luthier-works .note { font-family: var(--display); font-style: italic; font-size: clamp(22px,2.2vw,30px); line-height: 1.4; max-width: 26ch; }
+.luthier-works .etiqueta-img { border: 1px solid var(--line-light); }
+.luthier-works .etiqueta-img img { width: 100%; display: block; }
+
+.luthier-nav { background: var(--nogal); border-top: 1px solid var(--line-dark); display: grid; grid-template-columns: 1fr 1fr; }
+.luthier-nav a { padding: clamp(28px,3.5vw,46px) var(--gutter); display: flex; flex-direction: column; gap: 8px; transition: background .5s var(--ease); }
+.luthier-nav a:hover { background: var(--nogal-2); }
+.luthier-nav .dir { font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--on-dark-faint); }
+.luthier-nav .who { font-family: var(--display); font-style: italic; font-size: clamp(19px,2vw,26px); color: var(--on-dark); }
+.luthier-nav a:last-child { text-align: right; border-left: 1px solid var(--line-dark); align-items: flex-end; }
+
+/* home: la etiqueta band */
+.etiqueta { background: var(--marfil); color: var(--on-light); padding: clamp(80px,10vw,136px) 0; }
+.etiqueta-grid { display: grid; grid-template-columns: 1fr minmax(0,560px); gap: clamp(32px,5vw,88px); align-items: center; }
+@media (max-width: 820px){ .etiqueta-grid { grid-template-columns: 1fr; } }
+.etiqueta h2 { font-family: var(--display); font-weight: 500; font-size: clamp(30px,3.8vw,54px); line-height: 1.08; margin: var(--s3) 0 var(--s4); }
+.etiqueta h2 em { font-style: italic; color: var(--naranja-deep); }
+.etiqueta p { color: var(--on-light-dim); max-width: 44ch; }
+.etiqueta-photo { border: 1px solid var(--line-light); box-shadow: 0 24px 60px -24px rgba(36,26,18,.35); }
+.etiqueta-photo img { width: 100%; display: block; }

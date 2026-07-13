@@ -1,0 +1,12 @@
+---
+import LuthierPage from "../../components/LuthierPage.astro";
+import { strings } from "../../i18n";
+
+export function getStaticPaths() {
+  return strings.en.luthiers.people.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+---
+
+<LuthierPage locale="en" slug={slug!} />

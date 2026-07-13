@@ -111,14 +111,14 @@ const otherHome = other === "en" ? "/" : "/es/";
         </div>
         <div class="luthiers-grid">
           {t.luthiers.people.map((p, i) => (
-            <div class="luthier-card reveal" style={`--i:${i}`}>
+            <a class="luthier-card reveal" style={`--i:${i}`} href={`${home}luthier/${p.slug}/`}>
               <div class="luthier-figure"><img src={p.img} alt={p.name} loading="lazy" /></div>
               <div class="luthier-info">
                 <div class="role">{p.role}</div>
                 <div class="name">{p.name}</div>
-                <div class="spec">{p.spec}</div>
+                <div class="spec">{p.spec} · <em class="script">{t.luthiers.meet} {p.name.split(" ")[0]} →</em></div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </div>
@@ -146,6 +146,20 @@ const otherHome = other === "en" ? "/" : "/es/";
               </div>
             </article>
           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- LA ETIQUETA -->
+    <section class="etiqueta">
+      <div class="container etiqueta-grid">
+        <div>
+          <p class="label on-light reveal">{t.etiqueta.label}</p>
+          <h2 class="reveal" style="--i:1">{t.etiqueta.h2a}<em>{t.etiqueta.h2accent}</em>{t.etiqueta.h2b}</h2>
+          <p class="reveal" style="--i:2">{t.etiqueta.p}</p>
+        </div>
+        <div class="etiqueta-photo reveal" style="--i:1">
+          <img src="/etiqueta.png" alt={t.etiqueta.alt} loading="lazy" />
         </div>
       </div>
     </section>

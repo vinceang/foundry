@@ -52,11 +52,45 @@ export const strings = {
       h2accent: "bench",
       h2b: ".",
       intro: "Every Vicente guitar is carried start to finish by the hands of one family — and signed inside the soundhole by the man who built it.",
+      meet: "Meet",
       people: [
-        { img: "/luthier-cesar.png", role: "Master luthier", name: "Cesar Vicente", spec: "Soundboards, voicing & final polish" },
-        { img: "/luthier-leonardo.png", role: "Luthier · the elder son", name: "Leonardo Vicente", spec: "Rosettes, marquetry & inlay" },
-        { img: "/luthier-lorenzo.png", role: "Luthier · the younger son", name: "Lorenzo Vicente", spec: "Sides, bending & necks" },
+        { slug: "cesar", img: "/luthier-cesar.png", role: "Master luthier", name: "Cesar Vicente", spec: "Soundboards, voicing & final polish" },
+        { slug: "leonardo", img: "/luthier-leonardo.png", role: "Luthier · the elder son", name: "Leonardo Vicente", spec: "Rosettes, marquetry & inlay" },
+        { slug: "lorenzo", img: "/luthier-lorenzo.png", role: "Luthier · the younger son", name: "Lorenzo Vicente", spec: "Sides, bending & necks" },
       ],
+    },
+    luthierPages: {
+      backHome: "Back to the workshop",
+      prevL: "Previous luthier",
+      nextL: "Next luthier",
+      hisWork: "His work",
+      signedLabel: "Every guitar he builds carries the house label inside the soundhole, signed in his hand.",
+      pages: {
+        cesar: {
+          quote: "The wood tells you what it wants to be. My job is to not interrupt.",
+          bio: [
+            "Cesar took his place at the bench at fourteen, sweeping shavings for his father Miguel and sharpening the planes before he was allowed to touch one. He built his first guitar at nineteen. His father made him give it away — a guitar you keep, he said, teaches you nothing.",
+            "Forty years on, he tunes every soundboard that leaves the house — shaving, tapping, listening, shaving again — and lays on every final coat of shellac by palm. Guitarists who visit the workshop are usually surprised by the silence. Cesar is listening.",
+          ],
+          facts: [ ["1975", "At the bench since"], ["Voicing", "The tap, the ear"], ["La Clásica", "His guitar"] ],
+        },
+        leonardo: {
+          quote: "A rosette is a thousand decisions around an absence.",
+          bio: [
+            "The elder son studied marquetry before he studied guitars — a year with a furniture restorer in the Albaicín taught his hands the patience his father's bench would demand. His rosettes are drawn from the tilework of the Alhambra, redrawn until they belong to a guitar instead of a wall.",
+            "No two of his mosaics are alike; the pattern of each is logged in the house book beside the name of the guitarist who commissioned it. He is the quietest of the three, and the one whose work is photographed most.",
+          ],
+          facts: [ ["2006", "At the bench since"], ["Mosaic", "Rosettes & inlay"], ["La Negra", "His guitar"] ],
+        },
+        lorenzo: {
+          quote: "I play flamenco badly enough to know exactly what a guitar must forgive.",
+          bio: [
+            "The younger son is the only one of the three who performs — badly, he insists, and on purpose: a builder who plays knows what a dropped golpe feels like through the top, where a thumb lands, what a guitar must forgive. His flamencas are built for working players.",
+            "He bends every side in the house over the hot iron, by hand and by feel, the way his grandfather did — no molds, no forms, the wood answering the heat. The minute it relaxes, he says, the shape is won.",
+          ],
+          facts: [ ["2009", "At the bench since"], ["El hierro", "Sides & necks"], ["La Blanca", "His guitar"] ],
+        },
+      },
     },
     collection: {
       label: "The guitars · Las guitarras",
@@ -70,6 +104,14 @@ export const strings = {
         { img: "/guitar-blanca.png", name: "La Blanca", spec: "Flamenca · spruce & Spanish cypress", price: "€9,600", maker: "Lorenzo Vicente" },
         { img: "/guitar-negra.png", name: "La Negra", spec: "Flamenca · spruce & rosewood", price: "€11,200", maker: "Leonardo Vicente" },
       ],
+    },
+    etiqueta: {
+      label: "The label · La etiqueta",
+      h2a: "Signed on the ",
+      h2accent: "inside",
+      h2b: ".",
+      p: "Every guitar carries the house label inside the soundhole — the family mark, the year, its number in the book, and the hand of the man who built it. Nothing leaves without a name.",
+      alt: "The Vicente house label seen through the soundhole, behind the strings",
     },
     process: {
       label: "The craft · El oficio",
@@ -150,11 +192,45 @@ export const strings = {
       h2accent: "banco",
       h2b: ".",
       intro: "Cada guitarra Vicente pasa de principio a fin por las manos de una sola familia — y va firmada por dentro de la boca por el hombre que la construyó.",
+      meet: "Conocer a",
       people: [
-        { img: "/luthier-cesar.png", role: "Maestro lutier", name: "Cesar Vicente", spec: "Tapas, afinación y acabado" },
-        { img: "/luthier-leonardo.png", role: "Lutier · el hijo mayor", name: "Leonardo Vicente", spec: "Rosetas, marquetería e incrustación" },
-        { img: "/luthier-lorenzo.png", role: "Lutier · el hijo menor", name: "Lorenzo Vicente", spec: "Aros, doblado y mástiles" },
+        { slug: "cesar", img: "/luthier-cesar.png", role: "Maestro lutier", name: "Cesar Vicente", spec: "Tapas, afinación y acabado" },
+        { slug: "leonardo", img: "/luthier-leonardo.png", role: "Lutier · el hijo mayor", name: "Leonardo Vicente", spec: "Rosetas, marquetería e incrustación" },
+        { slug: "lorenzo", img: "/luthier-lorenzo.png", role: "Lutier · el hijo menor", name: "Lorenzo Vicente", spec: "Aros, doblado y mástiles" },
       ],
+    },
+    luthierPages: {
+      backHome: "Volver al taller",
+      prevL: "Lutier anterior",
+      nextL: "Lutier siguiente",
+      hisWork: "Su obra",
+      signedLabel: "Cada guitarra que construye lleva la etiqueta de la casa por dentro de la boca, firmada de su mano.",
+      pages: {
+        cesar: {
+          quote: "La madera te dice lo que quiere ser. Mi trabajo es no interrumpir.",
+          bio: [
+            "Cesar ocupó su sitio en el banco a los catorce años, barriendo virutas para su padre Miguel y afilando los cepillos antes de que le dejaran tocar uno. Construyó su primera guitarra a los diecinueve. Su padre le hizo regalarla: una guitarra que te quedas, decía, no te enseña nada.",
+            "Cuarenta años después, él afina cada tapa que sale de la casa — rebajando, golpeando, escuchando, rebajando otra vez — y tiende cada capa final de goma laca con la palma. A los guitarristas que visitan el taller les suele sorprender el silencio. Cesar está escuchando.",
+          ],
+          facts: [ ["1975", "En el banco desde"], ["La afinación", "El golpe, el oído"], ["La Clásica", "Su guitarra"] ],
+        },
+        leonardo: {
+          quote: "Una roseta son mil decisiones alrededor de un vacío.",
+          bio: [
+            "El hijo mayor estudió marquetería antes que guitarras: un año con un restaurador de muebles del Albaicín le enseñó a las manos la paciencia que luego exigiría el banco de su padre. Sus rosetas nacen de los alicatados de la Alhambra, redibujados hasta que pertenecen a una guitarra y no a un muro.",
+            "No hay dos mosaicos suyos iguales; el patrón de cada uno queda anotado en el libro de la casa junto al nombre del guitarrista que lo encargó. Es el más callado de los tres, y el que más fotografían.",
+          ],
+          facts: [ ["2006", "En el banco desde"], ["El mosaico", "Rosetas e incrustación"], ["La Negra", "Su guitarra"] ],
+        },
+        lorenzo: {
+          quote: "Toco el flamenco lo bastante mal como para saber qué debe perdonar una guitarra.",
+          bio: [
+            "El hijo menor es el único de los tres que toca en público — mal, insiste, y a propósito: un constructor que toca sabe lo que se siente un golpe fallado a través de la tapa, dónde cae un pulgar, qué debe perdonar una guitarra. Sus flamencas están hechas para guitarristas que trabajan.",
+            "Él dobla todos los aros de la casa sobre el hierro caliente, a mano y a puro tacto, como lo hacía su abuelo: sin moldes, sin formas, la madera respondiendo al calor. En el momento en que cede, dice, la forma está ganada.",
+          ],
+          facts: [ ["2009", "En el banco desde"], ["El hierro", "Aros y mástiles"], ["La Blanca", "Su guitarra"] ],
+        },
+      },
     },
     collection: {
       label: "Las guitarras · The guitars",
@@ -168,6 +244,14 @@ export const strings = {
         { img: "/guitar-blanca.png", name: "La Blanca", spec: "Flamenca · abeto y ciprés español", price: "9.600 €", maker: "Lorenzo Vicente" },
         { img: "/guitar-negra.png", name: "La Negra", spec: "Flamenca · abeto y palosanto", price: "11.200 €", maker: "Leonardo Vicente" },
       ],
+    },
+    etiqueta: {
+      label: "La etiqueta · The label",
+      h2a: "Firmada por ",
+      h2accent: "dentro",
+      h2b: ".",
+      p: "Cada guitarra lleva la etiqueta de la casa por dentro de la boca: la marca de la familia, el año, su número en el libro y la mano del que la construyó. Nada sale sin nombre.",
+      alt: "La etiqueta de la casa Vicente vista a través de la boca, tras las cuerdas",
     },
     process: {
       label: "El oficio · The craft",
