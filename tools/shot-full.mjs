@@ -35,7 +35,7 @@ await page.evaluate(async () => {
   }
   window.scrollTo({ top: 0, behavior: 'instant' });
 });
-await page.waitForTimeout(1800); // let reveal transitions settle
+await page.waitForTimeout(2800); // let reveal transitions fully settle (incl. staggered delays)
 
 await page.screenshot({ path: resolve(out), fullPage: true });
 await browser.close();

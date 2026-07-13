@@ -1,0 +1,251 @@
+---
+import "../styles/global.css";
+import { strings, type Locale } from "../i18n";
+import mark from "../assets/mark.svg?raw";
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const t = strings[locale];
+const other = locale === "en" ? "es" : "en";
+const home = locale === "en" ? "/" : "/es/";
+const otherHome = other === "en" ? "/" : "/es/";
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{t.title}</title>
+    <meta name="description" content={t.description} />
+    <link rel="alternate" hreflang="en" href="/" />
+    <link rel="alternate" hreflang="es" href="/es/" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand-mark" href={home} set:html={mark} aria-label="Vicente · Lutier" />
+      <div class="header-right">
+        <nav class="nav-links">
+          <a href="#guitarras">{t.nav.guitars}</a>
+          <a href="#familia">{t.nav.family}</a>
+          <a href="#taller">{t.nav.workshop}</a>
+          <a href="#oficio">{t.nav.process}</a>
+          <a href="#encargo">{t.nav.commission}</a>
+        </nav>
+        <div class="lang-toggle small-caps" aria-label="Language">
+          <a href="/" class={locale === "en" ? "active" : ""} lang="en">EN</a>
+          <span class="sep">·</span>
+          <a href="/es/" class={locale === "es" ? "active" : ""} lang="es">ES</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-media">
+        <img src="/guitar-loop-poster.jpg" alt="Macro of a handmade Spanish classical guitar in warm light" />
+        <video class="hero-video" muted loop playsinline preload="none" poster="/guitar-loop-poster.jpg" aria-hidden="true" data-src="/guitar-loop.mp4"></video>
+      </div>
+      <div class="hero-est reveal" style="--i:4">
+        <span class="script">Vicente</span>
+        {t.hero.est}
+      </div>
+      <div class="hero-content container">
+        <h1 class="reveal" style="--i:0">{t.hero.h1a}<em>{t.hero.h1accent}</em>{t.hero.h1b}</h1>
+        <p class="hero-sub reveal" style="--i:1">{t.hero.sub}</p>
+        <div class="hero-meta reveal" style="--i:2">
+          {t.hero.meta.map(([k, v]) => <span>{k} <b>{v}</b></span>)}
+        </div>
+      </div>
+      <div class="scroll-cue">{t.hero.scroll}</div>
+    </section>
+
+    <!-- MANIFESTO -->
+    <section class="manifesto">
+      <span class="ghost" aria-hidden="true">{t.manifesto.ghost}</span>
+      <div class="container">
+        <p class="manifesto-lead reveal">{t.manifesto.lead1}<span class="accent">{t.manifesto.leadAccent}</span>{t.manifesto.lead2}</p>
+        <div class="manifesto-body">
+          <p class="reveal" style="--i:0">{t.manifesto.p1}</p>
+          <p class="reveal" style="--i:1">{t.manifesto.p2}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKSHOP / LINEAGE -->
+    <section class="lineage" id="taller">
+      <div class="lineage-grid">
+        <div class="lineage-media"><img src="/workshop.png" alt="The Vicente workshop in Granada, soundboards hanging from the beams" style="object-position: 30% center" /></div>
+        <div class="lineage-text">
+          <p class="label reveal">{t.lineage.label}</p>
+          <h2 class="reveal" style="--i:1">{t.lineage.h2a}<em>{t.lineage.h2accent}</em>{t.lineage.h2b}</h2>
+          <blockquote class="pullquote reveal" style="--i:2">{t.lineage.quote}</blockquote>
+          <p class="reveal" style="--i:3">{t.lineage.p}</p>
+          <div class="lineage-stats reveal" style="--i:4">
+            {t.lineage.stats.map(([num, lab]) => (
+              <div class="stat"><span class="num">{num}</span><span class="lab">{lab}</span></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LUTHIERS -->
+    <section class="luthiers" id="familia">
+      <span class="ghost" aria-hidden="true">{t.luthiers.ghost}</span>
+      <div class="container">
+        <div class="luthiers-head">
+          <div>
+            <p class="label reveal">{t.luthiers.label}</p>
+            <h2 class="reveal" style="--i:1; margin-top: var(--s3)">{t.luthiers.h2a}<em>{t.luthiers.h2accent}</em>{t.luthiers.h2b}</h2>
+          </div>
+          <p class="reveal" style="--i:2">{t.luthiers.intro}</p>
+        </div>
+        <div class="luthiers-grid">
+          {t.luthiers.people.map((p, i) => (
+            <div class="luthier-card reveal" style={`--i:${i}`}>
+              <div class="luthier-figure"><img src={p.img} alt={p.name} loading="lazy" /></div>
+              <div class="luthier-info">
+                <div class="role">{p.role}</div>
+                <div class="name">{p.name}</div>
+                <div class="spec">{p.spec}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section class="collection" id="guitarras">
+      <div class="container">
+        <div class="collection-head">
+          <div>
+            <p class="label on-light reveal">{t.collection.label}</p>
+            <h2 class="reveal" style="--i:1; margin-top: var(--s3)">{t.collection.h2a}<em>{t.collection.h2accent}</em>{t.collection.h2b}</h2>
+          </div>
+          <p class="reveal" style="--i:2">{t.collection.intro}</p>
+        </div>
+        <div class="collection-grid">
+          {t.collection.guitars.map((g, i) => (
+            <article class="guitar-card reveal" style={`--i:${i}`}>
+              <div class="guitar-figure"><img src={g.img} alt={`${g.name} — ${g.spec}`} loading="lazy" /></div>
+              <div class="guitar-info">
+                <div class="gname">{g.name}</div>
+                <div class="gspec">{g.spec}</div>
+                <div class="gprice">{g.price}</div>
+                <a class="gmaker" href="#familia">{t.collection.madeBy} {g.maker}</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process" id="oficio">
+      <svg class="laceria" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+        <path class="echo" d="M0,88 L90,22 180,88 270,22 360,88 450,22 540,88 630,22 720,88 810,22 900,88 990,22 1080,88 1170,22 1260,88 1350,22 1440,88" />
+        <path d="M0,22 L90,88 180,22 270,88 360,22 450,88 540,22 630,88 720,22 810,88 900,22 990,88 1080,22 1170,88 1260,22 1350,88 1440,22" />
+      </svg>
+      <div class="container">
+        <div class="process-head">
+          <p class="label reveal" style="justify-content:center">{t.process.label}</p>
+          <h2 class="reveal" style="--i:1; margin-top: var(--s3)">{t.process.h2a}<em>{t.process.h2accent}</em>{t.process.h2b}</h2>
+        </div>
+        <div class="process-steps">
+          {t.process.steps.map((s, i) => (
+            <div class="step reveal" style={`--i:${i}`} data-ghost={String(i + 1)}>
+              <span class="n">{s.n}</span>
+              <h3>{s.jp}</h3>
+              <div class="en">{s.en}</div>
+              <p>{s.p}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- COMMISSION -->
+    <section class="commission" id="encargo">
+      <span class="ghost" aria-hidden="true">{t.commission.ghost}</span>
+      <p class="label on-light reveal" style="justify-content:center; position:relative">{t.commission.label}</p>
+      <h2 class="reveal" style="--i:1">{t.commission.h2a}<em>{t.commission.h2accent}</em>{t.commission.h2b}</h2>
+      <p class="reveal" style="--i:2">{t.commission.p}</p>
+      <a class="btn reveal" style="--i:3" href="#"><span>{t.commission.cta} →</span></a>
+      <p class="commission-note reveal" style="--i:4">{t.commission.note}</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <span class="ghost" aria-hidden="true">Vicente</span>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a class="brand-mark" href={home} set:html={mark} aria-label="Vicente · Lutier" />
+            <p>{t.footer.blurb}</p>
+          </div>
+          <div class="footer-col">
+            <h4>{t.footer.colGuitars}</h4>
+            {t.collection.guitars.map((g) => <a href="#guitarras">{g.name}</a>)}
+          </div>
+          <div class="footer-col">
+            <h4>{t.footer.colHouse}</h4>
+            <a href="#familia">{t.footer.houseLinks[0]}</a>
+            <a href="#taller">{t.footer.houseLinks[1]}</a>
+            <a href="#oficio">{t.footer.houseLinks[2]}</a>
+            <a href="#">{t.footer.houseLinks[3]}</a>
+          </div>
+        </div>
+        <div class="footer-base">
+          <span><i class="seed" aria-hidden="true"></i>{t.footer.base[0]}</span>
+          <span class="script" style="text-transform:none; letter-spacing:.02em">{t.footer.base[1]}</span>
+          <span>{t.footer.base[2]}</span>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      document.documentElement.classList.add("js");
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll(".reveal, .laceria").forEach((el) => io.observe(el));
+
+      // hero film: only for motion-tolerant users; poster is the truth
+      const hv = document.querySelector(".hero-video");
+      if (hv && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        hv.src = hv.dataset.src;
+        hv.addEventListener("canplay", () => { hv.classList.add("is-playing"); hv.play().catch(() => {}); });
+        hv.load();
+      }
+
+      // header: hide going down, return coming up, solid bar once scrolled
+      const header = document.querySelector(".site-header");
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle("scrolled", y > 60);
+        if (y > 260 && y > lastY + 4) header.classList.add("hidden");
+        else if (y < lastY - 4 || y <= 260) header.classList.remove("hidden");
+        lastY = y;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>
