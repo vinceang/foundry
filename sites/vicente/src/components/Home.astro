@@ -9,7 +9,6 @@ const t = strings[locale];
 const other = locale === "en" ? "es" : "en";
 const home = locale === "en" ? "/" : "/es/";
 const otherHome = other === "en" ? "/" : "/es/";
-const conciertoHref = locale === "en" ? "/guitars/concierto/" : "/es/guitarras/concierto/";
 ---
 
 <!doctype html>
@@ -17,6 +16,8 @@ const conciertoHref = locale === "en" ? "/guitars/concierto/" : "/es/guitarras/c
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{t.title}</title>
     <meta name="description" content={t.description} />
     <link rel="alternate" hreflang="en" href="/" />
@@ -138,13 +139,9 @@ const conciertoHref = locale === "en" ? "/guitars/concierto/" : "/es/guitarras/c
         <div class="collection-grid">
           {t.collection.guitars.map((g, i) => (
             <article class="guitar-card reveal" style={`--i:${i}`}>
-              {i === 0 ? (
-                <a class="guitar-figure" href={conciertoHref} aria-label={`${g.name} — ${g.spec}`}><img src={g.img} alt={`${g.name} — ${g.spec}`} loading="lazy" /></a>
-              ) : (
-                <div class="guitar-figure"><img src={g.img} alt={`${g.name} — ${g.spec}`} loading="lazy" /></div>
-              )}
+              <div class="guitar-figure"><img src={g.img} alt={`${g.name} — ${g.spec}`} loading="lazy" /></div>
               <div class="guitar-info">
-                {i === 0 ? <a class="gname" href={conciertoHref}>{g.name}</a> : <div class="gname">{g.name}</div>}
+                <div class="gname">{g.name}</div>
                 <div class="gspec">{g.spec}</div>
                 <div class="gprice">{g.price}</div>
                 <a class="gmaker" href="#familia">{t.collection.madeBy} {g.maker}</a>
@@ -214,7 +211,7 @@ const conciertoHref = locale === "en" ? "/guitars/concierto/" : "/es/guitarras/c
           </div>
           <div class="footer-col">
             <h4>{t.footer.colGuitars}</h4>
-            {t.collection.guitars.map((g, i) => i === 0 ? <a href={conciertoHref}>{g.name}</a> : <a href="#guitarras">{g.name}</a>)}
+            {t.collection.guitars.map((g) => <a href="#guitarras">{g.name}</a>)}
           </div>
           <div class="footer-col">
             <h4>{t.footer.colHouse}</h4>

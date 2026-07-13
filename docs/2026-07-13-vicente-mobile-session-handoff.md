@@ -1,8 +1,23 @@
 # Casa Vicente mobile refinement session handoff
 
 **Date:** 2026-07-13  
-**Branch:** `fix/vicente-mobile-session`  
-**Status:** In progress — more mobile review notes are expected during this session.
+**Branch:** `fix/vicente-mobile-session` (merged)  
+**Status:** Closed — resolved on desktop review, 2026-07-13.
+
+> **Post-merge resolution (desktop session, 2026-07-13):**
+> - **Change 01 (hero metadata/est mark) — KEPT.** Folded from the temporary
+>   `mobile-session.css` into `global.css` and the temp file removed. A
+>   deepened phone-width hero scrim was added alongside it: the sub-copy
+>   crossed the bright soundboard at ≤720px and needed a real gradient, not
+>   a text-shadow.
+> - **Change 02 (Concierto detail page) — REMOVED** per Vince's review
+>   ("not fond of the detail section"). `InstrumentDetail.astro`,
+>   `instrument-detail.css` and both routes deleted; the La Clásica links in
+>   the collection and footer reverted. The link markup had also broken the
+>   three-guitars section (an inline `<a>` swapped for the `.guitar-figure`
+>   div lost the arch mat) — restored to the original presentation. An
+>   instrument detail experience remains an open idea, to be redesigned
+>   from scratch to house standards when Vince wants it.
 
 ## Session goal
 

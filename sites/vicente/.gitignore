@@ -24,3 +24,6 @@ pnpm-debug.log*
 .idea/
 .vercel
 .env*
+
+# raw generated originals & rejected candidates (kept local)
+assets-src/
