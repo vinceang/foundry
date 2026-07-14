@@ -36,7 +36,7 @@ cd sites/shokunin && npx astro dev        # session used port 4326
 - Full-page capture: `node tools/shot-full.mjs <url> <out.png> 1440 900`
 - Band capture: `node tools/shot-clip.mjs <url> <out.png> <y> 1000 1440`
 - Both **must run from repo root** (they resolve `tools/node_modules`).
-- Review artifacts live in `shots/shokunin/` (only finals are committed).
+- Review artifacts live in `shots/` (gitignored scratch); curated record captures are committed under `docs/visuals/<site>/`.
 
 ## Deploy
 

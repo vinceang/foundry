@@ -8,7 +8,7 @@ specifics parameterized out.
 **Standalone use:** hand this file to any LLM as the aesthetic direction for
 a project, alongside 1–3 reference screenshots (imagery anchors a model's
 target far better than prose — canonical references live in
-`foundry/shots/shokunin/`, live site: https://shokunin-topaz.vercel.app).
+`foundry/docs/visuals/shokunin/`, live site: https://shokunin-topaz.vercel.app).
 **With vince-ui:** this profile is a *mood layer*; the house skill's
 structural rules (grid, 8pt, hierarchy, accessibility) remain the floor.
 
