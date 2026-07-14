@@ -1,0 +1,392 @@
+/* ============================================================
+   SCHWARZWALD — design system
+   fir-black-green ground · aged brass light · winter-night blue
+   Type: EB Garamond (display) · Hanken Grotesk (body/labels)
+         Grenze Gotisch (blackletter accents)
+   No red. No circles. No rounded corners. Light comes from brass.
+   ============================================================ */
+
+:root {
+  /* forest depths */
+  --wald:        #0e130e;
+  --wald-2:      #151c14;
+  --wald-3:      #1d261b;
+  --void:        #080b08;
+
+  /* winter night — one chapter per page */
+  --nacht:       #101720;
+  --nacht-2:     #17212e;
+
+  /* aged brass */
+  --messing:        #c68e4e;
+  --messing-bright: #eec489;
+  --messing-deep:   #8f6335;
+  --messing-faint:  rgba(198, 142, 78, .38);
+
+  /* linen (text on dark) */
+  --leinen:       #eae4d3;
+  --leinen-dim:   #a2988a;
+  --leinen-faint: rgba(234, 228, 211, .42);
+
+  --line:        rgba(198, 142, 78, .22);
+  --line-soft:   rgba(234, 228, 211, .1);
+
+  /* type */
+  --display: "EB Garamond", "Georgia", serif;
+  --body:    "Hanken Grotesk", "Helvetica Neue", sans-serif;
+  --fraktur: "Grenze Gotisch", serif;
+
+  /* rhythm */
+  --s1: 8px;  --s2: 16px;  --s3: 24px;  --s4: 32px;  --s5: 48px;
+  --s6: 64px; --s7: 96px;  --s8: 128px; --s9: 192px;
+
+  --gutter: clamp(20px, 5vw, 96px);
+  --frame: clamp(12px, 1.6vw, 24px);   /* corner-fitting inset */
+
+  --ease: cubic-bezier(.19, 1, .22, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background: var(--void);
+}
+
+body {
+  font-family: var(--body);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.7;
+  letter-spacing: .012em;
+  background: var(--wald);
+  color: var(--leinen);
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+::selection { background: var(--messing-deep); color: var(--leinen); }
+
+/* ---------- typography helpers ---------- */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: .02em;
+  line-height: 1.1;
+}
+
+.reading {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: .01em;
+  color: var(--leinen-dim);
+}
+
+.label {
+  font-family: var(--body);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--messing);
+}
+
+.label--dim { color: var(--leinen-dim); }
+
+.fraktur {
+  font-family: var(--fraktur);
+  font-weight: 400;
+  color: inherit;
+}
+
+/* the gable — the house's only ornament shape */
+.gable {
+  display: inline-block;
+  width: 9px; height: 11px;
+  background: var(--messing);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.gable--faint { background: var(--messing-faint); }
+
+/* ---------- reveal system (visible without JS) ---------- */
+.rv { opacity: 1; transform: none; }
+html.js .rv {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  transition-delay: calc(var(--d, 0) * 110ms);
+}
+html.js .rv.in { opacity: 1; transform: none; }
+
+/* masked line reveal for display headings */
+.rv-line { display: block; }
+html.js .rv-line { overflow: hidden; }
+html.js .rv-line > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.3s var(--ease);
+  transition-delay: calc(var(--d, 0) * 130ms);
+}
+html.js .rv.in .rv-line > span,
+html.js .rv-line.in > span { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .rv { opacity: 1; transform: none; transition: none; }
+  html.js .rv-line > span { transform: none; transition: none; }
+}
+
+/* ---------- frame — brass corner fittings of the clock case ---------- */
+.hud-frame { position: fixed; inset: var(--frame); pointer-events: none; z-index: 90; }
+.hud-frame i {
+  position: absolute; width: 26px; height: 26px;
+  border: 1px solid var(--messing-faint);
+}
+.hud-frame i:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.hud-frame i:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+.hud-frame i:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+.hud-frame i:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+@media (max-width: 760px) { .hud-frame i { width: 16px; height: 16px; } }
+
+/* ---------- header ----------
+   Transparent over the hero; veiled once scrolled; withdraws on
+   scroll-down, returns on scroll-up. Content is never read through it. */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(var(--frame) + 14px) calc(var(--frame) + 22px);
+  transition:
+    transform .7s var(--ease),
+    background .5s var(--ease),
+    padding .5s var(--ease),
+    border-color .5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-veiled {
+  background: rgba(8, 11, 8, .88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--line-soft);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.site-header.is-withdrawn { transform: translateY(-102%); }
+@media (prefers-reduced-motion: reduce) {
+  .site-header { transition: none; }
+}
+.brand { display: flex; align-items: center; gap: 14px; pointer-events: auto; }
+.brand-seal { width: 34px; height: 34px; flex: 0 0 auto; }
+.brand-word {
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: .34em; text-transform: uppercase; color: var(--leinen);
+  padding-left: 2px;
+}
+.site-nav { display: flex; align-items: center; gap: clamp(18px, 2.6vw, 36px); }
+.site-nav a {
+  font-size: 10.5px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--leinen-dim); transition: color .35s;
+}
+.site-nav a:hover { color: var(--messing-bright); }
+.nav-cta {
+  padding: 10px 22px;
+  border: 1px solid var(--line);
+  color: var(--leinen) !important;
+  transition: border-color .35s, background .35s;
+}
+.nav-cta:hover { border-color: var(--messing); background: rgba(198,142,78,.08); }
+
+/* language switch — quiet, hairline-separated */
+.lang-switch {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 10.5px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase;
+}
+.lang-switch .sep { width: 1px; height: 12px; background: var(--line-soft); }
+.lang-switch a { color: var(--leinen-dim); transition: color .35s; }
+.lang-switch a:hover { color: var(--messing-bright); }
+.lang-switch .is-current { color: var(--messing); }
+
+@media (max-width: 760px) {
+  .site-header { padding: calc(var(--frame) + 10px) calc(var(--frame) + 12px); }
+  /* direct children only — the language switch inside .lang-switch must
+     survive on mobile (it is the guest's only path between locales) */
+  .site-nav > a:not(.nav-cta) { display: none; }
+  .site-nav { gap: 14px; }
+  .nav-cta { padding: 8px 14px; letter-spacing: .22em; }
+  .brand-word { font-size: 13px; letter-spacing: .26em; }
+  .brand-seal { width: 28px; height: 28px; }
+}
+/* below 560px the correspondence chip yields; the language switch stays —
+   acquisition is still reachable from the hero and footer, but a guest can
+   always change language */
+@media (max-width: 560px) {
+  .nav-cta { display: none; }
+}
+
+/* ---------- buttons ---------- */
+.btn-brass, .btn-ghost {
+  display: inline-block;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .32em; text-transform: uppercase;
+  padding: 15px 34px;
+  transition: background .35s, color .35s, border-color .35s, letter-spacing .6s var(--ease);
+}
+.btn-brass { background: var(--messing); color: #120e08; }
+.btn-brass:hover { background: var(--messing-bright); }
+.btn-ghost { border: 1px solid var(--line); color: var(--leinen); }
+.btn-ghost:hover { border-color: var(--messing); color: var(--messing-bright); }
+
+/* ---------- status chip ---------- */
+.status {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: .26em; text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  color: var(--messing);
+}
+.status--dim { color: var(--leinen-faint); border-color: var(--line-soft); }
+
+/* ---------- plates (imagery) ---------- */
+.plate {
+  position: relative;
+  background:
+    radial-gradient(80% 70% at 50% 38%, rgba(198,142,78,.07), transparent 70%),
+    var(--wald-2);
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.plate img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(.94);
+  transition: filter 1s var(--ease);
+}
+a:hover .plate img, .plate:hover img { filter: brightness(1.05); }
+
+/* ceremonial pending state — used until a plate is hung */
+.plate-pending {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; gap: 0;
+  content-visibility: visible;
+}
+.plate-pending .gable { width: 14px; height: 17px; margin-bottom: 14px; }
+.plate-pending span {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .4em; text-transform: uppercase;
+  color: var(--leinen-faint);
+}
+
+/* ---------- ledger rows ---------- */
+.ledger { list-style: none; }
+.ledger li {
+  display: grid;
+  grid-template-columns: 72px 1fr auto auto 20px;
+  gap: var(--s3);
+  align-items: baseline;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--leinen-faint);
+  font-size: 13.5px;
+  letter-spacing: .04em;
+}
+.ledger li:first-child { border-top: 1px solid var(--line-soft); }
+.ledger .wv { font-family: var(--display); color: var(--leinen-dim); }
+.ledger .name { font-family: var(--display); font-size: 17px; color: var(--leinen-dim); }
+.ledger .gable { align-self: center; }
+@media (max-width: 640px) {
+  .ledger li { grid-template-columns: 60px 1fr auto; }
+  .ledger li > :nth-child(4), .ledger li > .gable { display: none; }
+}
+
+/* ---------- spec sheet (museum placard) ---------- */
+.specs {
+  border: 1px solid var(--line-soft);
+  padding: var(--s4);
+  display: grid; gap: var(--s3);
+}
+.specs div { display: grid; gap: 4px; }
+.specs dt {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .32em; text-transform: uppercase;
+  color: var(--messing);
+}
+.specs dd { font-family: var(--display); font-size: 17px; color: var(--leinen); }
+
+/* ---------- section furniture ---------- */
+.sect-head { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: var(--s6); }
+.sect-head .rule { flex: 1; height: 1px; background: var(--line-soft); align-self: center; }
+
+.brass-rule { width: 64px; height: 1px; background: var(--messing); }
+
+/* chapter folio — Roman numeral in the dial's own numbering */
+.folio {
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: .18em;
+  color: var(--messing-faint);
+}
+
+/* ---------- footer ---------- */
+.site-footer {
+  position: relative;
+  background: var(--void);
+  border-top: 1px solid var(--line-soft);
+  padding: var(--s7) var(--gutter) var(--s6);
+}
+.footer-grid {
+  max-width: 1280px; margin-inline: auto;
+  display: grid; gap: var(--s5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+.footer-mark { font-family: var(--display); font-size: 20px; letter-spacing: .3em; text-transform: uppercase; }
+.footer-col h4 { margin-bottom: var(--s3); }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; font-size: 13.5px; color: var(--leinen-dim); }
+.footer-col a { transition: color .3s; }
+.footer-col a:hover { color: var(--messing-bright); }
+.footer-legal {
+  max-width: 1280px; margin: var(--s6) auto 0;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line-soft);
+  display: flex; flex-wrap: wrap; gap: var(--s3);
+  justify-content: space-between;
+  font-size: 11.5px; color: var(--leinen-faint); letter-spacing: .08em;
+}
+
+/* ---------- custom cursor (fine pointers only) ---------- */
+@media (pointer: fine) {
+  html.js.cursor-on, html.js.cursor-on a, html.js.cursor-on button { cursor: none; }
+  .cursor {
+    position: fixed; top: 0; left: 0; z-index: 999; pointer-events: none;
+    width: 34px; height: 34px; margin: -17px 0 0 -17px;
+    border: 1px solid var(--messing-faint);
+    border-radius: 50%;
+    transition: transform .28s var(--ease), border-color .28s, background .28s;
+    will-change: transform;
+  }
+  .cursor::after {
+    content: ""; position: absolute; inset: 0; margin: auto;
+    width: 3px; height: 3px; border-radius: 50%; background: var(--messing);
+  }
+  .cursor.is-link {
+    transform: scale(1.7);
+    border-color: var(--messing);
+    background: rgba(198,142,78,.06);
+  }
+}
+.cursor { display: none; }
+html.js.cursor-on .cursor { display: block; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none !important; }
+}
+
+/* focus visibility */
+a:focus-visible, button:focus-visible {
+  outline: 1px solid var(--messing-bright);
+  outline-offset: 4px;
+}

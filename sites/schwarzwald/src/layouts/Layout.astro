@@ -1,0 +1,214 @@
+---
+import '../styles/global.css';
+import { ui, type Locale } from '../data/site';
+
+interface Props {
+  lang: Locale;
+  title?: string;
+  description?: string;
+  /** Path of this page in the other locale, for the switch + hreflang. */
+  altPath?: string;
+  /** Path of this page in its own locale (canonical-ish, for hreflang). */
+  selfPath?: string;
+}
+const { lang, title, description, altPath, selfPath } = Astro.props;
+const t = ui[lang];
+const pageTitle = title ?? t.meta.title;
+const pageDesc = description ?? t.meta.description;
+const otherLang = lang === 'en' ? 'de' : 'en';
+const switchHref = altPath ?? t.altPath;
+const homeHref = lang === 'de' ? '/de/' : '/';
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDesc} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDesc} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0e130e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" hreflang={otherLang} href={switchHref} />
+    {selfPath && <link rel="alternate" hreflang={lang} href={selfPath} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Hanken+Grotesk:wght@300;400;600;700&family=Grenze+Gotisch:wght@400&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // `?nofx` keeps everything visible; `?scroll=N` jumps to an offset —
+      // both exist for the screenshot critique loop only.
+      if (!location.search.includes('nofx')) document.documentElement.classList.add('js');
+      else addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('img[loading="lazy"]').forEach((i) => (i.loading = 'eager'));
+        const m = location.search.match(/scroll=(\d+)/);
+        if (m) addEventListener('load', () => setTimeout(() => scrollTo(0, +m[1]), 300));
+      });
+    </script>
+  </head>
+  <body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="hud-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <header class="site-header">
+      <a class="brand" href={homeHref} aria-label={t.nav.brandAria}>
+        <span class="brand-seal" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="34" height="34" fill="none">
+            <path d="M16 4.5 L28 28 H4 Z" stroke="var(--messing-faint)" stroke-width="1.2" />
+            <line x1="16" y1="14" x2="16" y2="23.4" stroke="var(--messing)" stroke-width="1.2" />
+            <path d="M14.4 23.4 h3.2 l-1.6 2.6 Z" fill="var(--messing)" />
+          </svg>
+        </span>
+        <span class="brand-word">Schwarzwald</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href={`${homeHref}#kabinett`}>{t.nav.kabinett}</a>
+        <a href={`${homeHref}#werkstatt`}>{t.nav.werkstatt}</a>
+        <a href={`${homeHref}#urkunde`}>{t.nav.urkunde}</a>
+        <a class="nav-cta" href={`${homeHref}#auftrag`}>{t.nav.cta}</a>
+        <div class="lang-switch">
+          <span class="is-current" aria-current="true">{t.selfLabel}</span>
+          <span class="sep" aria-hidden="true"></span>
+          <a href={switchHref} lang={otherLang} hreflang={otherLang}>{t.altLabel}</a>
+        </div>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-mark">Schwarzwald</p>
+          <p style="margin-top: 16px; max-width: 38ch; font-size: 13.5px; color: var(--leinen-dim);">
+            {t.footer.blurb}
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">{t.footer.houseTitle}</h4>
+          <ul>
+            {t.footer.houseLinks.map((l) => (
+              <li><a href={`${homeHref}${l.href}`}>{l.t}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">{t.footer.audiencesTitle}</h4>
+          <ul>
+            {t.footer.audiences.map((a) => <li>{a}</li>)}
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">{t.footer.corrTitle}</h4>
+          <ul>
+            <li><a href={`mailto:${t.footer.corrLines[0]}`}>{t.footer.corrLines[0]}</a></li>
+            <li>{t.footer.corrLines[1]}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>{t.footer.legal}</span>
+        <span><span class="fraktur" aria-hidden="true" style="font-size: 14px; color: var(--messing-faint); margin-right: 10px;">Zeit</span>{t.footer.legalNote}</span>
+      </div>
+    </footer>
+
+    <script>
+      // ---- reveal on scroll ----
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.16, rootMargin: '0px 0px -6% 0px' }
+      );
+      document.querySelectorAll('.rv, .rv-line').forEach((el) => io.observe(el));
+
+      // ---- header veil / withdraw ----
+      const header = document.querySelector('.site-header') as HTMLElement;
+      let lastY = scrollY;
+      const headerTick = () => {
+        const y = scrollY;
+        header.classList.toggle('is-veiled', y > 40);
+        if (y > 240 && y > lastY + 4) header.classList.add('is-withdrawn');
+        else if (y < lastY - 4 || y <= 240) header.classList.remove('is-withdrawn');
+        lastY = y;
+      };
+      addEventListener('scroll', headerTick, { passive: true });
+      headerTick();
+
+      // ---- the hour in Schonach (see DESIGN.md §5) ----
+      const uhr = document.querySelector<HTMLElement>('[data-uhr]');
+      if (uhr) {
+        const bands = JSON.parse(uhr.dataset.uhrBands || '[]') as string[];
+        const place = uhr.dataset.uhrPlace || 'Schonach';
+        const tick = () => {
+          const now = new Date();
+          const fmt = new Intl.DateTimeFormat('de-DE', {
+            timeZone: 'Europe/Berlin', hour: '2-digit', minute: '2-digit', hour12: false,
+          });
+          const hh = parseInt(
+            new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Berlin', hour: '2-digit', hour12: false }).format(now),
+            10
+          );
+          const band = hh < 6 ? bands[0] : hh < 18 ? bands[1] : hh < 22 ? bands[2] : bands[0];
+          uhr.textContent = `${place}, ${fmt.format(now)} — ${band}`;
+        };
+        tick();
+        setInterval(tick, 60_000);
+      }
+
+      // ---- custom cursor ----
+      const fine = matchMedia('(pointer: fine)').matches;
+      const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (fine && !noMotion) {
+        document.documentElement.classList.add('cursor-on');
+        const cur = document.querySelector('.cursor') as HTMLElement;
+        let x = 0, y = 0, cx = 0, cy = 0;
+        addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; });
+        const loop = () => {
+          cx += (x - cx) * 0.22;
+          cy += (y - cy) * 0.22;
+          cur.style.translate = `${cx}px ${cy}px`;
+          requestAnimationFrame(loop);
+        };
+        loop();
+        document.querySelectorAll('a, button, [data-cursor]').forEach((el) => {
+          el.addEventListener('mouseenter', () => cur.classList.add('is-link'));
+          el.addEventListener('mouseleave', () => cur.classList.remove('is-link'));
+        });
+      }
+
+      // ---- gentle parallax on marked media ----
+      if (!noMotion) {
+        const px = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
+        if (px.length) {
+          let ticking = false;
+          const update = () => {
+            const vh = innerHeight;
+            for (const el of px) {
+              const r = el.getBoundingClientRect();
+              if (r.bottom < -80 || r.top > vh + 80) continue;
+              const p = (r.top + r.height / 2 - vh / 2) / vh; // -0.5 .. 0.5
+              const depth = parseFloat(el.dataset.parallax || '24');
+              el.style.transform = `translateY(${(-p * depth).toFixed(2)}px) scale(1.06)`;
+            }
+            ticking = false;
+          };
+          addEventListener('scroll', () => {
+            if (!ticking) { ticking = true; requestAnimationFrame(update); }
+          }, { passive: true });
+          update();
+        }
+      }
+    </script>
+  </body>
+</html>

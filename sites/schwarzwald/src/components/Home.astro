@@ -1,0 +1,456 @@
+---
+import fs from 'node:fs';
+import Layout from '../layouts/Layout.astro';
+import { clocks, privateHands, ui, type Locale } from '../data/site';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = ui[lang];
+const altPath = lang === 'en' ? '/de/' : '/';
+const selfPath = lang === 'en' ? '/' : '/de/';
+
+// A plate renders only once its file is hung in public/plates/ —
+// until then the ceremonial pending state stands in.
+const plate = (name: string) =>
+  fs.existsSync(new URL(`../../public/plates/${name}`, import.meta.url)) ? `/plates/${name}` : undefined;
+const heroImg = plate('hero.jpg');
+const werkstattImg = plate('werkstatt.jpg');
+---
+
+<Layout lang={lang} altPath={altPath} selfPath={selfPath}>
+  <main>
+    <!-- ══════════ HERO ══════════ -->
+    <section class="hero">
+      {heroImg ? (
+        <div class="hero-media" aria-hidden="true">
+          <img src={heroImg} alt="" loading="eager" fetchpriority="high" width="1536" height="1024" />
+          <div class="hero-shade"></div>
+        </div>
+      ) : (
+        <div class="hero-glow" aria-hidden="true"></div>
+      )}
+      <div class="hero-inner">
+        <p class="label rv" style="--d:0">{t.hero.label}</p>
+        <h1 class="display hero-title">
+          <span class="rv-line" style="--d:1"><span>{t.hero.line1}</span></span>
+          <span class="rv-line" style="--d:2"><span>{t.hero.line2}</span></span>
+        </h1>
+        <p class="hero-body rv" style="--d:3">{t.hero.body}</p>
+        <div class="hero-ctas rv" style="--d:4">
+          <a class="btn-brass" href="#kabinett">{t.hero.cta1}</a>
+          <a class="btn-ghost" href="#auftrag">{t.hero.cta2}</a>
+        </div>
+      </div>
+      <p
+        class="hero-uhr rv"
+        style="--d:5"
+        data-uhr
+        data-uhr-bands={JSON.stringify(t.hero.timeBands)}
+        data-uhr-place={t.hero.timePlace}
+      >{t.hero.timeFallback}</p>
+    </section>
+
+    <!-- ══════════ I. DOCTRINE ══════════ -->
+    <section class="doctrine">
+      <span class="doctrine-mark fraktur" aria-hidden="true">{t.doctrine.watermark}</span>
+      <div class="chapter">
+        <p class="folio rv">{t.doctrine.folio}</p>
+        <p class="label rv" style="--d:1">{t.doctrine.label}</p>
+        <h2 class="display chapter-display rv" style="--d:2">{t.doctrine.display}</h2>
+        <p class="chapter-body rv" style="--d:3">{t.doctrine.body}</p>
+        <ul class="facts rv" style="--d:4">
+          {t.doctrine.facts.map((f) => (
+            <li>
+              <span class="display facts-n">{f.n}</span>
+              <span class="facts-t">{f.t}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ II. KABINETT ══════════ -->
+    <section class="kabinett" id="kabinett">
+      <div class="chapter">
+        <p class="folio rv">{t.kabinett.folio}</p>
+        <div class="sect-head rv" style="--d:1">
+          <p class="label">{t.kabinett.label}</p>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <h2 class="display chapter-display rv" style="--d:2">{t.kabinett.display}</h2>
+        <p class="chapter-body rv" style="--d:3">{t.kabinett.body}</p>
+      </div>
+
+      <div class="works">
+        {clocks.map((c, i) => (
+          <article class={`work ${i % 2 === 1 ? 'work--flip' : ''}`}>
+            <figure class="plate work-plate rv">
+              {plate(`${c.slug}.jpg`) ? (
+                <img src={plate(`${c.slug}.jpg`)} alt={c.imgAlt[lang]} loading="lazy" width="1024" height="1536" />
+              ) : (
+                <span class="plate-pending">
+                  <span>
+                    <span class="gable gable--faint" aria-hidden="true" style="display:block; margin-inline:auto;"></span>
+                    <span>{t.kabinett.plateForthcoming}</span>
+                  </span>
+                </span>
+              )}
+            </figure>
+            <div class="work-info">
+              <p class="work-meta rv">
+                <span class="display work-wv">{c.wv}</span>
+                <span class={`status ${c.status === 'promised' ? 'status--dim' : ''}`}>
+                  {c.status === 'open' ? t.kabinett.statusOpen : t.kabinett.statusPromised}
+                </span>
+              </p>
+              <h3 class="display work-name rv" style="--d:1">{c.name}</h3>
+              <p class="reading work-reading rv" style="--d:2">{c.reading[lang]}</p>
+              <dl class="specs work-specs rv" style="--d:3">
+                <div><dt>{t.kabinett.woodLabel}</dt><dd>{c.wood[lang]}</dd></div>
+                <div><dt>{t.kabinett.movementLabel}</dt><dd>{c.movement[lang]}</dd></div>
+                <div><dt>{t.kabinett.hoursLabel}</dt><dd>{c.hours[lang]}</dd></div>
+              </dl>
+              <p class="work-foot rv" style="--d:4">
+                <span class="display work-price">{c.price[lang]}</span>
+                <a class="work-dossier" href="#auftrag">{t.kabinett.dossier}</a>
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- ══════════ III. IN PRIVATE HANDS ══════════ -->
+    <section class="hands">
+      <div class="chapter">
+        <p class="folio rv">{t.hands.folio}</p>
+        <div class="sect-head rv" style="--d:1">
+          <p class="label">{t.hands.label}</p>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <h2 class="display chapter-display rv" style="--d:2">{t.hands.display}</h2>
+        <p class="chapter-body rv" style="--d:3">{t.hands.body}</p>
+        <ul class="ledger rv" style="--d:4">
+          {privateHands.map((h) => (
+            <li>
+              <span class="wv">{h.wv}</span>
+              <span class="name">{h.name}</span>
+              <span>{h.place[lang]}</span>
+              <span>{h.year}</span>
+              <span class="gable gable--faint" aria-hidden="true"></span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ══════════ IV. WERKSTATT (winter night) ══════════ -->
+    <section class="werkstatt" id="werkstatt">
+      <div class="chapter werkstatt-grid">
+        <div>
+          <p class="folio rv">{t.werkstatt.folio}</p>
+          <p class="label rv" style="--d:1">{t.werkstatt.label}</p>
+          <h2 class="display chapter-display rv" style="--d:2">{t.werkstatt.display}</h2>
+          <p class="chapter-body rv" style="--d:3">{t.werkstatt.body}</p>
+          <aside class="honest rv" style="--d:4">
+            <p class="label label--dim">{t.werkstatt.noteLabel}</p>
+            <p>{t.werkstatt.note}</p>
+          </aside>
+        </div>
+        <figure class="plate werkstatt-plate rv" style="--d:2">
+          {werkstattImg ? (
+            <img src={werkstattImg} alt={t.werkstatt.plateAlt} loading="lazy" width="1024" height="1536" data-parallax="18" />
+          ) : (
+            <span class="plate-pending">
+              <span>
+                <span class="gable gable--faint" aria-hidden="true" style="display:block; margin-inline:auto;"></span>
+                <span>{t.kabinett.plateForthcoming}</span>
+              </span>
+            </span>
+          )}
+        </figure>
+      </div>
+    </section>
+
+    <!-- ══════════ V. URKUNDE ══════════ -->
+    <section class="urkunde" id="urkunde">
+      <div class="chapter">
+        <div class="urkunde-card rv">
+          <p class="folio">{t.urkunde.folio}</p>
+          <p class="label" style="margin-top: 8px;">{t.urkunde.label}</p>
+          <h2 class="display chapter-display" style="margin-top: 24px;">{t.urkunde.display}</h2>
+          <p class="chapter-body" style="margin-top: 24px; margin-inline:auto;">{t.urkunde.body}</p>
+          <p style="margin-top: 32px;">
+            <a class="urkunde-link" href="#auftrag">{t.urkunde.link}</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ VI. AUFTRAG ══════════ -->
+    <section class="auftrag" id="auftrag">
+      <div class="chapter auftrag-inner">
+        <p class="folio rv">{t.auftrag.folio}</p>
+        <p class="label rv" style="--d:1">{t.auftrag.label}</p>
+        <h2 class="display chapter-display rv" style="--d:2">{t.auftrag.display}</h2>
+        <p class="chapter-body rv" style="--d:3">{t.auftrag.body}</p>
+        <p class="rv" style="--d:4; margin-top: var(--s5);">
+          <a class="btn-brass" href={`mailto:${t.footer.corrLines[0]}`}>{t.auftrag.cta}</a>
+        </p>
+        <p class="auftrag-aside rv" style="--d:5">{t.auftrag.aside}</p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* ---------- shared chapter scaffolding ---------- */
+  .chapter {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .chapter-display {
+    font-size: clamp(32px, 4.6vw, 58px);
+    max-width: 18ch;
+    margin-top: var(--s3);
+  }
+  .chapter-body {
+    max-width: 58ch;
+    margin-top: var(--s4);
+    color: var(--leinen-dim);
+  }
+  .folio { margin-bottom: var(--s2); }
+
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--s8) 0 var(--s6);
+    background: linear-gradient(180deg, var(--wald) 0%, var(--wald) 72%, var(--void) 100%);
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(52% 44% at 68% 34%, rgba(198,142,78,.1), transparent 70%);
+  }
+  .hero-media { position: absolute; inset: 0; }
+  .hero-media img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: 72% center;
+  }
+  .hero-shade {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, var(--wald) 24%, rgba(14,19,14,.55) 52%, transparent 78%),
+      linear-gradient(180deg, rgba(14,19,14,.6), transparent 26%, transparent 62%, var(--void));
+  }
+  @media (max-width: 760px) {
+    /* no veil can dim the dial enough to read text over it — so on mobile
+       the image is a top band fading into solid ground, and the words sit
+       below it on pure darkness. No overlap, full contrast. */
+    .hero { justify-content: flex-end; padding-bottom: var(--s5); }
+    .hero-media { inset: 0 0 auto 0; height: 52svh; }
+    .hero-media img { object-position: 70% center; }
+    .hero-shade {
+      background:
+        linear-gradient(180deg, rgba(14,19,14,.6), transparent 32%, transparent 58%, var(--wald) 97%);
+    }
+    .hero-inner { margin-top: 52svh; }
+    .hero-uhr { margin-top: var(--s4); }
+  }
+  .hero-inner {
+    position: relative;
+    max-width: 1280px;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .hero-title {
+    font-size: clamp(52px, 9.4vw, 128px);
+    line-height: 1.04;
+    letter-spacing: .03em;
+    margin-top: var(--s4);
+  }
+  .hero-body {
+    max-width: 44ch;
+    margin-top: var(--s4);
+    font-size: 17px;
+    color: var(--leinen-dim);
+  }
+  .hero-ctas {
+    display: flex; flex-wrap: wrap; gap: var(--s2);
+    margin-top: var(--s5);
+  }
+  .hero-uhr {
+    position: relative;
+    max-width: 1280px;
+    width: 100%;
+    margin: var(--s6) auto 0;
+    padding-inline: var(--gutter);
+    font-size: 12px;
+    letter-spacing: .18em;
+    color: var(--leinen-faint);
+  }
+
+  /* ---------- doctrine ---------- */
+  .doctrine {
+    position: relative;
+    background: var(--void);
+    padding-block: var(--s9);
+    overflow: hidden;
+  }
+  .doctrine-mark {
+    position: absolute;
+    right: -0.06em;
+    top: 50%;
+    translate: 0 -50%;
+    font-size: clamp(200px, 30vw, 420px);
+    line-height: 1;
+    color: rgba(198, 142, 78, .05);
+    pointer-events: none;
+    user-select: none;
+  }
+  .facts {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--s5) var(--s4);
+    margin-top: var(--s7);
+    max-width: 880px;
+  }
+  @media (min-width: 900px) { .facts { grid-template-columns: repeat(4, 1fr); } }
+  .facts li { display: grid; gap: 10px; align-content: start; }
+  .facts-n {
+    font-size: clamp(26px, 2.6vw, 34px);
+    color: var(--messing);
+    letter-spacing: .06em;
+    border-bottom: 1px solid var(--line-soft);
+    padding-bottom: 14px;
+  }
+  .facts-t { font-size: 13px; color: var(--leinen-dim); letter-spacing: .04em; }
+
+  /* ---------- kabinett ---------- */
+  .kabinett {
+    padding-block: var(--s9);
+    background: linear-gradient(180deg, var(--void), var(--wald) 20%);
+  }
+  .works {
+    max-width: 1280px;
+    margin: var(--s8) auto 0;
+    padding-inline: var(--gutter);
+    display: grid;
+    gap: var(--s8);
+  }
+  .work {
+    display: grid;
+    gap: var(--s5);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .work { grid-template-columns: 5fr 6fr; gap: var(--s7); }
+    .work--flip { grid-template-columns: 6fr 5fr; }
+    .work--flip .work-plate { order: 2; }
+    .work--flip .work-info { order: 1; }
+  }
+  /* plates are 2:3 — the box matches so the carving crown and pendulum
+     are never cropped */
+  .work-plate { aspect-ratio: 2 / 3; }
+  .work-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s3);
+  }
+  .work-wv { font-size: 15px; letter-spacing: .14em; color: var(--leinen-dim); }
+  .work-name { font-size: clamp(34px, 3.6vw, 52px); margin-top: var(--s3); }
+  .work-reading { font-size: 18px; margin-top: 6px; }
+  .work-specs { margin-top: var(--s4); }
+  .work-foot {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: var(--s3);
+    margin-top: var(--s4);
+  }
+  .work-price { font-size: 24px; letter-spacing: .04em; }
+  .work-dossier {
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: .3em; text-transform: uppercase;
+    color: var(--messing);
+    transition: color .35s, letter-spacing .6s var(--ease);
+  }
+  .work-dossier:hover { color: var(--messing-bright); letter-spacing: .4em; }
+
+  /* ---------- in private hands ---------- */
+  .hands {
+    background: linear-gradient(180deg, var(--wald), var(--void) 22%);
+    padding-block: var(--s9);
+  }
+  .hands .ledger { margin-top: var(--s6); max-width: 880px; }
+
+  /* ---------- werkstatt (the one nacht chapter) ---------- */
+  .werkstatt {
+    background: linear-gradient(180deg, var(--void) 0%, var(--nacht) 18%, var(--nacht) 82%, var(--void) 100%);
+    padding-block: var(--s9);
+  }
+  .werkstatt-grid { display: grid; gap: var(--s6); }
+  @media (min-width: 960px) {
+    .werkstatt-grid { grid-template-columns: 7fr 5fr; gap: var(--s7); align-items: start; }
+  }
+  .werkstatt-plate { aspect-ratio: 2 / 3; }
+  .honest {
+    margin-top: var(--s6);
+    border-left: 1px solid var(--messing-faint);
+    padding-left: var(--s4);
+    max-width: 52ch;
+    display: grid; gap: var(--s2);
+    color: var(--leinen-dim);
+    font-size: 15px;
+  }
+
+  /* ---------- urkunde ---------- */
+  .urkunde {
+    padding-block: var(--s9);
+    background: linear-gradient(180deg, var(--void), var(--wald) 26%);
+  }
+  .urkunde-card {
+    border: 1px solid var(--line);
+    padding: clamp(40px, 6vw, 96px);
+    text-align: center;
+    position: relative;
+  }
+  .urkunde-card .chapter-display { margin-inline: auto; }
+  .urkunde-card::before, .urkunde-card::after {
+    content: "";
+    position: absolute;
+    width: 9px; height: 11px;
+    background: var(--messing-faint);
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    left: 50%; translate: -50% 0;
+  }
+  .urkunde-card::before { top: -6px; }
+  .urkunde-card::after { bottom: -6px; rotate: 180deg; }
+  .urkunde-link {
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: .3em; text-transform: uppercase;
+    color: var(--messing);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    transition: color .35s, border-color .35s;
+  }
+  .urkunde-link:hover { color: var(--messing-bright); border-color: var(--messing); }
+
+  /* ---------- auftrag ---------- */
+  .auftrag {
+    background: linear-gradient(180deg, var(--wald), var(--void) 26%);
+    padding-block: var(--s9);
+  }
+  .auftrag-inner { text-align: center; }
+  .auftrag-inner .chapter-display, .auftrag-inner .chapter-body { margin-inline: auto; }
+  .auftrag-aside {
+    margin-top: var(--s4);
+    font-size: 12.5px;
+    letter-spacing: .14em;
+    color: var(--leinen-faint);
+  }
+</style>

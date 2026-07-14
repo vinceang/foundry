@@ -9,7 +9,7 @@ A collection of bespoke, ultra-refined **heritage-craft atelier** sites — each
 | Suntoku (寸徳) | Hand-forged kitchen knife atelier — sumi ink, washi paper, vermilion, Shippori Mincho; ships to suntoku.com | Japan · Sakai | [`sites/kaji`](sites/kaji) |
 | Shokunin | Bespoke samurai ateliers — lacquer dark, smoked gold, Marcellus/Manrope | Japan | [`sites/shokunin`](sites/shokunin) |
 | Vicente *(Lutier)* | Family-owned boutique guitar atelier, the Vicente family — planned EN/ES language switching | Spain · Andalusia (Córdoba) | [`sites/vicente`](sites/vicente) — not started |
-| *(name TBD)* | Cuckoo clock house — planned EN/DE language switching | Germany · Black Forest / Bavaria | [`sites/schwarzwald`](sites/schwarzwald) — not started |
+| Schwarzwald | Cuckoo clock house, est. 1854 — fir-black-green, aged brass, EB Garamond/Hanken Grotesk/Grenze Gotisch; native EN/DE | Germany · Black Forest (Schonach) | [`sites/schwarzwald`](sites/schwarzwald) |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 
