@@ -197,6 +197,11 @@ const open = c.status === 'open';
   }
   .d-prov-stage { color: var(--leinen); font-size: 15.5px; }
   .d-prov-date { color: var(--leinen-faint); font-size: 13px; letter-spacing: .06em; }
+  @media (max-width: 640px) {
+    /* date takes its own line under the stage so neither wraps */
+    .d-prov li { grid-template-columns: 32px 1fr; }
+    .d-prov-date { grid-column: 2; }
+  }
 
   /* ---------- close ---------- */
   .d-close {
