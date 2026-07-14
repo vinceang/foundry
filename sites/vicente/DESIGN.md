@@ -39,6 +39,7 @@ Never let an accent drift back toward red, and never introduce a monospace — t
 - **Lacería divider** — drawn-on-scroll double zigzag (naranja over ivory echo) at the process seam. One per page maximum.
 - **La etiqueta composite** (`public/etiqueta.png`) — Vince's REAL wordmark composited in-browser onto a generated blank-label soundhole macro (multiply at .88; the photo's bright strings read over the ink naturally). Recipe in `docs` history / scratchpad `etiqueta-shot*.mjs`. **Never ask an image model to render the logo** — it will garble it; composite the SVG.
 - **Language toggle** EN·ES — every page, both locales authored by hand in `src/i18n.ts` (Spanish is the house's first language; never machine-translate).
+- **Guitar pages** (`/guitars/<slug>/`, `/es/guitarras/<slug>/`) — the inverse of the luthier pages: body on nogal left, the guitar on a full-bleed **marfil mat** right (`object-fit: contain` — the whole instrument or nothing; multiply hides the letterbox). Each guitar has a voice-quote like the luthiers, *la voz* narrative, and **la ficha** — specs as a page from the house book (letterspaced caps keys, hairline rows), never a data table. Lacería seam sits at the ficha; maker section links to his profile. Home cards link via `.card-link` stretched overlay — never turn card elements into anchors.
 - Hero: Higgsfield macro-glide film (Seedance 2.0 from the approved still), poster fallback, reduced-motion safe.
 
 ## Asset recipes

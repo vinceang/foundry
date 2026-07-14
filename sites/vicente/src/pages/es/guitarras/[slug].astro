@@ -1,0 +1,10 @@
+---
+import GuitarPage from "../../../components/GuitarPage.astro";
+
+export function getStaticPaths() {
+  return ["clasica", "blanca", "negra"].map((slug) => ({ params: { slug } }));
+}
+const { slug } = Astro.params;
+---
+
+<GuitarPage locale="es" slug={slug} />

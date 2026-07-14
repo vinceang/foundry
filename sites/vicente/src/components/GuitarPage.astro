@@ -1,0 +1,186 @@
+---
+import "../styles/global.css";
+import { strings, type Locale } from "../i18n";
+import mark from "../assets/mark.svg?raw";
+
+interface Props { locale: Locale; slug: string }
+const { locale, slug } = Astro.props;
+const t = strings[locale];
+const home = locale === "en" ? "/" : "/es/";
+const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
+const otherBase = locale === "en" ? "/es/guitarras/" : "/guitars/";
+
+const guitars = t.collection.guitars;
+const idx = guitars.findIndex((g) => g.slug === slug);
+const guitar = guitars[idx];
+const page = t.guitarPages.pages[slug as keyof typeof t.guitarPages.pages];
+const prev = guitars[(idx + guitars.length - 1) % guitars.length];
+const next = guitars[(idx + 1) % guitars.length];
+const maker = t.luthiers.people.find((p) => p.name === guitar.maker)!;
+const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages.pages];
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{guitar.name} — VICENTE · Lutier</title>
+    <meta name="description" content={page.lede} />
+    <link rel="alternate" hreflang="en" href={`/guitars/${slug}/`} />
+    <link rel="alternate" hreflang="es" href={`/es/guitarras/${slug}/`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header solid">
+      <a class="brand-mark" href={home} set:html={mark} aria-label="Vicente · Lutier" />
+      <div class="header-right">
+        <nav class="nav-links">
+          <a href={`${home}#guitarras`}>{t.nav.guitars}</a>
+          <a href={`${home}#familia`}>{t.nav.family}</a>
+          <a href={`${home}#taller`}>{t.nav.workshop}</a>
+          <a href={`${home}#oficio`}>{t.nav.process}</a>
+          <a href={`${home}#encargo`}>{t.nav.commission}</a>
+        </nav>
+        <div class="lang-toggle small-caps" aria-label="Language">
+          <a href={`/guitars/${slug}/`} class={locale === "en" ? "active" : ""} lang="en">EN</a>
+          <span class="sep">·</span>
+          <a href={`/es/guitarras/${slug}/`} class={locale === "es" ? "active" : ""} lang="es">ES</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- GUITAR HERO — body on nogal, guitar on a full-bleed marfil mat -->
+    <section class="gp-hero">
+      <div class="gp-hero-body">
+        <p class="label reveal">{guitar.spec}</p>
+        <h1 class="reveal" style="--i:1">{guitar.name}</h1>
+        <blockquote class="luthier-quote reveal" style="--i:2">“{page.quote}”</blockquote>
+        <p class="gp-lede reveal" style="--i:3">{page.lede}</p>
+        <div class="gp-buy reveal" style="--i:4">
+          <span class="gp-price">{guitar.price}</span>
+          <a class="btn" href={`${home}#encargo`}><span>{t.guitarPages.commissionCta} →</span></a>
+        </div>
+        <p class="gp-note reveal" style="--i:5">{t.guitarPages.commissionNote}</p>
+      </div>
+      <div class="gp-hero-media reveal">
+        <img src={guitar.img} alt={`${guitar.name} — ${guitar.spec}`} />
+      </div>
+    </section>
+
+    <!-- LA VOZ -->
+    <section class="gp-voz">
+      <span class="ghost" aria-hidden="true">voz</span>
+      <div class="container">
+        <p class="label reveal">{t.guitarPages.vozLabel}</p>
+        <div class="gp-voz-body">
+          {page.voz.map((p, i) => (
+            <p class="reveal" style={`--i:${i + 1}`}>{p}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- LA FICHA — the workshop record, over the lacería seam -->
+    <section class="gp-ficha">
+      <svg class="laceria on-light" viewBox="0 0 1440 110" preserveAspectRatio="none" aria-hidden="true">
+        <path class="echo" d="M0,88 L90,22 180,88 270,22 360,88 450,22 540,88 630,22 720,88 810,22 900,88 990,22 1080,88 1170,22 1260,88 1350,22 1440,88" />
+        <path d="M0,22 L90,88 180,22 270,88 360,22 450,88 540,22 630,88 720,22 810,88 900,22 990,88 1080,22 1170,88 1260,22 1350,88 1440,22" />
+      </svg>
+      <div class="container gp-ficha-grid">
+        <div>
+          <p class="label on-light reveal">{t.guitarPages.fichaLabel}</p>
+          <dl class="ficha-book reveal" style="--i:1">
+            {page.ficha.map(([k, v]) => (
+              <div class="row"><dt>{k}</dt><dd>{v}</dd></div>
+            ))}
+          </dl>
+        </div>
+        <aside class="gp-ficha-aside reveal" style="--i:2">
+          <p class="ficha-note">{t.guitarPages.fichaNote}</p>
+          <div class="etiqueta-arch">
+            <img src="/etiqueta.png" alt={t.etiqueta.alt} loading="lazy" />
+          </div>
+          <p class="ficha-signed">{t.guitarPages.signedNote}</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- EL CONSTRUCTOR -->
+    <section class="gp-maker">
+      <div class="container gp-maker-grid">
+        <a class="luthier-card reveal" href={`${home}luthier/${maker.slug}/`}>
+          <div class="luthier-figure"><img src={maker.img} alt={maker.name} loading="lazy" /></div>
+          <div class="luthier-info">
+            <div class="role">{maker.role}</div>
+            <div class="name">{maker.name}</div>
+            <div class="spec">{maker.spec} · <em class="script">{t.guitarPages.meet} {maker.name.split(" ")[0]} →</em></div>
+          </div>
+        </a>
+        <div class="gp-maker-copy">
+          <p class="label reveal">{t.guitarPages.makerLabel}</p>
+          <blockquote class="luthier-quote reveal" style="--i:1">“{makerPage.quote}”</blockquote>
+          <p class="reveal" style="--i:2">{t.collection.madeBy} <strong>{maker.name}</strong> — {maker.spec.toLowerCase()}.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREV / NEXT -->
+    <nav class="luthier-nav" aria-label="Other guitars">
+      <a href={`${guitarsBase}${prev.slug}/`}>
+        <span class="dir">← {t.guitarPages.prevG}</span>
+        <span class="who">{prev.name}</span>
+      </a>
+      <a href={`${guitarsBase}${next.slug}/`}>
+        <span class="dir">{t.guitarPages.nextG} →</span>
+        <span class="who">{next.name}</span>
+      </a>
+    </nav>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <span class="ghost" aria-hidden="true">Vicente</span>
+      <div class="container">
+        <div class="footer-base" style="margin-top:0; padding-top:0; border-top:none">
+          <span><i class="seed" aria-hidden="true"></i>{t.footer.base[0]}</span>
+          <span class="script" style="text-transform:none; letter-spacing:.02em">{t.footer.base[1]}</span>
+          <span><a href={home}>← {t.guitarPages.backHome}</a></span>
+        </div>
+      </div>
+    </footer>
+
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      document.querySelectorAll(".reveal, .laceria").forEach((el) => io.observe(el));
+
+      const header = document.querySelector(".site-header");
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle("scrolled", y > 60);
+        if (y > 260 && y > lastY + 4) header.classList.add("hidden");
+        else if (y < lastY - 4 || y <= 260) header.classList.remove("hidden");
+        lastY = y;
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>

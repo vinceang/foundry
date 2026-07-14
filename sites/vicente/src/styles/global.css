@@ -287,6 +287,11 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px,3vw,48px); }
 @media (max-width: 900px){ .collection-grid { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; } }
 .guitar-card { position: relative; cursor: pointer; }
+/* whole-card link as a stretched overlay — never restyle the card's own
+   elements into anchors (an inline <a> broke the arch mat once already) */
+.card-link { position: absolute; inset: 0; z-index: 2; border-radius: var(--arch); }
+.card-link:focus-visible { outline: 2px solid var(--naranja-deep); outline-offset: 4px; }
+.guitar-info .gmaker { position: relative; z-index: 3; }
 .guitar-figure {
   position: relative; overflow: hidden;
   border-radius: var(--arch);
@@ -410,6 +415,76 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
 .luthier-works .note { font-family: var(--display); font-style: italic; font-size: clamp(22px,2.2vw,30px); line-height: 1.4; max-width: 26ch; }
 .luthier-works .etiqueta-img { border: 1px solid var(--line-light); }
 .luthier-works .etiqueta-img img { width: 100%; display: block; }
+
+/* ============================================================
+   GUITAR PAGES — la ficha de cada guitarra
+   Body on nogal (left, under the brand), the guitar on a full-bleed
+   marfil mat (right) — the inverse of the luthier pages, so people
+   and instruments read as different rooms of the same house.
+   ============================================================ */
+.site-header.solid { background: var(--nogal); border-bottom: 1px solid var(--line-dark); }
+
+.gp-hero { background: var(--nogal); color: var(--on-dark); display: grid; grid-template-columns: 1fr minmax(320px, 44%); min-height: 100svh; }
+.gp-hero-media { position: relative; background: var(--marfil-2); overflow: hidden; }
+.gp-hero-media img {
+  /* contain, not cover: the whole instrument or nothing — multiply onto the
+     mat makes the letterbox invisible since the backdrop matches the marfil */
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: contain; object-position: center;
+  padding: clamp(20px, 3.5vh, 44px);
+  mix-blend-mode: multiply;
+}
+.gp-hero-body {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: clamp(110px,13vh,160px) clamp(32px,5.5vw,96px) clamp(56px,7vw,90px) var(--gutter);
+}
+.gp-hero-body h1 { font-family: var(--display); font-style: italic; font-weight: 500; font-size: clamp(48px,6vw,92px); line-height: 1; color: #fff; margin: var(--s3) 0 var(--s4); }
+.gp-lede { color: var(--on-dark-dim); max-width: 52ch; }
+.gp-buy { display: flex; align-items: center; gap: var(--s4); margin-top: var(--s5); flex-wrap: wrap; }
+.gp-price { font-family: var(--display); font-size: clamp(28px,2.6vw,38px); color: var(--naranja-bright); }
+.gp-note { margin-top: var(--s3); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-faint); }
+@media (max-width: 860px) {
+  .gp-hero { grid-template-columns: 1fr; }
+  .gp-hero-media { order: -1; min-height: 62svh; }
+  .gp-hero-body { padding-top: var(--s6); }
+}
+
+.gp-voz { background: var(--nogal-2); color: var(--on-dark); padding: clamp(80px,10vw,132px) 0; position: relative; overflow: hidden; }
+.gp-voz .ghost {
+  position: absolute; right: -2%; bottom: -6%; pointer-events: none; user-select: none;
+  font-family: var(--display); font-style: italic; font-size: clamp(160px,26vw,380px); line-height: 1;
+  color: rgba(241,233,214,.045);
+}
+.gp-voz-body { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px,4vw,64px); margin-top: var(--s5); }
+.gp-voz-body p { color: var(--on-dark-dim); max-width: 58ch; }
+@media (max-width: 720px){ .gp-voz-body { grid-template-columns: 1fr; } }
+
+.gp-ficha { background: var(--paper); color: var(--on-light); padding: 0 0 clamp(88px,12vw,152px); position: relative; }
+.laceria.on-light .echo { stroke: rgba(36,26,18,.12); }
+.gp-ficha-grid { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(36px,5vw,88px); margin-top: var(--s6); align-items: start; }
+@media (max-width: 860px){ .gp-ficha-grid { grid-template-columns: 1fr; } }
+.ficha-book { margin-top: var(--s5); }
+.ficha-book .row {
+  display: grid; grid-template-columns: minmax(120px, 200px) 1fr; gap: var(--s3);
+  padding: 13px 0; border-bottom: 1px solid var(--line-light);
+  align-items: baseline;
+}
+.ficha-book dt { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; font-weight: 600; color: var(--naranja-deep); }
+.ficha-book dd { font-size: 17px; color: var(--on-light); }
+.gp-ficha-aside { padding-top: var(--s2); }
+.ficha-note { font-family: var(--display); font-style: italic; font-size: clamp(19px,1.7vw,23px); line-height: 1.45; max-width: 34ch; color: var(--on-light); }
+.etiqueta-arch { margin-top: var(--s4); border-radius: var(--arch); overflow: hidden; border: 1px solid var(--line-light); }
+.etiqueta-arch img { width: 100%; display: block; }
+.ficha-signed { margin-top: var(--s3); font-size: 12.5px; letter-spacing: .18em; text-transform: uppercase; color: var(--on-light-dim); }
+
+.gp-maker { background: var(--nogal); color: var(--on-dark); padding: clamp(80px,10vw,132px) 0; }
+.gp-maker-grid { display: grid; grid-template-columns: minmax(0,380px) 1fr; gap: clamp(36px,5vw,88px); align-items: center; }
+@media (max-width: 820px){
+  .gp-maker-grid { grid-template-columns: 1fr; max-width: 440px; margin-inline: auto; }
+  .gp-maker-copy { order: -1; } /* label-first cadence holds when stacked */
+}
+.gp-maker-copy p:not(.label) { color: var(--on-dark-dim); max-width: 48ch; }
+.gp-maker-copy .luthier-quote { margin: var(--s4) 0; }
 
 .luthier-nav { background: var(--nogal); border-top: 1px solid var(--line-dark); display: grid; grid-template-columns: 1fr 1fr; }
 .luthier-nav a { padding: clamp(28px,3.5vw,46px) var(--gutter); display: flex; flex-direction: column; gap: 8px; transition: background .5s var(--ease); }

@@ -9,6 +9,7 @@ const t = strings[locale];
 const other = locale === "en" ? "es" : "en";
 const home = locale === "en" ? "/" : "/es/";
 const otherHome = other === "en" ? "/" : "/es/";
+const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
 ---
 
 <!doctype html>
@@ -139,6 +140,7 @@ const otherHome = other === "en" ? "/" : "/es/";
         <div class="collection-grid">
           {t.collection.guitars.map((g, i) => (
             <article class="guitar-card reveal" style={`--i:${i}`}>
+              <a class="card-link" href={`${guitarsBase}${g.slug}/`} aria-label={`${g.name} — ${g.spec}`}></a>
               <div class="guitar-figure"><img src={g.img} alt={`${g.name} — ${g.spec}`} loading="lazy" /></div>
               <div class="guitar-info">
                 <div class="gname">{g.name}</div>
@@ -211,7 +213,7 @@ const otherHome = other === "en" ? "/" : "/es/";
           </div>
           <div class="footer-col">
             <h4>{t.footer.colGuitars}</h4>
-            {t.collection.guitars.map((g) => <a href="#guitarras">{g.name}</a>)}
+            {t.collection.guitars.map((g) => <a href={`${guitarsBase}${g.slug}/`}>{g.name}</a>)}
           </div>
           <div class="footer-col">
             <h4>{t.footer.colHouse}</h4>
