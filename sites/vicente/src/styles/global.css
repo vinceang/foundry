@@ -364,7 +364,8 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
 .btn::before { content:""; position:absolute; inset:0; background: var(--naranja); transform: translateY(101%); transition: transform .5s var(--ease); }
 .btn:hover::before { transform: translateY(0); }
 .btn span { position: relative; }
-.commission-note { position: relative; margin-top: var(--s4); font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--on-light-dim); }
+/* .commission > p would zero this margin (higher specificity), so match it */
+.commission > p.commission-note { position: relative; margin: var(--s6) auto 0; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--on-light-dim); }
 
 /* ============================================================
    FOOTER
