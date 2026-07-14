@@ -73,6 +73,7 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
         <p class="gp-note reveal" style="--i:5">{t.guitarPages.commissionNote}</p>
       </div>
       <div class="gp-hero-media reveal">
+        <img class="gp-bleed" src={guitar.img} alt="" aria-hidden="true" />
         <img src={guitar.img} alt={`${guitar.name} — ${guitar.spec}`} />
       </div>
     </section>

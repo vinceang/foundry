@@ -425,17 +425,47 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
 .site-header.solid { background: var(--nogal); border-bottom: 1px solid var(--line-dark); }
 
 .gp-hero { background: var(--nogal); color: var(--on-dark); display: grid; grid-template-columns: 1fr minmax(320px, 44%); min-height: 100svh; }
-.gp-hero-media { position: relative; background: var(--marfil-2); overflow: hidden; }
+/* Full-bleed AND whole-instrument at every viewport ratio, three layers:
+   1. a blurred cover copy of the photo extends its own backdrop across the
+      column (no flat color can match the photos' lighting gradients);
+   2. the sharp photo sits centered at natural contain size, its outer edges
+      feather-masked into the blur (the photos carry ≥10% backdrop margin on
+      every side by recipe, so the feather never touches the instrument);
+   3. a warm vignette puts both layers under one light.
+   Container padding reserves the fixed-header zone — without it, wide/short
+   viewports (fit-by-height) hide the headstock behind the header bar. */
+.gp-hero-media {
+  --pt: clamp(110px, 13vh, 160px);  /* header-safe top */
+  --px: clamp(24px, 3.5vw, 48px);
+  --pb: clamp(28px, 4.5vh, 56px);
+  --fz: 64px;                        /* feather depth into the photo edge */
+  position: relative; background: var(--marfil-2); overflow: hidden;
+}
 .gp-hero-media img {
-  /* contain, not cover: the whole instrument or nothing — multiply onto the
-     mat makes the letterbox invisible since the backdrop matches the marfil.
-     The top padding matters: the fixed header overlays this column, so the
-     contain box must start below it or wide/short viewports (fit-by-height)
-     hide the headstock behind the header bar. */
-  position: absolute; inset: 0; width: 100%; height: 100%;
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%;
   object-fit: contain; object-position: center;
-  padding: clamp(110px, 13vh, 160px) clamp(24px, 3.5vw, 48px) clamp(28px, 4.5vh, 56px);
-  mix-blend-mode: multiply;
+  padding: var(--pt) var(--px) var(--pb);
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent var(--px), #000 calc(var(--px) + var(--fz)), #000 calc(100% - var(--px) - var(--fz)), transparent calc(100% - var(--px))),
+    linear-gradient(180deg, transparent var(--pt), #000 calc(var(--pt) + var(--fz)), #000 calc(100% - var(--pb) - var(--fz)), transparent calc(100% - var(--pb)));
+  mask-image:
+    linear-gradient(90deg, transparent var(--px), #000 calc(var(--px) + var(--fz)), #000 calc(100% - var(--px) - var(--fz)), transparent calc(100% - var(--px))),
+    linear-gradient(180deg, transparent var(--pt), #000 calc(var(--pt) + var(--fz)), #000 calc(100% - var(--pb) - var(--fz)), transparent calc(100% - var(--pb)));
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+.gp-hero-media .gp-bleed {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; max-width: none; max-height: none;
+  object-fit: cover;
+  filter: blur(34px) saturate(1.04);
+  transform: scale(1.12); /* keeps blur's soft edges outside the column */
+  -webkit-mask-image: none; mask-image: none;
+}
+.gp-hero-media::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(115% 92% at 50% 40%, transparent 55%, rgba(38,24,17,.2) 100%);
 }
 .gp-hero-body {
   display: flex; flex-direction: column; justify-content: center;
@@ -448,8 +478,7 @@ html:not(.js) .laceria path { stroke-dashoffset: 0; }
 .gp-note { margin-top: var(--s3); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--on-dark-faint); }
 @media (max-width: 860px) {
   .gp-hero { grid-template-columns: 1fr; }
-  .gp-hero-media { order: -1; min-height: 74svh; }
-  .gp-hero-media img { padding: 96px 20px 24px; }
+  .gp-hero-media { order: -1; min-height: 74svh; --pt: 96px; --px: 20px; --pb: 24px; --fz: 44px; }
   .gp-hero-body { padding-top: var(--s6); }
 }
 

@@ -44,7 +44,7 @@ Never let an accent drift back toward red, and never introduce a monospace — t
 
 ## Asset recipes
 
-- Guitars (catalog): gpt-image-2, portrait 1024×1536, warm aged-ivory seamless backdrop, **anatomy clause is mandatory**: *"long slender neck joining the body exactly at the twelfth fret, nineteen frets total, slotted headstock with three tuners per side, ONE single bridge with tie-block, six nylon strings."* Vince reads fret joins — an 11-fret join got a candidate rejected. Inspect every render before use.
+- Guitars (catalog): gpt-image-2, portrait 1024×1536, warm aged-ivory seamless backdrop, **anatomy clause is mandatory**: *"long slender neck joining the body exactly at the twelfth fret, nineteen frets total, slotted headstock with three tuners per side, ONE single bridge with tie-block, six nylon strings."* Vince reads fret joins — an 11-fret join got a candidate rejected. Inspect every render before use. **Also mandatory: generous empty backdrop margin on ALL sides (≥10% of frame)** — the guitar-page hero feathers the photo edges into a blurred self-extension, and the feather needs that margin (photos without headroom got headstocks eaten twice).
 - Portraits: warm window-light chiaroscuro, half-shadow, dark linen/canvas aprons, workshop bokeh with hanging guitars. Vince has face veto.
 - Beware real-world names: one workshop render produced a legible "Manuel Reyes" poster (a real Granada luthier) — cropped out via `object-position: 30% center`. Check generated text in backgrounds.
 
@@ -55,7 +55,7 @@ English warm and declarative with one poetic turn per section; Spanish is idioma
 ## Revisit backlog (Vince: "I will revisit at some point for additional details")
 
 1. Etiqueta composite: at full zoom, ink still slightly overrides string highlights — a string-aware overlay (pixel-sampled) was attempted and time-boxed; refine if the image gets used larger than ~700px.
-2. La Blanca's arch mat reads slightly cooler than its siblings (its photo backdrop) — could regenerate or color-match.
+2. ~~La Blanca's arch mat reads slightly cooler than its siblings~~ — resolved 2026-07-13: blanca and negra regenerated with warm cream backdrops matched to La Clásica (plus all-sides margins).
 3. Second insignia surface: the headstock logo composite was planned but not built.
 4. Workshop image: consider regenerating without any legible poster text at all (currently crop-managed).
 5. Possible portrait-orientation hero film variant for mobile (current 16:9 crops tight on 390px).
