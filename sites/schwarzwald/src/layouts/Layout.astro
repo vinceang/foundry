@@ -68,6 +68,7 @@ const homeHref = lang === 'de' ? '/de/' : '/';
       </a>
       <nav class="site-nav" aria-label="Primary">
         <a href={`${homeHref}#kabinett`}>{t.nav.kabinett}</a>
+        <a href={`${homeHref}#familie`}>{t.nav.familie}</a>
         <a href={`${homeHref}#werkstatt`}>{t.nav.werkstatt}</a>
         <a href={`${homeHref}#urkunde`}>{t.nav.urkunde}</a>
         <a class="nav-cta" href={`${homeHref}#auftrag`}>{t.nav.cta}</a>
@@ -164,6 +165,43 @@ const homeHref = lang === 'de' ? '/de/' : '/';
         };
         tick();
         setInterval(tick, 60_000);
+      }
+
+      // ---- settle videos: play once, dissolve back to the still ----
+      // Desktop fine-pointer only; reduced-motion / Save-Data / nofx never
+      // fetch a byte (preload=none, src set only after all gates pass).
+      {
+        const noMotionV = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const saveData = (navigator as any).connection?.saveData === true;
+        const desktop = matchMedia('(min-width: 960px) and (pointer: fine)').matches;
+        const js = document.documentElement.classList.contains('js');
+        if (js && desktop && !noMotionV && !saveData) {
+          const arm = (v: HTMLVideoElement) => {
+            v.src = v.dataset.src!;
+            v.addEventListener('playing', () => v.classList.add('is-live'));
+            v.addEventListener('ended', () => v.classList.remove('is-live'));
+          };
+          document.querySelectorAll<HTMLVideoElement>('[data-settle="load"]').forEach((v) => {
+            arm(v);
+            addEventListener('load', () => setTimeout(() => v.play().catch(() => {}), 900));
+          });
+          const vio = new IntersectionObserver(
+            (entries) => {
+              for (const e of entries) {
+                if (e.isIntersecting) {
+                  const v = e.target as HTMLVideoElement;
+                  v.play().catch(() => {});
+                  vio.unobserve(v);
+                }
+              }
+            },
+            { threshold: 0.45 }
+          );
+          document.querySelectorAll<HTMLVideoElement>('[data-settle="view"]').forEach((v) => {
+            arm(v);
+            vio.observe(v);
+          });
+        }
       }
 
       // ---- custom cursor ----

@@ -1,7 +1,8 @@
 ---
 import fs from 'node:fs';
+import path from 'node:path';
 import Layout from '../layouts/Layout.astro';
-import { clocks, privateHands, ui, type Locale } from '../data/site';
+import { clocks, generations, privateHands, ui, type Locale } from '../data/site';
 
 interface Props { lang: Locale }
 const { lang } = Astro.props;
@@ -9,12 +10,20 @@ const t = ui[lang];
 const altPath = lang === 'en' ? '/de/' : '/';
 const selfPath = lang === 'en' ? '/' : '/de/';
 
-// A plate renders only once its file is hung in public/plates/ —
-// until then the ceremonial pending state stands in.
+// A plate renders only once its file is hung in public/plates/ — until then
+// the ceremonial pending state stands in. Resolved from the project root:
+// import.meta.url points into dist/ chunks during `astro build`, where the
+// relative hop to public/ no longer exists (this silently blanked every
+// plate in production once).
 const plate = (name: string) =>
-  fs.existsSync(new URL(`../../public/plates/${name}`, import.meta.url)) ? `/plates/${name}` : undefined;
+  fs.existsSync(path.join(process.cwd(), 'public/plates', name)) ? `/plates/${name}` : undefined;
 const heroImg = plate('hero.jpg');
 const werkstattImg = plate('werkstatt.jpg');
+const masterImg = plate('familie-elias.jpg');
+const handsImg = plate('familie-haende.jpg');
+const apprImg = plate('familie-marta.jpg');
+const heroVideo = plate('hero.mp4');
+const werkstattVideo = plate('werkstatt.mp4');
 ---
 
 <Layout lang={lang} altPath={altPath} selfPath={selfPath}>
@@ -24,6 +33,9 @@ const werkstattImg = plate('werkstatt.jpg');
       {heroImg ? (
         <div class="hero-media" aria-hidden="true">
           <img src={heroImg} alt="" loading="eager" fetchpriority="high" width="1536" height="1024" />
+          {heroVideo && (
+            <video class="settle-video" muted playsinline preload="none" data-settle="load" data-src={heroVideo} width="1280" height="720"></video>
+          )}
           <div class="hero-shade"></div>
         </div>
       ) : (
@@ -144,7 +156,93 @@ const werkstattImg = plate('werkstatt.jpg');
       </div>
     </section>
 
-    <!-- ══════════ IV. WERKSTATT (winter night) ══════════ -->
+    <!-- ══════════ IV. DIE FAMILIE ══════════ -->
+    <section class="familie" id="familie">
+      <div class="chapter">
+        <p class="folio rv">{t.familie.folio}</p>
+        <div class="sect-head rv" style="--d:1">
+          <p class="label">{t.familie.label}</p>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <h2 class="display chapter-display rv" style="--d:2">{t.familie.display}</h2>
+
+        <div class="familie-grid">
+          <figure class="familie-portrait rv" style="--d:3">
+            <div class="plate">
+              {masterImg ? (
+                <img src={masterImg} alt={t.familie.masterAlt} loading="lazy" width="1344" height="2016" />
+              ) : (
+                <span class="plate-pending">
+                  <span>
+                    <span class="gable gable--faint" aria-hidden="true" style="display:block; margin-inline:auto;"></span>
+                    <span>{t.kabinett.plateForthcoming}</span>
+                  </span>
+                </span>
+              )}
+            </div>
+            <figcaption class="plate-caption">
+              <span class="display plate-caption-name">{t.familie.masterName}</span>
+              <span>{t.familie.masterCaption}</span>
+            </figcaption>
+          </figure>
+
+          <div class="familie-side">
+            <p class="chapter-body rv" style="--d:4; margin-top: 0;">{t.familie.body}</p>
+            <h3 class="label label--dim rv" style="--d:5; margin-top: var(--s6);">{t.familie.ledgerLabel}</h3>
+            <ul class="ledger familie-ledger rv" style="--d:6">
+              {generations.map((g) => (
+                <li>
+                  <span class="wv">{g.n}</span>
+                  <span class="name">{g.name}</span>
+                  <span>{g.years[lang]}</span>
+                  <span class="gable gable--faint" aria-hidden="true"></span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="familie-duo">
+          <figure class="familie-hands rv">
+            <div class="plate">
+              {handsImg ? (
+                <img src={handsImg} alt={t.familie.handsAlt} loading="lazy" width="2016" height="1344" data-parallax="18" />
+              ) : (
+                <span class="plate-pending">
+                  <span>
+                    <span class="gable gable--faint" aria-hidden="true" style="display:block; margin-inline:auto;"></span>
+                    <span>{t.kabinett.plateForthcoming}</span>
+                  </span>
+                </span>
+              )}
+            </div>
+            <figcaption class="plate-caption">
+              <span>{t.familie.handsCaption}</span>
+            </figcaption>
+          </figure>
+          <figure class="familie-appr rv" style="--d:1">
+            <div class="plate">
+              {apprImg ? (
+                <img src={apprImg} alt={t.familie.apprAlt} loading="lazy" width="1344" height="2016" />
+              ) : (
+                <span class="plate-pending">
+                  <span>
+                    <span class="gable gable--faint" aria-hidden="true" style="display:block; margin-inline:auto;"></span>
+                    <span>{t.kabinett.plateForthcoming}</span>
+                  </span>
+                </span>
+              )}
+            </div>
+            <figcaption class="plate-caption">
+              <span class="display plate-caption-name">{t.familie.apprName}</span>
+              <span>{t.familie.apprCaption}</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ V. WERKSTATT (winter night) ══════════ -->
     <section class="werkstatt" id="werkstatt">
       <div class="chapter werkstatt-grid">
         <div>
@@ -159,7 +257,12 @@ const werkstattImg = plate('werkstatt.jpg');
         </div>
         <figure class="plate werkstatt-plate rv" style="--d:2">
           {werkstattImg ? (
-            <img src={werkstattImg} alt={t.werkstatt.plateAlt} loading="lazy" width="1024" height="1536" data-parallax="18" />
+            <>
+              <img src={werkstattImg} alt={t.werkstatt.plateAlt} loading="lazy" width="1024" height="1536" />
+              {werkstattVideo && (
+                <video class="settle-video" muted playsinline preload="none" data-settle="view" data-src={werkstattVideo} width="720" height="1080" aria-hidden="true"></video>
+              )}
+            </>
           ) : (
             <span class="plate-pending">
               <span>
@@ -242,6 +345,7 @@ const werkstattImg = plate('werkstatt.jpg');
     width: 100%; height: 100%;
     object-fit: cover; object-position: 72% center;
   }
+  .hero-media .settle-video { object-position: 72% center; }
   .hero-shade {
     position: absolute; inset: 0;
     background:
@@ -380,6 +484,47 @@ const werkstattImg = plate('werkstatt.jpg');
     transition: color .35s, letter-spacing .6s var(--ease);
   }
   .work-dossier:hover { color: var(--messing-bright); letter-spacing: .4em; }
+
+  /* ---------- die familie ---------- */
+  .familie {
+    background: linear-gradient(180deg, var(--void), var(--wald) 18%, var(--wald) 84%, var(--void));
+    padding-block: var(--s9);
+  }
+  .familie-grid {
+    display: grid;
+    gap: var(--s6);
+    margin-top: var(--s7);
+  }
+  @media (min-width: 960px) {
+    .familie-grid { grid-template-columns: 5fr 6fr; gap: var(--s7); align-items: start; }
+  }
+  /* the caption sits under the plate, outside its border */
+  .familie-portrait .plate { aspect-ratio: 2 / 3; }
+  .familie-hands .plate { aspect-ratio: 3 / 2; }
+  .familie-appr .plate { aspect-ratio: 2 / 3; }
+  .familie-ledger li { grid-template-columns: 56px 1fr auto 20px; }
+  .familie-ledger .name { color: var(--leinen); }
+  .familie-duo {
+    display: grid;
+    gap: var(--s6);
+    margin-top: var(--s8);
+  }
+  @media (min-width: 960px) {
+    .familie-duo { grid-template-columns: 7fr 4fr; gap: var(--s7); align-items: end; }
+  }
+  .plate-caption {
+    display: grid;
+    gap: 4px;
+    padding-top: var(--s2);
+    font-size: 12.5px;
+    letter-spacing: .06em;
+    color: var(--leinen-dim);
+  }
+  .plate-caption-name {
+    font-size: 17px;
+    color: var(--leinen);
+    letter-spacing: .04em;
+  }
 
   /* ---------- in private hands ---------- */
   .hands {

@@ -316,6 +316,22 @@ a:hover .plate img, .plate:hover img { filter: brightness(1.05); }
 }
 .specs dd { font-family: var(--display); font-size: 17px; color: var(--leinen); }
 
+/* ---------- settle videos ----------
+   A video plays once over its exact start-frame still, then dissolves back
+   into the photograph — one breath of life, then stillness. Desktop only,
+   JS-gated (reduced-motion and Save-Data never load a byte). */
+.settle-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.6s var(--ease);
+  pointer-events: none;
+}
+.settle-video.is-live { opacity: 1; }
+
 /* ---------- section furniture ---------- */
 .sect-head { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: var(--s6); }
 .sect-head .rule { flex: 1; height: 1px; background: var(--line-soft); align-self: center; }

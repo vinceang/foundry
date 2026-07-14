@@ -54,6 +54,7 @@ must stay consistent with this table:
 | Fact | Value |
 |---|---|
 | Founded | 1854, Schonach im Schwarzwald |
+| The family | Waldvogel ("forest bird") — masters: Matthias I. 1854–1881 · Johann II. 1881–1907 · Albrecht III. 1907–1934 · Frieda IV. 1934–1961 · Georg V. 1961–1987 · Lorenz VI. 1987–2011 · Elias VII. 2011– · Marta VIII., apprenticed 2019 |
 | Generations | Seven |
 | Clocks per year | Eight |
 | Wood drying | Eleven years, air-dried in the attic of the house |
@@ -180,10 +181,22 @@ text, no ticking animation, updated at most once a minute.
 
 ## 6. Imagery
 
-One recipe, no exceptions: **one subject, one warm lantern light, void
-background.** Chiaroscuro. Palette inside the frame must match the tokens —
-fir-dark greens, walnut and linden browns *as the object's own material*,
-brass glints. No text in images, no faces (anonymous carver's hands allowed).
+One recipe: **one subject, one warm lantern light, void background.**
+Chiaroscuro. Palette inside the frame must match the tokens — fir-dark
+greens, walnut and linden browns *as the object's own material*, brass
+glints. No text in images.
+
+**Faces (amended 2026-07-14, by the owner's direction):** the house shows
+its people. Portraits are sanctioned in the Familie chapter and anywhere
+the craft is shown in action — under the same one-lantern rule: Rembrandt
+chiaroscuro, quiet dignity, the sitter lit as the clocks are lit. Never
+stock-photo energy (no smiling at camera, no posed teamwork), never
+daylight, never a busy workshop background. Portraits are of *named members
+of the family fiction* — every face belongs to someone in the
+Werkverzeichnis. Generation note: reference images of environments hijack
+soul_2's prompt enhancer (it describes the reference's daylight clutter
+instead of following art direction) — describe people in text and keep one
+fixed physical description per person across shots.
 
 ### Generation recipe (Higgsfield `soul_2`)
 
@@ -202,11 +215,18 @@ raw PNGs → `assets-src/` (gitignored) → `sips` JPEG q≈78, longest edge
 ### Motion imagery
 
 Video is rare by policy. It exists for what only a camera can do — light
-raking across relief carving, parallax through the workshop, the pendulum's
-slow beat. Camera moves as a visitor would; the subject never moves (the
-pendulum is the licensed exception — it may swing at true one-second beat,
-nothing else in frame moving). One video per page, desktop-only, lazy,
-≤4MB, generated from the exact still it layers over.
+raking across relief carving, the pendulum's slow beat, a shaving curling
+off the chisel. Camera moves as a visitor would; the subject never moves
+(the pendulum and the chisel's cut are the licensed exceptions). Generated
+from the exact still it layers over, desktop-only, JS-gated, ≤4MB.
+
+**The settle pattern (2026-07-14):** videos do not loop. A video plays
+*once* over its start-frame still, then dissolves back into the photograph
+— one breath of life, then stillness. This retires the loop-seam problem
+and is truer to the register than any loop. Up to two settle videos per
+page (hero on load, one chapter on scroll-into-view) provided they are
+never in the same viewport; reduced-motion, Save-Data, and mobile never
+fetch a byte (`preload="none"`, src assigned only after all gates pass).
 
 ---
 

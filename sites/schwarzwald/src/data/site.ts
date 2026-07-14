@@ -116,6 +116,18 @@ export const clocks: Clock[] = [
   },
 ];
 
+// The Waldvogel line — seven masters since 1854, the eighth apprenticed.
+export const generations = [
+  { n: 'I.', name: 'Matthias Waldvogel', years: { en: '1854–1881', de: '1854–1881' } },
+  { n: 'II.', name: 'Johann Waldvogel', years: { en: '1881–1907', de: '1881–1907' } },
+  { n: 'III.', name: 'Albrecht Waldvogel', years: { en: '1907–1934', de: '1907–1934' } },
+  { n: 'IV.', name: 'Frieda Waldvogel', years: { en: '1934–1961', de: '1934–1961' } },
+  { n: 'V.', name: 'Georg Waldvogel', years: { en: '1961–1987', de: '1961–1987' } },
+  { n: 'VI.', name: 'Lorenz Waldvogel', years: { en: '1987–2011', de: '1987–2011' } },
+  { n: 'VII.', name: 'Elias Waldvogel', years: { en: '2011–', de: '2011–' } },
+  { n: 'VIII.', name: 'Marta Waldvogel', years: { en: 'apprenticed 2019', de: 'in der Lehre seit 2019' } },
+];
+
 export const privateHands = [
   { wv: 'WV 199', name: 'Hirschruf', year: '2023', place: { en: 'Vienna', de: 'Wien' } },
   { wv: 'WV 190', name: 'Wintergang', year: '2019', place: { en: 'Kyoto', de: 'Kyōto' } },
@@ -138,6 +150,7 @@ export const ui = {
     },
     nav: {
       kabinett: 'Kabinett',
+      familie: 'Familie',
       werkstatt: 'Werkstatt',
       urkunde: 'Urkunde',
       cta: 'Correspondence',
@@ -189,8 +202,24 @@ export const ui = {
       body:
         'Every clock since 1854 stands in the Werkverzeichnis. Owners may write for the record of their clock — its wood, its felling winter, its hours — at any time. These left the house most recently.',
     },
-    werkstatt: {
+    familie: {
       folio: 'IV.',
+      label: 'Die Familie',
+      display: 'Seven generations of one name.',
+      body:
+        'Since 1854 the Werkverzeichnis has been signed Waldvogel. Matthias carved the first case; Frieda, the fourth, kept the benches working through two wars; Elias, the seventh, signs it today. His daughter Marta, the eighth, already cuts her own fir boughs. No clock leaves this house that a Waldvogel has not held.',
+      masterName: 'Elias Waldvogel',
+      masterCaption: 'Seventh generation. Master of the house since 2011.',
+      masterAlt: 'Portrait of Elias Waldvogel, seventh-generation master clockmaker, at his bench by lantern light',
+      handsCaption: 'The chisel is taught before the fountain pen.',
+      handsAlt: 'An old clockmaker\'s weathered hands guiding a child\'s hands over a linden carving, one chisel held together, by candlelight',
+      apprName: 'Marta Waldvogel',
+      apprCaption: 'Eighth generation. Apprenticed to her father since 2019.',
+      apprAlt: 'Portrait of Marta Waldvogel, eighth-generation apprentice, examining a small brass movement by lantern light',
+      ledgerLabel: 'The masters of the house',
+    },
+    werkstatt: {
+      folio: 'V.',
       label: 'Die Werkstatt',
       display: 'Between three hundred and nine hundred hours.',
       body:
@@ -202,7 +231,7 @@ export const ui = {
       link: 'The craft, at length',
     },
     urkunde: {
-      folio: 'V.',
+      folio: 'VI.',
       label: 'Die Urkunde',
       display: 'No clock leaves without its papers.',
       body:
@@ -210,7 +239,7 @@ export const ui = {
       link: 'Why authenticity matters',
     },
     auftrag: {
-      folio: 'VI.',
+      folio: 'VII.',
       label: 'Der Auftrag',
       display: 'Commission a clock that does not yet exist.',
       body:
@@ -247,6 +276,7 @@ export const ui = {
     },
     nav: {
       kabinett: 'Kabinett',
+      familie: 'Familie',
       werkstatt: 'Werkstatt',
       urkunde: 'Urkunde',
       cta: 'Korrespondenz',
@@ -298,8 +328,24 @@ export const ui = {
       body:
         'Jede Uhr seit 1854 steht im Werkverzeichnis. Eigentümer können jederzeit um den Eintrag ihrer Uhr schreiben — ihr Holz, ihren Schlagwinter, ihre Stunden. Diese verließen das Haus zuletzt.',
     },
-    werkstatt: {
+    familie: {
       folio: 'IV.',
+      label: 'Die Familie',
+      display: 'Sieben Generationen, ein Name.',
+      body:
+        'Seit 1854 trägt das Werkverzeichnis die Unterschrift Waldvogel. Matthias schnitzte das erste Gehäuse; Frieda, die vierte, hielt die Bänke durch zwei Kriege am Werk; Elias, der siebte, unterschreibt heute. Seine Tochter Marta, die achte, schneidet bereits ihre eigenen Tannenzweige. Keine Uhr verlässt dieses Haus, die kein Waldvogel gehalten hat.',
+      masterName: 'Elias Waldvogel',
+      masterCaption: 'Siebte Generation. Meister des Hauses seit 2011.',
+      masterAlt: 'Porträt von Elias Waldvogel, Uhrmachermeister in siebter Generation, an seiner Werkbank im Laternenlicht',
+      handsCaption: 'Das Eisen wird vor dem Füllfederhalter gelehrt.',
+      handsAlt: 'Die verwitterten Hände eines alten Uhrmachers führen die Hände eines Kindes über eine Lindenschnitzerei, ein gemeinsam gehaltenes Eisen, bei Kerzenlicht',
+      apprName: 'Marta Waldvogel',
+      apprCaption: 'Achte Generation. In der Lehre bei ihrem Vater seit 2019.',
+      apprAlt: 'Porträt von Marta Waldvogel, Lehrling in achter Generation, ein kleines Messingwerk im Laternenlicht prüfend',
+      ledgerLabel: 'Die Meister des Hauses',
+    },
+    werkstatt: {
+      folio: 'V.',
       label: 'Die Werkstatt',
       display: 'Zwischen dreihundert und neunhundert Stunden.',
       body:
@@ -311,7 +357,7 @@ export const ui = {
       link: 'Das Handwerk, ausführlich',
     },
     urkunde: {
-      folio: 'V.',
+      folio: 'VI.',
       label: 'Die Urkunde',
       display: 'Keine Uhr verlässt das Haus ohne ihre Papiere.',
       body:
@@ -319,7 +365,7 @@ export const ui = {
       link: 'Warum Echtheit zählt',
     },
     auftrag: {
-      folio: 'VI.',
+      folio: 'VII.',
       label: 'Der Auftrag',
       display: 'Geben Sie eine Uhr in Auftrag, die es noch nicht gibt.',
       body:
