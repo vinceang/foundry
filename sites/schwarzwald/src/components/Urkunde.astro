@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ui, type Locale } from '../data/site';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = ui[lang];
+const p = t.urkundePage;
+
+const selfPath = lang === 'de' ? '/de/urkunde/' : '/urkunde/';
+const altPath = lang === 'de' ? '/urkunde/' : '/de/urkunde/';
+const homeHref = lang === 'de' ? '/de/' : '/';
+---
+
+<Layout lang={lang} title={p.title} description={p.description} altPath={altPath} selfPath={selfPath}>
+  <main class="urkunde-page">
+    <section class="u-hero">
+      <span class="u-mark fraktur" aria-hidden="true">Echt</span>
+      <div class="chapter">
+        <p class="label rv">{p.label}</p>
+        <h1 class="display u-display rv" style="--d:1">{p.display}</h1>
+        <p class="u-intro rv" style="--d:2">{p.intro}</p>
+      </div>
+    </section>
+
+    <section class="u-sections">
+      <div class="chapter u-inner">
+        {p.sections.map((s) => (
+          <article class="u-section">
+            <p class="folio rv">{s.folio}</p>
+            <h2 class="display u-head rv" style="--d:1">{s.head}</h2>
+            <div class="u-body rv" style="--d:2">
+              {s.body.map((par) => <p>{par}</p>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="u-close">
+      <div class="chapter u-close-inner">
+        <span class="gable" aria-hidden="true" style="margin-inline: auto;"></span>
+        <p class="u-close-line rv">{p.close}</p>
+        <p class="rv" style="--d:1; margin-top: var(--s4);">
+          <a class="btn-brass" href={`${homeHref}#kabinett`}>{p.closeCta}</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .chapter {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .u-hero {
+    position: relative;
+    padding: calc(var(--s9) + 40px) 0 var(--s8);
+    background: linear-gradient(180deg, var(--wald), var(--void));
+    overflow: hidden;
+  }
+  .u-mark {
+    position: absolute;
+    right: -0.05em;
+    bottom: -0.28em;
+    font-size: clamp(160px, 24vw, 340px);
+    line-height: 1;
+    color: rgba(198, 142, 78, .05);
+    pointer-events: none;
+    user-select: none;
+  }
+  .u-display {
+    font-size: clamp(38px, 5.4vw, 72px);
+    max-width: 16ch;
+    margin-top: var(--s3);
+  }
+  .u-intro {
+    max-width: 58ch;
+    margin-top: var(--s4);
+    color: var(--leinen-dim);
+    font-size: 17px;
+  }
+
+  .u-sections { background: var(--void); padding-block: var(--s7) var(--s8); }
+  .u-inner {
+    max-width: 880px;
+    display: grid;
+    gap: var(--s8);
+  }
+  .u-head {
+    font-size: clamp(26px, 3vw, 38px);
+    margin-top: var(--s2);
+  }
+  .u-body {
+    margin-top: var(--s4);
+    display: grid;
+    gap: var(--s3);
+  }
+  .u-body p {
+    color: var(--leinen-dim);
+    max-width: 58ch;
+  }
+  /* the last paragraph of each section is the aphorism — let it stand */
+  .u-body p:last-child:not(:only-child) {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--leinen);
+  }
+
+  .u-close {
+    background: linear-gradient(180deg, var(--void), var(--wald) 40%);
+    padding-block: var(--s8) var(--s9);
+  }
+  .u-close-inner {
+    text-align: center;
+    display: grid;
+    justify-items: center;
+  }
+  .u-close-line {
+    margin-top: var(--s3);
+    color: var(--leinen-dim);
+    max-width: 48ch;
+  }
+</style>

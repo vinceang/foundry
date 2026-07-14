@@ -284,7 +284,7 @@ const werkstattVideo = plate('werkstatt.mp4');
           <h2 class="display chapter-display" style="margin-top: 24px;">{t.urkunde.display}</h2>
           <p class="chapter-body" style="margin-top: 24px; margin-inline:auto;">{t.urkunde.body}</p>
           <p style="margin-top: 32px;">
-            <a class="urkunde-link" href="#auftrag">{t.urkunde.link}</a>
+            <a class="urkunde-link" href={lang === 'de' ? '/de/urkunde/' : '/urkunde/'}>{t.urkunde.link}</a>
           </p>
         </div>
       </div>

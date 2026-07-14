@@ -358,6 +358,57 @@ export const ui = {
       cta: 'Open a correspondence',
       aside: 'The house accepts three commissions a year.',
     },
+    urkundePage: {
+      title: 'Die Urkunde — Why authenticity matters · Schwarzwald',
+      description:
+        'What the VdS certificate means, why mechanical construction matters, why Black Forest origin matters, and what a collector should ask of any cuckoo clock.',
+      label: 'Die Urkunde',
+      display: 'Why authenticity matters.',
+      intro:
+        'Most cuckoo clocks sold today are souvenirs. They are not wrong; they are simply not this. This page explains what the papers of this house attest, and what a collector should ask of any clock, wherever it is bought.',
+      sections: [
+        {
+          folio: 'I.',
+          head: 'The VdS certificate',
+          body: [
+            'The Verein die Schwarzwalduhr — the Black Forest Clock Association — certifies one thing, strictly: that a clock is mechanical, and that every essential part of it was made in the Black Forest. No electronics, no imported movement, no carving cast in resin. The certificate exists because the region\'s name is borrowed far more often than it is earned.',
+            'Every clock of this house carries the VdS seal. It is the floor beneath our own Urkunde, not the ceiling.',
+          ],
+        },
+        {
+          folio: 'II.',
+          head: 'Why mechanical matters',
+          body: [
+            'A battery clock is finished the day it is made. A mechanical clock is only begun: its brass movement asks to be wound, regulated, cleaned, and passed on — and answers with a working life measured in generations. Our movements run eight days to a winding, and every part of them can be made again by hand, which is the true meaning of repairable.',
+            'The winding is not a chore. It is the one minute a week in which the clock belongs entirely to you.',
+          ],
+        },
+        {
+          folio: 'III.',
+          head: 'Why the Black Forest matters',
+          body: [
+            'The cuckoo clock was not invented as a product; it grew out of winters. Farm families on these slopes carved through the snowed-in months, and by 1850 the school at Furtwangen had given the craft its classical form — the Bahnhäusle, the little house — in the same decade this workshop was founded. The linden that carves cleanest grows on these hills; the craft, the wood, and the weather are one thing.',
+            'A cuckoo clock made elsewhere may be a fine object. It is a picture of a clock, the way a print is a picture of a painting.',
+          ],
+        },
+        {
+          folio: 'IV.',
+          head: 'What this house adds',
+          body: [
+            'The VdS seal certifies the region. The Urkunde of this house certifies the clock: which stem the wood came from and the winter it was felled, the hours of carving, the caster of the bells where there are bells, and the signature of the master who let it leave. Behind the Urkunde stands the Werkverzeichnis — the ledger kept without a missing entry since 1854. Owners may write for the record of their clock at any time, and their heirs after them.',
+          ],
+        },
+        {
+          folio: 'V.',
+          head: 'For the collector',
+          body: [
+            'Whatever house you buy from, ask four things. Is the movement mechanical, and who made it? Does it carry the VdS seal? Is the carving cut from wood, or cast and stained to look like it? And will the maker put the answers in writing, signed? A clock that passes these questions will outlive its first owner. That is the entire point of one.',
+          ],
+        },
+      ],
+      close: 'Every dossier in the Kabinett states these papers plainly.',
+      closeCta: 'Enter the Kabinett',
+    },
     dossier: {
       back: 'The Kabinett',
       recordLabel: 'The craft record',
@@ -503,6 +554,57 @@ export const ui = {
         'Eine Auftragsuhr beginnt mit einer Korrespondenz und, wenn das Haus annimmt, mit einer Audienz — in Schonach oder brieflich. Der Schnitzbericht geht Ihnen monatlich zu. Ist die Uhr vollendet, reist ein Uhrmacher des Hauses, um sie zu hängen, aufzuziehen und den ersten Ruf in ihrem Zimmer zu hören. Wir nennen das die Investitur.',
       cta: 'Korrespondenz beginnen',
       aside: 'Das Haus nimmt drei Aufträge im Jahr an.',
+    },
+    urkundePage: {
+      title: 'Die Urkunde — Warum Echtheit zählt · Schwarzwald',
+      description:
+        'Was das VdS-Zertifikat bedeutet, warum ein mechanisches Werk zählt, warum die Herkunft aus dem Schwarzwald zählt — und was ein Sammler von jeder Kuckucksuhr verlangen sollte.',
+      label: 'Die Urkunde',
+      display: 'Warum Echtheit zählt.',
+      intro:
+        'Die meisten Kuckucksuhren, die heute verkauft werden, sind Andenken. Sie sind nicht falsch; sie sind nur nicht dies. Diese Seite erklärt, was die Papiere dieses Hauses bezeugen — und was ein Sammler von jeder Uhr verlangen sollte, wo immer er sie kauft.',
+      sections: [
+        {
+          folio: 'I.',
+          head: 'Das VdS-Zertifikat',
+          body: [
+            'Der Verein die Schwarzwalduhr zertifiziert eine Sache, streng: dass eine Uhr mechanisch ist und dass jedes wesentliche Teil im Schwarzwald gefertigt wurde. Keine Elektronik, kein importiertes Werk, keine in Harz gegossene Schnitzerei. Das Zertifikat existiert, weil der Name der Region weit öfter geliehen als verdient wird.',
+            'Jede Uhr dieses Hauses trägt das VdS-Siegel. Es ist der Boden unter unserer eigenen Urkunde, nicht die Decke.',
+          ],
+        },
+        {
+          folio: 'II.',
+          head: 'Warum ein mechanisches Werk zählt',
+          body: [
+            'Eine Batterieuhr ist fertig an dem Tag, an dem sie gebaut wird. Eine mechanische Uhr fängt erst an: Ihr Messingwerk will aufgezogen, reguliert, gereinigt und weitergegeben werden — und antwortet mit einem Arbeitsleben, das in Generationen gemessen wird. Unsere Werke laufen acht Tage je Aufzug, und jedes ihrer Teile kann von Hand neu gefertigt werden. Das ist die wahre Bedeutung von reparierbar.',
+            'Das Aufziehen ist keine Pflicht. Es ist die eine Minute in der Woche, in der die Uhr ganz Ihnen gehört.',
+          ],
+        },
+        {
+          folio: 'III.',
+          head: 'Warum der Schwarzwald zählt',
+          body: [
+            'Die Kuckucksuhr wurde nicht als Produkt erfunden; sie ist aus Wintern gewachsen. Bauernfamilien an diesen Hängen schnitzten durch die eingeschneiten Monate, und um 1850 gab die Schule in Furtwangen dem Handwerk seine klassische Form — das Bahnhäusle —, im selben Jahrzehnt, in dem diese Werkstatt gegründet wurde. Die Linde, die sich am reinsten schneidet, wächst auf diesen Höhen; das Handwerk, das Holz und das Wetter sind ein und dasselbe.',
+            'Eine anderswo gebaute Kuckucksuhr mag ein feines Objekt sein. Sie ist das Bild einer Uhr, wie ein Druck das Bild eines Gemäldes ist.',
+          ],
+        },
+        {
+          folio: 'IV.',
+          head: 'Was dieses Haus hinzufügt',
+          body: [
+            'Das VdS-Siegel bezeugt die Region. Die Urkunde dieses Hauses bezeugt die Uhr: aus welchem Stamm das Holz kam und in welchem Winter er geschlagen wurde, die Stunden der Schnitzarbeit, den Gießer der Glocken, wo Glocken sind, und die Unterschrift des Meisters, der sie gehen ließ. Hinter der Urkunde steht das Werkverzeichnis — das Buch, das seit 1854 ohne eine fehlende Eintragung geführt wird. Eigentümer können jederzeit um den Eintrag ihrer Uhr schreiben, und ihre Erben nach ihnen.',
+          ],
+        },
+        {
+          folio: 'V.',
+          head: 'Für den Sammler',
+          body: [
+            'Von welchem Haus Sie auch kaufen — fragen Sie vier Dinge. Ist das Werk mechanisch, und wer hat es gebaut? Trägt die Uhr das VdS-Siegel? Ist die Schnitzerei aus Holz geschnitten oder gegossen und auf Holz gebeizt? Und legt der Hersteller die Antworten schriftlich vor, unterschrieben? Eine Uhr, die diese Fragen besteht, wird ihren ersten Eigentümer überleben. Das ist der ganze Sinn einer solchen Uhr.',
+          ],
+        },
+      ],
+      close: 'Jedes Dossier im Kabinett nennt diese Papiere ausdrücklich.',
+      closeCta: 'Ins Kabinett',
     },
     dossier: {
       back: 'Das Kabinett',

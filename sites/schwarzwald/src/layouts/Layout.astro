@@ -70,7 +70,7 @@ const homeHref = lang === 'de' ? '/de/' : '/';
         <a href={`${homeHref}#kabinett`}>{t.nav.kabinett}</a>
         <a href={`${homeHref}#familie`}>{t.nav.familie}</a>
         <a href={`${homeHref}#werkstatt`}>{t.nav.werkstatt}</a>
-        <a href={`${homeHref}#urkunde`}>{t.nav.urkunde}</a>
+        <a href={lang === 'de' ? '/de/urkunde/' : '/urkunde/'}>{t.nav.urkunde}</a>
         <a class="nav-cta" href={`${homeHref}#auftrag`}>{t.nav.cta}</a>
         <div class="lang-switch">
           <span class="is-current" aria-current="true">{t.selfLabel}</span>
