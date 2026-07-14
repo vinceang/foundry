@@ -1,0 +1,238 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import Layout from '../layouts/Layout.astro';
+import { ui, type Clock, type Locale } from '../data/site';
+
+interface Props { lang: Locale; clock: Clock }
+const { lang, clock: c } = Astro.props;
+const t = ui[lang];
+const d = t.dossier;
+
+const kabinettPath = lang === 'de' ? `/de/kabinett/${c.slug}/` : `/kabinett/${c.slug}/`;
+const altPath = lang === 'de' ? `/kabinett/${c.slug}/` : `/de/kabinett/${c.slug}/`;
+const homeHref = lang === 'de' ? '/de/' : '/';
+
+const img = fs.existsSync(path.join(process.cwd(), 'public/plates', `${c.slug}.jpg`))
+  ? `/plates/${c.slug}.jpg`
+  : undefined;
+
+const title = `${c.name} · ${c.wv} — Schwarzwald`;
+const description = `${c.name}, ${c.reading[lang]}. ${c.wood[lang]}. ${c.hours[lang]}.`;
+const open = c.status === 'open';
+---
+
+<Layout lang={lang} title={title} description={description} altPath={altPath} selfPath={kabinettPath}>
+  <main class="dossier">
+    <!-- arrival -->
+    <section class="d-hero">
+      <div class="chapter d-hero-grid">
+        <figure class="plate d-plate rv">
+          {img ? (
+            <img src={img} alt={c.imgAlt[lang]} loading="eager" fetchpriority="high" width="1024" height="1536" />
+          ) : (
+            <span class="plate-pending">
+              <span>
+                <span class="gable gable--faint" aria-hidden="true" style="display:block; margin-inline:auto;"></span>
+                <span>{t.kabinett.plateForthcoming}</span>
+              </span>
+            </span>
+          )}
+        </figure>
+        <div class="d-head">
+          <p class="rv"><a class="d-back" href={`${homeHref}#kabinett`}>◄ {d.back}</a></p>
+          <p class="d-meta rv" style="--d:1">
+            <span class="display d-wv">{c.wv}</span>
+            <span class={`status ${open ? '' : 'status--dim'}`}>
+              {open ? t.kabinett.statusOpen : t.kabinett.statusPromised}
+            </span>
+          </p>
+          <h1 class="display d-name rv" style="--d:2">{c.name}</h1>
+          <p class="reading d-reading rv" style="--d:3">{c.reading[lang]}</p>
+
+          <dl class="specs d-specs rv" style="--d:4">
+            <div><dt>{d.specFelling}</dt><dd>{c.felling[lang]}</dd></div>
+            <div><dt>{d.specMovement}</dt><dd>{c.movement[lang]}</dd></div>
+            <div><dt>{d.specCall}</dt><dd>{c.call[lang]}</dd></div>
+            <div><dt>{d.specDimensions}</dt><dd>{c.dimensions}</dd></div>
+            <div><dt>{d.specHours}</dt><dd>{c.hours[lang]}</dd></div>
+            <div><dt>{d.specPrice}</dt><dd class="d-price display">{c.price[lang]}</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- the craft record -->
+    <section class="d-record">
+      <div class="chapter d-record-inner">
+        <p class="label rv">{d.recordLabel}</p>
+        <div class="d-record-copy">
+          {c.record[lang].map((p, i) => (
+            <p class="rv" style={`--d:${i + 1}`}>{p}</p>
+          ))}
+        </div>
+
+        <h2 class="label label--dim rv" style="margin-top: var(--s7);">{d.provenanceLabel}</h2>
+        <ol class="d-prov rv" style="--d:1">
+          {c.stages.map((s) => (
+            <li>
+              <span class="gable gable--faint" aria-hidden="true"></span>
+              <span class="d-prov-stage">{s.stage[lang]}</span>
+              <span class="d-prov-date">{s.date[lang]}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- papers + invitation -->
+    <section class="d-close">
+      <div class="chapter d-close-inner">
+        <div class="d-papers rv">
+          <p class="label">{d.papersLabel}</p>
+          <p class="d-papers-body">{d.papers}</p>
+        </div>
+
+        <div class="d-invite rv" style="--d:1">
+          <h2 class="display d-invite-head">{open ? d.inviteOpen : d.invitePromised}</h2>
+          <p class="d-invite-body">{open ? d.inviteOpenBody : d.invitePromisedBody}</p>
+          <p style="margin-top: var(--s4);">
+            <a class="btn-brass" href={`mailto:${t.footer.corrLines[0]}?subject=${encodeURIComponent(`${c.wv} — ${c.name}`)}`}>{d.cta}</a>
+          </p>
+        </div>
+
+        <div class="d-seal rv" style="--d:2" aria-hidden="false">
+          <span class="d-seal-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="44" height="44" fill="none">
+              <path d="M16 4.5 L28 28 H4 Z" stroke="var(--messing-faint)" stroke-width="1.2" />
+              <line x1="16" y1="14" x2="16" y2="23.4" stroke="var(--messing)" stroke-width="1.2" />
+              <path d="M14.4 23.4 h3.2 l-1.6 2.6 Z" fill="var(--messing)" />
+            </svg>
+          </span>
+          <p class="d-seal-line">{c.wv} · {c.name}</p>
+          <p class="d-seal-attest">{d.seal}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .chapter {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ---------- arrival ---------- */
+  .d-hero {
+    padding-block: calc(var(--s8) + 64px) var(--s8);
+    background: linear-gradient(180deg, var(--wald), var(--wald) 82%, var(--void));
+  }
+  .d-hero-grid {
+    display: grid;
+    gap: var(--s6);
+  }
+  @media (min-width: 960px) {
+    .d-hero-grid { grid-template-columns: 5fr 6fr; gap: var(--s7); align-items: center; }
+  }
+  .d-plate { aspect-ratio: 2 / 3; }
+  .d-back {
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: .3em; text-transform: uppercase;
+    color: var(--leinen-dim);
+    transition: color .35s;
+  }
+  .d-back:hover { color: var(--messing-bright); }
+  .d-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s3);
+    margin-top: var(--s5);
+  }
+  .d-wv { font-size: 15px; letter-spacing: .14em; color: var(--leinen-dim); }
+  .d-name { font-size: clamp(44px, 6vw, 78px); margin-top: var(--s3); }
+  .d-reading { font-size: 19px; margin-top: 8px; }
+  .d-specs { margin-top: var(--s5); }
+  @media (min-width: 640px) {
+    .d-specs { grid-template-columns: 1fr 1fr; }
+  }
+  .d-price { color: var(--messing-bright); }
+
+  /* ---------- craft record ---------- */
+  .d-record { background: var(--void); padding-block: var(--s8); }
+  .d-record-inner { max-width: 880px; }
+  .d-record-copy { margin-top: var(--s5); display: grid; gap: var(--s4); }
+  .d-record-copy p {
+    color: var(--leinen-dim);
+    max-width: 58ch;
+    font-size: 17px;
+  }
+  .d-record-copy p:first-child::first-letter {
+    font-family: var(--fraktur);
+    font-size: 3.2em;
+    line-height: .8;
+    float: left;
+    padding-right: 12px;
+    padding-top: 6px;
+    color: var(--messing);
+  }
+  .d-prov {
+    list-style: none;
+    margin-top: var(--s5);
+    border-left: 1px solid var(--line-soft);
+    display: grid;
+    gap: var(--s4);
+    padding-left: 0;
+  }
+  .d-prov li {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: baseline;
+    gap: var(--s2);
+  }
+  .d-prov .gable {
+    width: 8px; height: 10px;
+    margin-left: -4.5px;
+    align-self: center;
+  }
+  .d-prov-stage { color: var(--leinen); font-size: 15.5px; }
+  .d-prov-date { color: var(--leinen-faint); font-size: 13px; letter-spacing: .06em; }
+
+  /* ---------- close ---------- */
+  .d-close {
+    background: linear-gradient(180deg, var(--void), var(--wald) 30%);
+    padding-block: var(--s8) var(--s9);
+  }
+  .d-close-inner { max-width: 880px; text-align: center; }
+  .d-papers {
+    border: 1px solid var(--line);
+    padding: var(--s5) var(--s5) var(--s5);
+  }
+  .d-papers-body {
+    margin-top: var(--s3);
+    color: var(--leinen-dim);
+    max-width: 58ch;
+    margin-inline: auto;
+    font-size: 15px;
+  }
+  .d-invite { margin-top: var(--s7); }
+  .d-invite-head { font-size: clamp(28px, 3.4vw, 44px); }
+  .d-invite-body { margin-top: var(--s3); color: var(--leinen-dim); max-width: 48ch; margin-inline: auto; }
+  .d-seal {
+    margin-top: var(--s8);
+    display: grid;
+    justify-items: center;
+    gap: var(--s2);
+  }
+  .d-seal-line {
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: .14em;
+  }
+  .d-seal-attest {
+    font-size: 11.5px;
+    letter-spacing: .12em;
+    color: var(--leinen-faint);
+    max-width: 40ch;
+  }
+</style>

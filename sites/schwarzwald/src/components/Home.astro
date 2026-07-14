@@ -124,7 +124,7 @@ const werkstattVideo = plate('werkstatt.mp4');
               </dl>
               <p class="work-foot rv" style="--d:4">
                 <span class="display work-price">{c.price[lang]}</span>
-                <a class="work-dossier" href="#auftrag">{t.kabinett.dossier}</a>
+                <a class="work-dossier" href={`${lang === 'de' ? '/de' : ''}/kabinett/${c.slug}/`}>{t.kabinett.dossier}</a>
               </p>
             </div>
           </article>

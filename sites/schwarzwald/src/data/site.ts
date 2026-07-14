@@ -15,6 +15,12 @@ export interface Clock {
   status: 'open' | 'promised';
   img?: string;
   imgAlt: Record<Locale, string>;
+  /* dossier */
+  felling: Record<Locale, string>;
+  dimensions: string;
+  call: Record<Locale, string>;
+  record: Record<Locale, string[]>; // long-form paragraphs
+  stages: { stage: Record<Locale, string>; date: Record<Locale, string> }[];
 }
 
 export const clocks: Clock[] = [
@@ -41,6 +47,32 @@ export const clocks: Clock[] = [
       en: 'Carved cuckoo clock "Mondlicht" — an owl beneath a crescent moon, dark-waxed linden, lit by a single warm light',
       de: 'Geschnitzte Kuckucksuhr „Mondlicht" — eine Eule unter der Mondsichel, dunkel gewachste Linde, von einem warmen Licht beleuchtet',
     },
+    felling: {
+      en: 'Linden felled January 2013, waning moon, north slope above Schonach',
+      de: 'Linde geschlagen im Januar 2013, abnehmender Mond, Nordhang über Schonach',
+    },
+    dimensions: '58 × 34 × 22 cm',
+    call: {
+      en: 'Two notes, a falling minor third, voiced low for a sleeping house',
+      de: 'Zwei Töne, eine fallende kleine Terz, leise gestimmt für ein schlafendes Haus',
+    },
+    record: {
+      en: [
+        'The owl was drawn seven times before she was allowed into linden. She sits above the dial with her wings folded, and the crescent moon behind her is cut so shallow that it only appears when the room\'s light is low — a carving made for the hours it is named after.',
+        'The case is waxed dark, never stained: eleven coats, each rubbed back by hand, so the year-rings of the wood still read under the finish. The dial is walnut from the same valley, and the hands were cut from a single offcut of the case.',
+      ],
+      de: [
+        'Die Eule wurde sieben Mal gezeichnet, ehe sie in die Linde durfte. Sie sitzt über dem Zifferblatt mit angelegten Flügeln, und die Mondsichel hinter ihr ist so flach geschnitten, dass sie erst hervortritt, wenn das Licht im Zimmer niedrig wird — eine Schnitzerei für die Stunden, nach denen sie heißt.',
+        'Das Gehäuse ist dunkel gewachst, nie gebeizt: elf Schichten, jede von Hand zurückgerieben, sodass die Jahresringe unter der Oberfläche lesbar bleiben. Das Zifferblatt ist Nussbaum aus demselben Tal, die Zeiger sind aus einem einzigen Abschnitt des Gehäuses geschnitten.',
+      ],
+    },
+    stages: [
+      { stage: { en: 'Drawn', de: 'Gezeichnet' }, date: { en: 'March 2024', de: 'März 2024' } },
+      { stage: { en: 'Carved, 460 hours', de: 'Geschnitzt, 460 Stunden' }, date: { en: 'April 2024 — February 2025', de: 'April 2024 — Februar 2025' } },
+      { stage: { en: 'Movement fitted and regulated', de: 'Werk eingesetzt und reguliert' }, date: { en: 'March 2025', de: 'März 2025' } },
+      { stage: { en: 'Voiced', de: 'Gestimmt' }, date: { en: 'April 2025', de: 'April 2025' } },
+      { stage: { en: 'Entered into the Werkverzeichnis', de: 'Ins Werkverzeichnis eingetragen' }, date: { en: 'May 2025', de: 'Mai 2025' } },
+    ],
   },
   {
     slug: 'tannenruh',
@@ -65,6 +97,32 @@ export const clocks: Clock[] = [
       en: 'Carved cuckoo clock "Tannenruh" — deep relief of fir boughs in pale linden, single warm light against darkness',
       de: 'Geschnitzte Kuckucksuhr „Tannenruh" — tiefes Relief aus Tannenzweigen in heller Linde, ein warmes Licht in der Dunkelheit',
     },
+    felling: {
+      en: 'Linden felled January 2011, waning moon — the palest stem of that winter',
+      de: 'Linde geschlagen im Januar 2011, abnehmender Mond — der hellste Stamm jenes Winters',
+    },
+    dimensions: '64 × 38 × 24 cm',
+    call: {
+      en: 'Two notes, a falling minor third, with a longer rest — snow slows everything',
+      de: 'Zwei Töne, eine fallende kleine Terz, mit längerer Pause — Schnee verlangsamt alles',
+    },
+    record: {
+      en: [
+        'Tannenruh is carved from linden left unstained and unwaxed except for a single pass of cold-pressed oil: the snow in the relief is the wood itself. The boughs hang at the true angle of loaded fir — the carver worked from branches brought in from the January forest and kept on the bench until they thawed.',
+        'It is the deepest relief the house has cut in this generation, six centimetres at the crown. Six hundred and forty hours. The dial is kept nearly bare so that nothing competes with the weight of the snow.',
+      ],
+      de: [
+        'Tannenruh ist aus Linde geschnitzt, ungebeizt und ungewachst bis auf einen einzigen Auftrag kaltgepressten Öls: Der Schnee im Relief ist das Holz selbst. Die Zweige hängen im wahren Winkel beladener Tannen — der Schnitzer arbeitete nach Ästen aus dem Januarwald, die auf der Bank lagen, bis sie tauten.',
+        'Es ist das tiefste Relief, das das Haus in dieser Generation geschnitten hat, sechs Zentimeter am Scheitel. Sechshundertvierzig Stunden. Das Zifferblatt bleibt beinahe kahl, damit nichts mit dem Gewicht des Schnees streitet.',
+      ],
+    },
+    stages: [
+      { stage: { en: 'Drawn', de: 'Gezeichnet' }, date: { en: 'September 2023', de: 'September 2023' } },
+      { stage: { en: 'Carved, 640 hours', de: 'Geschnitzt, 640 Stunden' }, date: { en: 'October 2023 — January 2025', de: 'Oktober 2023 — Januar 2025' } },
+      { stage: { en: 'Movement fitted and regulated', de: 'Werk eingesetzt und reguliert' }, date: { en: 'February 2025', de: 'Februar 2025' } },
+      { stage: { en: 'Voiced', de: 'Gestimmt' }, date: { en: 'March 2025', de: 'März 2025' } },
+      { stage: { en: 'Entered into the Werkverzeichnis · promised', de: 'Ins Werkverzeichnis eingetragen · versprochen' }, date: { en: 'April 2025', de: 'April 2025' } },
+    ],
   },
   {
     slug: 'waldkauz',
@@ -89,6 +147,32 @@ export const clocks: Clock[] = [
       en: 'Carved cuckoo clock "Waldkauz" — a tawny owl perched over the dial, walnut and linden, chiaroscuro light',
       de: 'Geschnitzte Kuckucksuhr „Waldkauz" — ein Waldkauz über dem Zifferblatt, Nussbaum und Linde, im Helldunkel',
     },
+    felling: {
+      en: 'Walnut felled February 2009; linden January 2014 — both under a waning moon',
+      de: 'Nussbaum geschlagen im Februar 2009; Linde im Januar 2014 — beide bei abnehmendem Mond',
+    },
+    dimensions: '61 × 36 × 23 cm',
+    call: {
+      en: 'Two notes, a falling minor third; after ten in the evening the clock keeps its silence',
+      de: 'Zwei Töne, eine fallende kleine Terz; nach zehn Uhr abends schweigt die Uhr',
+    },
+    record: {
+      en: [
+        'The tawny owl keeps the third watch — the hours between midnight and three, when the forest is most awake. He is carved in pale linden against a walnut case, feather by feather, five hundred and twenty hours, his talons closed around the ridge of the roof as a living owl closes them in sleep.',
+        'Waldkauz carries the house\'s night silence: a small brass lever stills the bellows after ten. It was built for a bedroom wall, and the movement is regulated a breath slower than the others — the seventh generation maintains the sixth\'s conviction that a bedroom clock should never hurry.',
+      ],
+      de: [
+        'Der Waldkauz hält die dritte Wache — die Stunden zwischen Mitternacht und drei, in denen der Wald am wachsten ist. Er ist in heller Linde gegen ein Nussbaumgehäuse geschnitzt, Feder um Feder, fünfhundertzwanzig Stunden, die Fänge um den First geschlossen, wie ein lebender Kauz sie im Schlaf schließt.',
+        'Waldkauz trägt die Nachtabschaltung des Hauses: ein kleiner Messinghebel stellt die Bälge nach zehn Uhr still. Er wurde für eine Schlafzimmerwand gebaut, und das Werk ist einen Atemzug langsamer reguliert als die anderen — die siebte Generation hält an der Überzeugung der sechsten fest, dass eine Schlafzimmeruhr nie eilen darf.',
+      ],
+    },
+    stages: [
+      { stage: { en: 'Drawn', de: 'Gezeichnet' }, date: { en: 'June 2024', de: 'Juni 2024' } },
+      { stage: { en: 'Carved, 520 hours', de: 'Geschnitzt, 520 Stunden' }, date: { en: 'July 2024 — May 2025', de: 'Juli 2024 — Mai 2025' } },
+      { stage: { en: 'Movement fitted and regulated', de: 'Werk eingesetzt und reguliert' }, date: { en: 'June 2025', de: 'Juni 2025' } },
+      { stage: { en: 'Voiced', de: 'Gestimmt' }, date: { en: 'July 2025', de: 'Juli 2025' } },
+      { stage: { en: 'Entered into the Werkverzeichnis', de: 'Ins Werkverzeichnis eingetragen' }, date: { en: 'August 2025', de: 'August 2025' } },
+    ],
   },
   {
     slug: 'abendlaeuten',
@@ -113,6 +197,33 @@ export const clocks: Clock[] = [
       en: 'Carved cuckoo clock "Abendläuten" — smoked linden with a gilt-brass pendulum catching warm light',
       de: 'Geschnitzte Kuckucksuhr „Abendläuten" — geräucherte Linde, das vergoldete Messingpendel im warmen Licht',
     },
+    felling: {
+      en: 'Linden felled January 2008, waning moon — smoked over beech for four months',
+      de: 'Linde geschlagen im Januar 2008, abnehmender Mond — vier Monate über Buche geräuchert',
+    },
+    dimensions: '72 × 41 × 26 cm',
+    call: {
+      en: 'Two notes, a falling minor third, answered by six small bells at the full hour',
+      de: 'Zwei Töne, eine fallende kleine Terz, zur vollen Stunde beantwortet von sechs kleinen Glocken',
+    },
+    record: {
+      en: [
+        'Abendläuten remembers the sound of the valley at seven in the evening: the cuckoo calls, and six bells — cast for the house in Villingen, each tuned to the peal of a church within walking distance of Schonach — answer in order, near to far. Oak leaves and small bells are carved through nine hundred hours into linden smoked dark over beech.',
+        'The pendulum is gilt brass, the only bright metal the house permits itself in this register, because it is the part that moves: light should ride on what is alive. It is the largest clock of the current Kabinett and the longest carving of the seventh generation\'s tenure.',
+      ],
+      de: [
+        'Abendläuten erinnert den Klang des Tals um sieben Uhr abends: Der Kuckuck ruft, und sechs Glocken — für das Haus in Villingen gegossen, jede auf das Geläut einer Kirche in Gehweite von Schonach gestimmt — antworten der Reihe nach, von nah bis fern. Eichenlaub und kleine Glocken sind in neunhundert Stunden in über Buche dunkel geräucherte Linde geschnitten.',
+        'Das Pendel ist vergoldetes Messing, das einzige helle Metall, das sich das Haus in diesem Register erlaubt, denn es ist der Teil, der sich bewegt: Licht soll auf dem reiten, was lebt. Es ist die größte Uhr des gegenwärtigen Kabinetts und die längste Schnitzarbeit in der Zeit der siebten Generation.',
+      ],
+    },
+    stages: [
+      { stage: { en: 'Drawn', de: 'Gezeichnet' }, date: { en: 'January 2023', de: 'Januar 2023' } },
+      { stage: { en: 'Carved, 780 hours', de: 'Geschnitzt, 780 Stunden' }, date: { en: 'February 2023 — October 2024', de: 'Februar 2023 — Oktober 2024' } },
+      { stage: { en: 'Bells cast and tuned, Villingen', de: 'Glocken gegossen und gestimmt, Villingen' }, date: { en: 'November 2024', de: 'November 2024' } },
+      { stage: { en: 'Movement fitted and regulated', de: 'Werk eingesetzt und reguliert' }, date: { en: 'December 2024', de: 'Dezember 2024' } },
+      { stage: { en: 'Voiced', de: 'Gestimmt' }, date: { en: 'January 2025', de: 'Januar 2025' } },
+      { stage: { en: 'Entered into the Werkverzeichnis · promised', de: 'Ins Werkverzeichnis eingetragen · versprochen' }, date: { en: 'February 2025', de: 'Februar 2025' } },
+    ],
   },
 ];
 
@@ -189,7 +300,7 @@ export const ui = {
         'The clocks currently in the house. Each carries its Werkverzeichnis number — the ledger the family has kept, without a missing entry, since 1854.',
       statusOpen: 'Open to correspondence',
       statusPromised: 'Promised',
-      dossier: 'Request the dossier',
+      dossier: 'Open the dossier',
       woodLabel: 'Wood',
       movementLabel: 'Movement',
       hoursLabel: 'Carving',
@@ -246,6 +357,26 @@ export const ui = {
         'A bespoke clock begins with a correspondence and, if the house accepts, an audience — in Schonach or by letter. The carving record is sent monthly. When the clock is ready, a clockmaker of the house travels to hang it, start it, and hear the first call in its own room. We call this the investiture.',
       cta: 'Open a correspondence',
       aside: 'The house accepts three commissions a year.',
+    },
+    dossier: {
+      back: 'The Kabinett',
+      recordLabel: 'The craft record',
+      specFelling: 'The wood',
+      specDimensions: 'Dimensions',
+      specMovement: 'Movement',
+      specCall: 'The call',
+      specHours: 'Carving',
+      specPrice: 'Price',
+      provenanceLabel: 'Provenance',
+      papersLabel: 'Its papers',
+      papers:
+        'This clock carries the VdS certificate of the Verein die Schwarzwalduhr and the house\'s Urkunde: the wood, its felling winter, the hours of carving, and the signature of Elias Waldvogel.',
+      inviteOpen: 'Open to correspondence.',
+      inviteOpenBody: 'Write to the house. Replies within three days.',
+      invitePromised: 'This clock is promised.',
+      invitePromisedBody: 'The Werkverzeichnis does not reopen. The house accepts correspondence for the departures of next year.',
+      cta: 'Open a correspondence',
+      seal: 'Entered into the Werkverzeichnis of the house, Schonach im Schwarzwald.',
     },
     footer: {
       blurb: 'Uhrenhaus im Schwarzwald. One family, seven generations. Eight clocks leave the house each year, by correspondence.',
@@ -315,7 +446,7 @@ export const ui = {
         'Die Uhren, die derzeit im Haus stehen. Jede trägt ihre Nummer im Werkverzeichnis — dem Buch, das die Familie seit 1854 ohne eine fehlende Eintragung führt.',
       statusOpen: 'Offen für Korrespondenz',
       statusPromised: 'Versprochen',
-      dossier: 'Dossier anfragen',
+      dossier: 'Dossier öffnen',
       woodLabel: 'Holz',
       movementLabel: 'Werk',
       hoursLabel: 'Schnitzarbeit',
@@ -372,6 +503,26 @@ export const ui = {
         'Eine Auftragsuhr beginnt mit einer Korrespondenz und, wenn das Haus annimmt, mit einer Audienz — in Schonach oder brieflich. Der Schnitzbericht geht Ihnen monatlich zu. Ist die Uhr vollendet, reist ein Uhrmacher des Hauses, um sie zu hängen, aufzuziehen und den ersten Ruf in ihrem Zimmer zu hören. Wir nennen das die Investitur.',
       cta: 'Korrespondenz beginnen',
       aside: 'Das Haus nimmt drei Aufträge im Jahr an.',
+    },
+    dossier: {
+      back: 'Das Kabinett',
+      recordLabel: 'Der Werkbericht',
+      specFelling: 'Das Holz',
+      specDimensions: 'Maße',
+      specMovement: 'Werk',
+      specCall: 'Der Ruf',
+      specHours: 'Schnitzarbeit',
+      specPrice: 'Preis',
+      provenanceLabel: 'Provenienz',
+      papersLabel: 'Ihre Papiere',
+      papers:
+        'Diese Uhr trägt das VdS-Zertifikat des Vereins die Schwarzwalduhr und die Urkunde des Hauses: das Holz, sein Schlagwinter, die Stunden der Schnitzarbeit und die Unterschrift von Elias Waldvogel.',
+      inviteOpen: 'Offen für Korrespondenz.',
+      inviteOpenBody: 'Schreiben Sie dem Haus. Antwort binnen drei Tagen.',
+      invitePromised: 'Diese Uhr ist versprochen.',
+      invitePromisedBody: 'Das Werkverzeichnis öffnet sich nicht erneut. Das Haus nimmt Korrespondenz für die Abschiede des nächsten Jahres an.',
+      cta: 'Korrespondenz beginnen',
+      seal: 'Eingetragen ins Werkverzeichnis des Hauses, Schonach im Schwarzwald.',
     },
     footer: {
       blurb: 'Uhrenhaus im Schwarzwald. Eine Familie, sieben Generationen. Acht Uhren verlassen das Haus im Jahr, auf Korrespondenz.',

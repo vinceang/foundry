@@ -1,0 +1,11 @@
+---
+import Dossier from '../../../components/Dossier.astro';
+import { clocks } from '../../../data/site';
+
+export function getStaticPaths() {
+  return clocks.map((c) => ({ params: { slug: c.slug }, props: { clock: c } }));
+}
+const { clock } = Astro.props;
+---
+
+<Dossier lang="de" clock={clock} />
