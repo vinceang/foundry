@@ -57,10 +57,10 @@
    whole empty screens of darkness between them. */
 @media (max-width: 760px) {
   :root {
-    --s6: 48px;
-    --s7: 64px;
-    --s8: 80px;
-    --s9: 96px;
+    --s6: 40px;
+    --s7: 56px;
+    --s8: 64px;
+    --s9: 72px;
   }
 }
 

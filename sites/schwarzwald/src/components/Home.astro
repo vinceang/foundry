@@ -366,16 +366,20 @@ const corrPath = lang === 'de' ? '/de/korrespondenz/' : '/correspondence/';
   @media (max-width: 760px) {
     /* no veil can dim the dial enough to read text over it — so on mobile
        the image is a top band fading into solid ground, and the words sit
-       below it on pure darkness. No overlap, full contrast. */
-    .hero { justify-content: flex-end; padding-bottom: var(--s5); }
-    .hero-media { inset: 0 0 auto 0; height: 52svh; }
+       below it on pure darkness. No overlap, full contrast. The desktop
+       top padding is dead space under the absolute image band — drop it,
+       and let the words follow the image at one small step. */
+    .hero { justify-content: flex-end; padding-top: 0; padding-bottom: var(--s4); }
+    .hero-media { inset: 0 0 auto 0; height: 48svh; }
     .hero-media img { object-position: 70% center; }
+    .hero-title { font-size: clamp(44px, 12vw, 52px); }
+    .hero-ctas { margin-top: var(--s4); }
     .hero-shade {
       background:
         radial-gradient(56% 60% at 70% 42%, rgba(198,142,78,.08), transparent 74%),
         linear-gradient(180deg, rgba(14,19,14,.6), transparent 32%, transparent 58%, var(--wald) 97%);
     }
-    .hero-inner { margin-top: 52svh; }
+    .hero-inner { margin-top: calc(48svh + var(--s3)); }
     .hero-uhr { margin-top: var(--s4); }
   }
   .hero-inner {
