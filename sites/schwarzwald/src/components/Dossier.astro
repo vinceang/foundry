@@ -158,8 +158,13 @@ const open = c.status === 'open';
   }
   .d-price { color: var(--messing-bright); }
 
-  /* ---------- craft record ---------- */
-  .d-record { background: var(--void); padding-block: var(--s8); }
+  /* ---------- craft record ----------
+     the record is the house speaking of the clock in its own voice — it
+     sits on stube, the page's one chapter of lamplit timber */
+  .d-record {
+    background: linear-gradient(180deg, var(--void), var(--stube) 14%, var(--stube) 86%, var(--void));
+    padding-block: var(--s8);
+  }
   .d-record-inner { max-width: 880px; }
   .d-record-copy { margin-top: var(--s5); display: grid; gap: var(--s4); }
   .d-record-copy p {

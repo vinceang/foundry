@@ -17,6 +17,9 @@
   --nacht:       #101720;
   --nacht-2:     #17212e;
 
+  /* lamplit timber — the house's own voice, one chapter per page */
+  --stube:       #171309;
+
   /* aged brass */
   --messing:        #c68e4e;
   --messing-bright: #eec489;
@@ -301,8 +304,11 @@ a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
   .ledger li > :nth-child(4), .ledger li > .gable { display: none; }
 }
 
-/* ---------- spec sheet (museum placard) ---------- */
+/* ---------- spec sheet (museum placard) ----------
+   filled with stube — a small panel of lamplit timber against the fir
+   ground, like the wooden placard beside a museum piece */
 .specs {
+  background: var(--stube);
   border: 1px solid var(--line-soft);
   padding: var(--s4);
   display: grid; gap: var(--s3);

@@ -77,6 +77,7 @@ The world is the fir forest at night, seen from a lantern-lit workshop.
 | `--wald` | `#0e130e` | Default page ground (fir-black-green — *not* neutral black, *not* Shokunin's brown) |
 | `--wald-2/3` | `#151c14` / `#1d261b` | Raised timber surfaces, panels |
 | `--nacht` / `--nacht-2` | `#101720` / `#17212e` | Winter-night blue — one chapter per page, no more |
+| `--stube` | `#171309` | Lamplit-timber brown (the *Stube*, the farmhouse parlor) — the ground of the chapter where the house speaks in its own voice, and the fill of `.specs` placards |
 | `--messing` | `#c68e4e` | Aged brass: labels, hairlines, marks, one primary button |
 | `--messing-bright` | `#eec489` | Brass at full lantern light: hovers, active, glints |
 | `--messing-deep` | `#8f6335` | Brass in shadow; selection background |
@@ -94,6 +95,16 @@ The world is the fir forest at night, seen from a lantern-lit workshop.
 2. **Nacht blue is the winter air outside the window** — at most one chapter
    per page (the Urkunde or provenance chapter). It must never become a
    second accent.
+2a. **Stube brown is the lamplight inside the house** (added 2026-07-15, to
+   break the dark monotone without breaking the register). Same discipline
+   as nacht: at most one stube chapter per page, and only where the house
+   speaks of itself — "The house" doctrine on the home page, the carving
+   record on a dossier. The page's tonal journey is now *three motivated
+   temperatures*: fir-green (the forest, the default), stube (inside the
+   house), nacht (the winter night outside the window). Every chapter ground
+   must be one of these or void; never invent a fourth. The one sanctioned
+   small-scale use is the `.specs` placard — a panel of lamplit timber
+   beside each clock.
 3. **Text sits on darkness, never on brass** except inside the primary
    button (`#120e08` on `--messing`).
 4. **Forbidden:** red in any form, vermilion (Kaji's), Shokunin's brown
@@ -149,7 +160,7 @@ are EB Garamond, one size up. Prices written in full: `€ 14,800` (EN) /
 
 ### Page anatomy (home)
 
-`Hero (full svh, clock in void, Schonach time) → Doctrine (void + Fraktur
+`Hero (full svh, clock in void, Schonach time) → Doctrine (stube + Fraktur
 watermark) → The Kabinett (alternating works) → In private hands (ledger) →
 The Werkstatt (nacht) → The Urkunde strip → The Auftrag (correspondence) →
 Footer`. Every page: *arrive in darkness → doctrine → material → invitation*.
