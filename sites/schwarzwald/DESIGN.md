@@ -364,7 +364,9 @@ adjectives, emoji, tourist-kitsch framing (no lederhosen, no oompah, no
   only (3 families), no JS frameworks — static Astro + vanilla script.
 - **Mobile-first:** same darkness, same cadence; rails and cursor are
   desktop grace notes; full-width tap targets; a smaller lantern, not a
-  lesser house.
+  lesser house. The upper rhythm steps compress at ≤760px
+  (`--s6…--s9` → 48/64/80/96) so chapter separations stay generous
+  without stacking empty screens of darkness between chapters.
 - **i18n:** every page exists at `/` (EN) and `/de/` (DE); the switch in
   the header maps the *same page* across locales; `hreflang` pairs in head.
 

@@ -52,6 +52,18 @@
   --ease: cubic-bezier(.19, 1, .22, 1);
 }
 
+/* On a phone the same 8px cadence plays in a smaller room: the upper
+   rhythm steps compress so chapters stay generous without stacking
+   whole empty screens of darkness between them. */
+@media (max-width: 760px) {
+  :root {
+    --s6: 48px;
+    --s7: 64px;
+    --s8: 80px;
+    --s9: 96px;
+  }
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html {
