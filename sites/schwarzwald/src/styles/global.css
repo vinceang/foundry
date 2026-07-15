@@ -20,6 +20,9 @@
   /* lamplit timber — the house's own voice, one chapter per page */
   --stube:       #171309;
 
+  /* cherry wood — the placard panels only, never a chapter ground */
+  --kirsche:     #1d1009;
+
   /* aged brass */
   --messing:        #c68e4e;
   --messing-bright: #eec489;
@@ -305,10 +308,10 @@ a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
 }
 
 /* ---------- spec sheet (museum placard) ----------
-   filled with stube — a small panel of lamplit timber against the fir
+   filled with kirsche — a small panel of cherry wood against the fir
    ground, like the wooden placard beside a museum piece */
 .specs {
-  background: var(--stube);
+  background: var(--kirsche);
   border: 1px solid var(--line-soft);
   padding: var(--s4);
   display: grid; gap: var(--s3);

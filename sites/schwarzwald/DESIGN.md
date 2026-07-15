@@ -77,7 +77,8 @@ The world is the fir forest at night, seen from a lantern-lit workshop.
 | `--wald` | `#0e130e` | Default page ground (fir-black-green — *not* neutral black, *not* Shokunin's brown) |
 | `--wald-2/3` | `#151c14` / `#1d261b` | Raised timber surfaces, panels |
 | `--nacht` / `--nacht-2` | `#101720` / `#17212e` | Winter-night blue — one chapter per page, no more |
-| `--stube` | `#171309` | Lamplit-timber brown (the *Stube*, the farmhouse parlor) — the ground of the chapter where the house speaks in its own voice, and the fill of `.specs` placards |
+| `--stube` | `#171309` | Lamplit-timber brown (the *Stube*, the farmhouse parlor) — the ground of the chapters where the house speaks in its own voice, and the footer hearth |
+| `--kirsche` | `#1d1009` | Cherry wood (*Kirschbaum*, the clock-cabinet timber) — the fill of the card family only: `.specs` placards, the Urkunde card, the papers card. Never a chapter ground, never larger than a card |
 | `--messing` | `#c68e4e` | Aged brass: labels, hairlines, marks, one primary button |
 | `--messing-bright` | `#eec489` | Brass at full lantern light: hovers, active, glints |
 | `--messing-deep` | `#8f6335` | Brass in shadow; selection background |
@@ -108,15 +109,20 @@ The world is the fir forest at night, seen from a lantern-lit workshop.
    temperatures*: fir-green (the forest, the default), stube (inside the
    house), nacht (the winter night outside the window) — warm and cold
    alternating around the green. Every chapter ground must be one of these
-   or void; never invent a fourth. Two sanctioned uses outside chapters:
-   the `.specs` placard — a panel of lamplit timber beside each clock —
-   and the site footer, which settles from void into stube on every page:
-   the guest leaves past the hearth.
+   or void; never invent a fourth. One sanctioned use outside chapters:
+   the site footer, which settles from void into stube on every page —
+   the guest leaves past the hearth. (The card family — `.specs`, the
+   Urkunde card, the papers card — is filled with kirsche, cherry wood;
+   see the token table.)
 3. **Text sits on darkness, never on brass** except inside the primary
    button (`#120e08` on `--messing`).
 4. **Forbidden:** red in any form, vermilion (Kaji's), Shokunin's brown
    lacquer range, pure `#000`/`#fff`, saturated accents, decorative
    gradients (gradients exist only as photographic shade/vignette).
+   Kirsche (`#1d1009`) is not an exception to the red rule: it is a wood
+   brown whose warmth leans red, sanctioned only as the card family's
+   timber. If a tone reads as *color* rather than *material*, it is red,
+   and it is out.
 
 ---
 
