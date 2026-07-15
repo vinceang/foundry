@@ -23,6 +23,10 @@
   /* cherry wood — the placard panels only, never a chapter ground */
   --kirsche:     #1d1009;
 
+  /* soft grain for the kirsche cards — brass-tinted SVG noise, baked to
+     ~7% alpha; wood has grain, so the card family carries a whisper of it */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .93 0 0 0 0 .77 0 0 0 0 .53 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
   /* aged brass */
   --messing:        #c68e4e;
   --messing-bright: #eec489;
@@ -323,7 +327,7 @@ a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
    filled with kirsche — a small panel of cherry wood against the fir
    ground, like the wooden placard beside a museum piece */
 .specs {
-  background: var(--kirsche);
+  background: var(--kirsche) var(--grain);
   border: 1px solid var(--line-soft);
   padding: var(--s4);
   display: grid; gap: var(--s3);

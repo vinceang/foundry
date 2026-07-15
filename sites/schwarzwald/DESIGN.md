@@ -79,7 +79,7 @@ The world is the fir forest at night, seen from a lantern-lit workshop.
 | `--wald-2/3` | `#151c14` / `#1d261b` | Raised timber surfaces, panels |
 | `--nacht` / `--nacht-2` | `#101720` / `#17212e` | Winter-night blue — one chapter per page, no more |
 | `--stube` | `#171309` | Lamplit-timber brown (the *Stube*, the farmhouse parlor) — the ground of the chapters where the house speaks in its own voice, and the footer hearth |
-| `--kirsche` | `#1d1009` | Cherry wood (*Kirschbaum*, the clock-cabinet timber) — the fill of the card family only: `.specs` placards, the Urkunde card, the papers card. Never a chapter ground, never larger than a card |
+| `--kirsche` | `#1d1009` | Cherry wood (*Kirschbaum*, the clock-cabinet timber) — the fill of the card family only: `.specs` placards, the Urkunde card, the papers card, the writing desk. Always laid with `--grain` (a brass-tinted SVG noise tile at ~7% alpha, `background: var(--kirsche) var(--grain)`): wood has grain, so the cards carry a soft tooth. Never a chapter ground, never larger than a card |
 | `--messing` | `#c68e4e` | Aged brass: labels, hairlines, marks, one primary button |
 | `--messing-bright` | `#eec489` | Brass at full lantern light: hovers, active, glints |
 | `--messing-deep` | `#8f6335` | Brass in shadow; selection background |
