@@ -358,6 +358,28 @@ export const ui = {
       cta: 'Open a correspondence',
       aside: 'The house accepts three commissions a year.',
     },
+    corrPage: {
+      title: 'Open a correspondence · Schwarzwald',
+      description:
+        'Acquisition begins with a letter — for a clock of the Kabinett, the departures of next year, or an Auftrag.',
+      label: 'Correspondence',
+      display: 'Write to the house.',
+      intro:
+        'Acquisition begins with a letter, as it has since 1854. Say who you are, where the clock would hang, and what it should keep time over. The house reads every letter, and Elias answers each one by hand.',
+      fieldName: 'How the house may address you',
+      fieldPlace: 'Where the clock would hang',
+      placeHint: 'A town and a country are enough.',
+      fieldSubject: 'The matter of the letter',
+      subjectNext: 'The departures of next year',
+      subjectAuftrag: 'An Auftrag — a clock that does not yet exist',
+      fieldLetter: 'The letter',
+      letterHint: 'There is no form to follow. Write as you would to a person; you are.',
+      send: 'Send the letter',
+      sendNote: 'The letter leaves from your own hand — sending opens your mail, addressed to the house.',
+      noscript: 'Or write directly to',
+      aside: 'Replies within three days. The house accepts three commissions a year.',
+      subjectPrefix: 'Correspondence',
+    },
     urkundePage: {
       title: 'Die Urkunde — Why authenticity matters · Schwarzwald',
       description:
@@ -554,6 +576,28 @@ export const ui = {
         'Eine Auftragsuhr beginnt mit einer Korrespondenz und, wenn das Haus annimmt, mit einer Audienz — in Schonach oder brieflich. Der Schnitzbericht geht Ihnen monatlich zu. Ist die Uhr vollendet, reist ein Uhrmacher des Hauses, um sie zu hängen, aufzuziehen und den ersten Ruf in ihrem Zimmer zu hören. Wir nennen das die Investitur.',
       cta: 'Korrespondenz beginnen',
       aside: 'Das Haus nimmt drei Aufträge im Jahr an.',
+    },
+    corrPage: {
+      title: 'Eine Korrespondenz eröffnen · Schwarzwald',
+      description:
+        'Der Erwerb beginnt mit einem Brief — für eine Uhr des Kabinetts, die Abschiede des nächsten Jahres oder einen Auftrag.',
+      label: 'Korrespondenz',
+      display: 'Schreiben Sie dem Haus.',
+      intro:
+        'Der Erwerb beginnt mit einem Brief, wie seit 1854. Sagen Sie, wer Sie sind, wo die Uhr hängen würde und worüber sie die Zeit halten soll. Das Haus liest jeden Brief, und Elias beantwortet jeden von Hand.',
+      fieldName: 'Wie das Haus Sie ansprechen darf',
+      fieldPlace: 'Wo die Uhr hängen würde',
+      placeHint: 'Ort und Land genügen.',
+      fieldSubject: 'Der Gegenstand des Briefes',
+      subjectNext: 'Die Abschiede des nächsten Jahres',
+      subjectAuftrag: 'Ein Auftrag — eine Uhr, die es noch nicht gibt',
+      fieldLetter: 'Der Brief',
+      letterHint: 'Es gibt keine Vorlage. Schreiben Sie, wie man einem Menschen schreibt; Sie tun es.',
+      send: 'Den Brief senden',
+      sendNote: 'Der Brief geht aus Ihrer eigenen Hand — beim Senden öffnet sich Ihre Post, an das Haus adressiert.',
+      noscript: 'Oder schreiben Sie direkt an',
+      aside: 'Antwort innerhalb von drei Tagen. Das Haus nimmt drei Aufträge im Jahr an.',
+      subjectPrefix: 'Korrespondenz',
     },
     urkundePage: {
       title: 'Die Urkunde — Warum Echtheit zählt · Schwarzwald',

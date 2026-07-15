@@ -1,0 +1,211 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { clocks, ui, type Locale } from '../data/site';
+
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const t = ui[lang];
+const p = t.corrPage;
+const addr = t.footer.corrLines[0];
+const selfPath = lang === 'de' ? '/de/korrespondenz/' : '/correspondence/';
+const altPath = lang === 'de' ? '/correspondence/' : '/de/korrespondenz/';
+const open = clocks.filter((c) => c.status === 'open');
+---
+
+<Layout lang={lang} title={p.title} description={p.description} altPath={altPath} selfPath={selfPath}>
+  <main class="corr-page">
+    <section class="c-hero">
+      <span class="c-mark fraktur" aria-hidden="true">Brief</span>
+      <div class="chapter">
+        <p class="label rv">{p.label}</p>
+        <h1 class="display c-display rv" style="--d:1">{p.display}</h1>
+        <p class="c-intro rv" style="--d:2">{p.intro}</p>
+      </div>
+    </section>
+
+    <section class="c-desk-sect">
+      <div class="chapter">
+        <form
+          class="c-desk rv"
+          data-corr
+          data-addr={addr}
+          data-subject-prefix={p.subjectPrefix}
+          action={`mailto:${addr}`}
+          method="get"
+        >
+          <div class="c-field">
+            <label class="label" for="c-name">{p.fieldName}</label>
+            <input id="c-name" name="name" type="text" required autocomplete="name" />
+          </div>
+
+          <div class="c-field">
+            <label class="label" for="c-place">{p.fieldPlace}</label>
+            <input id="c-place" name="place" type="text" autocomplete="address-level2" />
+            <p class="c-hint">{p.placeHint}</p>
+          </div>
+
+          <div class="c-field">
+            <label class="label" for="c-uhr">{p.fieldSubject}</label>
+            <div class="c-select">
+              <select id="c-uhr" name="uhr">
+                {open.map((c) => <option value={c.slug}>{c.name} · {c.wv}</option>)}
+                <option value="next">{p.subjectNext}</option>
+                <option value="auftrag">{p.subjectAuftrag}</option>
+              </select>
+              <span class="gable gable--faint c-caret" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="c-field">
+            <label class="label" for="c-letter">{p.fieldLetter}</label>
+            <textarea id="c-letter" name="letter" rows="9" required></textarea>
+            <p class="c-hint">{p.letterHint}</p>
+          </div>
+
+          <div class="c-send">
+            <button class="btn-brass" type="submit">{p.send}</button>
+            <p class="c-hint">{p.sendNote}</p>
+            <noscript>
+              <p class="c-hint">{p.noscript} <a class="c-addr" href={`mailto:${addr}`}>{addr}</a>.</p>
+            </noscript>
+          </div>
+        </form>
+        <p class="c-aside rv" style="--d:1">{p.aside}</p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  // The letter leaves from the guest's own hand: submit composes a mailto
+  // and opens their mail client. ?uhr=<slug|next|auftrag> preselects the
+  // matter (dossier CTAs arrive with it).
+  const form = document.querySelector<HTMLFormElement>('[data-corr]');
+  if (form) {
+    const sel = form.querySelector<HTMLSelectElement>('select');
+    const want = new URLSearchParams(location.search).get('uhr');
+    if (want && sel && [...sel.options].some((o) => o.value === want)) sel.value = want;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const matter = sel?.selectedOptions[0]?.textContent?.trim() ?? '';
+      const subject = `${form.dataset.subjectPrefix} — ${matter}`;
+      const place = fd.get('place');
+      const body = `${fd.get('letter')}\n\n— ${fd.get('name')}${place ? `, ${place}` : ''}`;
+      location.href = `mailto:${form.dataset.addr}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+</script>
+
+<style>
+  .chapter {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* ---------- arrival ---------- */
+  .c-hero {
+    position: relative;
+    padding: calc(var(--s8) + 64px) 0 var(--s7);
+    background: linear-gradient(180deg, var(--wald), var(--void));
+    overflow: hidden;
+  }
+  .c-mark {
+    position: absolute;
+    right: -0.06em;
+    top: 50%;
+    translate: 0 -50%;
+    font-size: clamp(170px, 24vw, 360px);
+    line-height: 1;
+    color: rgba(198, 142, 78, .05);
+    pointer-events: none;
+    user-select: none;
+  }
+  .c-display {
+    font-size: clamp(40px, 5.4vw, 72px);
+    max-width: 16ch;
+    margin-top: var(--s3);
+  }
+  .c-intro {
+    max-width: 58ch;
+    margin-top: var(--s4);
+    color: var(--leinen-dim);
+  }
+
+  /* ---------- the writing desk ---------- */
+  .c-desk-sect {
+    padding-block: var(--s7) var(--s9);
+    background: linear-gradient(180deg, var(--void), var(--wald) 30%);
+  }
+  .c-desk {
+    background: var(--kirsche);
+    border: 1px solid var(--line);
+    padding: clamp(32px, 5vw, 72px);
+    max-width: 880px;
+    display: grid;
+    gap: var(--s5);
+  }
+  .c-field { display: grid; gap: 10px; }
+  .c-desk input,
+  .c-desk textarea,
+  .c-desk select {
+    width: 100%;
+    background: rgba(8, 11, 8, .38);
+    border: 1px solid var(--line-soft);
+    color: var(--leinen);
+    padding: 14px 16px;
+    font-family: var(--body);
+    font-size: 15.5px;
+    font-weight: 300;
+    letter-spacing: .02em;
+    color-scheme: dark;
+    transition: border-color .35s;
+  }
+  /* the letter itself is written in the house's own face */
+  .c-desk textarea {
+    font-family: var(--display);
+    font-size: 17px;
+    line-height: 1.7;
+    resize: vertical;
+    min-height: 200px;
+  }
+  .c-desk input:hover,
+  .c-desk textarea:hover,
+  .c-desk select:hover { border-color: var(--line); }
+  .c-desk input:focus-visible,
+  .c-desk textarea:focus-visible,
+  .c-desk select:focus-visible {
+    border-color: var(--messing);
+    outline: 1px solid var(--messing-bright);
+    outline-offset: 4px;
+  }
+  .c-select { position: relative; }
+  .c-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 48px;
+    cursor: pointer;
+  }
+  .c-caret {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    translate: 0 -50%;
+    rotate: 180deg;
+    pointer-events: none;
+  }
+  .c-hint {
+    font-size: 12.5px;
+    color: var(--leinen-faint);
+    letter-spacing: .04em;
+  }
+  .c-addr { color: var(--messing); }
+  .c-send { display: grid; gap: var(--s2); justify-items: start; }
+  .c-aside {
+    margin-top: var(--s4);
+    font-size: 12.5px;
+    letter-spacing: .14em;
+    color: var(--leinen-faint);
+  }
+</style>

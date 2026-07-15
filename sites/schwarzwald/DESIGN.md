@@ -39,7 +39,7 @@ real and correct, glossed on first use — never costume.
 - **The Werkstatt** — the workshop / craftsmanship chapter.
 - **The Auftrag** — a bespoke commission. Never "custom order", "configurator".
 - **The Urkunde** — the certificate of authenticity (the real **VdS certificate** — Verein die Schwarzwalduhr — plus the house's own attestation). Never "warranty", "guarantee badge".
-- **Correspondence / Audience** — how acquisition begins. Never "checkout", "cart", "consultation call".
+- **Correspondence / Audience** — how acquisition begins. Never "checkout", "cart", "consultation call". The correspondence page is **the writing desk**: a kirsche card holding four fields (name, where the clock would hang, the matter, the letter — the letter set in EB Garamond). Submitting composes a mail in the guest's own client — "the letter leaves from your own hand" — so the house never holds a form submission; `?uhr=<slug|next|auftrag>` preselects the matter for dossier CTAs. All "Open a correspondence" CTAs lead there, never to a bare mailto.
 - Statuses: `Open to correspondence` · `Promised` · `In private hands`. Never "in stock / sold out".
 - **Investiture** — the day the clock is hung and started in the collector's home (the house sends a clockmaker).
 
@@ -269,6 +269,18 @@ movements and pendulums, carving hands with chisels, wood shavings, the
 bellows and whistles, fir branches with snow (Urkunde chapter). Pipeline:
 raw PNGs → `assets-src/` (gitignored) → `sips` JPEG q≈78, longest edge
 ≤2048 → `public/plates/`. Target ≤500KB.
+
+### The archive plate (added 2026-07-15)
+
+One sanctioned exception to the one-lantern recipe: a period photograph
+from the house's fictional archive (the benches circa 1905), used as a
+*watermark, not an image* — grayscale, screen-blended into the nacht
+chapter at ≤ .35 opacity, feathered to nothing with a radial mask,
+`aria-hidden`, desktop only. It is the house's memory hanging in the
+winter air. Rules: period-true (glass-plate grain, no modern objects),
+black and white only, never a chapter's subject, never captioned, at
+most one per page. Generate as "authentic circa-1905 photograph,
+glass-plate negative aesthetic … monochrome only, no text."
 
 ### Motion imagery
 

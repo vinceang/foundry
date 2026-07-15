@@ -24,6 +24,8 @@ const handsImg = plate('familie-haende.jpg');
 const apprImg = plate('familie-marta.jpg');
 const heroVideo = plate('hero.mp4');
 const werkstattVideo = plate('werkstatt.mp4');
+const archivImg = plate('archiv-1905.jpg');
+const corrPath = lang === 'de' ? '/de/korrespondenz/' : '/correspondence/';
 ---
 
 <Layout lang={lang} altPath={altPath} selfPath={selfPath}>
@@ -50,7 +52,7 @@ const werkstattVideo = plate('werkstatt.mp4');
         <p class="hero-body rv" style="--d:3">{t.hero.body}</p>
         <div class="hero-ctas rv" style="--d:4">
           <a class="btn-brass" href="#kabinett">{t.hero.cta1}</a>
-          <a class="btn-ghost" href="#auftrag">{t.hero.cta2}</a>
+          <a class="btn-ghost" href={corrPath}>{t.hero.cta2}</a>
         </div>
       </div>
       <p
@@ -134,6 +136,11 @@ const werkstattVideo = plate('werkstatt.mp4');
 
     <!-- ══════════ III. IN PRIVATE HANDS ══════════ -->
     <section class="hands">
+      {archivImg && (
+        <div class="hands-archiv" aria-hidden="true">
+          <img src={archivImg} alt="" loading="lazy" width="1536" height="1024" />
+        </div>
+      )}
       <div class="chapter">
         <p class="folio rv">{t.hands.folio}</p>
         <div class="sect-head rv" style="--d:1">
@@ -298,7 +305,7 @@ const werkstattVideo = plate('werkstatt.mp4');
         <h2 class="display chapter-display rv" style="--d:2">{t.auftrag.display}</h2>
         <p class="chapter-body rv" style="--d:3">{t.auftrag.body}</p>
         <p class="rv" style="--d:4; margin-top: var(--s5);">
-          <a class="btn-brass" href={`mailto:${t.footer.corrLines[0]}`}>{t.auftrag.cta}</a>
+          <a class="btn-brass" href={`${corrPath}?uhr=auftrag`}>{t.auftrag.cta}</a>
         </p>
         <p class="auftrag-aside rv" style="--d:5">{t.auftrag.aside}</p>
       </div>
@@ -542,9 +549,30 @@ const werkstattVideo = plate('werkstatt.mp4');
      the provenance chapter is the page's one nacht chapter — the winter
      air outside the window, where the departed clocks now keep time */
   .hands {
+    position: relative;
     background: linear-gradient(180deg, var(--wald), var(--nacht) 18%, var(--nacht) 82%, var(--void));
     padding-block: var(--s9);
+    overflow: hidden;
   }
+  /* the archive plate — the benches of 1905, screen-blended into the
+     night air like a memory; feathered, silent, decoration only */
+  .hands-archiv {
+    position: absolute;
+    right: max(-60px, -4vw);
+    top: 50%;
+    translate: 0 -50%;
+    width: min(44vw, 620px);
+    opacity: .32;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    -webkit-mask-image: radial-gradient(ellipse 56% 52% at 50% 50%, #000 32%, transparent 74%);
+    mask-image: radial-gradient(ellipse 56% 52% at 50% 50%, #000 32%, transparent 74%);
+  }
+  .hands-archiv img {
+    filter: grayscale(1) brightness(.92) contrast(.92);
+  }
+  .hands .chapter { position: relative; }
+  @media (max-width: 1100px) { .hands-archiv { display: none; } }
   .hands .ledger { margin-top: var(--s6); max-width: 880px; }
 
   /* ---------- werkstatt ----------
