@@ -18,12 +18,13 @@ work extends the brand instead of diluting it. The register is Nocturne
 ### Positioning
 
 Schwarzwald is **not a shop**. It is a house — one family, seven generations,
-one workshop above the Schonach valley. **Eight clocks leave the house each
-year.** Every design decision flows from three consequences of that fiction:
+one workshop above the Schonach valley. **Twelve clocks leave the house each
+year — one for each hour of the dial.** Every design decision flows from
+three consequences of that fiction:
 
 | Fact of the world | Design consequence |
 |---|---|
-| Eight clocks a year, no more | Scarcity is content. The Kabinett shows what is promised and what is already *in private hands*, not just what can be acquired. Never paginate, never grid-dump. |
+| Twelve clocks a year — one per dial hour, no more | Scarcity is content. The Kabinett shows what is promised and what is already *in private hands*, not just what can be acquired. Never paginate, never grid-dump. |
 | A clock is raised, not manufactured | Presentation is curatorial: one clock at a time, generous darkness around it, the carving record and provenance instead of marketing bullets. |
 | Acquisition is by correspondence | The visitor writes; the house answers. CTAs are invitations ("Open a correspondence", "Request the dossier") — never urgency ("Buy now", stock counters, timers). |
 
@@ -56,7 +57,7 @@ must stay consistent with this table:
 | Founded | 1854, Schonach im Schwarzwald |
 | The family | Waldvogel ("forest bird") — masters: Matthias I. 1854–1881 · Johann II. 1881–1907 · Albrecht III. 1907–1934 · Frieda IV. 1934–1961 · Georg V. 1961–1987 · Lorenz VI. 1987–2011 · Elias VII. 2011– · Marta VIII., apprenticed 2019 |
 | Generations | Seven |
-| Clocks per year | Eight |
+| Clocks per year | Twelve — one for each hour of the dial (raised from eight, 2026-07-15, by the owner's direction) |
 | Wood drying | Eleven years, air-dried in the attic of the house |
 | Movement | Eight-day mechanical, brass, cut in the Black Forest |
 | Carving time | Between 300 and 900 hours per clock |
@@ -211,6 +212,18 @@ background.** Chiaroscuro — but chiaroscuro means *modelled by light*, not
 fir-dark greens, walnut and linden browns *as the object's own material*,
 brass glints. No text in images.
 
+**The carvability test (added 2026-07-15, by the owner's direction).**
+Every clock image must depict an object a master could actually cut.
+Carved wood holds chisel facets, readable grain, and gravity-true,
+structural forms; it never sags, droops, or pillows. If any surface reads
+as fondant, wax, fabric, or upholstery rather than worked timber — or if
+hardware is craft-false (a pendulum hung on a chain instead of a rod, an
+impossible overhang) — regenerate. The fiction's credibility rests on
+material honesty: a collector who carves, or knows carving, must find
+nothing in the photograph that the workshop could not make. Prompt with
+"crisp chisel facets, visible gouge marks, readable wood grain,
+gravity-true forms; never soft, melted, or drooping."
+
 **The lighting floor (amended 2026-07-15).** The first Kabinett batch
 over-obeyed "pitch-black": *Abendläuten* and *Mondlicht* shipped with a mean
 luminance under 9 and effectively vanished into the page ground. The page
@@ -309,7 +322,7 @@ The house speaks like a seventh-generation master: quiet, exact, certain.
   ("the call is two notes, a falling minor third").
 - **The house never begs.** No exclamation marks, no social proof, no
   reviews, no "don't miss". The strongest line permitted is a fact:
-  "Eight clocks leave this house each year."
+  "Twelve clocks leave this house each year."
 - **Honesty as luxury:** one formal admission — linden moves; a hairline
   may open along the crown in a first dry winter, and the relief is cut so
   it closes again. Documented, named, dignified. This makes every other

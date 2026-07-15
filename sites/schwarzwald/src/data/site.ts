@@ -257,7 +257,7 @@ export const ui = {
     meta: {
       title: 'Schwarzwald — Uhrenhaus im Schwarzwald, est. 1854',
       description:
-        'One family, seven generations, eight cuckoo clocks a year. Carved in Schonach im Schwarzwald since 1854, released by correspondence.',
+        'One family, seven generations, twelve cuckoo clocks a year. Carved in Schonach im Schwarzwald since 1854, released by correspondence.',
     },
     nav: {
       kabinett: 'Kabinett',
@@ -271,7 +271,7 @@ export const ui = {
       label: 'Uhrenhaus · Schonach im Schwarzwald · seit 1854',
       line1: 'The forest',
       line2: 'keeps time.',
-      body: 'Cuckoo clocks raised by one family for seven generations. Eight leave the house each year.',
+      body: 'Cuckoo clocks raised by one family for seven generations. Twelve leave the house each year — one for each hour of the dial.',
       cta1: 'Enter the Kabinett',
       cta2: 'Open a correspondence',
       timeFallback: 'Schonach im Schwarzwald',
@@ -287,7 +287,7 @@ export const ui = {
       facts: [
         { n: 'MDCCCLIV', t: 'Founded in Schonach' },
         { n: 'VII', t: 'Generations of one family' },
-        { n: 'VIII', t: 'Clocks leave the house each year' },
+        { n: 'XII', t: 'Clocks leave the house each year' },
         { n: 'XI', t: 'Years the wood rests before carving' },
       ],
       watermark: 'Zeit',
@@ -295,7 +295,7 @@ export const ui = {
     kabinett: {
       folio: 'II.',
       label: 'Das Kabinett',
-      display: 'Eight departures a year.',
+      display: 'Twelve departures a year.',
       body:
         'The clocks currently in the house. Each carries its Werkverzeichnis number — the ledger the family has kept, without a missing entry, since 1854.',
       statusOpen: 'Open to correspondence',
@@ -430,7 +430,7 @@ export const ui = {
       seal: 'Entered into the Werkverzeichnis of the house, Schonach im Schwarzwald.',
     },
     footer: {
-      blurb: 'Uhrenhaus im Schwarzwald. One family, seven generations. Eight clocks leave the house each year, by correspondence.',
+      blurb: 'Uhrenhaus im Schwarzwald. One family, seven generations. Twelve clocks leave the house each year, by correspondence.',
       houseTitle: 'The house',
       houseLinks: [
         { href: '#kabinett', t: 'Das Kabinett' },
@@ -454,7 +454,7 @@ export const ui = {
     meta: {
       title: 'Schwarzwald — Uhrenhaus im Schwarzwald, seit 1854',
       description:
-        'Eine Familie, sieben Generationen, acht Kuckucksuhren im Jahr. Geschnitzt in Schonach im Schwarzwald seit 1854, vergeben auf Korrespondenz.',
+        'Eine Familie, sieben Generationen, zwölf Kuckucksuhren im Jahr. Geschnitzt in Schonach im Schwarzwald seit 1854, vergeben auf Korrespondenz.',
     },
     nav: {
       kabinett: 'Kabinett',
@@ -468,7 +468,7 @@ export const ui = {
       label: 'Uhrenhaus · Schonach im Schwarzwald · seit 1854',
       line1: 'Der Wald',
       line2: 'hält die Zeit.',
-      body: 'Kuckucksuhren aus der Hand einer Familie, in siebter Generation. Acht verlassen das Haus im Jahr.',
+      body: 'Kuckucksuhren aus der Hand einer Familie, in siebter Generation. Zwölf verlassen das Haus im Jahr — eine für jede Stunde des Zifferblatts.',
       cta1: 'Ins Kabinett',
       cta2: 'Korrespondenz beginnen',
       timeFallback: 'Schonach im Schwarzwald',
@@ -484,7 +484,7 @@ export const ui = {
       facts: [
         { n: 'MDCCCLIV', t: 'Gegründet in Schonach' },
         { n: 'VII', t: 'Generationen einer Familie' },
-        { n: 'VIII', t: 'Uhren verlassen das Haus im Jahr' },
+        { n: 'XII', t: 'Uhren verlassen das Haus im Jahr' },
         { n: 'XI', t: 'Jahre ruht das Holz vor dem Schnitt' },
       ],
       watermark: 'Zeit',
@@ -492,7 +492,7 @@ export const ui = {
     kabinett: {
       folio: 'II.',
       label: 'Das Kabinett',
-      display: 'Acht Abschiede im Jahr.',
+      display: 'Zwölf Abschiede im Jahr.',
       body:
         'Die Uhren, die derzeit im Haus stehen. Jede trägt ihre Nummer im Werkverzeichnis — dem Buch, das die Familie seit 1854 ohne eine fehlende Eintragung führt.',
       statusOpen: 'Offen für Korrespondenz',
@@ -627,7 +627,7 @@ export const ui = {
       seal: 'Eingetragen ins Werkverzeichnis des Hauses, Schonach im Schwarzwald.',
     },
     footer: {
-      blurb: 'Uhrenhaus im Schwarzwald. Eine Familie, sieben Generationen. Acht Uhren verlassen das Haus im Jahr, auf Korrespondenz.',
+      blurb: 'Uhrenhaus im Schwarzwald. Eine Familie, sieben Generationen. Zwölf Uhren verlassen das Haus im Jahr, auf Korrespondenz.',
       houseTitle: 'Das Haus',
       houseLinks: [
         { href: '#kabinett', t: 'Das Kabinett' },
