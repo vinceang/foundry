@@ -346,11 +346,13 @@ const werkstattVideo = plate('werkstatt.mp4');
     object-fit: cover; object-position: 72% center;
   }
   .hero-media .settle-video { object-position: 72% center; }
+  /* the veil covers the text column only — the clock side stays unshaded
+     so the carving reads at the image's own exposure */
   .hero-shade {
     position: absolute; inset: 0;
     background:
-      linear-gradient(90deg, var(--wald) 24%, rgba(14,19,14,.55) 52%, transparent 78%),
-      linear-gradient(180deg, rgba(14,19,14,.6), transparent 26%, transparent 62%, var(--void));
+      linear-gradient(90deg, var(--wald) 22%, rgba(14,19,14,.45) 46%, transparent 66%),
+      linear-gradient(180deg, rgba(14,19,14,.55), transparent 24%, transparent 66%, var(--void));
   }
   @media (max-width: 760px) {
     /* no veil can dim the dial enough to read text over it — so on mobile

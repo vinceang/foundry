@@ -181,10 +181,26 @@ text, no ticking animation, updated at most once a minute.
 
 ## 6. Imagery
 
-One recipe: **one subject, one warm lantern light, void background.**
-Chiaroscuro. Palette inside the frame must match the tokens — fir-dark
-greens, walnut and linden browns *as the object's own material*, brass
-glints. No text in images.
+One recipe: **one subject, one warm lantern light raised close, void
+background.** Chiaroscuro — but chiaroscuro means *modelled by light*, not
+*swallowed by dark*. Palette inside the frame must match the tokens —
+fir-dark greens, walnut and linden browns *as the object's own material*,
+brass glints. No text in images.
+
+**The lighting floor (amended 2026-07-15).** The first Kabinett batch
+over-obeyed "pitch-black": *Abendläuten* and *Mondlicht* shipped with a mean
+luminance under 9 and effectively vanished into the page ground. The page
+already supplies the darkness — the plate must supply the clock. Rule: the
+lantern is *raised to the work*, every carved detail readable, drama carried
+by the direction and warmth of the light, never by underexposure.
+Measurable floor: a plate's mean luminance ≥ 15 (the plates that read well
+sit at 15–22). The pipeline that hits it: generate with the revised phrase
+below, then finish with a **gamma 0.8 midtone lift** before the JPEG pass —
+finishing a well-modelled plate is legitimate; rescuing an unmodelled one is
+not (if the carving isn't lit in the raw generation, regenerate). Never
+re-darken in CSS (no `brightness()` under 1 on plates). A settle video must
+receive the *same* lift as its still (ffmpeg `lutrgb gammaval(0.8)`) or the
+dissolve pops.
 
 **Faces (amended 2026-07-14, by the owner's direction):** the house shows
 its people. Portraits are sanctioned in the Familie chapter and anywhere
@@ -200,11 +216,16 @@ fixed physical description per person across shots.
 
 ### Generation recipe (Higgsfield `soul_2`)
 
-Constant art-direction phrase per batch:
+Constant art-direction phrase per batch (revised 2026-07-15 — the earlier
+"pitch-black … deep chiaroscuro shadows" phrase produced underexposed
+plates):
 
-> "…pitch-black background with a faint fir-green cast, single warm lantern
-> key light, deep chiaroscuro shadows, museum artifact presentation,
-> ultra-premium, no text, no people."
+> "…near-black background with a faint fir-green cast, generous warm
+> lantern key light from the upper left that fully models the carving —
+> every detail clearly readable — with a soft amber fill so no part of the
+> subject is lost to shadow; rich dramatic chiaroscuro, glowing edges,
+> brass glints, museum artifact presentation, ultra-premium, no text, no
+> people."
 
 Subjects: ornate carved cuckoo clocks (linden, walnut, dark-stained), brass
 movements and pendulums, carving hands with chisels, wood shavings, the

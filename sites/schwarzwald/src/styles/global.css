@@ -262,10 +262,9 @@ html.js .rv-line.in > span { transform: none; }
 }
 .plate img {
   width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(.94);
   transition: filter 1s var(--ease);
 }
-a:hover .plate img, .plate:hover img { filter: brightness(1.05); }
+a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
 
 /* ceremonial pending state — used until a plate is hung */
 .plate-pending {
