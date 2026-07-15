@@ -56,7 +56,7 @@ import { works, sealedWorks } from '../data/works';
   </section>
 
   <!-- ============ DOCTRINE ============ -->
-  <section class="doctrine" id="doctrine">
+  <section class="doctrine hishimon" id="doctrine">
     <p class="doctrine-kanji kanji" aria-hidden="true">職人</p>
     <div class="doctrine-inner">
       <p class="label rv">The doctrine</p>
@@ -153,14 +153,33 @@ import { works, sealedWorks } from '../data/works';
         </ul>
       </div>
     </div>
-    <figure class="ateliers-detail rv">
-      <img src="/works/lacing.jpg" alt="Macro view of lacquered armor scales bound with indigo silk cords" loading="lazy" data-parallax="20" />
-      <figcaption class="label label--dim">Kachi-iro lacing · 340 hours to a single cuirass</figcaption>
-    </figure>
+    <div class="ateliers-detail">
+      <div class="ateliers-detail-copy">
+        <p class="label rv">The binding</p>
+        <h3 class="display rv" style="--d: 1">The cord is<br />drawn last.</h3>
+        <p class="rv" style="--d: 2">
+          Each iron scale receives eight grounds of black urushi. Every ground
+          cures for nineteen days in cedar humidity before the next is laid.
+          Only then does kachi-iro silk bind the rows — tensioned by hand so
+          the cuirass can move without losing its line.
+        </p>
+        <dl class="ateliers-detail-facts rv" style="--d: 3">
+          <div><dt class="label label--dim">Lacquer</dt><dd>8 hand-laid grounds</dd></div>
+          <div><dt class="label label--dim">Cure</dt><dd>19 days per ground</dd></div>
+          <div><dt class="label label--dim">Lacing</dt><dd>340 hours per cuirass</dd></div>
+        </dl>
+      </div>
+      <figure class="ateliers-detail-media rv" style="--d: 2">
+        <div class="ateliers-detail-frame">
+          <img src="/works/lacing.jpg" alt="Macro view of lacquered armor scales bound with indigo silk cords" loading="lazy" data-parallax="20" />
+        </div>
+        <figcaption class="label label--dim">Kachi-iro silk over eight grounds of kuro-urushi</figcaption>
+      </figure>
+    </div>
   </section>
 
   <!-- ============ COMMISSION ============ -->
-  <section class="commission" id="commission">
+  <section class="commission hishimon" id="commission">
     <div class="commission-inner">
       <p class="label rv">The twelfth work</p>
       <h2 class="display rv" style="--d: 1">One commission a year<br />is accepted.</h2>
@@ -443,7 +462,7 @@ import { works, sealedWorks } from '../data/works';
   .doctrine {
     position: relative;
     padding: var(--s9) var(--gutter);
-    background: var(--void);
+    background: var(--roiro);
     overflow: hidden;
   }
   .doctrine-kanji {
@@ -540,8 +559,9 @@ import { works, sealedWorks } from '../data/works';
   /* sealed ledger */
   .sealed {
     max-width: 1280px; margin: 0 auto;
-    padding-top: var(--s6);
-    border-top: 1px solid var(--line-soft);
+    padding: var(--s5);
+    border: 1px solid var(--line-soft);
+    background: var(--urushi-2) var(--nashiji);
   }
   .sealed-row {
     display: grid;
@@ -556,6 +576,7 @@ import { works, sealedWorks } from '../data/works';
   .sealed-hint { font-size: 14px; letter-spacing: .06em; }
   .sealed-lock { color: var(--kin-faint); text-align: center; }
   @media (max-width: 640px) {
+    .sealed { padding: var(--s4); }
     .sealed-row { grid-template-columns: 48px 1fr 24px; }
     .sealed-when { grid-column: 2; grid-row: 2; }
   }
@@ -585,9 +606,33 @@ import { works, sealedWorks } from '../data/works';
   .atelier-list strong { color: var(--silk); font-weight: 600; letter-spacing: .04em; }
   .atelier-list span { margin-left: auto; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--kin); }
 
-  .ateliers-detail { max-width: 1280px; margin: var(--s7) auto 0; overflow: hidden; }
-  .ateliers-detail img { width: 100%; border: 1px solid var(--line-soft); transform: scale(1.06); }
-  .ateliers-detail figcaption { margin-top: 18px; }
+  .ateliers-detail {
+    max-width: 1280px; margin: var(--s8) auto 0;
+    display: grid; gap: var(--s6); align-items: center;
+  }
+  @media (min-width: 960px) {
+    .ateliers-detail { grid-template-columns: 4fr 7fr; gap: var(--s7); }
+  }
+  .ateliers-detail-copy { max-width: 42ch; }
+  .ateliers-detail-copy h3 {
+    font-size: clamp(32px, 4vw, 54px);
+    margin: 18px 0 26px;
+  }
+  .ateliers-detail-copy > p:not(.label) { color: var(--silk-dim); }
+  .ateliers-detail-facts { margin-top: var(--s5); border-top: 1px solid var(--line-soft); }
+  .ateliers-detail-facts div {
+    display: grid; grid-template-columns: 96px 1fr; gap: var(--s3);
+    padding: 15px 0; border-bottom: 1px solid var(--line-soft);
+    align-items: baseline;
+  }
+  .ateliers-detail-facts dt { letter-spacing: .28em; }
+  .ateliers-detail-facts dd { font-size: 14px; color: var(--silk); }
+  .ateliers-detail-frame { overflow: hidden; border: 1px solid var(--line-soft); }
+  .ateliers-detail-media img {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    transform: scale(1.06);
+  }
+  .ateliers-detail-media figcaption { margin-top: 18px; }
 
   /* ============ COMMISSION ============ */
   .commission { padding: var(--s9) var(--gutter); background: var(--void); }

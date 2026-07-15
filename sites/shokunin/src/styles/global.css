@@ -11,7 +11,12 @@
   --urushi:      #120d0a;
   --urushi-2:    #1a130e;
   --urushi-3:    #241a13;
+  --roiro:       #1d140f;
   --void:        #0a0705;
+
+  /* nashiji — kin-tinted particulate suspended in raised lacquer.
+     Panels only: never a chapter ground, never over photography. */
+  --nashiji: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' seed='19' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .902 0 0 0 0 .804 0 0 0 0 .576 0 0 0 .085 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* kon indigo — depth panels, night air */
   --kon:         #131c26;
@@ -262,6 +267,27 @@ html.js.cursor-on .cursor { display: block; }
 .sect-head .rule { flex: 1; height: 1px; background: var(--line-soft); align-self: center; }
 
 .gold-rule { width: 64px; height: 1px; background: var(--kin); }
+
+/* Hishimon — the house diamond translated into a silk wall lattice.
+   Interior chapters only. The thread stays below 3% alpha; small crossing
+   glints read as kin catching lamplight. It never enters imagery or kon. */
+.hishimon { position: relative; isolation: isolate; overflow: hidden; }
+.hishimon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(230, 205, 147, .12) 1px, transparent 1.6px),
+    radial-gradient(rgba(230, 205, 147, .07) 1px, transparent 1.6px),
+    repeating-linear-gradient(45deg, transparent 0 47px, rgba(194, 160, 97, .03) 48px 49px, transparent 50px 96px),
+    repeating-linear-gradient(-45deg, transparent 0 47px, rgba(194, 160, 97, .03) 48px 49px, transparent 50px 96px);
+  background-size: 96px 96px;
+  background-position: 0 0, 48px 48px, 0 0, 0 0;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent);
+}
 
 /* focus visibility */
 a:focus-visible, button:focus-visible {

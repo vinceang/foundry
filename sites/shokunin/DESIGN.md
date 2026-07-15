@@ -59,6 +59,8 @@ light; silk is the voice.**
 | `--void` | `#0a0705` | Deepest ground: footer, doctrine, between-chapters |
 | `--urushi` | `#120d0a` | Default page ground (black-brown lacquer, *not* neutral black) |
 | `--urushi-2/3` | `#1a130e` / `#241a13` | Raised lacquer surfaces, cards |
+| `--roiro` | `#1d140f` | Polished black-lacquer room, warm where lamplight collects. Doctrine only on the home page; never a general alternate background. |
+| `--nashiji` | Kin-tinted SVG particulate at 8.5% alpha | Pear-skin lacquer speckle on raised panels. Always paired with `--urushi-2/3`; never a chapter ground or image overlay. |
 | `--kon` / `--kon-2` | `#131c26` / `#1b2733` | Indigo depth panels — one chapter per page, no more |
 | `--kin` | `#c2a061` | Smoked gold: labels, marks, primary buttons |
 | `--kin-bright` | `#e6cd93` | Gold at full lamplight: hovers, active states, glints |
@@ -76,9 +78,12 @@ light; silk is the voice.**
    area, it has become jewelry — pull back.
 2. **Kon indigo is atmosphere, not variety.** At most one indigo chapter per
    page (ateliers, provenance). It reads as "night air outside the lamp".
-3. **Text sits on darkness, never on gold** except inside the primary button
+3. **Roiro is the house under lamplight.** It lifts the home Doctrine one
+   step above void so material hierarchy reads before texture. Do not repeat
+   it elsewhere on the home page or use it as a generic warm section.
+4. **Text sits on darkness, never on gold** except inside the primary button
    (`#14100a` on `--kin`).
-4. **Forbidden:** red/vermilion in any form (it belongs to the sibling brand
+5. **Forbidden:** red/vermilion in any form (it belongs to the sibling brand
    Kaji), pure `#000`/`#fff`, saturated accent colors, gradients as
    decoration (gradients exist only as photographic shade/vignette).
 
@@ -134,13 +139,34 @@ also carry; it is `aria-hidden` decoration or paired with romaji.
   It is the only ornament shape. No circles-as-decoration, no rounded
   corners anywhere (`border-radius: 0` implicitly everywhere except the
   cursor ring).
+- **Hishimon is the interior wall textile.** `.hishimon` repeats the house
+  diamond as a kin-thread lattice on a 96px field: lines never exceed 3%
+  alpha, while the crossing glints may reach 12% because they read as metal
+  catching lamplight. A vertical mask lets the lattice arrive and recede
+  with the chapter's light. It belongs only where the house speaks in its
+  own voice: the Doctrine, the Commission rite, and dossier Craft record.
+  Never place it on Register imagery, the kon Atelier/Provenance chapter,
+  the hero, or a nashiji panel. The diamond is house identity here, not a
+  borrowed wallpaper motif.
+- **The sealed ledger is raised lacquer, not loose paper.** Its enclosing
+  panel uses `--urushi-2` with `--nashiji`; hairline-separated rows remain
+  ledger-like, while the material surface makes the annual register feel
+  handled and kept. Nashiji does not extend to the surrounding chapter.
 
 ### Page anatomy (home)
 
-`Hero (full svh) → Doctrine (void + watermark kanji) → The Register (works,
+`Hero (full svh) → Doctrine (roiro + hishimon + watermark kanji) → The Register (works,
 alternating) → Sealed ledger → Ateliers (kon) → Commission rite → Footer`.
 New pages follow the same arc: *arrive in darkness → doctrine → material →
 invitation*.
+
+The Ateliers chapter contains two asymmetric spreads. The first introduces
+the three lineages with documentary photography on the left; the second
+reverses the cadence, placing the material record on the left and a close
+craft image on the right at the 960px breakpoint. The text must explain what
+the image proves — named materials, durations, and hand process — rather than
+serve as a generic image caption. On smaller screens both spreads become
+text-led vertical chapters.
 
 ---
 
