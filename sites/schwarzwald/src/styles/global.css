@@ -352,6 +352,28 @@ a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
 }
 .settle-video.is-live { opacity: 1; }
 
+/* ---------- the wallpaper ----------
+   The gable repeated tone-on-tone: a woodblock-printed fir lattice on
+   the parlor wall, the kind of pattern a lamplit room only shows when
+   the light rakes it. Stube rooms only (the doctrine, the Werkstatt,
+   the craft record) — the forest and the winter night have no walls. */
+.wallpaper { position: relative; }
+.wallpaper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(rgba(238, 196, 137, .12) 1px, transparent 1.8px),
+    radial-gradient(rgba(238, 196, 137, .07) 1px, transparent 1.8px),
+    linear-gradient(45deg, transparent 74px, rgba(198, 142, 78, .05) 75px, rgba(198, 142, 78, .05) 76px, transparent 77px, transparent 109px),
+    linear-gradient(-45deg, transparent 75px, rgba(198, 142, 78, .05) 76px, rgba(198, 142, 78, .05) 77px, transparent 78px, transparent 109px);
+  background-size: 109px 109px;
+  background-position: 54px 55px, 0 0, 0 0, 0 0;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 20%, #000 80%, transparent);
+}
+
 /* ---------- section furniture ---------- */
 .sect-head { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: var(--s6); }
 .sect-head .rule { flex: 1; height: 1px; background: var(--line-soft); align-self: center; }

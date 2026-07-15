@@ -170,6 +170,22 @@ are EB Garamond, one size up. Prices written in full: `€ 14,800` (EN) /
   brand seal (gable over the letter S), chapter-rail nodes, timeline nodes,
   ledger marks, hotspot rings. No circles-as-decoration, no rounded corners
   anywhere, no diamonds (Shokunin's).
+- **The wallpaper (added 2026-07-15, by the owner's direction).**
+  `.wallpaper`: a quilted trellis — thread-fine brass lines crossing at
+  45° on a 109px cell, a brighter brass nail-head at each crossing —
+  the tufted wallcovering of a lamplit Herrenzimmer. Lines ≤5% alpha
+  (felt, not seen); the nail-heads may glint to ~12% because they are
+  metal, and brass appears where lantern light catches metal. Masked to
+  fade with the room's light. It hangs only in stube rooms: the
+  doctrine, the Werkstatt, the dossier craft record — never on the
+  forest ground, the nacht chapter, void, or cards. Reconciliation with
+  the diamond ban: the ban is on the diamond as *mark* (solid harlequin
+  ornament — that variant was prototyped and rejected); the trellis is
+  *material*, upholstery rather than emblem, the same distinction that
+  admits kirsche as timber rather than red. The nail-head is a point of
+  light (≤2px), not a circle-as-decoration. A gable-lattice variant was
+  prototyped and set aside: rows of triangles read as bunting and band
+  horizontally.
 - **Zero border-radius** (cursor ring excepted).
 
 ### Page anatomy (home)
