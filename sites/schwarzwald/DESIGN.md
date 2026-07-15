@@ -173,9 +173,10 @@ are EB Garamond, one size up. Prices written in full: `€ 14,800` (EN) /
 - **The wallpaper (added 2026-07-15, by the owner's direction).**
   `.wallpaper`: a quilted trellis — thread-fine brass lines crossing at
   45° on a 109px cell, a brighter brass nail-head at each crossing —
-  the tufted wallcovering of a lamplit Herrenzimmer. Lines ≤5% alpha
-  (felt, not seen); the nail-heads may glint to ~12% because they are
-  metal, and brass appears where lantern light catches metal. Masked to
+  the tufted wallcovering of a lamplit Herrenzimmer. Lines ≤3% alpha
+  (felt, not seen — the owner muted them below the first cut); the
+  nail-heads may glint to ~12% because they are metal, and brass
+  appears where lantern light catches metal. Masked to
   fade with the room's light. It hangs only in stube rooms: the
   doctrine, the Werkstatt, the dossier craft record — never on the
   forest ground, the nacht chapter, void, or cards. Reconciliation with
