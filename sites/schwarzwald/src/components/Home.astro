@@ -347,10 +347,12 @@ const werkstattVideo = plate('werkstatt.mp4');
   }
   .hero-media .settle-video { object-position: 72% center; }
   /* the veil covers the text column only — the clock side stays unshaded
-     so the carving reads at the image's own exposure */
+     so the carving reads at the image's own exposure. The faint brass
+     radial is the lantern's aura around the clock. */
   .hero-shade {
     position: absolute; inset: 0;
     background:
+      radial-gradient(44% 58% at 74% 40%, rgba(198,142,78,.09), transparent 72%),
       linear-gradient(90deg, var(--wald) 22%, rgba(14,19,14,.45) 46%, transparent 66%),
       linear-gradient(180deg, rgba(14,19,14,.55), transparent 24%, transparent 66%, var(--void));
   }
@@ -363,6 +365,7 @@ const werkstattVideo = plate('werkstatt.mp4');
     .hero-media img { object-position: 70% center; }
     .hero-shade {
       background:
+        radial-gradient(56% 60% at 70% 42%, rgba(198,142,78,.08), transparent 74%),
         linear-gradient(180deg, rgba(14,19,14,.6), transparent 32%, transparent 58%, var(--wald) 97%);
     }
     .hero-inner { margin-top: 52svh; }
@@ -535,16 +538,20 @@ const werkstattVideo = plate('werkstatt.mp4');
     letter-spacing: .04em;
   }
 
-  /* ---------- in private hands ---------- */
+  /* ---------- in private hands ----------
+     the provenance chapter is the page's one nacht chapter — the winter
+     air outside the window, where the departed clocks now keep time */
   .hands {
-    background: linear-gradient(180deg, var(--wald), var(--void) 22%);
+    background: linear-gradient(180deg, var(--wald), var(--nacht) 18%, var(--nacht) 82%, var(--void));
     padding-block: var(--s9);
   }
   .hands .ledger { margin-top: var(--s6); max-width: 880px; }
 
-  /* ---------- werkstatt (the one nacht chapter) ---------- */
+  /* ---------- werkstatt ----------
+     the lamplit benches — the most literal stube content on the site;
+     nacht moved to the provenance chapter, its original assignment */
   .werkstatt {
-    background: linear-gradient(180deg, var(--void) 0%, var(--nacht) 18%, var(--nacht) 82%, var(--void) 100%);
+    background: linear-gradient(180deg, var(--void) 0%, var(--stube) 18%, var(--stube) 82%, var(--void) 100%);
     padding-block: var(--s9);
   }
   .werkstatt-grid { display: grid; gap: var(--s6); }

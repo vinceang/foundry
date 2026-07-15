@@ -351,10 +351,12 @@ a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
   color: var(--messing-faint);
 }
 
-/* ---------- footer ---------- */
+/* ---------- footer ----------
+   every page ends at the hearth — the void settles into lamplit timber,
+   the last thing a guest sees is the warmth of the house */
 .site-footer {
   position: relative;
-  background: var(--void);
+  background: linear-gradient(180deg, var(--void), var(--stube) 60%);
   border-top: 1px solid var(--line-soft);
   padding: var(--s7) var(--gutter) var(--s6);
 }

@@ -92,19 +92,26 @@ The world is the fir forest at night, seen from a lantern-lit workshop.
 1. **Brass is light, not paint.** It appears where lantern light would catch
    metal: labels, edges, the pendulum, one primary button per view. >5% of
    the frame in brass = jewelry; pull back.
-2. **Nacht blue is the winter air outside the window** — at most one chapter
-   per page (the Urkunde or provenance chapter). It must never become a
-   second accent.
+2. **Nacht blue is the winter air outside the window** — strictly one
+   chapter per page, and always the provenance/Urkunde register: the chapter
+   about clocks that have *left* the house. On the home page that is
+   "In private hands" (moved there 2026-07-15 — the Werkstatt held nacht
+   at first, but the workshop is *inside* the house; the ledger of departed
+   clocks is what stands at the window). It must never become a second
+   accent.
 2a. **Stube brown is the lamplight inside the house** (added 2026-07-15, to
-   break the dark monotone without breaking the register). Same discipline
-   as nacht: at most one stube chapter per page, and only where the house
-   speaks of itself — "The house" doctrine on the home page, the carving
-   record on a dossier. The page's tonal journey is now *three motivated
+   break the dark monotone without breaking the register). It grounds the
+   chapters where the house itself speaks or works: "The house" doctrine
+   and the Werkstatt on the home page, the craft record on a dossier —
+   at most two stube chapters per page, never adjacent, never beside the
+   nacht chapter. The page's tonal journey is *three motivated
    temperatures*: fir-green (the forest, the default), stube (inside the
-   house), nacht (the winter night outside the window). Every chapter ground
-   must be one of these or void; never invent a fourth. The one sanctioned
-   small-scale use is the `.specs` placard — a panel of lamplit timber
-   beside each clock.
+   house), nacht (the winter night outside the window) — warm and cold
+   alternating around the green. Every chapter ground must be one of these
+   or void; never invent a fourth. Two sanctioned uses outside chapters:
+   the `.specs` placard — a panel of lamplit timber beside each clock —
+   and the site footer, which settles from void into stube on every page:
+   the guest leaves past the hearth.
 3. **Text sits on darkness, never on brass** except inside the primary
    button (`#120e08` on `--messing`).
 4. **Forbidden:** red in any form, vermilion (Kaji's), Shokunin's brown
@@ -161,9 +168,9 @@ are EB Garamond, one size up. Prices written in full: `€ 14,800` (EN) /
 ### Page anatomy (home)
 
 `Hero (full svh, clock in void, Schonach time) → Doctrine (stube + Fraktur
-watermark) → The Kabinett (alternating works) → In private hands (ledger) →
-The Werkstatt (nacht) → The Urkunde strip → The Auftrag (correspondence) →
-Footer`. Every page: *arrive in darkness → doctrine → material → invitation*.
+watermark) → The Kabinett (alternating works) → In private hands (ledger,
+nacht) → Die Familie → The Werkstatt (stube) → The Urkunde strip → The
+Auftrag (correspondence) → Footer`. Every page: *arrive in darkness → doctrine → material → invitation*.
 
 ### Fixed chrome never touches content
 
