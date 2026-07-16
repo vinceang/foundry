@@ -288,10 +288,14 @@ The generalized rule for future chrome (toasts, cart drawer, back-to-top):
 content.** If a fixed element must cross the content column, it carries the
 lacquer veil treatment.
 
-Forms (future petition flow): underline-only inputs on darkness, floating
-gold labels in tracked caps, generous vertical rhythm. A petition should
-feel like writing a letter, not filling a checkout — single-column, one
-question at a time, no progress gamification.
+Forms: `/petition/` is the house writing desk. It follows the correspondence
+treatment shared by the sites at the interaction level — a dedicated letter
+page, preselected matter from dossier CTAs, and a mail-client handoff — while
+remaining materially Shokunin: a nashiji lacquer panel, underline-only fields,
+tracked kin labels, and the diamond as select mark. A petition feels like
+writing a letter, not filling a checkout: single-column, generous vertical
+rhythm, no progress gamification. Dossier CTAs pass
+`?matter=work-<slug>`; the home commission passes `?matter=commission`.
 
 ---
 

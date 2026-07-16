@@ -1,0 +1,249 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { works } from '../data/works';
+
+const address = 'register@shokunin.example';
+---
+
+<Layout
+  title="Open a petition — Shokunin"
+  description="Write to the Shokunin Register to petition for a work, request an audience, or propose a commission."
+>
+  <main class="petition-page">
+    <section class="petition-hero hishimon">
+      <span class="petition-kanji kanji" aria-hidden="true">願</span>
+      <div class="chapter">
+        <p class="label rv">The Register · Correspondence</p>
+        <h1 class="display petition-title rv" style="--d:1">Enter your petition.</h1>
+        <p class="petition-intro rv" style="--d:2">
+          A petition begins as a letter. Name the work you seek, or the
+          commission you wish the house to consider. The Register replies
+          within three days.
+        </p>
+      </div>
+    </section>
+
+    <section class="petition-desk-section">
+      <div class="chapter">
+        <form
+          class="petition-desk rv"
+          data-petition
+          data-address={address}
+          action={`mailto:${address}`}
+          method="get"
+        >
+          <div class="petition-field">
+            <label class="label" for="petition-name">Your name</label>
+            <input id="petition-name" name="name" type="text" required autocomplete="name" />
+          </div>
+
+          <div class="petition-field">
+            <label class="label" for="petition-place">Where you stand</label>
+            <input id="petition-place" name="place" type="text" autocomplete="address-level2" />
+            <p class="petition-hint">City and country are sufficient.</p>
+          </div>
+
+          <div class="petition-field">
+            <label class="label" for="petition-matter">The matter</label>
+            <div class="petition-select">
+              <select id="petition-matter" name="matter" required>
+                <option value="" selected disabled>Select a work or audience</option>
+                {works.map((work) => (
+                  <option value={`work-${work.slug}`}>
+                    Work {work.no} · {work.name} {work.kanji} · {work.status}
+                  </option>
+                ))}
+                <option value="commission">Work XII · The annual commission</option>
+                <option value="audience">Request an audience with the ateliers</option>
+              </select>
+              <span class="petition-caret" aria-hidden="true">◇</span>
+            </div>
+          </div>
+
+          <div class="petition-field">
+            <label class="label" for="petition-letter">Your letter</label>
+            <textarea id="petition-letter" name="letter" rows="9" required></textarea>
+            <p class="petition-hint">
+              There is no prescribed form. State who you are, what you seek,
+              and why you ask the house to release it.
+            </p>
+          </div>
+
+          <div class="petition-send">
+            <button class="btn-gold" type="submit">Send to the Register</button>
+            <p class="petition-hint">
+              Your mail client will open with the letter prepared. Nothing is
+              sent before you approve it.
+            </p>
+            <noscript>
+              <p class="petition-hint">
+                JavaScript is unavailable. Write directly to
+                <a class="petition-address" href={`mailto:${address}`}>{address}</a>.
+              </p>
+            </noscript>
+          </div>
+        </form>
+        <p class="petition-aside rv" style="--d:1">
+          Every petition is read by the keeper of the Register. No automated desk stands between you and the house.
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  // The letter leaves from the visitor's own hand. Dossier and commission
+  // CTAs arrive with ?matter=<work-slug|commission|audience> preselected.
+  const form = document.querySelector<HTMLFormElement>('[data-petition]');
+  if (form) {
+    const matter = form.querySelector<HTMLSelectElement>('#petition-matter');
+    const requested = new URLSearchParams(location.search).get('matter');
+    if (requested && matter && [...matter.options].some((option) => option.value === requested)) {
+      matter.value = requested;
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const selected = matter?.selectedOptions[0]?.textContent?.trim() ?? 'General petition';
+      const place = data.get('place');
+      const body = `${data.get('letter')}\n\n— ${data.get('name')}${place ? `, ${place}` : ''}`;
+      const subject = `Petition — ${selected}`;
+      location.href = `mailto:${form.dataset.address}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+</script>
+
+<style>
+  .chapter {
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .petition-hero {
+    padding: calc(var(--s8) + 64px) 0 var(--s7);
+    background: var(--roiro);
+  }
+  .petition-kanji {
+    position: absolute;
+    right: .02em;
+    top: 50%;
+    translate: 0 -50%;
+    font-size: clamp(190px, 28vw, 420px);
+    line-height: 1;
+    color: rgba(194, 160, 97, .05);
+    pointer-events: none;
+    user-select: none;
+  }
+  .petition-title {
+    max-width: 15ch;
+    margin-top: var(--s3);
+    font-size: clamp(42px, 6vw, 82px);
+  }
+  .petition-intro {
+    max-width: 58ch;
+    margin-top: var(--s4);
+    color: var(--silk-dim);
+  }
+
+  .petition-desk-section {
+    padding-block: var(--s7) var(--s9);
+    background: var(--void);
+  }
+  .petition-desk {
+    max-width: 880px;
+    display: grid;
+    gap: var(--s5);
+    padding: clamp(32px, 5vw, 72px);
+    border: 1px solid var(--line);
+    background: var(--urushi-2) var(--nashiji);
+  }
+  .petition-field { display: grid; gap: 10px; }
+  .petition-desk input,
+  .petition-desk textarea,
+  .petition-desk select {
+    width: 100%;
+    padding: 12px 0;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    color: var(--silk);
+    color-scheme: dark;
+    font-family: var(--body);
+    font-size: 15.5px;
+    font-weight: 300;
+    letter-spacing: .02em;
+    transition: border-color .35s;
+  }
+  .petition-desk textarea {
+    min-height: 200px;
+    resize: vertical;
+    font-family: var(--display);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+  .petition-desk input:hover,
+  .petition-desk textarea:hover,
+  .petition-desk select:hover { border-color: var(--kin); }
+  .petition-desk input:focus-visible,
+  .petition-desk textarea:focus-visible,
+  .petition-desk select:focus-visible {
+    border-color: var(--kin-bright);
+    outline: 1px solid var(--kin-bright);
+    outline-offset: 4px;
+  }
+  .petition-select { position: relative; }
+  .petition-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 48px;
+    cursor: pointer;
+  }
+  .petition-select option {
+    background: var(--urushi-2);
+    color: var(--silk);
+  }
+  .petition-select option:disabled { color: var(--silk-dim); }
+  .petition-caret {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--kin);
+    pointer-events: none;
+  }
+  .petition-hint {
+    color: var(--silk-faint);
+    font-size: 12.5px;
+    letter-spacing: .04em;
+  }
+  .petition-address { color: var(--kin); }
+  .petition-send { display: grid; gap: var(--s2); justify-items: start; }
+  .btn-gold {
+    display: inline-block;
+    padding: 15px 34px;
+    background: var(--kin);
+    color: #14100a;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    transition: background .4s var(--ease);
+  }
+  .btn-gold:hover { background: var(--kin-bright); }
+  .petition-aside {
+    max-width: 880px;
+    margin-top: var(--s4);
+    color: var(--silk-faint);
+    font-size: 12.5px;
+    letter-spacing: .12em;
+  }
+
+  @media (max-width: 640px) {
+    .petition-hero { padding-top: calc(var(--s7) + 64px); }
+    .petition-title { font-size: 42px; }
+    .petition-desk { padding: var(--s4); }
+  }
+</style>

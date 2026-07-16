@@ -54,7 +54,7 @@ const next = works[(idx + 1) % works.length];
         </dl>
 
         <div class="meta-actions rv" style="--d:6">
-          <a class="btn-gold" href="mailto:register@shokunin.example?subject=Petition%20—%20Work%20{work.no}">
+          <a class="btn-gold" href={`/petition/?matter=work-${work.slug}`}>
             Petition to acquire
           </a>
           <span class={`work-status ${work.status === 'Under petition' ? 'is-pending' : ''}`}>{work.status}</span>
