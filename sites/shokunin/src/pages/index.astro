@@ -133,7 +133,10 @@ import { works, sealedWorks } from '../data/works';
   <section class="ateliers" id="ateliers">
     <div class="ateliers-grid">
       <figure class="ateliers-media rv">
-        <img src="/works/atelier.jpg" alt="A craftsman's hands lacing indigo silk cord through lacquered armor scales by lantern light" loading="lazy" data-parallax="26" />
+        <div class="ateliers-media-frame">
+          <img src="/works/atelier-succession.jpg" alt="An urushi master guiding a young apprentice as they lacquer a kabuto at a night workshop" loading="lazy" data-parallax="20" />
+        </div>
+        <figcaption class="label label--dim">Shirakawa Iori, eleventh keeper · instruction at the lacquer bench</figcaption>
       </figure>
       <div class="ateliers-copy">
         <p class="label rv">The ateliers</p>
@@ -592,8 +595,9 @@ import { works, sealedWorks } from '../data/works';
     display: grid; gap: var(--s6); align-items: center;
   }
   @media (min-width: 960px) { .ateliers-grid { grid-template-columns: 6fr 5fr; } }
-  .ateliers-media { overflow: hidden; border: 1px solid var(--line-soft); }
-  .ateliers-media img { width: 100%; transform: scale(1.06); }
+  .ateliers-media-frame { overflow: hidden; border: 1px solid var(--line-soft); }
+  .ateliers-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transform: scale(1.06); }
+  .ateliers-media figcaption { margin-top: 18px; }
   .ateliers-copy h2 { font-size: clamp(34px, 4.8vw, 62px); margin: 18px 0 26px; }
   .ateliers-copy > p { color: var(--silk-dim); max-width: 52ch; }
   .atelier-list { list-style: none; margin-top: var(--s5); }

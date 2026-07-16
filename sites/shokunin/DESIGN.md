@@ -83,9 +83,12 @@ light; silk is the voice.**
    it elsewhere on the home page or use it as a generic warm section.
 4. **Text sits on darkness, never on gold** except inside the primary button
    (`#14100a` on `--kin`).
-5. **Forbidden:** red/vermilion in any form (it belongs to the sibling brand
-   Kaji), pure `#000`/`#fff`, saturated accent colors, gradients as
-   decoration (gradients exist only as photographic shade/vignette).
+5. **Forbidden as design language:** red/vermilion tokens, UI accents,
+   grounds, type, or ornament (those belong to the sibling brand Kaji), pure
+   `#000`/`#fff`, saturated accent colors, and decorative gradients.
+   Historically grounded red cord or lacquer may remain as a small artifact
+   detail inside documentary photography; it is material evidence, never a
+   color introduced by the interface or grade.
 
 ---
 
@@ -168,27 +171,48 @@ the image proves — named materials, durations, and hand process — rather tha
 serve as a generic image caption. On smaller screens both spreads become
 text-led vertical chapters.
 
+The first spread carries the home page's one human photograph: a keeper and
+apprentice absorbed in the same act of work. It makes succession visible
+without turning the chapter into a portrait grid. Individual keeper portraits
+are reserved for future Atelier profile pages.
+
+Every dossier repeats one photographic evidence pattern. **Craft record shows
+the work; Provenance shows its maker.** A work-specific documentary image may
+close "Notes from the bench"; it must not repeat a generic detail already used
+on the home page. "The record of its making" pairs the provenance timeline
+with a 4:5 portrait of the responsible keeper: timeline left and portrait
+right above 960px, portrait before timeline below it. The portrait is still,
+captioned only with name, generation/role, house, and place.
+
 ---
 
 ## 5. Imagery
 
 The photography is the brand's largest surface. One recipe, no exceptions:
 
-- **One subject, one warm light.** A single tungsten-warm key light (shaft
+- **One act, one warm light.** A single tungsten-warm key light (shaft
   from above, or low raking side light). Everything else falls to black.
 - **Background is void.** No environments, no lifestyle, no context — except
-  the atelier documentary shots (hands, tools, lantern), which keep the same
-  one-lamp rule and never show faces.
+  atelier documentary shots, where the workshop may emerge from shadow as
+  evidence: hands, tools, lantern, keeper, apprentice.
 - **Palette inside the frame** must match the tokens: lacquer black-browns,
-  indigo silk, aged gold. If a prop introduces red, crop it or reshoot.
-- **No text in images. No people** (except anonymous craftsman hands).
+  indigo silk, aged gold. Incidental artifact red is permitted only when it is
+  historically plausible, materially specific, and visually subordinate.
+- **Faces are lineage, not lifestyle.** The home page permits one human plate
+  in the Ateliers chapter: a keeper and apprentice engaged in craft, never
+  posed for fashion or heritage theater. Dossier Craft record and Provenance
+  chapters may show the maker at work; future Atelier profiles may show the
+  current keepers. Hero, Register, and dossier opening object plates remain
+  face-free.
+- **No readable text in images.** Workshop marks may fall into blur, but an
+  image never relies on generated signage or calligraphy for meaning.
 
 ### Generation recipe (Higgsfield `soul_2`)
 
 Keep one art-direction phrase constant across a batch:
 
 > "…pitch-black background, single warm key light, deep chiaroscuro shadows,
-> museum artifact presentation, ultra-premium, no text, no people."
+> museum artifact presentation, ultra-premium, no readable text."
 
 Pipeline: raw PNGs → `assets-src/` (gitignored) → `sips` JPEG q≈78, longest
 edge ≤2048 (≤1400 for detail shots) → `public/works/`. Target ≤500KB per

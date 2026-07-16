@@ -25,6 +25,7 @@ export type Work = {
   body: string[];
   specs: { k: string; v: string }[];
   provenance: { stage: string; detail: string; when: string }[];
+  maker: { src: string; alt: string; caption: string };
   hotspots: Hotspot[];
 };
 
@@ -46,9 +47,9 @@ export const works: Work[] = [
     portrait: true,
     lede: 'A sixty-two-plate russet iron bowl, raised and lacquered over eleven months, crowned with a crescent of hammered gold. Made to be worn once, and kept for three hundred years.',
     detail: {
-      src: '/works/lacing.jpg',
-      alt: 'Macro view of lacquered armor scales bound with indigo silk cords',
-      caption: 'Kachi-iro silk over lacquered scales — the house lacing standard',
+      src: '/works/gessho-urushi.jpg',
+      alt: 'A lacquer master applying the final finish to the Gesshō kabuto at a dark workshop bench',
+      caption: 'Final lacquer inspection · Gesshō at the Shirakawa bench',
     },
     body: [
       'The bowl is raised from sixty-two individual iron plates, each hand-forged, riveted and filed until the seams read as a single curve. House Mizuno lacquers in the old Kaga manner: eight grounds of black urushi, each cured in a cedar chamber for nineteen days before the next is laid.',
@@ -69,6 +70,11 @@ export const works: Work[] = [
       { stage: 'Laced', detail: 'Kachi-iro silk, 340 hours of braiding', when: 'February — April 2026' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work IV of XII', when: 'April 2026' },
     ],
+    maker: {
+      src: '/works/maker-mizuno.jpg',
+      alt: 'Mizuno Takeharu working by lamplight on a lacquered armor plate in the House Mizuno workshop',
+      caption: 'Mizuno Takeharu · sixteenth keeper, House Mizuno · Kaga',
+    },
     hotspots: [
       { x: 50, y: 22, title: 'Maedate crest', note: 'A single copper sheet, hammered over horn forms and fired with gold. No two crescents from the house share a curve.' },
       { x: 38, y: 52, title: 'Sixty-two plates', note: 'The seams are filed until the bowl reads as one curve. Run a thumb across it blind and you will count nothing.' },
@@ -110,6 +116,11 @@ export const works: Work[] = [
       { stage: 'Polished', detail: 'Ninety days, two artisans of the Hon’ami line', when: 'June — September 2025' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work VII of XII', when: 'January 2026' },
     ],
+    maker: {
+      src: '/works/maker-kanemoto.jpg',
+      alt: 'The twenty-sixth Kanemoto inspecting the polished Samidare blade by a single warm lantern',
+      caption: 'The twenty-sixth Kanemoto · swordsmith, Kanemoto Forge · Seki',
+    },
     hotspots: [
       { x: 55, y: 38, title: 'Samidare hamon', note: 'A straight temper line broken by soft descending strokes — rain that falls without wind. Visible only when the blade is moved against light.' },
       { x: 24, y: 52, title: 'Gold menuki', note: 'Cast and chased by the forge’s metalworker. Positioned to sit under the middle fingers, felt more than seen.' },
@@ -151,6 +162,11 @@ export const works: Work[] = [
       { stage: 'Dressed', detail: 'Gold urushi beads laid over nine days', when: 'January 2026' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work IX of XII', when: 'February 2026' },
     ],
+    maker: {
+      src: '/works/maker-shirakawa.jpg',
+      alt: 'Shirakawa Iori applying black urushi to a curved armor plate in the Wajima studio',
+      caption: 'Shirakawa Iori · eleventh keeper, Shirakawa Studio · Wajima',
+    },
     hotspots: [
       { x: 38, y: 30, title: 'The gold beads', note: 'Stress marks opened in the final cure. The studio’s custom is absolute: the flaw is kept, dressed in gold, and named.' },
       { x: 56, y: 52, title: 'Chased expression', note: 'Fierce at ten paces, serene at two. The studio adjusts the brow and mouth by fractions of a millimetre until both readings hold.' },

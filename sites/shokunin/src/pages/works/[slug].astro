@@ -94,20 +94,31 @@ const next = works[(idx + 1) % works.length];
       <div class="prov-inner">
         <p class="label rv">Provenance</p>
         <h2 class="display rv" style="--d:1">The record of its making</h2>
-        <ol class="prov-line">
-          {work.provenance.map((p, i) => (
-            <li class="rv" style={`--d:${i + 2}`}>
-              <span class="prov-dot" aria-hidden="true"></span>
-              <h3 class="display">{p.stage}</h3>
-              <p>{p.detail}</p>
-              <span class="label label--dim">{p.when}</span>
-            </li>
-          ))}
-        </ol>
+        <div class="prov-grid">
+          <figure class="prov-maker rv" style="--d:2">
+            <div class="prov-maker-frame">
+              <img src={work.maker.src} alt={work.maker.alt} loading="lazy" />
+            </div>
+            <figcaption class="label label--dim">{work.maker.caption}</figcaption>
+          </figure>
 
-        <div class="seal rv" style="--d:6" aria-label={`Register seal: Work ${work.no} of twelve, sealed ${work.year}`}>
-          <span class="seal-mark" aria-hidden="true"><span class="kanji">証</span></span>
-          <p class="label">Entered into the Register · Work {work.no} of XII · {work.year}</p>
+          <div class="prov-record">
+            <ol class="prov-line">
+              {work.provenance.map((p, i) => (
+                <li class="rv" style={`--d:${i + 2}`}>
+                  <span class="prov-dot" aria-hidden="true"></span>
+                  <h3 class="display">{p.stage}</h3>
+                  <p>{p.detail}</p>
+                  <span class="label label--dim">{p.when}</span>
+                </li>
+              ))}
+            </ol>
+
+            <div class="seal rv" style="--d:6" aria-label={`Register seal: Work ${work.no} of twelve, sealed ${work.year}`}>
+              <span class="seal-mark" aria-hidden="true"><span class="kanji">証</span></span>
+              <p class="label">Entered into the Register · Work {work.no} of XII · {work.year}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -309,8 +320,17 @@ const next = works[(idx + 1) % works.length];
 
   /* ===== provenance ===== */
   .provenance { padding: var(--s8) var(--gutter); background: var(--kon); }
-  .prov-inner { max-width: 880px; margin-inline: auto; }
-  .prov-inner h2 { font-size: clamp(30px, 4vw, 48px); margin: 16px 0 var(--s6); }
+  .prov-inner { max-width: 1280px; margin-inline: auto; }
+  .prov-inner h2 { font-size: clamp(30px, 4vw, 48px); margin-top: 16px; }
+  .prov-grid { display: grid; gap: var(--s6); margin-top: var(--s6); }
+  @media (min-width: 960px) {
+    .prov-grid { grid-template-columns: 5fr 4fr; gap: var(--s7); align-items: start; }
+    .prov-record { grid-column: 1; grid-row: 1; }
+    .prov-maker { grid-column: 2; grid-row: 1; }
+  }
+  .prov-maker-frame { overflow: hidden; border: 1px solid var(--line-soft); }
+  .prov-maker img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .prov-maker figcaption { margin-top: 16px; line-height: 1.7; }
   .prov-line { list-style: none; position: relative; padding-left: 34px; }
   .prov-line::before {
     content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px;
