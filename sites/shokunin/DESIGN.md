@@ -45,6 +45,12 @@ its kanji (月照), a one-line reading ("moonlight on still water"), and a
 register numeral. Names come from nature and weather, never from aggression
 ("Skullsplitter" is the opposite of this brand).
 
+The 2026 Register currently exposes four dossier archetypes: **Gesshō**
+(kabuto), **Samidare** (katana), **Kuronami** (sōmen), and **Musubi**
+(ō-yoroi). Musubi is the binding study: its chestnut-brown `kuri-iro` odoshi,
+black hon-kozane, and aged-gold kanamono make construction—not silhouette—
+the identity of the work.
+
 ---
 
 ## 2. Color
@@ -176,13 +182,17 @@ apprentice absorbed in the same act of work. It makes succession visible
 without turning the chapter into a portrait grid. Individual keeper portraits
 are reserved for future Atelier profile pages.
 
-Every dossier repeats one photographic evidence pattern. **Craft record shows
-the work; Provenance shows its maker.** A work-specific documentary image may
-close "Notes from the bench"; it must not repeat a generic detail already used
-on the home page. "The record of its making" pairs the provenance timeline
-with a 4:5 portrait of the responsible keeper: timeline left and portrait
-right above 960px, portrait before timeline below it. The portrait is still,
-captioned only with name, generation/role, house, and place.
+Every dossier repeats one photographic evidence pattern. **The opening plate
+shows the finished work; Provenance shows it being made.** The opening may be
+a full silhouette or a materially decisive crop: Musubi uses the repeated
+knots and lacquered scale rows because its binding is the object’s thesis.
+It never substitutes a workshop portrait for the finished object. "Notes from
+the bench" is always image-free: its text and specification card are the
+written craft record. "The record of its making" pairs the provenance timeline
+with a 4:5 documentary photograph specific to that work and process: timeline
+left and photograph right above 960px, photograph before timeline below it.
+The caption names the work, the recorded act, and the responsible house or
+maker.
 
 ---
 
@@ -200,10 +210,10 @@ The photography is the brand's largest surface. One recipe, no exceptions:
   historically plausible, materially specific, and visually subordinate.
 - **Faces are lineage, not lifestyle.** The home page permits one human plate
   in the Ateliers chapter: a keeper and apprentice engaged in craft, never
-  posed for fashion or heritage theater. Dossier Craft record and Provenance
-  chapters may show the maker at work; future Atelier profiles may show the
-  current keepers. Hero, Register, and dossier opening object plates remain
-  face-free.
+  posed for fashion or heritage theater. Dossier Provenance chapters may show
+  the maker at work on the named object; Craft record remains image-free.
+  Future Atelier profiles may show the current keepers. Hero, Register, and
+  dossier opening object plates remain face-free.
 - **No readable text in images.** Workshop marks may fall into blur, but an
   image never relies on generated signage or calligraphy for meaning.
 

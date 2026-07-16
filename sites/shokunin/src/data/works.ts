@@ -21,11 +21,10 @@ export type Work = {
   imageAlt: string;
   portrait: boolean;
   lede: string;
-  detail?: { src: string; alt: string; caption: string };
   body: string[];
   specs: { k: string; v: string }[];
   provenance: { stage: string; detail: string; when: string }[];
-  maker: { src: string; alt: string; caption: string };
+  provenanceImage: { src: string; alt: string; caption: string };
   hotspots: Hotspot[];
 };
 
@@ -46,11 +45,6 @@ export const works: Work[] = [
     imageAlt: 'Lacquered kabuto helmet with a gold crescent-moon crest, lit by a single warm light against darkness',
     portrait: true,
     lede: 'A sixty-two-plate russet iron bowl, raised and lacquered over eleven months, crowned with a crescent of hammered gold. Made to be worn once, and kept for three hundred years.',
-    detail: {
-      src: '/works/gessho-urushi.jpg',
-      alt: 'A lacquer master applying the final finish to the Gesshō kabuto at a dark workshop bench',
-      caption: 'Final lacquer inspection · Gesshō at the Shirakawa bench',
-    },
     body: [
       'The bowl is raised from sixty-two individual iron plates, each hand-forged, riveted and filed until the seams read as a single curve. House Mizuno lacquers in the old Kaga manner: eight grounds of black urushi, each cured in a cedar chamber for nineteen days before the next is laid.',
       'The maedate crest is not cast. It is a single sheet of copper, hammered over horn forms and fired with gold in the mercury-free kaga-mekki method the house has guarded since the seventeenth century. Under candlelight it does not glitter — it glows.',
@@ -70,10 +64,10 @@ export const works: Work[] = [
       { stage: 'Laced', detail: 'Kachi-iro silk, 340 hours of braiding', when: 'February — April 2026' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work IV of XII', when: 'April 2026' },
     ],
-    maker: {
-      src: '/works/maker-mizuno.jpg',
-      alt: 'Mizuno Takeharu working by lamplight on a lacquered armor plate in the House Mizuno workshop',
-      caption: 'Mizuno Takeharu · sixteenth keeper, House Mizuno · Kaga',
+    provenanceImage: {
+      src: '/works/gessho-urushi.jpg',
+      alt: 'Mizuno Takeharu applying the final lacquer finish to the Gesshō kabuto at a dark workshop bench',
+      caption: 'Final lacquer inspection · Gesshō at the House Mizuno bench · Kaga',
     },
     hotspots: [
       { x: 50, y: 22, title: 'Maedate crest', note: 'A single copper sheet, hammered over horn forms and fired with gold. No two crescents from the house share a curve.' },
@@ -116,7 +110,7 @@ export const works: Work[] = [
       { stage: 'Polished', detail: 'Ninety days, two artisans of the Hon’ami line', when: 'June — September 2025' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work VII of XII', when: 'January 2026' },
     ],
-    maker: {
+    provenanceImage: {
       src: '/works/maker-kanemoto.jpg',
       alt: 'The twenty-sixth Kanemoto inspecting the polished Samidare blade by a single warm lantern',
       caption: 'The twenty-sixth Kanemoto · swordsmith, Kanemoto Forge · Seki',
@@ -162,7 +156,7 @@ export const works: Work[] = [
       { stage: 'Dressed', detail: 'Gold urushi beads laid over nine days', when: 'January 2026' },
       { stage: 'Sealed', detail: 'Entered into the Register as Work IX of XII', when: 'February 2026' },
     ],
-    maker: {
+    provenanceImage: {
       src: '/works/maker-shirakawa.jpg',
       alt: 'Shirakawa Iori applying black urushi to a curved armor plate in the Wajima studio',
       caption: 'Shirakawa Iori · eleventh keeper, Shirakawa Studio · Wajima',
@@ -173,11 +167,56 @@ export const works: Work[] = [
       { x: 50, y: 82, title: 'Yodare-kake', note: 'The throat guard’s indigo lacing matches the kachi-iro standard of the house armories.' },
     ],
   },
+  {
+    slug: 'musubi',
+    no: 'X',
+    name: 'Musubi',
+    kanji: '結び',
+    reading: 'musubi — the binding that holds',
+    category: 'Ō-yoroi · full armor',
+    atelier: 'House Mizuno, Kaga',
+    atelierNote: 'Sixteenth generation of armorers',
+    year: '2026',
+    price: '¥42,800,000',
+    status: 'Open to petition',
+    image: '/works/musubi.jpg',
+    imageAlt: 'Black-lacquered ō-yoroi shoulder plates bound with warm brown silk knots and edged in aged gold',
+    portrait: true,
+    lede: 'A complete ō-yoroi built around the cord that holds it: black-lacquered hon-kozane drawn together in chestnut-brown silk, row after row, until separate plates move as one body.',
+    body: [
+      'Musubi begins with hon-kozane: hundreds of narrow iron and nerigawa scales, pierced to a shared pattern, overlapped, and lacquered until each row sheds water without losing its flex. The plates are deliberately quiet. Their work is to disappear beneath the rhythm of the cord.',
+      'The odoshi is braided for this armor alone. Chestnut-brown silk is sorted by twist and sheen before a single length reaches the bench, then drawn through each scale at a tension judged by hand. Too loose and the rows chatter; too tight and the armor cannot follow the body. The correct pull leaves every crossing even while the whole suit still breathes.',
+      'At the shoulder, one muted red tie records the joining of the final two assemblies. It is not an accent applied afterward, but the last structural knot—and the only moment the hand of the house is allowed to remain visible.',
+    ],
+    specs: [
+      { k: 'Construction', v: 'Hon-kozane ō-yoroi, iron and lacquered nerigawa' },
+      { k: 'Lacing', v: 'Kuri-iro silk, kebiki-odoshi' },
+      { k: 'Finish', v: 'Kuro-urushi, eight cured grounds' },
+      { k: 'Fittings', v: 'Hammered copper, aged-gold finish' },
+      { k: 'Weight', v: '28.4 kg' },
+      { k: 'Documentation', v: 'Register deed, lacing map, house oath' },
+    ],
+    provenance: [
+      { stage: 'Scaled', detail: 'Iron and nerigawa hon-kozane pierced and matched', when: 'January — March 2025' },
+      { stage: 'Lacquered', detail: 'Eight black grounds laid, cured, and burnished', when: 'April — September 2025' },
+      { stage: 'Braided', detail: 'Kuri-iro silk drawn and tensioned row by row', when: 'October 2025 — May 2026' },
+      { stage: 'Sealed', detail: 'Entered into the Register as Work X of XII', when: 'June 2026' },
+    ],
+    provenanceImage: {
+      src: '/works/maker-mizuno.jpg',
+      alt: 'A House Mizuno armorer drawing silk cord through the lacquered scales of Musubi at a dark workshop bench',
+      caption: 'Kuri-iro lacing drawn through Musubi · House Mizuno bench · Kaga',
+    },
+    hotspots: [
+      { x: 70, y: 44, title: 'Kebiki-odoshi', note: 'Silk drawn at an even hand tension, its compact knots holding every lacquered row without stiffening the whole.' },
+      { x: 53, y: 61, title: 'Hon-kozane', note: 'Overlapping iron and nerigawa scales lacquered separately, then bound into a flexible defensive skin.' },
+      { x: 84, y: 22, title: 'Aged-gold kanamono', note: 'A hand-worked fitting closes the shoulder assembly; its quiet wear is kept rather than polished away.' },
+    ],
+  },
 ];
 
 // The sealed remainder of the year — shown as locked ledger rows.
 export const sealedWorks = [
-  { no: 'X', hint: 'Ō-yoroi · full armor', unseal: 'Unsealed October 2026' },
   { no: 'XI', hint: 'Tantō · short blade', unseal: 'Unsealed November 2026' },
   { no: 'XII', hint: 'Reserved for commission', unseal: 'By appointment only' },
 ];

@@ -71,12 +71,6 @@ const next = works[(idx + 1) % works.length];
           {work.body.map((p, i) => (
             <p class="rv" style={`--d:${i + 2}`}>{p}</p>
           ))}
-          {work.detail && (
-            <figure class="record-detail rv" style="--d:5">
-              <img src={work.detail.src} alt={work.detail.alt} loading="lazy" data-parallax="18" />
-              <figcaption class="label label--dim">{work.detail.caption}</figcaption>
-            </figure>
-          )}
         </div>
         <aside class="record-specs rv" style="--d:2">
           <h3 class="label">Specification</h3>
@@ -95,11 +89,11 @@ const next = works[(idx + 1) % works.length];
         <p class="label rv">Provenance</p>
         <h2 class="display rv" style="--d:1">The record of its making</h2>
         <div class="prov-grid">
-          <figure class="prov-maker rv" style="--d:2">
-            <div class="prov-maker-frame">
-              <img src={work.maker.src} alt={work.maker.alt} loading="lazy" />
+          <figure class="prov-evidence rv" style="--d:2">
+            <div class="prov-evidence-frame">
+              <img src={work.provenanceImage.src} alt={work.provenanceImage.alt} loading="lazy" />
             </div>
-            <figcaption class="label label--dim">{work.maker.caption}</figcaption>
+            <figcaption class="label label--dim">{work.provenanceImage.caption}</figcaption>
           </figure>
 
           <div class="prov-record">
@@ -299,10 +293,6 @@ const next = works[(idx + 1) % works.length];
   .record-notes p:not(.label) {
     color: var(--silk-dim); max-width: 58ch; margin-bottom: 22px; font-size: 16px;
   }
-  .record-detail { margin-top: var(--s6); overflow: hidden; }
-  .record-detail img { width: 100%; border: 1px solid var(--line-soft); transform: scale(1.06); }
-  .record-detail figcaption { margin-top: 16px; }
-
   .record-specs {
     border: 1px solid var(--line-soft);
     padding: var(--s4);
@@ -326,11 +316,11 @@ const next = works[(idx + 1) % works.length];
   @media (min-width: 960px) {
     .prov-grid { grid-template-columns: 5fr 4fr; gap: var(--s7); align-items: start; }
     .prov-record { grid-column: 1; grid-row: 1; }
-    .prov-maker { grid-column: 2; grid-row: 1; }
+    .prov-evidence { grid-column: 2; grid-row: 1; }
   }
-  .prov-maker-frame { overflow: hidden; border: 1px solid var(--line-soft); }
-  .prov-maker img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
-  .prov-maker figcaption { margin-top: 16px; line-height: 1.7; }
+  .prov-evidence-frame { overflow: hidden; border: 1px solid var(--line-soft); }
+  .prov-evidence img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  .prov-evidence figcaption { margin-top: 16px; line-height: 1.7; }
   .prov-line { list-style: none; position: relative; padding-left: 34px; }
   .prov-line::before {
     content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px;
