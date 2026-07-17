@@ -1,15 +1,31 @@
 # Foundry
 
-A collection of bespoke, ultra-refined **heritage-craft atelier** sites — each one an ancestral family business, in a culture and craft Vince genuinely loves, built with the same reverence, restraint, and material honesty. Not a range-of-categories portfolio; a range of *cultures and crafts*, all in one register: quiet luxury, real domain authenticity, no pastiche. Distinctiveness comes from palette, type, and imagery drawn from the specific craft and place — not from breaking the register.
+A collection of bespoke digital worlds built with reverence, restraint, and
+material honesty. Foundry is not a template portfolio. Each site invents a
+complete place, vocabulary, photographic language, and reason to exist.
+
+The collection now works in **two qualities of light**:
+
+| Series | Atmosphere | Subjects |
+|---|---|---|
+| **Nocturnes** | Darkness, ceremony, artifacts, craft under one lamp | Heritage ateliers and houses |
+| **Aubades** | Daylight, hospitality, inhabited rooms, restorative warmth | Hotels, residences, and other places to dwell |
+
+The two series share standards, not styling. Read
+[`docs/foundry-series.md`](docs/foundry-series.md),
+[`docs/nocturne-taste-profile.md`](docs/nocturne-taste-profile.md), and
+[`docs/aubade-taste-profile.md`](docs/aubade-taste-profile.md).
 
 > This repo's original brief was three unrelated categories (ecommerce/SaaS/event) proving generic range. It pivoted after Suntoku and Shokunin — see [`docs/2026-07-12-repositioning-luxury-ateliers.md`](docs/2026-07-12-repositioning-luxury-ateliers.md) for the full history, including the two concepts (Roster, SIGNAL) retired in the move.
 
-| Site | What it is | Culture / craft | Lives in |
-|------|-----------|------------------|----------|
-| Suntoku (寸徳) | Hand-forged kitchen knife atelier — sumi ink, washi paper, vermilion, Shippori Mincho; ships to suntoku.com | Japan · Sakai | [`sites/kaji`](sites/kaji) |
-| Shokunin | Bespoke samurai ateliers — lacquer dark, smoked gold, Marcellus/Manrope | Japan | [`sites/shokunin`](sites/shokunin) |
-| Vicente *(Lutier)* | Family-owned boutique guitar atelier, the Vicente family — planned EN/ES language switching | Spain · Andalusia (Córdoba) | [`sites/vicente`](sites/vicente) — not started |
-| Schwarzwald | Cuckoo clock house, est. 1854 — fir-black-green, aged brass, EB Garamond/Hanken Grotesk/Grenze Gotisch; native EN/DE | Germany · Black Forest (Schonach) | [`sites/schwarzwald`](sites/schwarzwald) |
+| Site | Series | What it is | Culture / place | Lives in |
+|------|--------|------------|-----------------|----------|
+| Suntoku (寸徳) | Nocturne | Hand-forged kitchen knife atelier | Japan · Sakai | [`sites/kaji`](sites/kaji) |
+| Shokunin | Nocturne | Bespoke samurai ateliers | Japan · Kaga, Seki, Wajima | [`sites/shokunin`](sites/shokunin) |
+| Casa Vicente | Nocturne | Family-owned boutique guitar atelier | Spain · Andalusia | [`sites/vicente`](sites/vicente) |
+| Schwarzwald | Nocturne | Cuckoo clock house, est. 1854 | Germany · Black Forest | [`sites/schwarzwald`](sites/schwarzwald) |
+| Lagar do Sol | Aubade | Residential, collected olive-estate hotel | Portugal · Alentejo, between Estremoz and Vila Viçosa | [`sites/lagar-do-sol`](sites/lagar-do-sol) |
+| Aubade Hotel Two *(working project)* | Aubade | Contemporary, architecture-led hotel | Place and name to be chosen | `sites/<hotel-two-name>` |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 

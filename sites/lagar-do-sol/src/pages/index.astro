@@ -1,0 +1,276 @@
+---
+import "../styles/global.css";
+
+const rooms = [
+  {
+    name: "Quarto do Nascente",
+    detail: "King bed · eastern light · private terrace",
+    image: "bed-king",
+    alt: "Warm limewashed king room with oak joinery and an olive tree by the window",
+  },
+  {
+    name: "Casa do Pátio",
+    detail: "Two queen beds · family residence · courtyard side",
+    image: "bed-2-queen",
+    alt: "Quiet family room with two queen beds, linen, oak, and courtyard light",
+  },
+  {
+    name: "Residência do Olival",
+    detail: "Bedroom · sitting room · small kitchen",
+    image: "living",
+    alt: "Residential hotel sitting room connected to a warm bedroom",
+  },
+];
+
+const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "16:15", "19:35"];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Lagar do Sol — an eighteen-room house among the olive groves of the Alentejo." />
+    <meta name="theme-color" content="#f1eadc" />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
+    <title>Lagar do Sol — Alentejo</title>
+    <script is:inline>document.documentElement.classList.add("js");</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="Lagar do Sol, home">
+        <span class="mill-mark" aria-hidden="true"><i></i></span>
+        <span class="brand-text"><strong>Lagar do Sol</strong><small>Alentejo · Portugal</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav" data-menu>
+        <span>Menu</span><i aria-hidden="true"></i>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
+        <a href="#house">The house</a>
+        <a href="#rooms">Rooms</a>
+        <a href="#table">The table</a>
+        <a href="#grounds">The grounds</a>
+        <button class="nav-stay" type="button" data-open-stay>Plan a stay</button>
+      </nav>
+    </header>
+
+    <aside class="day-rail" aria-label="The guest's day">
+      <span class="rail-label">The day</span>
+      <div class="rail-line"><i data-rail-progress></i></div>
+      <strong id="rail-time">07:20</strong>
+      <div class="rail-dots" aria-hidden="true">
+        {times.map((time, index) => <span data-rail-dot={time} class:list={{ active: index === 0 }}></span>)}
+      </div>
+    </aside>
+
+    <main id="main">
+      <section class="hero chapter" id="top" data-time="07:20">
+        <picture>
+          <source media="(max-width: 720px)" srcset="/images/hero-estate-900.jpg" />
+          <img src="/images/hero-estate.jpg" width="1536" height="1024" alt="Whitewashed Alentejo house beyond an open gate and mature olive trees" fetchpriority="high" />
+        </picture>
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Um monte entre Estremoz e Vila Viçosa</p>
+          <h1>A house among<br />the olives.</h1>
+          <p>Eighteen rooms gathered around an old press, a shaded courtyard, and the long Alentejo day.</p>
+          <button class="text-link" type="button" data-open-stay>Plan your stay <span aria-hidden="true">↗</span></button>
+        </div>
+        <div class="hero-time"><span>First light</span><strong>07:20</strong></div>
+      </section>
+
+      <section class="arrival chapter section-pad" id="house" data-time="08:05">
+        <div class="arrival-copy reveal">
+          <p class="eyebrow">The house · 08:05</p>
+          <h2>The gate is open.<br />Your key is waiting.</h2>
+          <p>There is no reception counter. Come through the timber doors; someone from the house will meet you by name.</p>
+          <dl class="facts">
+            <div><dt>Rooms</dt><dd>18</dd></div>
+            <div><dt>Estate</dt><dd>40 hectares</dd></div>
+            <div><dt>From Lisbon</dt><dd>1 hr 45</dd></div>
+          </dl>
+        </div>
+        <figure class="arrival-image reveal">
+          <img src="/images/arrival-desk.jpg" srcset="/images/arrival-desk-900.jpg 900w, /images/arrival-desk.jpg 1536w" sizes="(max-width: 800px) 100vw, 58vw" width="1536" height="1024" alt="Oak host desk with a room key waiting while breakfast is prepared through the open door" loading="lazy" />
+          <figcaption>The host’s desk, facing the breakfast courtyard</figcaption>
+        </figure>
+      </section>
+
+      <section class="pattern-threshold" aria-label="The old press">
+        <div class="pattern-inner reveal">
+          <p class="eyebrow">The old lagar</p>
+          <blockquote>“The press stopped turning in 1964. The table has been set here ever since.”</blockquote>
+          <p>The original millstone remains in the dining room, cool beneath bare feet.</p>
+        </div>
+      </section>
+
+      <section class="rooms chapter section-pad" id="rooms" data-time="09:10">
+        <header class="section-heading reveal">
+          <p class="eyebrow">The rooms · 09:10</p>
+          <h2>Private houses,<br />held within one.</h2>
+          <p>Each room follows the old walls. No two windows meet the morning in quite the same way.</p>
+        </header>
+        <figure class="room-thesis reveal">
+          <img src="/images/living.jpg" srcset="/images/living-900.jpg 900w, /images/living.jpg 1536w" sizes="(max-width: 800px) 100vw, 72vw" width="1400" height="1120" alt="Residential suite with a pale sitting room opening into a bedroom" loading="lazy" />
+          <figcaption><span>Residência do Olival</span><small>Rooms that live like homes</small></figcaption>
+        </figure>
+        <div class="room-list">
+          {rooms.slice(0, 2).map((room, index) => (
+            <article class:list={["room-card", "reveal", { offset: index === 1 }]}>
+              <img src={`/images/${room.image}.jpg`} srcset={`/images/${room.image}-900.jpg 900w, /images/${room.image}.jpg 1536w`} sizes="(max-width: 800px) 100vw, 43vw" width="1400" height="933" alt={room.alt} loading="lazy" />
+              <div><p class="eyebrow">0{index + 1}</p><h3>{room.name}</h3><p>{room.detail}</p></div>
+            </article>
+          ))}
+        </div>
+        <div class="bath-note reveal">
+          <figure><img src="/images/bath.jpg" srcset="/images/bath-900.jpg 900w, /images/bath.jpg 1400w" sizes="(max-width: 800px) 100vw, 46vw" width="1400" height="1120" alt="Stone and limewash bathroom with brass fittings and a deep bath" loading="lazy" /></figure>
+          <div><p class="eyebrow">Water and stone</p><h3>Baths cut from the same pale stone as the old press.</h3><p>Linen is changed when you ask. The water is warmed by the Alentejo sun.</p></div>
+        </div>
+      </section>
+
+      <section class="breakfast chapter" id="table" data-time="10:15">
+        <figure class="breakfast-main reveal">
+          <img src="/images/breakfast-courtyard.jpg" srcset="/images/breakfast-courtyard-900.jpg 900w, /images/breakfast-courtyard.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="Host arranging a generous breakfast table in the shaded courtyard" loading="lazy" />
+        </figure>
+        <div class="breakfast-copy reveal">
+          <p class="eyebrow">The table · 10:15</p>
+          <h2>Bread arrives warm.</h2>
+          <p>The oil was pressed beyond the eastern wall. Breakfast waits beneath the trees until the last cup is finished.</p>
+        </div>
+        <figure class="breakfast-detail reveal">
+          <img src="/images/breakfast-detail.jpg" srcset="/images/breakfast-detail-900.jpg 900w, /images/breakfast-detail.jpg 1536w" sizes="(max-width: 800px) 92vw, 45vw" width="1536" height="1024" alt="Hands placing a loaf among ceramics, fruit, olive oil, and linen" loading="lazy" />
+        </figure>
+      </section>
+
+      <section class="courtyard chapter section-pad" data-time="11:30">
+        <header class="section-heading compact reveal">
+          <p class="eyebrow">The courtyard · 11:30</p>
+          <h2>White walls.<br />Moving shade.</h2>
+          <p>The retained fountain is fed from the old estate cistern. Its tile is the only pattern the courtyard needs.</p>
+        </header>
+        <figure class="courtyard-wide reveal">
+          <img src="/images/courtyard-wide.jpg" srcset="/images/courtyard-wide-900.jpg 900w, /images/courtyard-wide.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="Wide view of the whitewashed courtyard with fountain, olive trees, table, and shade sail" loading="lazy" />
+        </figure>
+        <div class="courtyard-pair">
+          <figure class="threshold-photo reveal"><img src="/images/courtyard-threshold.jpg" srcset="/images/courtyard-threshold-900.jpg 900w, /images/courtyard-threshold.jpg 1023w" sizes="(max-width: 800px) 82vw, 31vw" width="1023" height="1537" alt="View through a shaded doorway toward the courtyard fountain" loading="lazy" /></figure>
+          <figure class="fountain-photo reveal"><img src="/images/fountain.jpg" srcset="/images/fountain-900.jpg 900w, /images/fountain.jpg 1448w" sizes="(max-width: 800px) 82vw, 43vw" width="1448" height="1086" alt="Weathered courtyard fountain with restrained geometric tile" loading="lazy" /><figcaption>Stone, water, retained tile</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="estate chapter" id="grounds" data-time="15:20">
+        <img src="/images/olive-estate.jpg" srcset="/images/olive-estate-900.jpg 900w, /images/olive-estate.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="Lagar do Sol in the distance across mature olive and cork trees" loading="lazy" />
+        <div class="estate-copy reveal"><p class="eyebrow">Beyond the walls · 15:20</p><h2>Forty hectares<br />of working land.</h2><p>Olive, cork oak, dry grass, and the long horizon between Estremoz and Vila Viçosa.</p></div>
+      </section>
+
+      <section class="pool chapter section-pad" data-time="16:15">
+        <header class="section-heading compact reveal">
+          <p class="eyebrow">The water · 16:15</p>
+          <h2>By four, the olives begin to shade the stone.</h2>
+        </header>
+        <figure class="pool-main reveal"><img src="/images/pool-intimate.jpg" srcset="/images/pool-intimate-900.jpg 900w, /images/pool-intimate.jpg 1536w" sizes="(max-width: 800px) 100vw, 78vw" width="1536" height="1024" alt="Narrow stone pool, two linen-covered loungers, and the olive estate in afternoon light" loading="lazy" /></figure>
+        <figure class="pool-wide reveal"><img src="/images/pool-estate.jpg" srcset="/images/pool-estate-900.jpg 900w, /images/pool-estate.jpg 1536w" sizes="(max-width: 800px) 92vw, 47vw" width="1536" height="1024" alt="Wide view of the quiet pool set directly within the olive grove" loading="lazy" /><figcaption>The pool, looking back toward the monte</figcaption></figure>
+      </section>
+
+      <section class="hospitality chapter section-pad" data-time="12:40">
+        <figure class="reveal"><img src="/images/human-hospitality.jpg" srcset="/images/human-hospitality-900.jpg 900w, /images/human-hospitality.jpg 1535w" sizes="(max-width: 800px) 100vw, 56vw" width="1535" height="1024" alt="The cook finishing a dish with herbs in the estate kitchen" loading="lazy" /></figure>
+        <div class="reveal"><p class="eyebrow">From the kitchen</p><h2>Nothing travels farther than it needs to.</h2><p>Herbs come through the courtyard door. Bread is baked before the rooms wake. Dinner follows what the garden and neighboring farms bring that morning.</p></div>
+      </section>
+
+      <section class="evening chapter" data-time="19:35">
+        <img src="/images/long-table.jpg" srcset="/images/long-table-900.jpg 900w, /images/long-table.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="The courtyard long table at dusk as two guests move into the warmly lit house" loading="lazy" />
+        <div class="evening-time"><span>The long table</span><strong>19:35</strong></div>
+      </section>
+
+      <section class="stay pattern-surface" id="stay">
+        <div class="stay-inner reveal">
+          <p class="eyebrow">Stay for the whole day</p>
+          <h2>Leave after breakfast.</h2>
+          <p>Eighteen rooms. Three-night weekends from April through October. Write to the house and we will arrange the rest.</p>
+          <button class="primary-button" type="button" data-open-stay>Plan a stay</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand"><span class="mill-mark light" aria-hidden="true"><i></i></span><strong>Lagar do Sol</strong><small>Estremoz · Alentejo · Portugal</small></div>
+      <div><p>For stays and correspondence</p><a href="mailto:casa@lagardosol.example">casa@lagardosol.example</a></div>
+      <p class="footer-note">A fictional Foundry house.</p>
+    </footer>
+
+    <dialog class="stay-dialog" data-stay-dialog aria-labelledby="stay-title">
+      <button class="dialog-close" type="button" data-close-stay aria-label="Close stay enquiry">Close</button>
+      <div class="dialog-intro">
+        <span class="mill-mark" aria-hidden="true"><i></i></span>
+        <p class="eyebrow">Plan a stay</p>
+        <h2 id="stay-title">When would you like to come?</h2>
+        <p>Tell us the shape of your visit. The house will reply personally.</p>
+      </div>
+      <form class="stay-form" data-stay-form>
+        <label>Arrival<input type="date" name="arrival" required /></label>
+        <label>Departure<input type="date" name="departure" required /></label>
+        <label>Guests<select name="guests" required><option value="">Choose</option><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5+ guests</option></select></label>
+        <label>Room preference<select name="room"><option>Let the house choose</option><option>Quarto do Nascente</option><option>Casa do Pátio</option><option>Residência do Olival</option></select></label>
+        <label class="wide">Your name<input type="text" name="name" autocomplete="name" required /></label>
+        <label class="wide">Email<input type="email" name="email" autocomplete="email" required /></label>
+        <label class="wide">Anything we should prepare?<textarea name="note" rows="3"></textarea></label>
+        <button class="primary-button wide" type="submit">Send to the house</button>
+        <p class="form-status wide" role="status" aria-live="polite"></p>
+      </form>
+    </dialog>
+
+    <script>
+      const header = document.querySelector("[data-header]");
+      const menu = document.querySelector("[data-menu]");
+      const nav = document.querySelector("[data-nav]");
+      const dialog = document.querySelector("[data-stay-dialog]");
+      const form = document.querySelector("[data-stay-form]");
+      const railTime = document.querySelector("#rail-time");
+      const railProgress = document.querySelector("[data-rail-progress]");
+      const times = [...document.querySelectorAll("[data-rail-dot]")];
+      const chapters = [...document.querySelectorAll(".chapter[data-time]")];
+
+      addEventListener("scroll", () => header?.classList.toggle("scrolled", scrollY > 40), { passive: true });
+      menu?.addEventListener("click", () => {
+        const open = menu.getAttribute("aria-expanded") === "true";
+        menu.setAttribute("aria-expanded", String(!open));
+        nav?.classList.toggle("open", !open);
+      });
+      nav?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => {
+        menu?.setAttribute("aria-expanded", "false");
+        nav?.classList.remove("open");
+      }));
+
+      document.querySelectorAll("[data-open-stay]").forEach((button) => button.addEventListener("click", () => dialog?.showModal()));
+      document.querySelector("[data-close-stay]")?.addEventListener("click", () => dialog?.close());
+      dialog?.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
+
+      const today = new Date().toISOString().slice(0, 10);
+      form?.querySelectorAll('input[type="date"]').forEach((input) => input.setAttribute("min", today));
+      form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const status = form.querySelector(".form-status");
+        if (status) status.textContent = "Your note is ready for the house. This preview does not send correspondence yet.";
+      });
+
+      const chapterObserver = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        const time = visible.target.getAttribute("data-time");
+        const index = times.findIndex((dot) => dot.getAttribute("data-rail-dot") === time);
+        if (railTime && time) railTime.textContent = time;
+        times.forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex <= index));
+        if (railProgress && index >= 0) railProgress.style.height = `${(index / (times.length - 1)) * 100}%`;
+      }, { rootMargin: "-28% 0px -48%", threshold: [0.1, 0.35, 0.65] });
+      chapters.forEach((chapter) => chapterObserver.observe(chapter));
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("shown"); revealObserver.unobserve(entry.target); } });
+      }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+      document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+    </script>
+  </body>
+</html>
