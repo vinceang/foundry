@@ -99,7 +99,7 @@ small, figcaption { font-size: 11.5px; letter-spacing: 0.04em; }
 }
 .site-header.scrolled {
   height: 66px;
-  background: rgba(236, 229, 216, 0.96);
+  background: var(--lit);
   color: var(--schist);
   border-color: var(--hairline);
 }
@@ -495,8 +495,6 @@ html:not(.js) .orient { cursor: default; }
 /* ---------- responsive ---------- */
 @media (max-width: 1020px) {
   .building-grid, .table-grid, .stay-grid { grid-template-columns: 1fr; }
-  .building-figures { grid-template-columns: 1fr 1fr; align-items: start; }
-  .building-figures figure:nth-child(2) { width: 100%; margin-top: 60px; }
   .courts-grid { grid-template-columns: 1fr 1fr; }
   .courts-grid .courts-copy { grid-column: 1 / -1; }
   .room-stage { grid-template-columns: 1fr; }
