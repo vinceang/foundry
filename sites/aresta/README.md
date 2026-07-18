@@ -37,5 +37,6 @@ npm run preview
 Append `?nofx` to the URL to disable entrance animations for screenshots
 (`tools/shot-full.mjs` / `tools/shot-clip.mjs` from the repo root).
 
-This folder becomes an independent Vercel project when the site is approved
-for deployment.
+Deployed as the independent Vercel project `aresta`; production lives at
+<https://aresta-azure.vercel.app> (the bare `aresta.vercel.app` name was
+already taken by an unrelated project).
