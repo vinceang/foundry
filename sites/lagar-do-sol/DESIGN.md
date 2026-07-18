@@ -38,11 +38,13 @@ as ambient ornament.
 | Olive leaf | `#66705c` | Botanical structure |
 | Lagar brass | `#a68552` | Tiny points of emphasis |
 | Clay | `#a26f4e` | Rare warm counterpoint |
+| Chestnut | `#845226` | Eyebrows and editorial kickers |
 | Lampblack | `#27271f` | Type, iron, contrast |
 | Deep olive | `#34382d` | Evening and footer ground |
 
 Tan-on-cream body copy is prohibited. Paragraphs use lampblack at readable
-opacity.
+opacity. Chestnut gives the editorial hierarchy a warmer counterpoint to the
+olive grounds; it is reserved for short kickers rather than body copy.
 
 ## Type
 

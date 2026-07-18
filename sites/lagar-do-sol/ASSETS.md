@@ -6,7 +6,9 @@ derivatives live in `public/images/`; each has a full-width and `-900` source.
 | Asset | Page role |
 |---|---|
 | `hero-estate.png` | First light, gate, and house hero |
-| `arrival-desk.png` | Named arrival and the host’s desk |
+| `arrival-desk.png` | Named arrival, the eighteen-key board, and the host’s desk |
+| `arrival-desk-v1.png` | Earlier desk composition; held in reserve |
+| `arrival-desk-v2.png` | Key-board composition before the host was added; held in reserve |
 | `living.jpg` | Residential-suite thesis |
 | `bed-king.jpg` | Primary king room |
 | `bed-2-queen.jpg` | Family room |
