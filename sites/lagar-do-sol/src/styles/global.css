@@ -110,17 +110,17 @@ figcaption { display: flex; justify-content: space-between; gap: 20px; margin-to
 
 .rooms { background: var(--limewash); }
 .room-thesis { width: min(82%, 1100px); margin-left: auto; }
-.room-thesis img { aspect-ratio: 5/4; object-fit: cover; }
+.room-thesis img { aspect-ratio: 3/2; object-fit: cover; }
 .room-thesis figcaption span { font-family: var(--display); font-size: 18px; text-transform: none; letter-spacing: 0; color: var(--ink); }
 .room-list { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 100px); margin-top: clamp(80px, 10vw, 160px); }
 .room-card.offset { margin-top: 130px; }
-.room-card img { aspect-ratio: 4/3; object-fit: cover; }
+.room-card img { aspect-ratio: 3/2; object-fit: cover; }
 .room-card > div { padding: 23px 0; border-bottom: 1px solid rgba(39,39,31,.2); }
 .room-card .eyebrow { margin-bottom: 10px; }
 .room-card h3 { font-size: clamp(27px, 2.7vw, 42px); }
 .room-card > div > p:last-child { margin-top: 9px; color: rgba(39,39,31,.64); }
 .bath-note { display: grid; grid-template-columns: 1.1fr .85fr; gap: clamp(45px, 7vw, 110px); align-items: center; margin-top: clamp(100px, 14vw, 210px); }
-.bath-note figure img { aspect-ratio: 5/4; object-fit: cover; }
+.bath-note figure img { aspect-ratio: 3/2; object-fit: cover; }
 .bath-note .eyebrow { margin-bottom: 22px; }
 .bath-note h3 { max-width: 13ch; }
 .bath-note > div > p:last-child { margin-top: 24px; max-width: 38ch; color: rgba(39,39,31,.68); }

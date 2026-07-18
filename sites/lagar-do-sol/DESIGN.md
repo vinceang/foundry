@@ -90,6 +90,16 @@ grounds:   courtyard → estate → pool
 evening:   full-width long table → quiet stay invitation
 ```
 
+## Interior photography
+
+Rooms feel inherited, not installed. Limewash, dark timber, terracotta, linen,
+rush, stone, and aged brass carry the interiors; furniture is collected rather
+than matched. Keep the three room types spatially distinct: Nascente opens east
+to the grove, Pátio opens into the shared courtyard, and Olival reads as the old
+family apartment with its own salon. Tile is an architectural remnant, not a
+theme, and should change form from room to room. Preserve the photographs' 3:2
+field of view so thresholds, outlooks, and adjoining rooms remain legible.
+
 ## Motion
 
 Motion follows the property: the day-line state changes, content settles into

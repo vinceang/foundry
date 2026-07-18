@@ -6,19 +6,19 @@ const rooms = [
     name: "Quarto do Nascente",
     detail: "King bed · eastern light · private terrace",
     image: "bed-king",
-    alt: "Warm limewashed king room with oak joinery and an olive tree by the window",
+    alt: "Antique carved bed in a limewashed room opening to a private terrace and the eastern olive grove",
   },
   {
     name: "Casa do Pátio",
-    detail: "Two queen beds · family residence · courtyard side",
+    detail: "Two double beds · family room · courtyard door",
     image: "bed-2-queen",
-    alt: "Quiet family room with two queen beds, linen, oak, and courtyard light",
+    alt: "Twin antique beds in a shaded family room opening directly onto the tiled courtyard",
   },
   {
     name: "Residência do Olival",
-    detail: "Bedroom · sitting room · small kitchen",
+    detail: "King bed · private salon · grove views",
     image: "living",
-    alt: "Residential hotel sitting room connected to a warm bedroom",
+    alt: "Former family apartment with an antique king bed, private salon, and windows across the olive grove",
   },
 ];
 
@@ -117,20 +117,20 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
           <p>Each room follows the old walls. No two windows meet the morning in quite the same way.</p>
         </header>
         <figure class="room-thesis reveal">
-          <img src="/images/living.jpg" srcset="/images/living-900.jpg 900w, /images/living.jpg 1536w" sizes="(max-width: 800px) 100vw, 72vw" width="1400" height="1120" alt="Residential suite with a pale sitting room opening into a bedroom" loading="lazy" />
-          <figcaption><span>Residência do Olival</span><small>Rooms that live like homes</small></figcaption>
+          <img src="/images/living.jpg" srcset="/images/living-900.jpg 900w, /images/living.jpg 1535w" sizes="(max-width: 800px) 100vw, 72vw" width="1535" height="1024" alt={rooms[2].alt} loading="lazy" />
+          <figcaption><span>Residência do Olival</span><small>The old family rooms, overlooking the grove</small></figcaption>
         </figure>
         <div class="room-list">
           {rooms.slice(0, 2).map((room, index) => (
             <article class:list={["room-card", "reveal", { offset: index === 1 }]}>
-              <img src={`/images/${room.image}.jpg`} srcset={`/images/${room.image}-900.jpg 900w, /images/${room.image}.jpg 1536w`} sizes="(max-width: 800px) 100vw, 43vw" width="1400" height="933" alt={room.alt} loading="lazy" />
+              <img src={`/images/${room.image}.jpg`} srcset={`/images/${room.image}-900.jpg 900w, /images/${room.image}.jpg 1535w`} sizes="(max-width: 800px) 100vw, 43vw" width="1535" height="1024" alt={room.alt} loading="lazy" />
               <div><p class="eyebrow">0{index + 1}</p><h3>{room.name}</h3><p>{room.detail}</p></div>
             </article>
           ))}
         </div>
         <div class="bath-note reveal">
-          <figure><img src="/images/bath.jpg" srcset="/images/bath-900.jpg 900w, /images/bath.jpg 1400w" sizes="(max-width: 800px) 100vw, 46vw" width="1400" height="1120" alt="Stone and limewash bathroom with brass fittings and a deep bath" loading="lazy" /></figure>
-          <div><p class="eyebrow">Water and stone</p><h3>Baths cut from the same pale stone as the old press.</h3><p>Linen is changed when you ask. The water is warmed by the Alentejo sun.</p></div>
+          <figure><img src="/images/bath.jpg" srcset="/images/bath-900.jpg 900w, /images/bath.jpg 1535w" sizes="(max-width: 800px) 100vw, 46vw" width="1535" height="1024" alt="Hand-carved limestone bath, antique washstand, brass fittings, and an arched stone shower" loading="lazy" /></figure>
+          <div><p class="eyebrow">Water and stone</p><h3>Baths cut from the same pale stone as the old press.</h3><p>Deep tubs, warm brass, and linen dried in the courtyard. The water is warmed by the Alentejo sun.</p></div>
         </div>
       </section>
 
