@@ -1,0 +1,491 @@
+---
+import "../styles/global.css";
+
+const rooms = [
+  {
+    o: "east",
+    word: "East",
+    hour: "07:10 — first light",
+    title: "The sun crosses the bed before breakfast.",
+    body: "East rooms open onto the morning court and the inland heath. First light reaches the pillow at 07:10 in June, and the room is cool again by noon. The reveal frames the court's strawberry tree; the bath is limestone, the bed is dressed in sun-bleached flax.",
+    facts: [
+      ["Rooms", "Twelve"],
+      ["Floors", "1 and 2"],
+      ["Outlook", "Morning court"],
+      ["Sun", "07:10 – 12:00"],
+    ],
+    img: "room-east",
+    alt: "Bedroom at first light: low morning sun through a deep oak-lined reveal onto a bed in flax linen.",
+    caption: "East room 14",
+  },
+  {
+    o: "south",
+    word: "South",
+    hour: "13:00 — high light",
+    title: "At noon the reveal draws a slow trapezoid on the floor.",
+    body: "South rooms sit above the pool court. High light drops into the 90-centimetre reveal and moves across the limestone floor through the afternoon; on still days the water reflects onto the ceiling. Eight rooms — the smallest count, the longest hours of sun.",
+    facts: [
+      ["Rooms", "Eight"],
+      ["Floor", "2"],
+      ["Outlook", "Pool court"],
+      ["Sun", "11:00 – 16:00"],
+    ],
+    img: "room-south",
+    alt: "Bedroom at midday: a sharp trapezoid of high sun cast on a limestone floor through a deep reveal.",
+    caption: "South room 22",
+  },
+  {
+    o: "west",
+    word: "West",
+    hour: "18:40 — last light",
+    title: "The final two hours of light, at the level of the bed.",
+    body: "West rooms face open Atlantic. Nothing stands between the glass and the horizon, and the sun sets into the sea at the height of the mattress. The deep reveal holds the evening warmth; blackout is a sliding shutter of oak, not a curtain.",
+    facts: [
+      ["Rooms", "Eighteen"],
+      ["Floors", "1 and 2"],
+      ["Outlook", "The Atlantic"],
+      ["Sun", "16:30 – sunset"],
+    ],
+    img: "room-west",
+    alt: "Bedroom at dusk: low golden light over the Atlantic horizon through a full-height window.",
+    caption: "West room 31",
+  },
+];
+
+// Sun-plan glyph geometry, north up: window side, the field of light cast
+// into the room, and the sun standing outside the window.
+const plans = {
+  east: { win: "M80 33 L80 67", wedge: "M80 33 L80 67 L26 76 L26 24 Z", sun: [86.5, 50] },
+  south: { win: "M33 80 L67 80", wedge: "M33 80 L67 80 L76 26 L24 26 Z", sun: [50, 86.5] },
+  west: { win: "M20 33 L20 67", wedge: "M20 33 L20 67 L74 76 L74 24 Z", sun: [13.5, 50] },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Aresta — 38 rooms on the last plateau before the Atlantic. Carrapateira, Costa Vicentina, Portugal. Rooms named for what the sun does: east, south, west."
+    />
+    <title>Aresta — Carrapateira, Costa Vicentina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,300..620&family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero-west.jpg" />
+    <script is:inline>
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.classList.add("js");
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#building">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top">Aresta <small>Costa Vicentina</small></a>
+      <nav class="site-nav" aria-label="Sections">
+        <a class="quiet" href="#building">Building</a>
+        <a class="quiet" href="#rooms">Rooms</a>
+        <a class="quiet" href="#water">Water</a>
+        <a class="quiet" href="#table">Table</a>
+        <a class="quiet" href="#place">Place</a>
+        <a class="nav-stay" href="#stay">Plan a stay</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ hero ============ -->
+      <section class="hero" aria-label="Aresta">
+        <div class="frame">
+          <picture>
+            <img
+              src="/images/hero-west.jpg"
+              srcset="/images/hero-west-800.jpg 800w, /images/hero-west.jpg 1536w"
+              sizes="100vw"
+              alt="A long, low building of pale plaster on a clifftop plateau, its window bays throwing deep shadows in late sun, the Atlantic behind."
+              fetchpriority="high"
+            />
+          </picture>
+        </div>
+        <div class="hero-copy">
+          <p class="eyebrow">Aubade · 37°11′ N — 8°54′ W · Carrapateira, Portugal</p>
+          <h1 class="hero-title">Aresta</h1>
+          <p class="statement">A hotel shaped by light, proportion, and silence.</p>
+          <div class="hero-actions">
+            <a class="text-link" href="#rooms">Rooms by light <span class="arrow">→</span></a>
+            <a class="text-link" href="#stay">Plan a stay <span class="arrow">→</span></a>
+          </div>
+        </div>
+        <p class="hero-caption">The west wall at 18:40<br />last light</p>
+      </section>
+
+      <!-- ============ the building ============ -->
+      <section class="section" id="building" aria-labelledby="building-h">
+        <div class="building-grid">
+          <div class="building-copy reveal">
+            <p class="eyebrow">The building</p>
+            <h2 class="statement" id="building-h">Everything here is built on a bay of 3.6 metres.</h2>
+            <p>
+              Aresta stands where the plateau breaks into the sea cliff — the edge the
+              Portuguese call an <em class="aside">aresta</em>. The building repeats that edge at
+              the scale of a room: two floors of pale concrete and mineral plaster, one long
+              wall of window bays facing west, three courts cut through to carry light into
+              the centre. Every window reveal is 90 centimetres deep, so the sun arrives as
+              a shape, not a glare. Nothing is applied; the material is the finish.
+            </p>
+            <dl class="facts">
+              <div><dt>Rooms</dt><dd>38</dd></div>
+              <div><dt>Courts</dt><dd>3</dd></div>
+              <div><dt>Bay</dt><dd>3.6 m</dd></div>
+              <div><dt>Reveal</dt><dd>0.9 m</dd></div>
+            </dl>
+          </div>
+          <div class="building-figures">
+            <figure class="reveal">
+              <img src="/images/stair.jpg" srcset="/images/stair-800.jpg 800w, /images/stair.jpg 1024w" sizes="(max-width: 1020px) 100vw, 40vw" alt="A pale limestone stair between plaster walls, crossed by one blade of light from a high aperture." loading="lazy" />
+              <figcaption class="caption-row"><span>The stair</span><span>Limestone, one aperture</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <figure class="bay-strip" role="img" aria-label="The west elevation drawn as twenty-four bays.">
+        <figcaption>West elevation — twenty-four bays</figcaption>
+      </figure>
+
+      <!-- ============ rooms by light ============ -->
+      <section class="section rooms" id="rooms" aria-labelledby="rooms-h">
+        <div class="section-head reveal">
+          <p class="eyebrow">Rooms by light</p>
+          <h2 class="statement" id="rooms-h">The rooms are named for what the sun does.</h2>
+          <p class="lede">
+            There are no suites and no tiers. A room at Aresta faces east, south, or west,
+            and the difference between them is the hour the light arrives.
+          </p>
+        </div>
+
+        <div class="room-stage reveal">
+          <div class="orient-list" role="tablist" aria-label="Room orientations">
+            {rooms.map((r, i) => (
+              <button
+                class="orient"
+                role="tab"
+                id={`tab-${r.o}`}
+                aria-selected={i === 0 ? "true" : "false"}
+                aria-controls={`panel-${r.o}`}
+                data-o={r.o}
+              >
+                <span class="word">{r.word}</span>
+                <span class="hour">{r.hour}</span>
+              </button>
+            ))}
+            <p class="orient-note aside">
+              Choose a direction; the room, its hour, and its shadow change together.
+            </p>
+          </div>
+
+          <div class="room-panels">
+            {rooms.map((r, i) => (
+              <article
+                class="room-panel"
+                id={`panel-${r.o}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${r.o}`}
+                data-o={r.o}
+                hidden={i !== 0}
+              >
+                <figure class="room-media">
+                  <img
+                    src={`/images/${r.img}.jpg`}
+                    srcset={`/images/${r.img}-800.jpg 800w, /images/${r.img}.jpg 1536w`}
+                    sizes="(max-width: 1020px) 100vw, 60vw"
+                    alt={r.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                  />
+                  <figcaption class="caption-row"><span>{r.caption}</span><span>{r.hour}</span></figcaption>
+                </figure>
+                <div class="room-meta">
+                  <svg class="sun-plan" viewBox="0 0 100 100" aria-hidden="true">
+                    <path class="wedge" d={plans[r.o].wedge} />
+                    <rect class="room-outline" x="20" y="20" width="60" height="60" />
+                    <path class="window-side" d={plans[r.o].win} />
+                    <circle class="sun-dot" cx={plans[r.o].sun[0]} cy={plans[r.o].sun[1]} r="3.4" />
+                    <text x="50" y="12" text-anchor="middle">N</text>
+                    <text x="93" y="53">E</text>
+                    <text x="50" y="97" text-anchor="middle">S</text>
+                    <text x="2" y="53">W</text>
+                  </svg>
+                  <div class="room-desc">
+                    <h3>{r.title}</h3>
+                    <p>{r.body}</p>
+                  </div>
+                  <dl class="room-facts">
+                    {r.facts.map(([t, d]) => (
+                      <div><dt>{t}</dt><dd>{d}</dd></div>
+                    ))}
+                  </dl>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ water ============ -->
+      <section class="section water" id="water" aria-labelledby="water-h">
+        <div class="section-head reveal">
+          <p class="eyebrow">Water</p>
+          <h2 class="statement" id="water-h">The pool is cut from the same limestone as the lower hall.</h2>
+        </div>
+        <figure class="pool-figure reveal">
+          <img src="/images/pool.jpg" srcset="/images/pool-800.jpg 800w, /images/pool.jpg 1536w" sizes="100vw" alt="A long limestone pool aligned exactly with the Atlantic horizon, one plaster wall along its side." loading="lazy" />
+          <figcaption class="caption-row"><span>The pool, 25 m</span><span>Aligned to the horizon</span></figcaption>
+        </figure>
+        <div class="bath-row">
+          <div class="bath-copy reveal">
+            <h3>Each bath is carved from a single block.</h3>
+            <p>
+              The water arrives from a bronze spout set flush in the plaster, warmed to
+              38 degrees. In the pool it is unheated from May to October — mineral, still,
+              and level with the sea it faces. Towels are flax, folded on the stone rim
+              each afternoon.
+            </p>
+          </div>
+          <figure class="bath-figure reveal">
+            <img src="/images/bath.jpg" srcset="/images/bath-800.jpg 800w, /images/bath.jpg 1024w" sizes="(max-width: 640px) 100vw, 440px" alt="A bath carved from a single limestone block in a plaster niche, one bronze spout, one folded linen towel." loading="lazy" />
+            <figcaption class="caption-row"><span>The bath</span><span>One block, one spout</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ the table ============ -->
+      <section class="section table-section" id="table" aria-labelledby="table-h">
+        <div class="table-grid">
+          <figure class="primary reveal">
+            <img src="/images/table.jpg" srcset="/images/table-800.jpg 800w, /images/table.jpg 1536w" sizes="(max-width: 1020px) 100vw, 55vw" alt="A long white oak breakfast table set with pale ceramics, morning light laying a band along its length." loading="lazy" />
+            <figcaption class="caption-row"><span>The table at 08:00</span><span>White oak, twelve seats</span></figcaption>
+          </figure>
+          <div class="table-copy reveal">
+            <p class="eyebrow">The table</p>
+            <h2 class="statement" id="table-h">Breakfast is set at eight; the light arrives first.</h2>
+            <p>
+              One long table faces the morning court. Bread comes from the wood oven in
+              Aljezur, fish from the boats at Sagres, sweet potatoes and honey from the
+              parish. Dinner is a single menu, written each morning after the market.
+            </p>
+            <figure class="service-figure reveal">
+              <img src="/images/service.jpg" srcset="/images/service-800.jpg 800w, /images/service.jpg 1536w" sizes="(max-width: 640px) 100vw, 420px" alt="Hands placing a pale ceramic coffee service on a deep limestone window ledge in morning light." loading="lazy" />
+              <figcaption class="caption-row"><span>Coffee to the ledge</span><span>07:30 onward</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ courts + materials ============ -->
+      <section class="section" id="courts" aria-labelledby="courts-h">
+        <div class="courts-grid">
+          <div class="courts-copy reveal">
+            <p class="eyebrow">The courts</p>
+            <h2 class="statement" id="courts-h">Three courts carry the light into the centre.</h2>
+            <p>
+              Cut through the bar of the building, each holds one thing and holds it
+              exactly. The planting is the plateau's own — heath, grasses, lichen —
+              brought inside the walls and given water.
+            </p>
+            <dl class="court-index">
+              <div><dt>Court I</dt><dd>A channel of still water</dd></div>
+              <div><dt>Court II</dt><dd>One strawberry tree</dd></div>
+              <div><dt>Court III</dt><dd>The breakfast terrace</dd></div>
+            </dl>
+          </div>
+          <figure class="reveal">
+            <img src="/images/court.jpg" srcset="/images/court-800.jpg 800w, /images/court.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="A planted court between plaster walls: one strawberry tree, low heath, a still water channel." loading="lazy" />
+            <figcaption class="caption-row"><span>Court II</span><span>Strawberry tree</span></figcaption>
+          </figure>
+          <figure class="drop reveal">
+            <img src="/images/garden.jpg" srcset="/images/garden-800.jpg 800w, /images/garden.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="Coastal planting against a plaster wall: clipped heath, silver grasses, a low schist wall with lichen." loading="lazy" />
+            <figcaption class="caption-row"><span>The plateau planting</span><span>Heath, grass, lichen</span></figcaption>
+          </figure>
+        </div>
+
+        <div class="materials reveal">
+          <figure>
+            <img src="/images/material-stone.jpg" srcset="/images/material-stone-800.jpg 800w, /images/material-stone.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="Close-up of a limestone floor meeting a plaster wall with a recessed bronze shadow gap." loading="lazy" />
+            <figcaption class="caption-row"><span>Floor meets wall</span><span>Bronze shadow gap</span></figcaption>
+          </figure>
+          <figure>
+            <img src="/images/material-linen.jpg" srcset="/images/material-linen-800.jpg 800w, /images/material-linen.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="Heavy flax linen folded on a white oak shelf, raking light showing the weave." loading="lazy" />
+            <figcaption class="caption-row"><span>Flax on oak</span><span>Woven in Guimarães</span></figcaption>
+          </figure>
+          <div class="register-block">
+            <dl class="register">
+              <dt>Stone</dt><dd>Limestone from Sintra; schist from the cliff itself.</dd>
+              <dt>Wall</dt><dd>Lime plaster mixed with Bordeira sand.</dd>
+              <dt>Wood</dt><dd>White oak, sawn plain; walnut in the west rooms.</dd>
+              <dt>Metal</dt><dd>Blackened bronze — handles, spouts, shadow gaps.</dd>
+              <dt>Cloth</dt><dd>Flax linen woven in Guimarães.</dd>
+            </dl>
+            <p class="aside register-note">
+              Six materials, used everywhere and never disguised. What you touch on the
+              first evening is what the building is made of.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ place ============ -->
+      <section class="section place" id="place" aria-labelledby="place-h">
+        <div class="section-head reveal">
+          <p class="eyebrow">Place</p>
+          <h2 class="statement" id="place-h">The last plateau before the sea.</h2>
+          <p class="lede">
+            Carrapateira, on the Costa Vicentina — a protected coast of schist cliffs,
+            bleached grass, and Atlantic weather. The nearest lights after dark are the
+            village and the lighthouse at Cabo de São Vicente.
+          </p>
+        </div>
+        <figure class="place-figure reveal">
+          <img src="/images/place.jpg" srcset="/images/place-800.jpg 800w, /images/place.jpg 1536w" sizes="100vw" alt="Dark schist cliffs breaking into the Atlantic below a plateau of dry grass and low heath." loading="lazy" />
+          <figcaption class="caption-row"><span>The cliff at Carrapateira</span><span>Parque Natural do Sudoeste Alentejano</span></figcaption>
+        </figure>
+        <dl class="distances reveal">
+          <div><dt>Bordeira beach</dt><dd>20 min on foot</dd></div>
+          <div><dt>Aljezur market</dt><dd>15 min by road</dd></div>
+          <div><dt>Faro airport</dt><dd>1 h 20</dd></div>
+          <div><dt>Lisbon</dt><dd>2 h 50</dd></div>
+        </dl>
+      </section>
+
+      <!-- ============ stay ============ -->
+      <section class="section" id="stay" aria-labelledby="stay-h">
+        <div class="stay-grid">
+          <div class="stay-copy reveal">
+            <p class="eyebrow">Stay</p>
+            <h2 class="statement" id="stay-h">Choose a direction, then the dates.</h2>
+            <p>
+              Tell us when you are coming and which light you want to wake to. A person —
+              not a system — replies within a day with what is open.
+            </p>
+            <p class="stay-note aside">From €340 a night, breakfast at the long table included.</p>
+          </div>
+          <form class="stay-form reveal" action="mailto:estadias@aresta.pt" method="post" enctype="text/plain">
+            <div class="field-pair">
+              <div class="field">
+                <label for="arrive">Arrive</label>
+                <input id="arrive" name="arrive" type="date" required />
+              </div>
+              <div class="field">
+                <label for="depart">Depart</label>
+                <input id="depart" name="depart" type="date" required />
+              </div>
+            </div>
+            <div class="field">
+              <label for="orientation">Light</label>
+              <select id="orientation" name="orientation">
+                <option value="west">West — last light, the Atlantic</option>
+                <option value="east">East — first light, the morning court</option>
+                <option value="south">South — high light, the pool court</option>
+                <option value="any">No preference — advise me</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="email">Your address</label>
+              <input id="email" name="email" type="email" placeholder="name@example.com" required />
+            </div>
+            <button class="stay-submit" type="submit">Request dates</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ correspondence ============ -->
+    <footer class="footer" id="correspondence">
+      <div class="footer-grid">
+        <div>
+          <p class="wordmark">Aresta <small>Costa Vicentina</small></p>
+          <address>
+            Estrada da Bordeira, Carrapateira<br />
+            8670-230 Aljezur, Portugal<br />
+            <a href="mailto:estadias@aresta.pt">estadias@aresta.pt</a><br />
+            <a href="tel:+351282970040">+351 282 970 040</a>
+          </address>
+        </div>
+        <div>
+          <h3>Sections</h3>
+          <ul>
+            <li><a href="#building">The building</a></li>
+            <li><a href="#rooms">Rooms by light</a></li>
+            <li><a href="#water">Water</a></li>
+            <li><a href="#table">The table</a></li>
+            <li><a href="#place">Place</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>The seasonal letter</h3>
+          <p class="aside" style="margin-top: 16px; font-size: 14.5px;">
+            Four letters a year: the light, the sea, the table.
+          </p>
+          <form class="letter-field" action="mailto:estadias@aresta.pt" method="post" enctype="text/plain">
+            <label class="sr-only" for="letter-email">Your address</label>
+            <input id="letter-email" name="email" type="email" placeholder="Leave an address" required />
+            <button type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Aresta · Aubade — a fictional Foundry house</span>
+        <span>38 rooms · east, south, west</span>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // Header: inherit the wall color once past the hero.
+      const header = document.querySelector(".site-header");
+      const onScroll = () => header.classList.toggle("scrolled", scrollY > innerHeight * 0.82);
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Orientation selector — image, hour, plan, and description change together.
+      const tabs = [...document.querySelectorAll(".orient")];
+      const panels = [...document.querySelectorAll(".room-panel")];
+      function select(o) {
+        tabs.forEach((t) => t.setAttribute("aria-selected", String(t.dataset.o === o)));
+        panels.forEach((p) => {
+          if (p.dataset.o === o) p.removeAttribute("hidden");
+          else p.setAttribute("hidden", "");
+        });
+      }
+      tabs.forEach((t, i) => {
+        t.addEventListener("click", () => select(t.dataset.o));
+        t.addEventListener("keydown", (e) => {
+          if (e.key !== "ArrowDown" && e.key !== "ArrowUp" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+          e.preventDefault();
+          const d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1 : -1;
+          const next = tabs[(i + d + tabs.length) % tabs.length];
+          next.focus();
+          select(next.dataset.o);
+        });
+      });
+
+      // Reveals: settle in like light moving, once.
+      if (document.documentElement.classList.contains("fx")) {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("shown"); io.unobserve(e.target); }
+          }),
+          { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("shown"));
+      }
+    </script>
+  </body>
+</html>

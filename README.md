@@ -18,16 +18,21 @@ The two series share standards, not styling. Read
 
 > This repo's original brief was three unrelated categories (ecommerce/SaaS/event) proving generic range. It pivoted after Suntoku and Shokunin — see [`docs/2026-07-12-repositioning-luxury-ateliers.md`](docs/2026-07-12-repositioning-luxury-ateliers.md) for the full history, including the two concepts (Roster, SIGNAL) retired in the move.
 
-| Site | Series | What it is | Culture / place | Lives in |
-|------|--------|------------|-----------------|----------|
+| Site | Series | What it is | Culture / place | Project |
+|------|--------|------------|-----------------|---------|
 | Suntoku (寸徳) | Nocturne | Hand-forged kitchen knife atelier | Japan · Sakai | [`sites/kaji`](sites/kaji) |
 | Shokunin | Nocturne | Bespoke samurai ateliers | Japan · Kaga, Seki, Wajima | [`sites/shokunin`](sites/shokunin) |
 | Casa Vicente | Nocturne | Family-owned boutique guitar atelier | Spain · Andalusia | [`sites/vicente`](sites/vicente) |
 | Schwarzwald | Nocturne | Cuckoo clock house, est. 1854 | Germany · Black Forest | [`sites/schwarzwald`](sites/schwarzwald) |
-| Lagar do Sol | Aubade | Residential, collected olive-estate hotel | Portugal · Alentejo, between Estremoz and Vila Viçosa | [`sites/lagar-do-sol`](sites/lagar-do-sol) |
-| Aubade Hotel Two *(working project)* | Aubade | Contemporary, architecture-led hotel | Place and name to be chosen | `sites/<hotel-two-name>` |
+| [Lagar do Sol](https://lagar-do-sol.vercel.app) | Aubade | Residential, collected olive-estate hotel | Portugal · Alentejo, between Estremoz and Vila Viçosa | [`sites/lagar-do-sol`](sites/lagar-do-sol) · live |
+| Aresta | Aubade | Contemporary, architecture-led hotel | Portugal · Costa Vicentina, Carrapateira | [`sites/aresta`](sites/aresta) · built |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
+
+The current build sequence is documented in
+[`docs/2026-07-15-aubade-boutique-hotel-brief.md`](docs/2026-07-15-aubade-boutique-hotel-brief.md)
+and
+[`docs/2026-07-16-aubade-contemporary-hotel-brief.md`](docs/2026-07-16-aubade-contemporary-hotel-brief.md).
 
 ## Why no shared design system
 

@@ -2,6 +2,13 @@
 
 *Direction locked 2026-07-16.*
 
+**First design session completed 2026-07-17:** the name **Aresta**—Portuguese
+for the edge where two planes meet—is now locked, along with the place (the
+cliff plateau above the Atlantic at Carrapateira, Costa Vicentina), the
+governing 3.6 m bay geometry, the east/south/west room system, and the type
+pairing. The built site and its source of truth live in
+[`../sites/aresta`](../sites/aresta) (see its `DESIGN.md`).
+
 This is the contemporary counterpart to Hotel One and the second project in
 Foundry’s Aubade series. It shares the daylight doctrine in
 [`aubade-taste-profile.md`](aubade-taste-profile.md), but its identity comes
@@ -150,4 +157,3 @@ this set. Coherence comes from the second hotel’s building and location.
 5. Write the site’s own `DESIGN.md` and vocabulary.
 6. Build the hero and orientation interaction as the first proof; critique
    before building rooms or booking UI.
-
