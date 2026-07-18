@@ -18,6 +18,7 @@ tools/.cache/
 # os / editor
 .DS_Store
 *.log
+.claude/
 
 # design-review screenshots (critique-loop artifacts, kept local)
 shots/

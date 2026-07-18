@@ -24,9 +24,10 @@ theme set.
 **Proposition:** The rooms live like private houses; the estate hosts like a
 hotel.
 
-The mark is a millstone, not a decorative sunburst: one circle, four cuts, and
-a brass center. It may rotate only as a subtle loading or state change, never
-as ambient ornament.
+The primary mark is the spare two-tone olive branch carried by the wordmark.
+Its dark and pale leaves are structural, not botanical decoration. Use the
+branch alone only where the full name would be redundant, such as the stay
+dialogue; do not substitute the earlier millstone symbol.
 
 ## Tokens
 

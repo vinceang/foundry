@@ -1,5 +1,7 @@
 # Aresta
 
+![Aresta's stair study at the mobile breakpoint](image.png)
+
 Foundry's second **Aubade** hotel: a polished contemporary property on the
 cliff plateau above the Atlantic at Carrapateira, Costa Vicentina, shaped by
 architecture, orientation, and light.
