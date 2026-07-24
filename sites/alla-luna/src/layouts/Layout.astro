@@ -1,0 +1,176 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Fornace alla Luna — Murano goblets, blown by night since 1861',
+  description = 'A one-furnace goblet atelier on Fondamenta Serenella, Murano. The composizione melts at midnight; the piazza blows before dawn; nine commissions leave the fondamenta each year.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0a0e13" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // `?nofx` keeps everything visible; `?scroll=N` jumps to an offset —
+      // both exist for the screenshot critique loop only.
+      if (!location.search.includes('nofx')) document.documentElement.classList.add('js');
+      else addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('img[loading="lazy"]').forEach((i) => (i.loading = 'eager'));
+        const m = location.search.match(/scroll=(\d+)/);
+        if (m) addEventListener('load', () => setTimeout(() => scrollTo(0, +m[1]), 300));
+      });
+    </script>
+  </head>
+  <body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="hud-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Fornace alla Luna — home">
+        <span class="brand-seal" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="30" height="30" fill="none">
+            <circle cx="16" cy="16" r="12.5" stroke="var(--ambra-faint)" stroke-width="1.2" />
+            <circle cx="16" cy="16" r="4.4" stroke="var(--ambra)" stroke-width="1.2" />
+          </svg>
+        </span>
+        <span class="brand-word">alla Luna</span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/#casa">The house</a>
+        <a href="/#piazza">La Piazza</a>
+        <a href="/#tempera">La Tempera</a>
+        <a href="/#archivio">L’Archivio</a>
+        <a class="nav-cta" href="/#commissione">Write to the furnace</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-mark">Fornace alla Luna</p>
+          <p style="margin-top: 16px; max-width: 40ch; font-size: 13.5px; color: var(--cristallo-dim);">
+            One furnace, three crucibles, goblets only. The glass is made at
+            night, at the sign of the moon, as it has been since 1861.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">The furnace</h4>
+          <ul>
+            <li><a href="/#casa">The house</a></li>
+            <li><a href="/#piazza">La Piazza</a></li>
+            <li><a href="/#tempera">La Tempera</a></li>
+            <li><a href="/#archivio">L’Archivio</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">Correspondence</h4>
+          <ul>
+            <li><a href="mailto:fornace@allaluna.it">fornace@allaluna.it</a></li>
+            <li>Fondamenta Serenella 14, Murano</li>
+            <li>Cold in August — <span class="it" lang="it">la sosta</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>Fornace alla Luna · Murano · since 1861</span>
+        <span>The fondamenta at dawn — 20°</span>
+      </div>
+    </footer>
+
+    <script>
+      // ---- reveal on scroll ----
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.16, rootMargin: '0px 0px -6% 0px' }
+      );
+      document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+
+      // ---- header veil / withdraw ----
+      const header = document.querySelector('.site-header') as HTMLElement;
+      let lastY = scrollY;
+      const headerTick = () => {
+        const y = scrollY;
+        header.classList.toggle('is-veiled', y > 40);
+        if (y > 240 && y > lastY + 4) header.classList.add('is-withdrawn');
+        else if (y < lastY - 4 || y <= 240) header.classList.remove('is-withdrawn');
+        lastY = y;
+      };
+      addEventListener('scroll', headerTick, { passive: true });
+      headerTick();
+
+      // ---- the hour on Murano (see DESIGN.md §5) ----
+      const hour = document.querySelector<HTMLElement>('[data-hour]');
+      if (hour) {
+        const bands = [
+          'the composizione melts',
+          'the piazza is at the bench',
+          'the tempera holds the day’s work',
+          'the crucibles are charged',
+        ];
+        const tick = () => {
+          const now = new Date();
+          const fmt = new Intl.DateTimeFormat('it-IT', {
+            timeZone: 'Europe/Rome', hour: '2-digit', minute: '2-digit', hour12: false,
+          });
+          const hh = parseInt(
+            new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Rome', hour: '2-digit', hour12: false }).format(now),
+            10
+          );
+          const band = hh < 5 ? bands[0] : hh < 13 ? bands[1] : hh < 20 ? bands[2] : bands[3];
+          hour.textContent = `Murano, ${fmt.format(now)} — ${band}`;
+        };
+        tick();
+        setInterval(tick, 60_000);
+      }
+
+      // ---- custom cursor ----
+      const fine = matchMedia('(pointer: fine)').matches;
+      const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (fine && !noMotion && document.documentElement.classList.contains('js')) {
+        document.documentElement.classList.add('cursor-on');
+        const cur = document.querySelector('.cursor') as HTMLElement;
+        let x = 0, y = 0, cx = 0, cy = 0;
+        addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; });
+        const loop = () => {
+          cx += (x - cx) * 0.22;
+          cy += (y - cy) * 0.22;
+          cur.style.translate = `${cx}px ${cy}px`;
+          requestAnimationFrame(loop);
+        };
+        loop();
+        document.querySelectorAll('a, button, [data-cursor]').forEach((el) => {
+          el.addEventListener('mouseenter', () => cur.classList.add('is-link'));
+          el.addEventListener('mouseleave', () => cur.classList.remove('is-link'));
+        });
+      }
+    </script>
+  </body>
+</html>

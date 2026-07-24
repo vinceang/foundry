@@ -1,0 +1,334 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <main>
+    <!-- I · The bocca — 1,120° -->
+    <section class="hero">
+      <div class="hero-media" aria-hidden="true">
+        <img src="/plates/hero-bocca.jpg" alt="" fetchpriority="high" />
+      </div>
+      <div class="hero-content">
+        <p class="label rv">Fornace alla Luna · Murano</p>
+        <h1 class="display hero-title rv">The glass is made at night.</h1>
+        <p class="hero-sub rv">
+          One furnace at the sign of the moon, on Fondamenta Serenella since
+          1861. The <span class="it" lang="it">composizione</span> melts at
+          midnight; the piazza blows before dawn; nine commissions leave the
+          fondamenta each year.
+        </p>
+        <p class="hero-hour rv" data-hour>
+          <span class="ring ring--faint" aria-hidden="true"></span>
+          Fondamenta Serenella, Murano
+        </p>
+      </div>
+      <p class="folio" aria-hidden="true">1,120°<small>fusione</small></p>
+    </section>
+
+    <!-- II · The house — 1,040° -->
+    <section class="chapter chapter--fuoco" id="casa">
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">The house · since 1861</p>
+          <h2 class="display rv">A furnace is not a factory. It is a fire that is kept.</h2>
+          <p class="lede rv">
+            Murano’s furnaces were once known by the sign over the door — the
+            mermaid, the moor, the moon. This one took the moon, because its
+            work is nocturnal: the batch — sand, soda, lime, manganese against
+            the green — goes into the three crucibles
+            (<span class="it" lang="it">crogioli</span>) at midnight and melts
+            while the island sleeps. By five the glass is ready, and the
+            piazza works it until it is gone.
+          </p>
+        </div>
+        <div class="facts">
+          <div class="fact rv">
+            <span class="num">1861</span>
+            <p class="cap">Fondamenta Serenella. Six masters of the name Businello, father to son to son.</p>
+          </div>
+          <div class="fact rv">
+            <span class="num">Three crucibles</span>
+            <p class="cap">One fire, never divided. It goes cold once a year, in August — <span class="it" lang="it">la sosta</span> — for the rebuilding of the crucibles.</p>
+          </div>
+          <div class="fact rv">
+            <span class="num">Nine commissions</span>
+            <p class="cap">A year — goblets only. A service of twelve takes the piazza six weeks.</p>
+          </div>
+        </div>
+      </div>
+      <p class="folio" aria-hidden="true">1,040°<small>the melt</small></p>
+    </section>
+
+    <!-- III · La Piazza — 900° -->
+    <section class="chapter" id="piazza">
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">La Piazza</p>
+          <h2 class="display rv">Four people, one breath.</h2>
+        </div>
+        <div class="piazza-grid">
+          <figure class="piazza-media rv">
+            <img
+              src="/plates/piazza-scagno.jpg"
+              alt="The maestro at the scagno, rolling a blowpipe, his face lit by the glowing gather of molten glass."
+              loading="lazy"
+              width="1536" height="1024"
+            />
+          </figure>
+          <div>
+            <p class="lede rv">
+              The crew around a maestro has been called a
+              <span class="it" lang="it">piazza</span> on this island for five
+              hundred years. Ours is four: the glass passes from the garzone’s
+              gather to the serventi’s shaping to the maestro’s bench — the
+              <span class="it" lang="it">scagno</span> — and back, and no one
+              speaks, because at 900 degrees the glass does not wait for
+              sentences.
+            </p>
+            <ul class="crew rv">
+              <li><span class="who">Alvise Businello</span><span class="role">Maestro · sixth of the name</span></li>
+              <li><span class="who">Elena Fabris</span><span class="role">Prima serventa · at the bench since 2016</span></li>
+              <li><span class="who">Dario Vianello</span><span class="role">Servente</span></li>
+              <li><span class="who">Nico Ballarin</span><span class="role">Garzone</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <p class="folio" aria-hidden="true">900°<small>the bench</small></p>
+    </section>
+
+    <!-- IV · La Tempera — the signature — 480° -->
+    <section class="chapter chapter--fondo tempera" id="tempera">
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">La Tempera</p>
+          <h2 class="display rv">A goblet is finished by cooling.</h2>
+          <p class="lede rv">
+            Annealing is not waiting. It is the half of the craft that happens
+            without hands: the day’s work enters the
+            <span class="it" lang="it">tempera</span> at 480 degrees and comes
+            down to the morning air no faster than the glass forgives. Below —
+            the day’s last goblet, cooling into the Archive.
+          </p>
+        </div>
+        <div class="tempera-grid">
+          <figure class="tempera-stage rv">
+            <img
+              src="/plates/goblet-plenilunio.jpg"
+              alt="Modello 214, Plenilunio — a clear cristallo goblet with a slender baluster stem."
+              loading="lazy"
+              width="1024" height="1536"
+            />
+            <div class="tempera-glow" aria-hidden="true"></div>
+          </figure>
+          <div class="tempera-readout rv">
+            <span class="label">Modello 214 · Plenilunio</span>
+            <p class="tempera-degrees" data-degrees aria-hidden="true">20°</p>
+            <p class="tempera-band" data-band>cold, clear, and finished — it will not change again.</p>
+            <ol class="tempera-scale" data-scale>
+              <li data-deg="480"><span class="deg">480°</span><span>enters the tempera at the close of the day</span><span>19:40</span></li>
+              <li data-deg="340"><span class="deg">340°</span><span>the oven falls with the night</span><span>00:00</span></li>
+              <li data-deg="120"><span class="deg">120°</span><span>the piazza returns to the bench</span><span>05:00</span></li>
+              <li data-deg="20"><span class="deg">20°</span><span>the morning air of the fondamenta</span><span>07:30</span></li>
+            </ol>
+            <p class="tempera-ledger" data-ledger>
+              <span class="ring" aria-hidden="true"></span>
+              Entered into the Archive
+            </p>
+          </div>
+        </div>
+      </div>
+      <p class="folio" aria-hidden="true">480°<small>la tempera</small></p>
+    </section>
+
+    <!-- V · L’Archivio — 60° -->
+    <section class="chapter" id="archivio">
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">L’Archivio</p>
+          <h2 class="display rv">Every goblet has a page in the model book.</h2>
+          <p class="lede rv">
+            The <span class="it" lang="it">Libro dei Modelli</span> has been
+            kept since 1861; a design’s number is its name in the house. Three
+            pages are open this season.
+          </p>
+        </div>
+
+        <article class="work">
+          <figure class="work-media rv">
+            <img
+              src="/plates/goblet-plenilunio.jpg"
+              alt="Plenilunio — a clear cristallo goblet, thin flaring bowl on a baluster stem."
+              loading="lazy"
+              width="1024" height="1536"
+            />
+          </figure>
+          <div class="work-copy">
+            <div class="work-meta rv">
+              <span class="work-modello">Modello 214</span>
+              <span class="status"><span class="ring" aria-hidden="true"></span>In tempera</span>
+            </div>
+            <h3 class="work-title rv">Plenilunio</h3>
+            <p class="reading work-reading rv">the full moon on still water</p>
+            <p class="work-body rv">
+              Cristallo blown to a breath — sand from Fontainebleau, manganese
+              against the green — with a baluster stem drawn in one pull. The
+              bowl weighs less than the wine it holds. In the oven tonight;
+              cold by morning.
+            </p>
+          </div>
+        </article>
+
+        <article class="work work--flip">
+          <figure class="work-media rv">
+            <img
+              src="/plates/goblet-acqua-alta.jpg"
+              alt="Acqua Alta — a filigrana goblet with white spiral canes through bowl and stem."
+              loading="lazy"
+              width="1024" height="1536"
+            />
+          </figure>
+          <div class="work-copy">
+            <div class="work-meta rv">
+              <span class="work-modello">Modello 189</span>
+              <span class="status"><span class="ring" aria-hidden="true"></span>Promesso</span>
+            </div>
+            <h3 class="work-title rv">Acqua Alta</h3>
+            <p class="reading work-reading rv">the tide that enters the house</p>
+            <p class="work-body rv">
+              Thirty-two canes of <span class="it" lang="it">lattimo</span>
+              laid on the marver, fused, and twisted through bowl and stem —
+              <span class="it" lang="it">filigrana</span> as the tide leaves
+              lines on stone. A service of twelve, promised to a table in
+              Turin; the last four goblets are blown this month.
+            </p>
+          </div>
+        </article>
+
+        <article class="work">
+          <figure class="work-media work-media--absent rv">
+            <span class="absent-ring" aria-hidden="true"><i></i></span>
+            <figcaption>The house does not photograph what it no longer holds.</figcaption>
+          </figure>
+          <div class="work-copy">
+            <div class="work-meta rv">
+              <span class="work-modello">Modello 167</span>
+              <span class="status status--gone"><span class="ring" aria-hidden="true"></span>In private collection</span>
+            </div>
+            <h3 class="work-title rv">Nebbia</h3>
+            <p class="reading work-reading rv">the fog that closes the lagoon</p>
+            <p class="work-body rv">
+              A service of eight in <span class="it" lang="it">lattimo</span>
+              veiled over cristallo, blown in the winter of 2023 and gone from
+              the fondamenta since. Its page in the model book stays open; the
+              house can blow it again only for the same table.
+            </p>
+          </div>
+        </article>
+      </div>
+      <p class="folio" aria-hidden="true">60°<small>the archive</small></p>
+    </section>
+
+    <!-- VI · El Goto + the admission — 40° -->
+    <section class="chapter chapter--fuoco goto-strip" id="goto">
+      <div class="wrap goto-grid">
+        <div>
+          <p class="label rv">El Goto</p>
+          <h2 class="display rv" style="font-size: clamp(26px, 3vw, 40px); margin-top: 16px;">
+            The last gather of the day belongs to the piazza.
+          </h2>
+          <p class="lede rv" style="margin-top: 24px;">
+            Every evening the day’s last glass is blown for the bench, not the
+            Archive: <span class="it" lang="it">el goto</span>, the worker’s
+            own cup, made of whatever the crucible still holds. No two alike;
+            none for sale; every one drunk from.
+          </p>
+        </div>
+        <div class="admission rv">
+          <h3 class="display">What the hand leaves in the glass.</h3>
+          <p>
+            Under the foot of every goblet is the scar of the pontil, ground
+            smooth but never erased. And within a service of twelve, no two
+            goblets agree closer than a breath. This is not tolerance; it is
+            authorship. Glass remembers fire — and the hand.
+          </p>
+        </div>
+      </div>
+      <p class="folio" aria-hidden="true">40°<small>evening</small></p>
+    </section>
+
+    <!-- VII · La Commissione — 20° -->
+    <section class="chapter commissione" id="commissione">
+      <div class="wrap">
+        <p class="label rv">La Commissione</p>
+        <h2 class="display rv" style="font-size: clamp(34px, 4.6vw, 60px); margin-top: 16px; max-width: 18ch;">
+          Write to the furnace.
+        </h2>
+        <p class="lede rv" style="margin-top: 24px;">
+          A commission begins with a letter: what the table is, how many will
+          sit at it, what will be poured. The maestro answers within the week
+          — in August, when the furnace is cold, letters wait for September.
+          Nine commissions leave the fondamenta each year; the tenth letter is
+          answered with a date.
+        </p>
+        <a class="btn rv" href="mailto:fornace@allaluna.it?subject=A%20commission%20for%20the%20furnace">
+          <span class="ring" aria-hidden="true"></span>
+          Write to the furnace
+        </a>
+        <p class="commissione-note rv">
+          The furnace receives visitors by appointment, Tuesday to Friday,
+          from five in the morning — the glass is best before Venice wakes.
+        </p>
+      </div>
+      <p class="folio" aria-hidden="true">20°<small>the fondamenta</small></p>
+    </section>
+  </main>
+
+  <script>
+    // ---- La Tempera: heat as interface (progressive enhancement) ----
+    // Scroll cools the day's last goblet from furnace heat to ambient.
+    // Default markup = the finished cold state, so no-JS / reduced-motion
+    // readers get the completed composition.
+    const sec = document.querySelector<HTMLElement>('.tempera');
+    const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const js = document.documentElement.classList.contains('js');
+    if (sec && js && !noMotion) {
+      const glow = sec.querySelector<HTMLElement>('.tempera-glow')!;
+      const degrees = sec.querySelector<HTMLElement>('[data-degrees]')!;
+      const band = sec.querySelector<HTMLElement>('[data-band]')!;
+      const ledger = sec.querySelector<HTMLElement>('[data-ledger]')!;
+      const stations = Array.from(sec.querySelectorAll<HTMLElement>('[data-deg]'));
+      ledger.setAttribute('data-armed', '');
+
+      const bandFor = (t: number) =>
+        t > 1000 ? 'fusione — the glass is still light itself.'
+        : t > 480 ? 'the work of the bench is done; the heat is not.'
+        : t > 60 ? 'the tempera holds it through the night.'
+        : 'cold, clear, and finished — it will not change again.';
+
+      const fmt = (t: number) => `${Math.round(t).toLocaleString('en-US')}°`;
+
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const vh = innerHeight;
+        const r = sec.getBoundingClientRect();
+        if (r.bottom < -120 || r.top > vh + 120) return;
+        // 0 → section entering, 1 → section read through
+        const p = Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (r.height * 0.92)));
+        const t = 20 + 1100 * Math.pow(1 - p, 1.9);
+        glow.style.setProperty('--heat', String(Math.min(1, Math.max(0, (t - 430) / 690))));
+        degrees.textContent = fmt(t);
+        band.textContent = bandFor(t);
+        for (const s of stations) s.classList.toggle('is-passed', t < parseFloat(s.dataset.deg!));
+        ledger.classList.toggle('is-in', t <= 26);
+      };
+      addEventListener('scroll', () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+      }, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
+  </script>
+</Layout>
