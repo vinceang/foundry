@@ -1,0 +1,630 @@
+/* VELUM — materials of civil twilight at altitude.
+   Vesper series. See DESIGN.md before touching anything. */
+
+:root {
+  --flight-deck: #0d1017; /* night air at FL450 — page ground */
+  --stratus: #151a24;     /* raised surfaces, spec blocks */
+  --airframe: #8f98a8;    /* anodized aluminum — secondary voice */
+  --cirrus: #dfe3ea;      /* primary text */
+  --horizon: #c9915d;     /* the apricot band — hairlines and one button */
+  --hairline: rgba(143, 152, 168, 0.22);
+  --serif: "Spectral", Georgia, serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --gutter: clamp(20px, 5vw, 72px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--flight-deck);
+  color: var(--cirrus);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+
+::selection { background: var(--horizon); color: var(--flight-deck); }
+
+a { color: var(--cirrus); text-decoration: none; }
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--horizon);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--stratus);
+  color: var(--cirrus);
+  padding: 12px 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.skip-link:focus { left: 0; }
+
+/* ---------- voices ---------- */
+
+.mono {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--airframe);
+}
+
+.whisper {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 10.5px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--horizon);
+}
+
+.statement {
+  font-family: var(--serif);
+  font-weight: 200;
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.22;
+  letter-spacing: 0.01em;
+  color: var(--cirrus);
+  max-width: 22ch;
+}
+
+.body-copy {
+  max-width: 58ch;
+  color: var(--cirrus);
+}
+.body-copy + .body-copy { margin-top: 1.2em; }
+.body-copy .dim { color: var(--airframe); }
+
+.aside {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--airframe);
+}
+
+/* chapter head cadence: whisper → statement → copy */
+.chapter-head { margin-bottom: clamp(40px, 5vw, 72px); }
+.chapter-head .whisper { display: block; margin-bottom: 22px; }
+.chapter-head .whisper::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1px;
+  background: var(--horizon);
+  vertical-align: middle;
+  margin-right: 14px;
+}
+.chapter-head .statement { margin-bottom: 26px; }
+
+/* ---------- fixed chrome ---------- */
+
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 22px var(--gutter);
+  transition: background 0.6s var(--ease), backdrop-filter 0.6s var(--ease);
+}
+.site-header.veiled {
+  background: rgba(13, 16, 23, 0.82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 19px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--cirrus);
+}
+.wordmark small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0.3em;
+  color: var(--airframe);
+  margin-top: 4px;
+}
+
+.site-nav { display: flex; gap: 34px; align-items: baseline; }
+.site-nav a {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--airframe);
+  transition: color 0.4s var(--ease);
+}
+.site-nav a:hover { color: var(--cirrus); }
+.site-nav a.nav-intro { color: var(--horizon); }
+
+@media (max-width: 900px) {
+  .site-nav a:not(.nav-intro) { display: none; }
+}
+
+/* ---------- the flight-plan rail (signature) ---------- */
+
+.fp-rail {
+  position: fixed;
+  left: var(--gutter);
+  bottom: 28px;
+  z-index: 40;
+  display: none;
+  font-family: var(--mono);
+  color: var(--airframe);
+  pointer-events: none;
+  background: rgba(13, 16, 23, 0.78);
+  backdrop-filter: blur(6px);
+  padding: 12px 14px 8px;
+  margin-left: -14px;
+}
+html.js .fp-rail { display: block; }
+@media (max-width: 900px) {
+  html.js .fp-rail { display: none; }
+}
+
+.fp-readout {
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.fp-readout .fp-phase { color: var(--cirrus); }
+.fp-readout .fp-fl { color: var(--horizon); margin-left: 12px; }
+
+.fp-svg { display: block; overflow: visible; }
+.fp-svg .fp-path {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-width: 1;
+}
+.fp-svg .fp-path-flown {
+  fill: none;
+  stroke: var(--airframe);
+  stroke-width: 1;
+}
+.fp-svg .fp-dot { fill: var(--horizon); }
+.fp-svg .fp-ground {
+  stroke: var(--hairline);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+
+/* ---------- hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 62%;
+}
+.hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,16,23,0.55) 0%, rgba(13,16,23,0) 26%),
+    linear-gradient(0deg, rgba(13,16,23,0.94) 0%, rgba(13,16,23,0.55) 32%, rgba(13,16,23,0) 58%);
+}
+
+.hero-copy {
+  position: relative;
+  padding: 0 var(--gutter) 116px;
+  max-width: 720px;
+  text-shadow: 0 1px 14px rgba(13, 16, 23, 0.85);
+}
+.hero-copy .mono {
+  margin-bottom: 26px;
+  display: inline-block;
+  color: #a9b1c0;
+  background: rgba(13, 16, 23, 0.68);
+  backdrop-filter: blur(6px);
+  padding: 9px 13px;
+  margin-left: -13px;
+}
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 200;
+  font-size: clamp(64px, 10vw, 148px);
+  line-height: 0.95;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cirrus);
+  margin-left: -0.03em;
+}
+.hero-sub {
+  margin-top: 30px;
+  font-size: clamp(18px, 1.7vw, 23px);
+  font-weight: 300;
+  color: var(--cirrus);
+  max-width: 36ch;
+}
+.hero-facts {
+  margin-top: 34px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.hero-caption {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 32px;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--airframe);
+  line-height: 2;
+}
+@media (max-width: 900px) {
+  .hero-caption { display: none; }
+  .hero-copy { padding-bottom: 88px; }
+}
+
+/* the horizon rule — one thin apricot line at the hero's base */
+.horizon-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(201,145,93,0) 0%,
+    rgba(201,145,93,0.9) 18%,
+    rgba(201,145,93,0.9) 82%,
+    rgba(201,145,93,0) 100%);
+}
+
+/* ---------- sections ---------- */
+
+.section {
+  padding: clamp(120px, 14vw, 192px) var(--gutter) 0;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; }
+}
+
+/* withheld list — absence as content */
+.withheld {
+  border-top: 1px solid var(--hairline);
+  list-style: none;
+}
+.withheld li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--cirrus);
+}
+.withheld li span:last-child {
+  color: var(--airframe);
+  letter-spacing: 0.1em;
+  text-transform: none;
+  font-size: 11.5px;
+}
+.withheld-title {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--airframe);
+  margin-bottom: 18px;
+}
+
+.admission {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--hairline);
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 200;
+  font-style: italic;
+  color: var(--cirrus);
+  max-width: 30ch;
+}
+
+/* ---------- interlude (full-bleed cruise image) ---------- */
+
+.interlude {
+  position: relative;
+  margin-top: clamp(120px, 14vw, 192px);
+  height: clamp(420px, 68vh, 720px);
+  overflow: hidden;
+}
+.interlude img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.interlude::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(13,16,23,0.55) 0%, rgba(13,16,23,0) 34%);
+}
+.interlude figcaption {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 26px;
+  z-index: 1;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--airframe);
+}
+
+/* ---------- tails ---------- */
+
+.tail {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(32px, 5vw, 88px);
+  align-items: end;
+  margin-top: clamp(88px, 10vw, 144px);
+}
+.tail:first-of-type { margin-top: 0; }
+.tail.flip { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.tail.flip .tail-media { order: 2; }
+@media (max-width: 900px) {
+  .tail, .tail.flip { grid-template-columns: 1fr; align-items: start; }
+  .tail.flip .tail-media { order: 0; }
+}
+
+.tail-media {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--stratus);
+}
+.tail-media.tall { aspect-ratio: 2 / 3; }
+.tail-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* dry-run stand-in plate: stratus field with a mono tail mark, never a gray box */
+.plate-standin {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 26px;
+  background:
+    linear-gradient(160deg, #1a2130 0%, var(--stratus) 55%, #10141d 100%);
+}
+.plate-standin::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(201,145,93,0) 0%, rgba(201,145,93,0.75) 50%, rgba(201,145,93,0) 100%);
+}
+.plate-standin::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 62%;
+  height: 120px;
+  background: linear-gradient(0deg, rgba(201,145,93,0.09) 0%, rgba(201,145,93,0) 100%);
+}
+.plate-standin span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--airframe);
+}
+
+.tail-spec { padding-bottom: 6px; }
+.tail-reg {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: var(--horizon);
+  display: block;
+  margin-bottom: 14px;
+}
+.tail-name {
+  font-family: var(--serif);
+  font-weight: 200;
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+.spec-rows { border-top: 1px solid var(--hairline); margin-bottom: 26px; }
+.spec-rows div {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+}
+.spec-rows dt { color: var(--airframe); text-transform: uppercase; letter-spacing: 0.24em; }
+.spec-rows dd { color: var(--cirrus); text-align: right; }
+.tail-use { color: var(--airframe); font-size: 16px; max-width: 44ch; }
+.tail-use em { color: var(--cirrus); font-style: normal; }
+
+/* ---------- legs ---------- */
+
+.legs-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+}
+.legs-table caption {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--airframe);
+  padding-bottom: 18px;
+}
+.legs-table tr { border-bottom: 1px solid var(--hairline); }
+.legs-table tr:first-child { border-top: 1px solid var(--hairline); }
+.legs-table td {
+  padding: 17px 24px 17px 0;
+  vertical-align: baseline;
+  color: var(--cirrus);
+  white-space: nowrap;
+}
+.legs-table td.leg-route { letter-spacing: 0.2em; }
+.legs-table td.leg-note {
+  color: var(--airframe);
+  white-space: normal;
+  width: 46%;
+  padding-right: 0;
+  letter-spacing: 0.06em;
+}
+.legs-table tr.withheld-leg td { color: var(--airframe); }
+.legs-table tr.withheld-leg td.leg-route { color: var(--horizon); }
+@media (max-width: 900px) {
+  .legs-table td.leg-block { display: none; }
+}
+
+.legs-note {
+  margin-top: 30px;
+  font-size: 16px;
+  color: var(--airframe);
+  max-width: 52ch;
+}
+
+/* ---------- introduction ---------- */
+
+.intro-section {
+  padding-bottom: clamp(64px, 8vw, 112px);
+}
+.intro-actions {
+  margin-top: 48px;
+  display: flex;
+  align-items: baseline;
+  gap: 44px;
+  flex-wrap: wrap;
+}
+.intro-mail {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--flight-deck);
+  background: var(--horizon);
+  padding: 18px 34px;
+  transition: background 0.4s var(--ease);
+}
+.intro-mail:hover { background: #d9a26b; }
+.intro-aftn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--airframe);
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--hairline);
+  margin-top: clamp(96px, 10vw, 144px);
+  padding: 34px var(--gutter) 90px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--airframe);
+}
+
+/* ---------- motion (progressive enhancement only) ---------- */
+
+html.fx .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 1.4s var(--ease), transform 1.4s var(--ease);
+}
+html.fx .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+html.fx .hero-media img {
+  animation: hero-settle 3.2s var(--ease) both;
+}
+@keyframes hero-settle {
+  from { transform: scale(1.045); }
+  to { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.fx .reveal { opacity: 1; transform: none; transition: none; }
+  html.fx .hero-media img { animation: none; }
+}
