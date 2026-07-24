@@ -149,4 +149,4 @@ _(nothing in progress)_
 | Schwarzwald | Nocturne | Black Forest cuckoo clocks | — |
 | Lagar do Sol | Aubade | Olive-estate hotel, Alentejo | https://lagar-do-sol.vercel.app |
 | Aresta | Aubade | Architecture-led hotel, Costa Vicentina | https://aresta-azure.vercel.app |
-| Bottega Sant'Agata | Nocturne | Cremonese single-maker violin bottega | _deploy pending_ |
+| Bottega Sant'Agata | Nocturne | Cremonese single-maker violin bottega | https://santagata.vercel.app |

@@ -59,5 +59,9 @@ palette, ornament, interaction, order model.
   2.3 mm, each contour ring lighting in turn, ledger appearing at the edge.
 
 ## Live
-- Live URL: _<!-- filled on deploy -->_
-- Live render verified by screenshot: `shots/live/santagata.png`
+- Live URL: **https://santagata.vercel.app** (bare alias is ours; the
+  `-vincent-angs-projects` URL also serves the same deployment). HTTP 200,
+  `<title>` confirmed, SSO protection disabled.
+- Live render verified by screenshot: `shots/live/santagata.png` — confirmed
+  all six images load, Fraunces + Hanken Grotesk render, and the graduation
+  interaction sweeps live (3.7 → 2.3 mm on scroll).
