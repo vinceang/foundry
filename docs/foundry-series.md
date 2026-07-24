@@ -41,6 +41,44 @@ The opening pair establishes range inside the series:
 Lagar do Sol welcomes the guest into a life. Hotel Two gives the guest a new way
 to see space. They share Aubade doctrine but must not share a skin.
 
+## Vespers
+
+The third register is the hour between — civil twilight, passage, discretion.
+Cool blue-black ground, cold metal or aluminum, and one distant band of warm
+horizon light; the light comes from the edge of the world, not from a lamp.
+Its subjects are things in transit and worlds built on not being seen. Its
+shared taste profile lives in [`vesper-taste-profile.md`](vesper-taste-profile.md).
+
+A vesper is the evening office, sung at dusk. The opening pair are two
+private-charter houses that must read as different worlds despite one register:
+
+- **Auriga — placeless and warm.** Discretion as the product; the crew are the
+  hosts of the in-between hour; a warm afterglow accent; a route board of city
+  pairs.
+- **Velum — cold and capable.** The blue minute *before* first light rather
+  than after sunset; the operation that reaches the strips others cannot —
+  gravel, grass, 893 metres; a flight-plan rail flying a mountain profile.
+
+## Pastorales
+
+The fourth register is the cold bright working day — a craft worked outdoors
+under overcast snow-light. Cool near-white ground, one warm wood-note, the work
+shown in real weather. It is Nocturne inverted (cold flat light instead of one
+warm lamp) and distinct from Aubade (a working day, not warm hospitality). Its
+shared taste profile lives in
+[`pastorale-taste-profile.md`](pastorale-taste-profile.md).
+
+- **Tyri — snow-light and open.** A Numedal log yard told in overcast daylight;
+  the corner joint assembles as you scroll.
+
+Its dark counterpart builds the same Norwegian log houses but belongs to
+Nocturne, not Pastorale — proof the register is chosen from the hour, not the
+subject:
+
+- **Malmfuru — midwinter and lit from within.** The same craft on a moonless
+  January night: iron-blue dark, one warm window, a tree-ring archive as
+  signature.
+
 ## What remains recognizably Foundry
 
 Both series keep the same deeper commitments:

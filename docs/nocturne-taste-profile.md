@@ -96,11 +96,24 @@ one size up, written out in full — never abbreviated.
 
 ## Imagery
 
-One recipe, no exceptions: **one subject, one warm light, void background.**
-Chiaroscuro; the palette inside the frame must match the tokens; no text in
-images; no faces. Generation prompt template (keep one constant phrase per
-batch): *"…pitch-black background, single warm key light, deep chiaroscuro
-shadows, museum artifact presentation, ultra-premium, no text, no people."*
+One recipe: **one subject, one warm light, void background.** The dark is
+where the light stops — never an underexposed subject. Ask for the subject
+generously lit and fully modelled against the near-black; a murky plate
+reads as a mistake, not as reverence (mean luma ≥15 is a floor; the 20–40
+band is the target). The palette inside the frame must match the tokens;
+no text in images.
+
+People belong in the world. The maker at the bench, hands mid-process, a
+craftsman profiled beside their work — given the same lamp and the same
+reverence as the artifacts, roughly one human chapter per site. Faces are
+welcome when the story is the maker; people are never lifestyle models or
+set dressing.
+
+Generation prompt template (keep one constant phrase per batch):
+*"…near-black background, generous warm key light fully modelling the
+subject, soft amber fill, deep shadow surround, museum artifact
+presentation, no text."* For maker shots, swap the presentation clause:
+*"…a craftsman at work, face lit by the work itself."*
 
 **Video must earn its place**: if CSS could fake it (zoom, pan), use the
 still. Video exists for parallax, revealed geometry, light raking a

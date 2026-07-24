@@ -4,12 +4,14 @@ A collection of bespoke digital worlds built with reverence, restraint, and
 material honesty. Foundry is not a template portfolio. Each site invents a
 complete place, vocabulary, photographic language, and reason to exist.
 
-The collection now works in **two qualities of light**:
+The collection now works in **four qualities of light**:
 
 | Series | Atmosphere | Subjects |
 |---|---|---|
 | **Nocturnes** | Darkness, ceremony, artifacts, craft under one lamp | Heritage ateliers and houses |
 | **Aubades** | Daylight, hospitality, inhabited rooms, restorative warmth | Hotels, residences, and other places to dwell |
+| **Vespers** | Civil twilight, passage, discretion, light from the horizon | Things in transit; worlds built on not being seen |
+| **Pastorales** | Cold bright overcast, a craft worked outdoors in snow-light | Northern outdoor trades and makers |
 
 The two series share standards, not styling. Read
 [`docs/foundry-series.md`](docs/foundry-series.md),
@@ -26,6 +28,11 @@ The two series share standards, not styling. Read
 | Schwarzwald | Nocturne | Cuckoo clock house, est. 1854 | Germany · Black Forest | [`sites/schwarzwald`](sites/schwarzwald) |
 | [Lagar do Sol](https://lagar-do-sol.vercel.app) | Aubade | Residential, collected olive-estate hotel | Portugal · Alentejo, between Estremoz and Vila Viçosa | [`sites/lagar-do-sol`](sites/lagar-do-sol) · live |
 | [Aresta](https://aresta-azure.vercel.app) | Aubade | Contemporary, architecture-led hotel | Portugal · Costa Vicentina, Carrapateira | [`sites/aresta`](sites/aresta) · live |
+| Fornace alla Luna | Nocturne | Murano glass furnace, one goblet atelier | Italy · Venice, Murano | [`sites/alla-luna`](sites/alla-luna) |
+| Auriga | Vesper | Discreet private-jet charter, placeless | Three quiet fields | [`sites/auriga`](sites/auriga) |
+| Velum | Vesper | Short-field private-jet charter, alpine access | Switzerland · Genève | [`sites/velum`](sites/velum) |
+| Tyri | Pastorale | Hand-hewn log yard in snow-light | Norway · Rollag, Numedal | [`sites/tyri`](sites/tyri) |
+| Malmfuru | Nocturne | Hand-hewn log houses on a midwinter night | Norway · Nore, Numedal | [`sites/malmfuru`](sites/malmfuru) |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 
