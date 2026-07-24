@@ -1,0 +1,361 @@
+---
+import "../styles/global.css";
+
+// Novet — the corner. Two walls cross at a laft corner. Wall A runs face-on:
+// we see the long flat-hewn faces as SQUARE logs (kinning — no radius). Wall B
+// runs into the page: we see only its round log-heads projecting past the
+// corner, each showing the ring + radial drying check. Courses alternate A/B
+// so each locks the wall running the other way. Pieces are listed bottom-up;
+// the scroll scrub seats them in this order. Course pitch 52; log height 46.
+const H = 46;                     // log face height in viewBox units
+const CORNER = 232;               // x of the corner line (bar left edge)
+const bars = [498, 394, 290, 186, 82]; // y centers, wall A (face-on, square)
+const ends = [446, 342, 238, 134];     // y centers, wall B (round heads)
+const pieces = [];
+for (let i = 0; i < bars.length + ends.length; i++) {
+  if (i % 2 === 0) pieces.push({ kind: "bar", cy: bars[i / 2] });
+  else pieces.push({ kind: "end", cy: ends[(i - 1) / 2] });
+}
+
+const steps = [
+  {
+    no: "01",
+    name: "Kinning",
+    gloss: "the faces",
+    text: "The log's two faces are hewn flat with the broadaxe — following the grain of the tree, not a chalk line.",
+  },
+  {
+    no: "02",
+    name: "Medfar",
+    gloss: "the long groove",
+    text: "The underside is hollowed along the meddrag's scribed line, so the log rides the whole back of the one below it.",
+  },
+  {
+    no: "03",
+    name: "Novet",
+    gloss: "the corner",
+    text: "Each head is notched over the crossing log. Every course you lay binds the wall running the other way.",
+  },
+  {
+    no: "04",
+    name: "Vekta",
+    gloss: "the lock",
+    text: "Green timber dries, the medfar closes over the log beneath, and the joint tightens for a hundred years.",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Tyri — log houses hewn by hand in Rollag, Numedal. Felled in winter, raised by weight alone: no nails, no glue, no iron."
+    />
+    <title>Tyri — laft houses hewn in Numedal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400..700;1,400..600&family=Schibsted+Grotesk:ital,wght@0,400..700;1,400..600&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.classList.add("js");
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#skogen">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top">Tyri <small>Laftebruk · Numedal</small></a>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#skogen">Skogen</a>
+        <a href="#tunet">Tunet</a>
+        <a href="#novet">Novet</a>
+        <a href="#husa">Husa</a>
+        <a class="nav-ting" href="#tinging">Tinging</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ hero — the sky is the page ============ -->
+      <section class="hero" aria-label="Tyri">
+        <div class="hero-sky">
+          <div>
+            <p class="whisper hero-eyebrow">Pastorale · Rollag i Numedal, Norge · 60° N</p>
+            <h1 class="hero-title">
+              Tyri<svg class="roundel" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" /><line x1="12" y1="12" x2="19.8" y2="4.9" /></svg>
+            </h1>
+          </div>
+          <div class="hero-side">
+            <p class="hero-statement">Houses cut in winter.</p>
+            <p class="small">
+              Laft — log houses hewn by hand from malm pine, in the valley that
+              still keeps Norway's oldest wooden buildings. The yard has worked
+              in Rollag since 1911.
+            </p>
+            <div class="hero-actions">
+              <a class="text-link" href="#novet">How a corner locks <span class="arrow">→</span></a>
+              <a class="text-link" href="#tinging">Commission a house <span class="arrow">→</span></a>
+            </div>
+          </div>
+        </div>
+        <figure class="hero-figure">
+          <img
+            src="/images/hero-tunet.jpg"
+            srcset="/images/hero-tunet-800.jpg 800w, /images/hero-tunet.jpg 1536w"
+            sizes="100vw"
+            alt="A half-raised log house frame of hand-hewn pine on stone footings in a snow-covered yard, dark spruce hillside behind."
+            fetchpriority="high"
+          />
+          <figcaption class="hero-caption">Tunet at midday, February — a bolighus at course eleven</figcaption>
+        </figure>
+      </section>
+
+      <!-- ============ skogen — the forest ============ -->
+      <section class="section skogen" id="skogen" aria-labelledby="skogen-h">
+        <div class="skogen-grid">
+          <div class="reveal">
+            <p class="whisper">Skogen · <span class="gloss">the forest</span></p>
+            <h2 class="statement" id="skogen-h">One pine, felled below minus five.</h2>
+            <p class="body">
+              A wall begins as a standing tree, chosen in the deep cold. Malmfuru —
+              the dense, resin-heavy heartwood pine of a slow-grown Numedal
+              hillside — is felled in January and February, when the sap is down
+              and the timber will neither check nor blue as it dries.
+            </p>
+            <dl class="facts">
+              <div><dt>Felling</dt><dd>Jan–Feb, sap down</dd></div>
+              <div><dt>Timber</dt><dd>Malmfuru heartwood</dd></div>
+              <div><dt>Age at fell</dt><dd>120–180 years</dd></div>
+              <div><dt>Seasoned</dt><dd>Two winters, barked</dd></div>
+            </dl>
+          </div>
+          <figure class="skogen-figure reveal">
+            <img src="/images/hus.jpg" srcset="/images/hus-800.jpg 800w, /images/hus.jpg 1536w" sizes="(max-width: 900px) 100vw, 42vw" alt="A finished log house with a turf roof standing alone in deep snow, dark spruce forest behind under a pale winter sky." loading="lazy" width="1536" height="1024" />
+            <p class="caption-row"><span>A finished house, its timber cut two winters before</span><span>Rollag</span></p>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ tunet — the yard ============ -->
+      <section class="tunet" id="tunet" aria-labelledby="tunet-h">
+        <figure class="tunet-figure reveal">
+          <img src="/images/nov.jpg" srcset="/images/nov-800.jpg 800w, /images/nov.jpg 1536w" sizes="(max-width: 900px) 100vw, 52vw" alt="Axe-faceted crossing log heads at a laft corner, each end showing the pale ring and radial drying check, dusted with snow." loading="lazy" width="1536" height="1024" />
+        </figure>
+        <div class="tunet-text reveal">
+          <p class="whisper">Tunet · <span class="gloss">the yard</span></p>
+          <h2 class="statement" id="tunet-h">Every log is fitted to the one below it. Only then is it lifted away.</h2>
+          <p class="body">
+            The house is raised twice — once in the yard, dry-fitted course by
+            course so each log is scribed to its neighbour, then struck down,
+            numbered, and carted to the site to be raised a second and final
+            time. Nothing is cut to a drawing. Each log is cut to the log it
+            will lie on.
+          </p>
+          <p class="aside">Kinning, medfar, nov — the same three cuts, ten thousand times.</p>
+        </div>
+      </section>
+
+      <!-- ============ novet — the signature ============ -->
+      <section class="novet-track" id="novet" aria-labelledby="novet-h">
+        <div class="novet-stage">
+          <div class="novet-steps">
+            <p class="whisper">Novet · <span class="gloss">the corner</span></p>
+            <h2 class="statement" id="novet-h">The corner locks without a single nail.</h2>
+            <ol>
+              {steps.map((s) => (
+                <li data-step={s.no}>
+                  <p class="whisper step-label">
+                    <svg class="roundel" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" /><line x1="12" y1="12" x2="19.8" y2="4.9" /></svg>
+                    {s.no} — {s.name} · <span class="gloss">{s.gloss}</span>
+                  </p>
+                  <p>{s.text}</p>
+                </li>
+              ))}
+            </ol>
+            <p class="novet-fact">No nails. No glue. No iron. The weight of the wall is the fastener.</p>
+          </div>
+          <figure class="novet-figure" aria-hidden="false">
+            <svg viewBox="0 0 620 572" role="img" aria-label="Drawing of a laft corner: two log walls cross at the corner. One wall runs face-on as square hewn logs; the other runs into the page, showing only its round log-heads projecting past the corner. Courses alternate so each locks the wall running the other way, seated on a stone footing.">
+              <rect class="sill" x="150" y="530" width="440" height="26" />
+              <text class="novet-annot" x="590" y="566" text-anchor="end">GRUNNMUR — STONE FOOTING</text>
+              {pieces.map((p) =>
+                p.kind === "bar" ? (
+                  /* wall A — face-on, square-hewn log running right */
+                  <g data-piece data-dx="380" data-dy="-40">
+                    <rect class="log-bar" x={CORNER} y={p.cy - H / 2} width="358" height={H} />
+                    <line class="log-face-line" x1={CORNER + 8} y1={p.cy - H / 2 + 9} x2="582" y2={p.cy - H / 2 + 9} />
+                  </g>
+                ) : (
+                  /* wall B — a log running into the page: only its round head shows */
+                  <g data-piece data-dx="-300" data-dy="-40">
+                    <rect class="log-tail" x={CORNER} y={p.cy - H / 2} width="34" height={H} />
+                    <circle class="log-end-face" cx={CORNER - 34} cy={p.cy} r={H / 2 + 2} />
+                    <circle class="log-end-ring" cx={CORNER - 34} cy={p.cy} r={H / 2 - 12} />
+                    <line class="log-check" x1={CORNER - 34} y1={p.cy} x2={CORNER - 34 + 17} y2={p.cy - 17} />
+                  </g>
+                )
+              )}
+              <line class="corner-guide" x1={CORNER} y1="60" x2={CORNER} y2="528" />
+            </svg>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ husa — the houses ============ -->
+      <section class="section husa" id="husa" aria-labelledby="husa-h">
+        <div class="section-head reveal">
+          <p class="whisper">Husa · <span class="gloss">the houses</span></p>
+          <h2 class="statement" id="husa-h">Each house is one commission — never a model from a catalogue.</h2>
+          <p class="lede">
+            Tyri raises a handful of houses a year: a bolighus for a family, a
+            loft in the old Numedal manner, a seter high on the summer pasture.
+            Shown here as they stand, not as a range to choose from.
+          </p>
+        </div>
+        <div class="husa-grid">
+          <figure class="husa-figure husa-inne reveal">
+            <img src="/images/hus-inne.jpg" srcset="/images/hus-inne-800.jpg 800w, /images/hus-inne.jpg 1536w" sizes="(max-width: 900px) 100vw, 58vw" alt="Interior of a finished log room: pale timber walls, a plank floor lit by a small deep-set window, a black cast-iron wood stove and a plain bench." loading="lazy" width="1536" height="1024" />
+            <figcaption class="caption-row"><span>Stova — the main room, one window to the south and a jernovn</span><span>Bolighus, 2024</span></figcaption>
+          </figure>
+          <div class="husa-list reveal">
+            <ol class="works">
+              <li><span class="work-no">01</span><div><p class="work-name">Bolighus</p><p class="work-note">A dwelling house. One or two storeys, turf or slate roof, laft throughout.</p></div></li>
+              <li><span class="work-no">02</span><div><p class="work-name">Loft</p><p class="work-note">The Numedal storehouse — a raised, galleried loft on posts, the region's own form.</p></div></li>
+              <li><span class="work-no">03</span><div><p class="work-name">Seter</p><p class="work-note">A summer-pasture cabin, small and tight, built to sit empty through the winter.</p></div></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ tida — the settling years ============ -->
+      <section class="section tida" id="tida" aria-labelledby="tida-h">
+        <div class="tida-inner reveal">
+          <p class="whisper">Tida · <span class="gloss">the settling</span></p>
+          <h2 class="statement tida-statement" id="tida-h">A log house moves. Tyri says so, and hangs the doors to expect it.</h2>
+          <p class="body">
+            Green timber gives up its water for years, and a wall of it settles
+            as it dries — a three-metre wall drops about four centimetres in its
+            first two winters. This is not a fault to be hidden; it is designed
+            for. Door and window frames slide in grooved posts, gaps are left
+            above them, and the wall comes down onto its openings without ever
+            binding. A hundred years on, the joints are still closing.
+          </p>
+          <dl class="facts tida-facts">
+            <div><dt>Settlement</dt><dd>≈ 4 cm per 3 m, first two years</dd></div>
+            <div><dt>Allowance</dt><dd>Sliding frames, over-height gaps</dd></div>
+            <div><dt>Moisture</dt><dd>Felled ~30% → seated ~12%</dd></div>
+            <div><dt>Lifespan</dt><dd>Six centuries, standing in the valley</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <!-- ============ folka — the people ============ -->
+      <section class="folka" id="folka" aria-labelledby="folka-h">
+        <figure class="folka-figure reveal">
+          <img src="/images/folka.jpg" srcset="/images/folka-800.jpg 800w, /images/folka.jpg 1536w" sizes="(max-width: 900px) 100vw, 50vw" alt="A lafter in a dark wool jacket and knit cap swings a broadaxe along the flank of a pine log, pale chips scattered on the snow, his breath visible in the cold." loading="lazy" width="1536" height="1024" />
+        </figure>
+        <div class="folka-text reveal">
+          <p class="whisper">Folka · <span class="gloss">the people</span></p>
+          <h2 class="statement" id="folka-h">Four generations, one broadaxe grip.</h2>
+          <p class="body">
+            The yard is worked by hand — the broadaxe, the meddrag scribe, the
+            adze. What passes down the four generations is not a machine but a
+            grip and a way of reading grain: how to swing along the fibre so the
+            faceted face sheds water for centuries. The chips on the snow are the
+            only offcut; nothing else leaves the log.
+          </p>
+          <p class="aside">Working since 1911, felling below minus five, breath on the axe-head.</p>
+        </div>
+      </section>
+
+      <!-- ============ tinging — commission ============ -->
+      <section class="section tinging" id="tinging" aria-labelledby="tinging-h">
+        <div class="tinging-inner reveal">
+          <p class="whisper">Tinging · <span class="gloss">the commission</span></p>
+          <h2 class="statement tinging-statement" id="tinging-h">Commission a house. It begins with a standing tree.</h2>
+          <p class="body">
+            A commission opens two winters ahead of raising day — the timber has
+            to be felled and seasoned first. Tell Tyri the ground, the family,
+            and the form; the yard will answer with the trees it would fell for it.
+          </p>
+          <div class="tinging-actions">
+            <a class="btn" href="mailto:tun@tyri.example">Write to the yard <span class="arrow">→</span></a>
+            <a class="text-link" href="#novet">See how a corner locks <span class="arrow">→</span></a>
+          </div>
+          <dl class="facts tinging-facts">
+            <div><dt>Lead time</dt><dd>Two winters, timber first</dd></div>
+            <div><dt>Houses a year</dt><dd>A handful, no more</dd></div>
+          </dl>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Tyri Laftebruk, Rollag i Numedal · Pastorale — a fictional Foundry house</span>
+    </footer>
+
+    <script is:inline>
+      // Header veil once the sky band has scrolled.
+      const header = document.querySelector(".site-header");
+      const onScroll = () => header.classList.toggle("scrolled", scrollY > innerHeight * 0.5);
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Novet scrub — scroll assembles the corner, course by course.
+      // Runs only under .fx; the default DOM is the finished, assembled joint.
+      if (document.documentElement.classList.contains("fx")) {
+        const track = document.getElementById("novet");
+        const piecesEls = [...track.querySelectorAll("[data-piece]")];
+        const stepEls = [...track.querySelectorAll(".novet-steps li")];
+        const fact = track.querySelector(".novet-fact");
+        const n = piecesEls.length;
+        let ticking = false;
+
+        function paint() {
+          ticking = false;
+          const vh = innerHeight;
+          const rect = track.getBoundingClientRect();
+          const total = rect.height - vh;
+          const p = Math.min(1, Math.max(0, -rect.top / total));
+          piecesEls.forEach((el, i) => {
+            const local = Math.min(1, Math.max(0, p * n - i));
+            const e = 1 - Math.pow(1 - local, 3);
+            const dx = +el.dataset.dx * (1 - e);
+            const dy = +el.dataset.dy * (1 - e);
+            el.setAttribute("transform", `translate(${dx} ${dy})`);
+            el.setAttribute("opacity", local <= 0 ? "0" : "1");
+          });
+          const stepIdx = Math.min(3, Math.floor(p * 4));
+          stepEls.forEach((el, i) => el.classList.toggle("on", i === stepIdx));
+          fact.classList.toggle("on", p > 0.88);
+        }
+        function onScrub() {
+          if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+        }
+        addEventListener("scroll", onScrub, { passive: true });
+        addEventListener("resize", onScrub, { passive: true });
+        paint();
+      }
+
+      // Reveals: settle in once, like a log seating.
+      if (document.documentElement.classList.contains("fx")) {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("shown"); io.unobserve(e.target); }
+          }),
+          { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("shown"));
+      }
+    </script>
+  </body>
+</html>
