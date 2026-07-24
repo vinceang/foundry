@@ -33,6 +33,7 @@ The two series share standards, not styling. Read
 | [Velum](https://velum-vincent-angs-projects.vercel.app) | Vesper | Short-field private-jet charter, alpine access | Switzerland · Genève | [`sites/velum`](sites/velum) · live |
 | [Tyri](https://tyri.vercel.app) | Pastorale | Hand-hewn log yard in snow-light | Norway · Rollag, Numedal | [`sites/tyri`](sites/tyri) · live |
 | [Malmfuru](https://malmfuru.vercel.app) | Nocturne | Hand-hewn log houses on a midwinter night | Norway · Nore, Numedal | [`sites/malmfuru`](sites/malmfuru) · live |
+| Bottega Sant'Agata | Nocturne | Single-maker violin bottega, est. 1911 | Italy · Cremona, Lombardy | [`sites/santagata`](sites/santagata) |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 

@@ -28,11 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Custom violin maker → Bottega Sant'Agata
-- **Series:** Nocturne (spruce, maple, oil varnish under one lamp)
-- **Place idea:** Cremona, Italy — the violin city (Stradivari, Guarneri); a single-maker bottega
-- **Signature interaction:** the graduation map — a plate's arching thickness revealed as a live contour field
-- Building started 2026-07-24. House name: **Bottega Sant'Agata**, Cremona.
+_(nothing in progress)_
 
 ## Proposed — awaiting approval
 
@@ -153,3 +149,4 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 | Schwarzwald | Nocturne | Black Forest cuckoo clocks | — |
 | Lagar do Sol | Aubade | Olive-estate hotel, Alentejo | https://lagar-do-sol.vercel.app |
 | Aresta | Aubade | Architecture-led hotel, Costa Vicentina | https://aresta-azure.vercel.app |
+| Bottega Sant'Agata | Nocturne | Cremonese single-maker violin bottega | _deploy pending_ |
