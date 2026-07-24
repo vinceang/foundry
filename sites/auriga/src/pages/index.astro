@@ -1,0 +1,506 @@
+---
+import "../styles/global.css";
+
+// The Board — four standing routes. Times are computed once, at build,
+// against each field's local offset; every timestamp carries its local sky.
+const routes = [
+  {
+    id: "r1",
+    from: { code: "FAB", city: "Farnborough" },
+    to: { code: "TEB", city: "Teterboro" },
+    dep: { time: "20:45", cond: "dusk", sky: "sky-dusk" },
+    arr: { time: "23:05", cond: "night", sky: "sky-night", plus: "" },
+    block: "7 H 20",
+    tail: "MENKALINAN",
+    note: "Westbound the evening holds — London’s dusk is still in the windows over Nova Scotia.",
+    arc: "M317.5 96.3 Q200 31 83 149.9",
+    ends: [
+      [317.5, 96.3],
+      [83, 149.9],
+    ],
+  },
+  {
+    id: "r2",
+    from: { code: "LBG", city: "Le Bourget" },
+    to: { code: "RUH", city: "Riyadh" },
+    dep: { time: "14:30", cond: "afternoon", sky: "sky-afternoon" },
+    arr: { time: "21:25", cond: "dusk", sky: "sky-dusk", plus: "" },
+    block: "5 H 55",
+    tail: "HASSALEH",
+    note: "Paris after lunch; Riyadh as the heat leaves the air.",
+    arc: "M327.8 108.2 Q398 156 469.4 231.6",
+    ends: [
+      [327.8, 108.2],
+      [469.4, 231.6],
+    ],
+  },
+  {
+    id: "r3",
+    from: { code: "GVA", city: "Geneva" },
+    to: { code: "HND", city: "Tokyo Haneda" },
+    dep: { time: "10:00", cond: "morning", sky: "sky-morning" },
+    arr: { time: "05:05", cond: "dawn", sky: "sky-dawn", plus: "+1" },
+    block: "12 H 05",
+    tail: "CAPELLA",
+    note: "The long night over Siberia. Capella flies it without a stop.",
+    arc: "M339.6 122.2 Q553.5 -98 767.3 177.2",
+    ends: [
+      [339.6, 122.2],
+      [767.3, 177.2],
+    ],
+  },
+  {
+    id: "r4",
+    from: { code: "TEB", city: "Teterboro" },
+    to: { code: "LBG", city: "Le Bourget" },
+    dep: { time: "19:40", cond: "evening", sky: "sky-evening" },
+    arr: { time: "08:20", cond: "morning", sky: "sky-morning", plus: "+1" },
+    block: "6 H 40",
+    tail: "MENKALINAN",
+    note: "A night crossing that ends with Paris at breakfast.",
+    arc: "M83 149.9 Q205 40 327.8 108.2",
+    ends: [
+      [83, 149.9],
+      [327.8, 108.2],
+    ],
+  },
+];
+
+const cities = [
+  { code: "TEB", x: 83, y: 149.9, dx: 10, dy: 18, anchor: "start" },
+  { code: "FAB", x: 317.5, y: 96.3, dx: -9, dy: -8, anchor: "end" },
+  { code: "LBG", x: 327.8, y: 108.2, dx: 11, dy: 5, anchor: "start" },
+  { code: "GVA", x: 339.6, y: 122.2, dx: 9, dy: 17, anchor: "start" },
+  { code: "RUH", x: 469.4, y: 231.6, dx: 11, dy: 5, anchor: "start" },
+  { code: "HND", x: 767.3, y: 177.2, dx: -10, dy: -9, anchor: "end" },
+];
+
+const tails = [
+  {
+    star: "Capella",
+    greek: "α Aurigae",
+    type: "Bombardier Global 7500",
+    line: "The long night. Sixteen hours without a stop, a stateroom aft, and a galley that cooks rather than reheats.",
+    range: "7,700 nm",
+    fact: "16 h 00",
+    factLabel: "longest sector",
+  },
+  {
+    star: "Menkalinan",
+    greek: "β Aurigae",
+    type: "Dassault Falcon 8X",
+    line: "The Atlantic and the Gulf. Three engines, short fields, and the quietest cabin of the three.",
+    range: "6,450 nm",
+    fact: "London — Riyadh",
+    factLabel: "nonstop, either way",
+  },
+  {
+    star: "Hassaleh",
+    greek: "ι Aurigae",
+    type: "Embraer Praetor 600",
+    line: "The continent. In and out of the thousand-metre strips the larger tails cannot use.",
+    range: "4,018 nm",
+    fact: "1,000 m",
+    factLabel: "runway, if it must",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Auriga — private flight by written introduction. Three tails named for the stars of the Charioteer. Farnborough, Le Bourget, Teterboro. No telephone."
+    />
+    <title>Auriga — private flight, by introduction</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Instrument+Sans:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero-apron.jpg" />
+    <script is:inline>
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.classList.add("js");
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#protocol">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top">Auriga <small>est. 1994</small></a>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#protocol">Protocol</a>
+        <a href="#tails">Tails</a>
+        <a href="#board">The Board</a>
+        <a href="#aloft">Aloft</a>
+        <a class="nav-intro" href="#introduction">Introduction</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ apron / hero ============ -->
+      <section class="hero" aria-label="Auriga">
+        <div class="hero-media">
+          <img
+            src="/images/hero-apron.jpg"
+            srcset="/images/hero-apron-800.jpg 800w, /images/hero-apron.jpg 1600w"
+            sizes="100vw"
+            alt="An unmarked white long-range jet alone on a wet apron at civil twilight, airstair lit warm, a thin apricot afterglow on the horizon under a deep blue sky."
+            fetchpriority="high"
+          />
+        </div>
+        <div class="hero-copy">
+          <span class="whisper">Vesper · Farnborough — Le Bourget — Teterboro</span>
+          <h1 class="hero-title">Auriga</h1>
+          <p class="hero-statement">A charter you are told about, never shown.</p>
+          <svg class="arc-rule" viewBox="0 0 88 14" aria-hidden="true">
+            <path d="M2 12 Q44 -6 86 12" />
+          </svg>
+        </div>
+        <p class="hero-caption">The apron at Farnborough<br />20:45 — civil twilight</p>
+      </section>
+
+      <!-- ============ protocol ============ -->
+      <section class="section" id="protocol" aria-labelledby="protocol-h">
+        <div class="protocol-grid">
+          <div class="reveal">
+            <div class="section-head">
+              <span class="whisper">Protocol</span>
+            <h2 class="statement" id="protocol-h">We publish no telephone number.</h2>
+            </div>
+            <p class="body-copy">
+              If Auriga flies you, you have it. There is no press page, no brochure and no
+              livery — the paint is white, the registration is small, and the flight plans
+              read like anyone else’s. Since 1994 the operation has grown from one aircraft
+              to three, and the number has never appeared in print.
+            </p>
+            <p class="body-copy">
+              What follows is the whole of the public record.
+            </p>
+          </div>
+          <ol class="protocol-items reveal" role="list">
+            <li class="protocol-item">
+              <span class="num" aria-hidden="true">01</span>
+              <div>
+                <h3>The introduction</h3>
+                <p>
+                  Made in writing by an existing principal. We decline more than we accept,
+                  and a declined introduction is never mentioned again — to anyone.
+                </p>
+              </div>
+            </li>
+            <li class="protocol-item">
+              <span class="num" aria-hidden="true">02</span>
+              <div>
+                <h3>The answer</h3>
+                <p>
+                  Every introduction is answered within one day, in writing. Once terms are
+                  set, wheels-up follows within twelve hours of any request.
+                </p>
+              </div>
+            </li>
+            <li class="protocol-item">
+              <span class="num" aria-hidden="true">03</span>
+              <div>
+                <h3>The exception</h3>
+                <p>
+                  Auriga does not fly to airports that require it to be seen. Some cities we
+                  serve from a quieter field an hour away; the car is part of the flight.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ============ tails ============ -->
+      <section class="section" id="tails" aria-labelledby="tails-h">
+        <div class="section-head reveal">
+          <span class="whisper">Tails</span>
+          <h2 class="statement" id="tails-h">Three aircraft, named for the stars of the Charioteer.</h2>
+          <p class="body-copy">
+            Auriga stands highest at dusk in the northern winter. The fleet keeps the
+            constellation’s names and little else that could be recognised.
+          </p>
+        </div>
+
+        {
+          tails.map((t, i) => (
+            <article class={`tail-row reveal${i % 2 === 1 ? " flip" : ""}`}>
+              <div class="tail-media">
+                <div class="plate" role="img" aria-label={`${t.star}, ${t.type}, in the hangar at night — photography to follow`}>
+                  <svg viewBox="0 0 200 60" aria-hidden="true">
+                    <path d="M6 54 Q100 -14 194 54" />
+                  </svg>
+                  <span class="ops">PAINT: WHITE, UNMARKED · {t.greek.toUpperCase()}</span>
+                </div>
+              </div>
+              <div class="tail-copy">
+                <span class="whisper">{t.greek}</span>
+                <h3 class="tail-name">{t.star}</h3>
+                <p class="tail-type">{t.type}</p>
+                <p>{t.line}</p>
+                <div class="tail-facts">
+                  <div>
+                    <b>{t.range}</b> range
+                  </div>
+                  <div>
+                    <b>{t.fact}</b> {t.factLabel}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))
+        }
+
+        <div class="crew-note reveal">
+          <p class="statement">
+            Two pilots and one steward per tail — the same three faces for the life of a
+            contract.
+          </p>
+          <p class="body-copy">
+            Eleven crew in all. The captains of Menkalinan have flown together for eleven
+            years; the steward knows how you take your coffee by the second flight. Nobody
+            wears a name badge, because you already know their names.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ the board ============ -->
+      <section class="section board-section" id="board" aria-labelledby="board-h">
+        <div class="section-head reveal">
+          <span class="whisper">The Board</span>
+          <h2 class="statement" id="board-h">Four standing routes. Times in local light.</h2>
+          <p class="body-copy">
+            The board keeps the sectors we fly most. Each time is set against the sky it
+            belongs to — depart under one light, arrive under another. Everything else is
+            flown on request.
+          </p>
+        </div>
+
+        <div class="board reveal">
+          <div class="route-list" role="group" aria-label="Standing routes">
+            {
+              routes.map((r, i) => (
+                <button
+                  class="route"
+                  type="button"
+                  aria-pressed={i === 0 ? "true" : "false"}
+                  data-route={r.id}
+                  data-note={r.note}
+                  data-tail={r.tail}
+                >
+                  <span class="route-line">
+                    <span class="route-pair">
+                      {r.from.code} <span aria-hidden="true">⟶</span> {r.to.code}
+                    </span>
+                    <span class="route-block">{r.block}</span>
+                  </span>
+                  <span class="route-cities">
+                    {r.from.city} to {r.to.city} · {r.tail.charAt(0) + r.tail.slice(1).toLowerCase()}
+                  </span>
+                  <span class="route-times">
+                    <span class={`sky ${r.dep.sky}`} aria-hidden="true"></span>
+                    <span class="timechip">
+                      {r.dep.time} <span class="cond">{r.dep.cond}</span>
+                    </span>
+                    <span class="route-arrow" aria-hidden="true">→</span>
+                    <span class={`sky ${r.arr.sky}`} aria-hidden="true"></span>
+                    <span class="timechip">
+                      {r.arr.time}
+                      {r.arr.plus && <span class="plus">{r.arr.plus}</span>}{" "}
+                      <span class="cond">{r.arr.cond}</span>
+                    </span>
+                  </span>
+                </button>
+              ))
+            }
+          </div>
+
+          <div class="chart-panel">
+            <div class="chart-frame">
+              <svg viewBox="0 0 800 360" role="img" aria-label="Chart of the four standing routes drawn as great-circle arcs between Teterboro, Farnborough, Le Bourget, Geneva, Riyadh and Tokyo.">
+                <g class="graticule" aria-hidden="true">
+                  {[60, 140, 220, 300].map((y) => (
+                    <line x1="0" y1={y} x2="800" y2={y} />
+                  ))}
+                  {[100, 200, 300, 400, 500, 600, 700].map((x) => (
+                    <line x1={x} y1="0" x2={x} y2="360" />
+                  ))}
+                </g>
+                {
+                  routes.map((r, i) => (
+                    <g class="gc" data-gc={r.id} aria-hidden="true">
+                      <path class={`gc-arc${i === 0 ? " on" : ""}`} d={r.arc} />
+                      {r.ends.map(([x, y]) => (
+                        <circle class={`gc-end${i === 0 ? " on" : ""}`} cx={x} cy={y} r="3" />
+                      ))}
+                    </g>
+                  ))
+                }
+                <g aria-hidden="true">
+                  {
+                    cities.map((c) => (
+                      <>
+                        <circle class="city-dot" cx={c.x} cy={c.y} r="2" />
+                        <text class="city-label" x={c.x + c.dx} y={c.y + c.dy} text-anchor={c.anchor}>
+                          {c.code}
+                        </text>
+                      </>
+                    ))
+                  }
+                </g>
+              </svg>
+            </div>
+            <div class="board-note">
+              <p id="board-note-text">{routes[0].note}</p>
+              <span class="ops" id="board-note-tail">TAIL: {routes[0].tail}</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ aloft ============ -->
+      <section class="section" id="aloft" aria-labelledby="aloft-h">
+        <figure class="aloft-hero reveal">
+          <div class="aloft-media">
+            <img
+              src="/images/cabin-aloft.jpg"
+              alt="The cabin at altitude in the evening: a table set for one under a low warm lamp, and through the window a band of apricot afterglow beneath a deep blue sky."
+              loading="lazy"
+            />
+          </div>
+          <figcaption class="figure-caption" style="padding: 0 var(--gutter);">
+            Capella, mid-Atlantic — the table set while you slept
+          </figcaption>
+        </figure>
+
+        <div class="aloft-grid">
+          <figure class="aloft-figure reveal">
+            <img
+              src="/images/material-cabin.jpg"
+              alt="A folded pale wool blanket on a stitched leather armrest beside a walnut table edge, lit by one small cabin lamp, twilight in the window behind."
+              loading="lazy"
+            />
+            <figcaption>Wool, saddle leather, walnut — the cabin at lamp light</figcaption>
+          </figure>
+          <div class="aloft-copy">
+            <span class="whisper">Aloft</span>
+            <h2 class="statement" id="aloft-h">Dinner over the ocean, and the same three faces.</h2>
+            <p class="body-copy">
+              The cabin is wool, saddle leather and walnut, lit by its own small lamps once
+              the horizon goes. Dinner is cooked aboard and served when you ask for it, not
+              when the galley is ready. The bed is made while you eat.
+            </p>
+            <p class="body-copy">
+              Tomás has kept Capella’s cabin for nine years. He will not introduce himself
+              twice.
+            </p>
+            <figure class="steward-figure reveal">
+              <img
+                src="/images/steward.jpg"
+                alt="A steward in a plain dark suit setting the cabin table with white linen, his face lit by the warm lamp beside him, twilight held in the windows behind."
+                loading="lazy"
+              />
+              <figcaption class="figure-caption">Tomás, setting the table before descent</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ introduction ============ -->
+      <section class="section intro-section" id="introduction" aria-labelledby="intro-h">
+        <div class="intro-wrap reveal">
+          <span class="whisper">Introduction</span>
+          <h2 class="statement" id="intro-h">Ask the person who told you about us.</h2>
+          <p class="body-copy">
+            Auriga takes new principals by written introduction only. An introduction is a
+            page, not a form: who you are, who is introducing you, and where you fly. It is
+            read by a person and answered within one day.
+          </p>
+          <a class="intro-action" href="mailto:registry@auriga.aero">Begin an introduction <span aria-hidden="true">⟶</span></a>
+          <div class="intro-fields">
+            <p class="ops"><b>The answer</b> Within one day. In writing.</p>
+            <p class="ops"><b>Wheels-up</b> Within twelve hours of terms.</p>
+            <p class="ops"><b>The registry</b> St Helier, Jersey. No telephone.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>AURIGA · EST. 1994</span>
+      <span>FARNBOROUGH — LE BOURGET — TETERBORO</span>
+      <span>NO TELEPHONE. ASK YOUR INTRODUCER.</span>
+    </footer>
+
+    <script is:inline>
+      // The Board — route selection
+      (() => {
+        const buttons = Array.from(document.querySelectorAll(".route"));
+        const groups = Array.from(document.querySelectorAll(".gc"));
+        const note = document.getElementById("board-note-text");
+        const tail = document.getElementById("board-note-tail");
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+            groups.forEach((g) => {
+              const on = g.dataset.gc === btn.dataset.route;
+              g.querySelectorAll(".gc-arc, .gc-end").forEach((el) => {
+                el.classList.remove("on");
+                if (on) {
+                  // restart the draw animation
+                  void el.getBoundingClientRect();
+                  el.classList.add("on");
+                }
+              });
+            });
+            if (note) note.textContent = btn.dataset.note || "";
+            if (tail) tail.textContent = "TAIL: " + (btn.dataset.tail || "");
+          });
+        });
+      })();
+
+      // Header — veil once scrolled; withdraw on scroll-down, return on scroll-up
+      (() => {
+        const header = document.querySelector(".site-header");
+        if (!header) return;
+        let last = scrollY;
+        addEventListener(
+          "scroll",
+          () => {
+            const y = scrollY;
+            header.classList.toggle("veiled", y > 40);
+            header.classList.toggle("hidden", y > 320 && y > last);
+            last = y;
+          },
+          { passive: true }
+        );
+      })();
+
+      // Reveals — the glide
+      (() => {
+        if (!document.documentElement.classList.contains("fx")) return;
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.12 }
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>
