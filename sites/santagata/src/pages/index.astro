@@ -1,0 +1,569 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const effe = `<svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="M15.4 4.8c2.6.2 4.1 2 3.7 4.1-.3 1.6-1.8 2.6-3.2 2.3-1.3-.2-2-1.2-1.9-2.3.1-.9.9-1.5 1.8-1.4.6.1 1.1.5 1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8.6 39.2c-2.6-.2-4.1-2-3.7-4.1.3-1.6 1.8-2.6 3.2-2.3 1.3.2 2 1.2 1.9 2.3-.1.9-.9 1.5-1.8 1.4-.6-.1-1.1-.5-1.1-1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14.2 7C11 13 9.4 30 8.4 36.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M6 16.5h12M6 27.5h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".85"/></svg>`;
+
+// The violin-back plate silhouette, centred on (180,230) in a 0 0 360 460 field.
+// Upper bout, the C-bout waist, the broad lower bout — a clean violin back, drawn
+// as a hairline. The graduation contour rings nest inside it, thick centre → thin
+// edge, all concentric on the same centre.
+const plateOutline =
+  'M180 66 ' +
+  'C144 66 118 88 112 126 ' +           /* upper bout, left shoulder */
+  'C109 145 113 158 104 168 ' +         /* into the C-bout corner (left) */
+  'C96 177 96 187 104 196 ' +           /* the waist (left) */
+  'C112 205 118 214 118 234 ' +         /* out of the waist into the lower bout */
+  'C118 300 146 372 180 388 ' +         /* the broad lower bout, left */
+  'C214 372 242 300 242 234 ' +         /* lower bout, right */
+  'C242 214 248 205 256 196 ' +         /* the waist (right) */
+  'C264 187 264 177 256 168 ' +         /* C-bout corner, right */
+  'C247 158 251 145 248 126 ' +         /* upper bout, right shoulder */
+  'C242 88 216 66 180 66 Z';
+
+// Six nested contour rings, thick (small, central) → thin (large, edge). Each is a
+// thickness iso-line, all concentric on (180,230). Ring index maps to a station.
+const rings = [
+  // 0 · 4.2 mm — the dome of the back, the thickest island
+  'M180 202 C164 202 154 214 154 230 C154 248 165 258 180 258 C195 258 206 248 206 230 C206 214 196 202 180 202 Z',
+  // 1 · 3.7 mm — the upper field
+  'M180 180 C154 180 140 202 140 230 C140 262 156 282 180 282 C204 282 220 262 220 230 C220 202 206 180 180 180 Z',
+  // 2 · 3.1 mm — the flank
+  'M180 156 C144 156 126 194 126 232 C126 280 150 306 180 306 C210 306 234 280 234 232 C234 194 216 156 180 156 Z',
+  // 3 · 2.8 mm — toward the shoulders
+  'M180 130 C136 130 112 190 114 234 C116 296 146 332 180 332 C214 332 244 296 246 234 C248 190 224 130 180 130 Z',
+  // 4 · 2.6 mm — the broad approach to the edge
+  'M180 104 C128 104 100 188 102 238 C104 312 142 356 180 356 C218 356 256 312 258 238 C260 188 232 104 180 104 Z',
+  // 5 · 2.3 mm — the purfling channel, hard by the edge
+  'M180 78 C122 78 90 186 92 242 C94 328 138 382 180 382 C222 382 266 328 268 242 C270 186 238 78 180 78 Z',
+];
+
+// caliper station coordinates — a point that walks centre → edge along the treble
+// side as the thickness counts down. The last lands on the plate edge. Kept in
+// sync with the JS `stations` array in Layout.astro.
+const stationPts = [
+  { mm: '4.2', x: 180, y: 230 },
+  { mm: '3.7', x: 200, y: 230 },
+  { mm: '3.1', x: 216, y: 232 },
+  { mm: '2.8', x: 230, y: 234 },
+  { mm: '2.6', x: 242, y: 236 },
+  { mm: '2.3', x: 252, y: 238 },
+];
+
+const scale = [
+  { mm: '4.2 mm', band: 'The centre of the back', note: 'the dome, left thick to carry the arch' },
+  { mm: '3.7 mm', band: 'The upper field', note: 'thinning as the plate opens' },
+  { mm: '3.1 mm', band: 'The flank', note: 'where the back begins to speak' },
+  { mm: '2.8 mm', band: 'The shoulder', note: 'worked by tap-tone, not by rule' },
+  { mm: '2.6 mm', band: 'Toward the edge', note: 'lightened until it answers' },
+  { mm: '2.3 mm', band: 'The purfling channel', note: 'the last tenth, at the edge' },
+];
+
+const registro = [
+  {
+    name: 'Nebbia',
+    reading: 'the river fog',
+    modello: 'Modello del Gesù · 2024',
+    status: 'Al banco',
+    statusLabel: 'On the bench',
+    img: '/plates/registro.jpg',
+    alt: 'A finished violin under the varnish, the flamed maple back turned to the lamp.',
+    body:
+      'A del Gesù in the maker’s own reading — the belly thinned to 2.6 millimetres at the edge until it answered, the back left full at 4.2 in the dome. The wood is Val di Fiemme spruce felled in the winter of 2003 and rested twenty years. On the bench now; promised to the third petitioner on the list.',
+    wide: false,
+    flip: false,
+    absent: false,
+  },
+  {
+    name: 'Vespro',
+    reading: 'evening',
+    modello: 'Modello Amatise · 2023',
+    status: 'Promesso',
+    statusLabel: 'Promised',
+    img: '/plates/effe.jpg',
+    alt: 'An f-hole cut into the spruce belly, the grain raking under one light.',
+    body:
+      'An Amatise model, narrower in the waist and quicker under the bow. The effe were cut by knife over three evenings and the wings undercut by a tenth. Varnished in twenty coats over a summer; judged, as always, by lamplight. Promised, and waiting on the last of the drying.',
+    wide: true,
+    flip: true,
+    absent: false,
+  },
+  {
+    name: 'Torrazzo',
+    reading: 'the great bell-tower of Cremona',
+    modello: 'Modello Stradivari 1715 “Cremonese”',
+    status: 'Intonato',
+    statusLabel: 'Voiced and gone',
+    img: null,
+    alt: null,
+    body:
+      'Voiced in the spring and gone to a player in Turin. The bench keeps no photograph of an instrument once it leaves — only the maker’s note of its arching and the weight of its plates. A long model, broad in the lower bout, the deepest voice to leave this bench in a decade.',
+    wide: false,
+    flip: false,
+    absent: true,
+  },
+];
+
+const bancoItems = [
+  {
+    name: 'Archetto — the bow',
+    desc: 'Pernambuco stick, ebony frog, silver mounts. Rehaired by hand at the bench.',
+    price: 3400,
+    hint: '€3,400',
+  },
+  {
+    name: 'Custodia — the case',
+    desc: 'Shaped in the old form, wool-lined, oiled canvas over a spruce shell.',
+    price: 1650,
+    hint: '€1,650',
+  },
+  {
+    name: 'Pece — the rosin',
+    desc: 'The bench’s own cake, poured and cured over a slow flame. A single tin.',
+    price: 42,
+    hint: '€42',
+  },
+  {
+    name: 'Corde — a set of strings',
+    desc: 'Gut-core, wound to the bench’s tension. Fitted to the instrument’s voice.',
+    price: 118,
+    hint: '€118',
+  },
+  {
+    name: 'Spalliera — the shoulder rest',
+    desc: 'Carved maple, cork-footed, shaped to sit without touching the back.',
+    price: 210,
+    hint: '€210',
+  },
+];
+---
+
+<Layout>
+  <main id="top">
+    <!-- ══════════════ HERO ══════════════ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media">
+        <img
+          src="/plates/hero.jpg"
+          alt="A violin in the white — unvarnished spruce and maple — resting on the workbench among gouges, lit by one warm bench lamp."
+          fetchpriority="high"
+          width="1024"
+          height="1536"
+        />
+      </div>
+      <div class="hero-content">
+        <p class="label rv">Cremona · Contrada Sant’Agata · dal 1911</p>
+        <h1 class="hero-title display rv" id="hero-title">
+          Eleven violins<br />leave the bench<br />each year.
+        </h1>
+        <p class="hero-sub rv">
+          A single-maker bottega on the Contrada Sant’Agata. The wood is seasoned
+          twenty years, the arching worked to a tenth of a millimetre, and the
+          varnish judged only by lamplight.
+        </p>
+        <p class="hero-hour rv">
+          <span class="effe" aria-hidden="true" set:html={effe} />
+          <span>The instruments are not sold. They are commissioned, by letter.</span>
+        </p>
+      </div>
+      <div class="folio" aria-hidden="true">4.2<small>mm · il fondo</small></div>
+    </section>
+
+    <!-- ══════════════ LA BOTTEGA ══════════════ -->
+    <section class="chapter" id="bottega" aria-labelledby="bottega-h">
+      <div class="folio" aria-hidden="true">3.8<small>mm</small></div>
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">La bottega — the workshop</p>
+          <h2 class="display rv" id="bottega-h">
+            One maker, one bench, one lamp — and no two plates worked to the same
+            thickness.
+          </h2>
+        </div>
+        <div class="wrap--read" style="padding-inline:0; margin-inline:0;">
+          <p class="lede rv" style="max-width:62ch;">
+            No two plates are graduated alike, because no two pieces of wood carry
+            the same weight. The maker follows the wood, not a drawing — and a
+            violin that measured identically to another would sound worse for it.
+            The hand is in the arching. It is the one thing a workshop cannot draw
+            and a factory cannot copy, and it is why the bench keeps to eleven
+            instruments a year and no more.
+          </p>
+        </div>
+        <div class="facts">
+          <div class="fact rv">
+            <span class="num">1911</span>
+            <p class="cap">
+              The bench opened on the Contrada Sant’Agata, in the century of
+              Cremona’s revival. Three makers since: Achille, Guido, and Tobia.
+            </p>
+          </div>
+          <div class="fact rv">
+            <span class="num">Eleven</span>
+            <p class="cap">
+              Instruments a year — violins, with the rare viola or cello by long
+              petition. Accepted by letter, never sold from a shelf.
+            </p>
+          </div>
+          <div class="fact rv">
+            <span class="num">Twenty years</span>
+            <p class="cap">
+              The spruce rests, felled in winter in the Val di Fiemme and seasoned
+              two decades before a gouge ever touches it.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ IL MAESTRO (human chapter) ══════════════ -->
+    <section class="chapter chapter--legno2" id="maestro" aria-labelledby="maestro-h">
+      <div class="folio" aria-hidden="true">3.4<small>mm</small></div>
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">Il maestro — the maker at the bench</p>
+          <h2 class="display rv" id="maestro-h">
+            Tobia Ferraboschi, third of his name at the bench.
+          </h2>
+        </div>
+        <div class="maestro-grid">
+          <figure class="maestro-media rv">
+            <img
+              src="/plates/maestro.jpg"
+              alt="Tobia Ferraboschi bent over a spruce belly, a gouge in hand, his face lit by the bench lamp as he works the arching."
+              loading="lazy"
+              width="1024"
+              height="1536"
+            />
+          </figure>
+          <div>
+            <blockquote class="maestro-quote rv">
+              “I thin the plate until it answers. A tenth of a millimetre either
+              way is the difference between a violin that speaks and one that
+              chokes — and only the wood tells you where that tenth is.”
+            </blockquote>
+            <p class="maestro-attr rv">Tobia Ferraboschi · III · dal 1988</p>
+            <p class="maestro-body rv">
+              He works alone but for one apprentice, Marta, at the bench since
+              2019. The <span lang="it" class="it">vernice</span> — the varnish —
+              is his own recipe: an oil varnish over a mineral ground, twenty
+              coats, a summer of drying, and judged only under the one lamp. He
+              has never varnished by daylight. Neither did his father.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ LA GRADUAZIONE (signature interaction) ══════════════ -->
+    <section
+      class="chapter graduazione"
+      id="graduazione"
+      aria-labelledby="grad-h"
+      data-grad
+    >
+      <div class="folio" aria-hidden="true">2.9<small>mm</small></div>
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">La graduazione — the graduation of the plates</p>
+          <h2 class="display rv" id="grad-h">
+            The arching, read in thicknesses — the maker’s most private knowledge,
+            shown.
+          </h2>
+          <p class="lede rv" style="max-width:60ch;">
+            This is the map no shop shows: the thickness of a maple back, from the
+            thick dome at its centre to the thinned edge where it meets the
+            purfling. Measured with a caliper under cold north light — not judged
+            under the warm varnish lamp. Scroll, and the plate is graduated,
+            centre to edge, one contour at a time.
+          </p>
+        </div>
+
+        <div class="grad-grid">
+          <!-- the contour field -->
+          <figure class="grad-stage rv" aria-hidden="true">
+            <svg viewBox="0 0 360 460" role="img">
+              <!-- the plate silhouette -->
+              <path class="grad-outline" d={plateOutline} />
+              <!-- centre line -->
+              <path
+                class="grad-outline"
+                d="M180 52 L180 408"
+                style="opacity:.24; stroke-dasharray:2 7;"
+              />
+              <!-- nested thickness contours, thick centre → thin edge -->
+              {rings.map((d, i) => (
+                <path class={`grad-ring ring-${i}`} d={d} data-armed />
+              ))}
+              <!-- the caliper: a hairline reaching from centre to the reading point -->
+              <g class="grad-caliper" data-armed>
+                <line x1="180" y1="230" x2="180" y2="230" data-cal-h></line>
+                <circle cx="180" cy="230" r="4"></circle>
+              </g>
+            </svg>
+          </figure>
+
+          <!-- the readout -->
+          <div class="grad-readout">
+            <p class="label rv">Under the caliper</p>
+            <p class="grad-degrees rv">
+              <span data-grad-mm>2.3</span><small>mm</small>
+            </p>
+            <p class="grad-band reading" data-grad-band>the purfling channel</p>
+
+            <ul class="grad-scale rv" data-grad-scale aria-label="Arching thicknesses, centre to edge">
+              {scale.map((s) => (
+                <li>
+                  <span class="mm">{s.mm}</span>
+                  <span>{s.band}</span>
+                  <span class="grad-scale-note" style="color:var(--avorio-faint); font-size:12px; text-align:right;">{s.note}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p class="grad-ledger" data-grad-ledger data-armed>
+              <span class="effe" aria-hidden="true" set:html={effe} />
+              <span class="reading">
+                Fondo in acero · graduato a mano · Modello del Gesù
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ IL REGISTRO ══════════════ -->
+    <section class="chapter" id="registro" aria-labelledby="registro-h">
+      <div class="folio" aria-hidden="true">2.6<small>mm</small></div>
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">Il registro — the register of instruments</p>
+          <h2 class="display rv" id="registro-h">
+            What is on the bench, what is promised, and what has been voiced and
+            gone.
+          </h2>
+          <p class="lede rv">
+            Not a catalogue. The register keeps only what this bench is making now
+            — never a grid of products, never a page to turn. Each instrument is
+            named for Cremonese light and the fog of the Po valley.
+          </p>
+        </div>
+
+        {registro.map((w) => (
+          <article class={`work${w.flip ? ' work--flip' : ''}${w.wide ? ' work--wide' : ''} rv`}>
+            {w.absent ? (
+              <figure class="work-media work-media--absent">
+                <span class="absent-mark" aria-hidden="true">
+                  <span class="effe" set:html={effe} style="width:44px;height:82px;display:block;" />
+                </span>
+                <figcaption>Not photographed once it leaves the bench.</figcaption>
+              </figure>
+            ) : (
+              <figure class="work-media">
+                <img src={w.img} alt={w.alt} loading="lazy" width="1024" height="1536" />
+              </figure>
+            )}
+            <div class="work-text">
+              <div class="work-meta">
+                <span class={`status${w.absent ? ' status--gone' : ''}`}>
+                  <span class="effe" aria-hidden="true" set:html={effe} />
+                  {w.statusLabel}
+                </span>
+                <span class="work-modello">{w.modello}</span>
+              </div>
+              <h3 class="work-title display">{w.name}</h3>
+              <p class="work-reading reading">{w.reading}</p>
+              <p class="work-body">{w.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- ══════════════ IL BANCO (the accessories order form) ══════════════ -->
+    <section class="chapter banco" id="banco" aria-labelledby="banco-h">
+      <div class="folio" aria-hidden="true">2.3<small>mm</small></div>
+      <div class="wrap">
+        <div class="chapter-head">
+          <p class="label rv">Il banco — the counter</p>
+          <h2 class="display rv" id="banco-h">
+            The bench keeps its own bows, cases, rosin, and strings — and these you
+            may order.
+          </h2>
+          <p class="lede rv">
+            The violins are commissioned by letter. The bench’s own goods are a
+            different matter: they are made in small runs and sent by the counter.
+            Choose what the bench should set aside, and it will write back with the
+            wait and the post.
+          </p>
+        </div>
+
+        <div class="banco-grid">
+          <div>
+            <figure class="banco-media rv">
+              <img
+                src="/plates/banco.jpg"
+                alt="A pernambuco bow, a cake of the bench’s own rosin, and a coiled set of strings on the dark workbench."
+                loading="lazy"
+                width="1536"
+                height="1024"
+              />
+            </figure>
+            <p class="banco-note rv">
+              The counter never takes a card. Your order is assembled into a letter
+              to the bench; payment and post are settled by reply, once the goods
+              are set aside.
+            </p>
+          </div>
+
+          <form class="order-form rv" data-order aria-labelledby="banco-h">
+            <p class="label" style="color:var(--avorio-dim);">Set aside from the counter</p>
+            <div class="order-items">
+              {bancoItems.map((it, i) => (
+                <div class="order-item" data-price={it.price}>
+                  <div>
+                    <p class="oi-name">{it.name}</p>
+                    <p class="oi-desc">{it.desc}</p>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:var(--s3);">
+                    <span class="oi-price">{it.hint}</span>
+                    <span class="qty" role="group" aria-label={`Quantity — ${it.name}`}>
+                      <button type="button" data-dec aria-label={`One fewer — ${it.name}`}>–</button>
+                      <input
+                        type="number"
+                        name={`qty-${i}`}
+                        min="0"
+                        max="20"
+                        step="1"
+                        value="0"
+                        inputmode="numeric"
+                        aria-label={`Quantity of ${it.name}`}
+                      />
+                      <button type="button" data-inc aria-label={`One more — ${it.name}`}>+</button>
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div class="order-fields">
+              <div class="field">
+                <label for="ord-name">Your name</label>
+                <input id="ord-name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="field">
+                <label for="ord-email">Where to reply</label>
+                <input id="ord-email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="field field--full">
+                <label for="ord-address">Where to send it</label>
+                <input id="ord-address" name="address" type="text" autocomplete="street-address" />
+              </div>
+              <div class="field field--full">
+                <label for="ord-note">A note to the bench <span style="text-transform:none; letter-spacing:0; color:var(--avorio-faint); font-weight:400;">— the instrument it is for, the tension you prefer</span></label>
+                <textarea id="ord-note" name="note" rows="2"></textarea>
+              </div>
+            </div>
+
+            <div class="order-foot">
+              <p class="order-total">To set aside <b data-total>€0</b></p>
+              <button type="submit" class="btn">
+                <span class="effe" aria-hidden="true" set:html={effe} />
+                Send the order to the bench
+              </button>
+            </div>
+            <p style="font-size:12px; color:var(--avorio-faint); max-width:52ch;">
+              This opens a letter in your mail with the order set out in full. No
+              card is taken here, and nothing is charged until the bench replies.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ IL RICCIOLO (material accent) ══════════════ -->
+    <section class="chapter chapter--pece ricciolo" aria-labelledby="ricciolo-h">
+      <div class="wrap">
+        <div class="ricciolo-grid">
+          <figure class="ricciolo-media rv">
+            <img
+              src="/plates/scroll.jpg"
+              alt="The carved scroll of a violin — the volute at the peg-box, flamed maple raking under one warm light."
+              loading="lazy"
+              width="1024"
+              height="1536"
+            />
+          </figure>
+          <div class="ricciolo-text">
+            <p class="label rv">Il ricciolo — the scroll</p>
+            <h2 class="display rv" id="ricciolo-h" style="font-size:clamp(26px,3.2vw,42px); max-width:16ch;">
+              The one part of a violin that does no work, and is carved most
+              carefully of all.
+            </h2>
+            <p class="lede rv" style="margin-top:var(--s4);">
+              The scroll carries no string and shapes no sound. It is cut by hand
+              in <span lang="it" class="it">acero</span> — Bosnian maple — with a
+              knife and three gouges, and it is where a maker signs without a
+              signature. A trained eye reads the bench in the volute before it
+              reads the label.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════ LA COMMISSIONE (the letter) ══════════════ -->
+    <section class="chapter commissione" id="commissione" aria-labelledby="comm-h">
+      <div class="folio" aria-hidden="true">2.5<small>mm</small></div>
+      <div class="wrap wrap--read" style="margin-inline:auto;">
+        <div class="chapter-head" style="align-items:flex-start;">
+          <p class="label rv">La commissione — the letter</p>
+          <h2 class="display rv" id="comm-h">
+            An instrument is not bought. It is asked for, and waited for.
+          </h2>
+        </div>
+        <p class="lede rv" style="max-width:60ch;">
+          A violin from this bench is above <span class="display" style="font-style:normal;">€48,000</span>,
+          and there is no cart that could hold it. Write to the bench — say what you
+          play, and for what, and where you are on the list. The maker will write
+          back with the model, the wood, and the year it might be ready. There is a
+          wait. There has been since 1911.
+        </p>
+        <div class="cta-row rv">
+          <a
+            class="btn"
+            href="mailto:tobia@bottegasantagata.it?subject=Commission%20—%20a%20violin&body=I%20play%20…%0AI%20am%20writing%20to%20ask%20after%20a%20violin%20from%20the%20bench.%0A%0A—"
+          >
+            <span class="effe" aria-hidden="true" set:html={effe} />
+            Write to the bench
+          </a>
+          <a class="btn btn--ghost" href="#banco">
+            <span class="effe" aria-hidden="true" set:html={effe} />
+            Or order from the counter
+          </a>
+        </div>
+
+        <!-- the two paths, made explicit -->
+        <div class="paths rv">
+          <div class="path">
+            <p class="label">By letter · the instruments</p>
+            <h4>La commissione</h4>
+            <p>
+              Violins, above €48,000, made to a petition and waited for. No cart,
+              no price to a basket — a correspondence with the maker, and a place
+              on the list.
+            </p>
+          </div>
+          <div class="path">
+            <p class="label">By the counter · the bench goods</p>
+            <h4>Il banco</h4>
+            <p>
+              Bows, cases, rosin, strings — well under €5,000, made in small runs.
+              Ordered by the form above, which writes to the bench. Still no card
+              taken here; the post is settled by reply.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>

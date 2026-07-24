@@ -1,0 +1,286 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title = 'Bottega Sant’Agata — Cremonese violins, made by hand since 1911',
+  description = 'A single-maker violin bottega on the Contrada Sant’Agata, Cremona. Eleven instruments a year; the arching graduated to a tenth of a millimetre; the varnish judged only by lamplight.',
+} = Astro.props;
+
+const effe = `<svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="M15.4 4.8c2.6.2 4.1 2 3.7 4.1-.3 1.6-1.8 2.6-3.2 2.3-1.3-.2-2-1.2-1.9-2.3.1-.9.9-1.5 1.8-1.4.6.1 1.1.5 1.1 1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M8.6 39.2c-2.6-.2-4.1-2-3.7-4.1.3-1.6 1.8-2.6 3.2-2.3 1.3.2 2 1.2 1.9 2.3-.1.9-.9 1.5-1.8 1.4-.6-.1-1.1-.5-1.1-1.1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14.2 7C11 13 9.4 30 8.4 36.4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><path d="M6 16.5h12M6 27.5h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".85"/></svg>`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0c0908" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Hanken+Grotesk:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      // `?nofx` keeps everything visible & eager; `?scroll=N` jumps to an
+      // offset — both exist for the screenshot critique loop only.
+      if (!location.search.includes('nofx')) document.documentElement.classList.add('js');
+      else
+        addEventListener('DOMContentLoaded', () => {
+          document.querySelectorAll('img[loading="lazy"]').forEach((i) => (i.loading = 'eager'));
+          const m = location.search.match(/scroll=(\d+)/);
+          if (m) addEventListener('load', () => setTimeout(() => scrollTo(0, +m[1]), 300));
+        });
+    </script>
+  </head>
+  <body>
+    <div class="cursor" aria-hidden="true"></div>
+    <div class="hud-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Bottega Sant’Agata — home">
+        <span class="effe" aria-hidden="true" set:html={effe} />
+        <span class="brand-word">Sant’Agata<small>Cremona · 1911</small></span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/#bottega">The bottega</a>
+        <a href="/#maestro">Il maestro</a>
+        <a href="/#graduazione">La graduazione</a>
+        <a href="/#registro">Il registro</a>
+        <a href="/#banco">Il banco</a>
+        <a class="nav-cta" href="/#commissione">Write to the bench</a>
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-mark">Bottega Sant’Agata</p>
+          <p style="margin-top: 16px; max-width: 42ch; font-size: 13.5px; color: var(--avorio-dim);">
+            One maker, one bench, eleven violins a year. The wood is seasoned
+            twenty years, the arching worked to a tenth of a millimetre, and the
+            varnish judged only by lamplight — as it has been on the Contrada
+            Sant’Agata since 1911.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">The bench</h4>
+          <ul>
+            <li><a href="/#bottega">The bottega</a></li>
+            <li><a href="/#maestro">Il maestro</a></li>
+            <li><a href="/#graduazione">La graduazione</a></li>
+            <li><a href="/#registro">Il registro</a></li>
+            <li><a href="/#banco">Il banco</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="label label--dim">Correspondence</h4>
+          <ul>
+            <li><a href="mailto:tobia@bottegasantagata.it">tobia@bottegasantagata.it</a></li>
+            <li>Contrada Sant’Agata 9, Cremona</li>
+            <li>Instruments by letter · the bench by order</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>Bottega Sant’Agata · Cremona · since 1911</span>
+        <span>Ferraboschi, third of his name at the bench</span>
+      </div>
+    </footer>
+
+    <script>
+      // ---- reveal on scroll ----
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add('in');
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.16, rootMargin: '0px 0px -6% 0px' }
+      );
+      document.querySelectorAll('.rv').forEach((el) => io.observe(el));
+
+      // ---- header veil / withdraw ----
+      const header = document.querySelector('.site-header') as HTMLElement;
+      let lastY = scrollY;
+      const headerTick = () => {
+        const y = scrollY;
+        header.classList.toggle('is-veiled', y > 40);
+        if (y > 240 && y > lastY + 4) header.classList.add('is-withdrawn');
+        else if (y < lastY - 4 || y <= 240) header.classList.remove('is-withdrawn');
+        lastY = y;
+      };
+      addEventListener('scroll', headerTick, { passive: true });
+      headerTick();
+
+      // ---- the signature: la graduazione (a caliper reads the plate) ----
+      const grad = document.querySelector<HTMLElement>('[data-grad]');
+      if (grad) {
+        const rings = Array.from(grad.querySelectorAll<SVGPathElement>('.grad-ring'));
+        const caliper = grad.querySelector<SVGGElement>('.grad-caliper');
+        const dot = grad.querySelector<SVGCircleElement>('.grad-caliper circle');
+        const calLine = grad.querySelector<SVGLineElement>('[data-cal-h]');
+        const readout = document.querySelector<HTMLElement>('[data-grad-mm]');
+        const band = document.querySelector<HTMLElement>('[data-grad-band]');
+        const scale = Array.from(document.querySelectorAll<HTMLElement>('[data-grad-scale] li'));
+        const ledger = document.querySelector<HTMLElement>('[data-grad-ledger]');
+        // thickness stations centre -> edge (mm). x/y are the caliper point on the
+        // treble side of the plate; kept in sync with index.astro `stationPts`.
+        const stations = [
+          { mm: 4.2, band: 'the centre of the back', x: 180, y: 230 },
+          { mm: 3.7, band: 'the upper field', x: 200, y: 230 },
+          { mm: 3.1, band: 'the flank', x: 216, y: 232 },
+          { mm: 2.8, band: 'the shoulder', x: 230, y: 234 },
+          { mm: 2.6, band: 'toward the edge', x: 242, y: 236 },
+          { mm: 2.3, band: 'the purfling channel', x: 252, y: 238 },
+        ];
+        const noMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
+
+        let progress = -1;
+        const apply = (p: number) => {
+          // p in 0..1 across the section
+          const idx = clamp(Math.floor(p * stations.length), 0, stations.length - 1);
+          if (idx === progress) return;
+          progress = idx;
+          // light rings up to idx (thick to thin)
+          rings.forEach((r, i) => {
+            r.classList.toggle('is-drawn', i <= idx);
+            r.classList.toggle('is-lit', i === idx);
+          });
+          const st = stations[idx];
+          if (readout) readout.textContent = st.mm.toFixed(1);
+          if (band) band.textContent = st.band;
+          if (dot) {
+            dot.setAttribute('cx', String(st.x));
+            dot.setAttribute('cy', String(st.y));
+          }
+          if (calLine) {
+            // the caliper traces from the plate centre out to the reading point
+            calLine.setAttribute('x2', String(st.x));
+            calLine.setAttribute('y2', String(st.y));
+          }
+          scale.forEach((li, i) => li.classList.toggle('is-passed', i <= idx));
+          if (ledger) ledger.classList.toggle('is-in', idx >= stations.length - 1);
+        };
+
+        if (noMotion || !document.documentElement.classList.contains('js')) {
+          // finished state
+          rings.forEach((r) => r.classList.add('is-drawn'));
+          apply(1);
+        } else {
+          const section = grad.closest('section') as HTMLElement;
+          let ticking = false;
+          const onScroll = () => {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(() => {
+              const rect = section.getBoundingClientRect();
+              const vh = innerHeight;
+              // progress as the section travels through the viewport centre
+              const p = clamp((vh * 0.72 - rect.top) / (rect.height * 0.62), 0, 1);
+              apply(p);
+              ticking = false;
+            });
+          };
+          addEventListener('scroll', onScroll, { passive: true });
+          onScroll();
+        }
+      }
+
+      // ---- il banco: live order total + mailto assembly ----
+      const form = document.querySelector<HTMLFormElement>('[data-order]');
+      if (form) {
+        const totalEl = form.querySelector<HTMLElement>('[data-total]');
+        const fmt = (n: number) => '€' + n.toLocaleString('en-GB');
+        const recompute = () => {
+          let sum = 0;
+          form.querySelectorAll<HTMLElement>('.order-item').forEach((row) => {
+            const price = Number(row.dataset.price || 0);
+            const q = Number((row.querySelector('input[type="number"]') as HTMLInputElement)?.value || 0);
+            sum += price * Math.max(0, q);
+          });
+          if (totalEl) totalEl.textContent = fmt(sum);
+        };
+        form.querySelectorAll('.qty').forEach((q) => {
+          const input = q.querySelector('input') as HTMLInputElement;
+          q.querySelector('[data-inc]')?.addEventListener('click', () => {
+            input.value = String(Math.min(20, (Number(input.value) || 0) + 1));
+            recompute();
+          });
+          q.querySelector('[data-dec]')?.addEventListener('click', () => {
+            input.value = String(Math.max(0, (Number(input.value) || 0) - 1));
+            recompute();
+          });
+          input.addEventListener('input', recompute);
+        });
+        recompute();
+
+        // Assemble a structured order into the mailto body on submit.
+        // Never captures a card; hands off to the mail client.
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const lines: string[] = ['Order for the bench — Bottega Sant’Agata', ''];
+          let any = false;
+          form.querySelectorAll<HTMLElement>('.order-item').forEach((row) => {
+            const q = Number((row.querySelector('input[type="number"]') as HTMLInputElement)?.value || 0);
+            if (q > 0) {
+              any = true;
+              const name = row.querySelector('.oi-name')?.textContent?.trim();
+              const price = Number(row.dataset.price || 0);
+              lines.push(`  ${q} × ${name} — €${(price * q).toLocaleString('en-GB')}`);
+            }
+          });
+          lines.push('', `  Total: ${totalEl?.textContent}`, '');
+          const g = (n: string) => (form.elements.namedItem(n) as HTMLInputElement)?.value?.trim() || '';
+          lines.push('Deliver to:', `  ${g('name')}`, `  ${g('address')}`, '');
+          if (g('note')) lines.push('Note:', `  ${g('note')}`, '');
+          if (!any) {
+            const first = form.querySelector('.qty input') as HTMLInputElement;
+            first?.focus();
+            return;
+          }
+          const body = encodeURIComponent(lines.join('\n'));
+          const subj = encodeURIComponent('Order for the bench');
+          location.href = `mailto:banco@bottegasantagata.it?subject=${subj}&body=${body}`;
+        });
+      }
+
+      // ---- custom cursor ----
+      const fine = matchMedia('(pointer: fine)').matches;
+      const noMotionCur = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (fine && !noMotionCur && document.documentElement.classList.contains('js')) {
+        document.documentElement.classList.add('cursor-on');
+        const cur = document.querySelector('.cursor') as HTMLElement;
+        let x = 0, y = 0, cx = 0, cy = 0;
+        addEventListener('mousemove', (e) => { x = e.clientX; y = e.clientY; });
+        const loop = () => {
+          cx += (x - cx) * 0.22;
+          cy += (y - cy) * 0.22;
+          cur.style.translate = `${cx}px ${cy}px`;
+          requestAnimationFrame(loop);
+        };
+        loop();
+        document.querySelectorAll('a, button, input, textarea, select, [data-cursor]').forEach((el) => {
+          el.addEventListener('mouseenter', () => cur.classList.add('is-link'));
+          el.addEventListener('mouseleave', () => cur.classList.remove('is-link'));
+        });
+      }
+    </script>
+  </body>
+</html>
