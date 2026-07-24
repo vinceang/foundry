@@ -28,11 +28,11 @@ The two series share standards, not styling. Read
 | Schwarzwald | Nocturne | Cuckoo clock house, est. 1854 | Germany · Black Forest | [`sites/schwarzwald`](sites/schwarzwald) |
 | [Lagar do Sol](https://lagar-do-sol.vercel.app) | Aubade | Residential, collected olive-estate hotel | Portugal · Alentejo, between Estremoz and Vila Viçosa | [`sites/lagar-do-sol`](sites/lagar-do-sol) · live |
 | [Aresta](https://aresta-azure.vercel.app) | Aubade | Contemporary, architecture-led hotel | Portugal · Costa Vicentina, Carrapateira | [`sites/aresta`](sites/aresta) · live |
-| Fornace alla Luna | Nocturne | Murano glass furnace, one goblet atelier | Italy · Venice, Murano | [`sites/alla-luna`](sites/alla-luna) |
-| Auriga | Vesper | Discreet private-jet charter, placeless | Three quiet fields | [`sites/auriga`](sites/auriga) |
-| Velum | Vesper | Short-field private-jet charter, alpine access | Switzerland · Genève | [`sites/velum`](sites/velum) |
-| Tyri | Pastorale | Hand-hewn log yard in snow-light | Norway · Rollag, Numedal | [`sites/tyri`](sites/tyri) |
-| Malmfuru | Nocturne | Hand-hewn log houses on a midwinter night | Norway · Nore, Numedal | [`sites/malmfuru`](sites/malmfuru) |
+| [Fornace alla Luna](https://alla-luna.vercel.app) | Nocturne | Murano glass furnace, one goblet atelier | Italy · Venice, Murano | [`sites/alla-luna`](sites/alla-luna) · live |
+| [Auriga](https://auriga-vincent-angs-projects.vercel.app) | Vesper | Discreet private-jet charter, placeless | Three quiet fields | [`sites/auriga`](sites/auriga) · live |
+| [Velum](https://velum-vincent-angs-projects.vercel.app) | Vesper | Short-field private-jet charter, alpine access | Switzerland · Genève | [`sites/velum`](sites/velum) · live |
+| [Tyri](https://tyri.vercel.app) | Pastorale | Hand-hewn log yard in snow-light | Norway · Rollag, Numedal | [`sites/tyri`](sites/tyri) · live |
+| [Malmfuru](https://malmfuru.vercel.app) | Nocturne | Hand-hewn log houses on a midwinter night | Norway · Nore, Numedal | [`sites/malmfuru`](sites/malmfuru) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 
