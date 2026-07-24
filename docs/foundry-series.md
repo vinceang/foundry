@@ -95,6 +95,12 @@ Both series keep the same deeper commitments:
    subject-specific place and keeps the rest quiet.
 6. **Independent identities.** Sites share engineering tools and critique
    methods, never a universal palette or component library.
+7. **The order matches the price.** Commission-by-correspondence ("write to
+   us," no form) is for the truly bespoke and high-value. If a product — or
+   any real variant of it — might sell for under $5,000, the site gives a
+   proper, on-brand order/enquiry form instead. A workshop may do both:
+   bespoke by letter, the bench's accessories by a form. The form takes an
+   order request; it never captures a card or processes a real payment.
 
 ## The inversion
 

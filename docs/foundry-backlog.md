@@ -32,6 +32,14 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Proposed — awaiting approval
 
+### Custom violin maker
+- **Series:** Nocturne (spruce, maple, amber varnish under one lamp)
+- **Place idea:** Cremona, Italy — the violin city (Stradivari, Guarneri); a single-maker bottega
+- **Why it earns a place:** Vince-named; the scroll's volute, the f-holes, arching graduated to tenths of a millimetre, oil varnish catching light — macro imagery as fine as the knives
+- **Signature interaction:** the graduation map — a plate's thickness revealed as a contour field, or the varnish building coat by coat
+- **Order model (per the ≥/<$5,000 rule):** the instruments are bespoke and far above the line — commission by letter. But the bench sells bows, cases, strings, and rosin well under it — those get a real order form. This entry is the first live test of the order-matches-the-price doctrine.
+- **Must not read as Casa Vicente** (also a Nocturne luthier). Differentiate hard: Cremonese classical violin, not Andalusian flamenco guitar; a different city, palette, type pairing, and the violin-specific graduation/varnish signature rather than Vicente's. If the two ever feel like one house, change this one.
+
 ### Marrakech riad
 - **Series:** Aubade
 - **Place idea:** the medina, Marrakech — a nine-room courtyard house
