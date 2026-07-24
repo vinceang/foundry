@@ -32,6 +32,13 @@ _(nothing in progress)_
 
 ## Proposed — awaiting approval
 
+### Tiny home / ADU maker
+- **Series:** decided at build time — a maker of dwellings; argue Nocturne craft vs Aubade dwelling vs Pastorale outdoor build (the log-cabin precedent)
+- **Place idea:** Pacific Northwest, compact-timber Japan, or Scandinavia — a small shop building backyard homes and accessory dwelling units to order
+- **Why it earns a place:** Vince-named; compact joinery, fold-down and built-in furniture, big windows framing a garden — warm interiors and clever section drawings both photograph well
+- **Signature interaction:** the unit fitted to a real backyard — plan and section redraw to a lot's dimensions and setback, or the interior unfolding/compacting as you scroll
+- **Notes:** dwellings run well above $5,000 → commission model, but stock plans and finish packages could sit under it → an order form there (commitment 7). Must not read as the Nordic log houses (Tyri/Malmfuru) — a modern material system and voice, not heritage.
+
 ### Marrakech riad
 - **Series:** Aubade
 - **Place idea:** the medina, Marrakech — a nine-room courtyard house
