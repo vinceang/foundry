@@ -1,0 +1,403 @@
+/* ============================================================
+   MALMFURU — design system
+   iron-blue winter night · aged copper light · one hearth chapter
+   Type: Forum (display) · Schibsted Grotesk (body/labels)
+   No brass. No gables. No rounded corners. Light is walked toward.
+   ============================================================ */
+
+:root {
+  /* the dark season */
+  --natt:        #0b0e13;
+  --natt-2:      #12161d;
+  --natt-3:      #191f28;
+  --void:        #06080b;
+
+  /* the inside of the house — one chapter per page */
+  --aare:        #180f07;
+
+  /* tar-black timber — the card family only, never a chapter ground */
+  --tjaere:      #100c08;
+
+  /* soft grain for the tjære cards — copper-tinted noise at ~9% alpha;
+     hewn wood has tooth, so the card family carries a whisper of it */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 .9 0 0 0 0 .62 0 0 0 0 .42 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* aged copper */
+  --kopar:        #c07a4d;
+  --kopar-bright: #edaa79;
+  --kopar-deep:   #8a5230;
+  --kopar-faint:  rgba(192, 122, 77, .36);
+
+  /* undyed wool (text on dark) */
+  --ull:       #e9e5db;
+  --ull-dim:   #a49c8f;
+  --ull-faint: rgba(233, 229, 219, .4);
+
+  --line:      rgba(192, 122, 77, .2);
+  --line-soft: rgba(233, 229, 219, .09);
+
+  /* type */
+  --display: "Forum", "Georgia", serif;
+  --body:    "Schibsted Grotesk", "Helvetica Neue", sans-serif;
+
+  /* rhythm */
+  --s1: 8px;  --s2: 16px;  --s3: 24px;  --s4: 32px;  --s5: 48px;
+  --s6: 64px; --s7: 96px;  --s8: 128px; --s9: 192px;
+
+  --gutter: clamp(20px, 5vw, 96px);
+  --frame: clamp(12px, 1.6vw, 24px);
+
+  --ease: cubic-bezier(.19, 1, .22, 1);
+}
+
+/* the same 8px cadence in a smaller room */
+@media (max-width: 760px) {
+  :root { --s6: 40px; --s7: 56px; --s8: 64px; --s9: 72px; }
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background: var(--void);
+}
+
+body {
+  font-family: var(--body);
+  font-size: 15.5px;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: .008em;
+  background: var(--natt);
+  color: var(--ull);
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+::selection { background: var(--kopar-deep); color: var(--ull); }
+
+/* ---------- typography helpers ---------- */
+.display {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: .02em;
+  line-height: 1.12;
+}
+
+.reading {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: var(--ull-dim);
+}
+
+.label {
+  font-family: var(--body);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--kopar);
+}
+.label--dim { color: var(--ull-dim); }
+
+/* the nov cross — the workshop's only ornament shape */
+.nov {
+  display: inline-block;
+  width: 11px; height: 11px;
+  background: var(--kopar);
+  clip-path: polygon(36% 0, 64% 0, 64% 36%, 100% 36%, 100% 64%, 64% 64%, 64% 100%, 36% 100%, 36% 64%, 0 64%, 0 36%, 36% 36%);
+}
+.nov--faint { background: var(--kopar-faint); }
+
+/* ---------- reveal system (visible without JS) ---------- */
+.rv { opacity: 1; transform: none; }
+html.js .rv {
+  opacity: 0;
+  transform: translateY(34px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  transition-delay: calc(var(--d, 0) * 110ms);
+}
+html.js .rv.in { opacity: 1; transform: none; }
+
+.rv-line { display: block; }
+html.js .rv-line { overflow: hidden; }
+html.js .rv-line > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.3s var(--ease);
+  transition-delay: calc(var(--d, 0) * 130ms);
+}
+html.js .rv.in .rv-line > span,
+html.js .rv-line.in > span { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .rv { opacity: 1; transform: none; transition: none; }
+  html.js .rv-line > span { transform: none; transition: none; }
+}
+
+/* ---------- frame — nov corners at the viewport edge ----------
+   Each fitting is two hairlines crossing with overhang, the silhouette
+   of log ends lapped at a laft corner. The one piece of chrome. */
+.hud-frame { position: fixed; inset: var(--frame); pointer-events: none; z-index: 90; }
+.hud-frame i { position: absolute; width: 26px; height: 26px; }
+.hud-frame i::before, .hud-frame i::after {
+  content: ""; position: absolute; background: var(--kopar-faint);
+}
+.hud-frame i::before { width: 26px; height: 1px; }
+.hud-frame i::after  { width: 1px; height: 26px; }
+.hud-frame i:nth-child(1) { top: 0; left: 0; }
+.hud-frame i:nth-child(1)::before { top: 7px; left: 0; }
+.hud-frame i:nth-child(1)::after  { left: 7px; top: 0; }
+.hud-frame i:nth-child(2) { top: 0; right: 0; }
+.hud-frame i:nth-child(2)::before { top: 7px; right: 0; }
+.hud-frame i:nth-child(2)::after  { right: 7px; top: 0; }
+.hud-frame i:nth-child(3) { bottom: 0; left: 0; }
+.hud-frame i:nth-child(3)::before { bottom: 7px; left: 0; }
+.hud-frame i:nth-child(3)::after  { left: 7px; bottom: 0; }
+.hud-frame i:nth-child(4) { bottom: 0; right: 0; }
+.hud-frame i:nth-child(4)::before { bottom: 7px; right: 0; }
+.hud-frame i:nth-child(4)::after  { right: 7px; bottom: 0; }
+@media (max-width: 760px) {
+  .hud-frame i, .hud-frame i::before { width: 16px; }
+  .hud-frame i, .hud-frame i::after { height: 16px; }
+  .hud-frame i::before { }
+}
+
+/* ---------- header ---------- */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(var(--frame) + 14px) calc(var(--frame) + 22px);
+  transition:
+    transform .7s var(--ease),
+    background .5s var(--ease),
+    padding .5s var(--ease),
+    border-color .5s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-veiled {
+  background: rgba(6, 8, 11, .88);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--line-soft);
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+.site-header.is-withdrawn { transform: translateY(-102%); }
+@media (prefers-reduced-motion: reduce) { .site-header { transition: none; } }
+
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-seal { width: 32px; height: 32px; flex: 0 0 auto; }
+.brand-word {
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: .34em; text-transform: uppercase; color: var(--ull);
+  padding-left: 2px;
+}
+.site-nav { display: flex; align-items: center; gap: clamp(18px, 2.6vw, 36px); }
+.site-nav a {
+  font-size: 10.5px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--ull-dim); transition: color .35s;
+}
+.site-nav a:hover { color: var(--kopar-bright); }
+.nav-cta {
+  padding: 10px 22px;
+  border: 1px solid var(--line);
+  color: var(--ull) !important;
+  transition: border-color .35s, background .35s;
+}
+.nav-cta:hover { border-color: var(--kopar); background: rgba(192,122,77,.08); }
+
+@media (max-width: 760px) {
+  .site-header { padding: calc(var(--frame) + 10px) calc(var(--frame) + 12px); }
+  .site-nav > a:not(.nav-cta) { display: none; }
+  .site-nav { gap: 14px; }
+  .nav-cta { padding: 8px 14px; letter-spacing: .22em; }
+  .brand-word { font-size: 13px; letter-spacing: .26em; }
+  .brand-seal { width: 26px; height: 26px; }
+}
+
+/* ---------- buttons ---------- */
+.btn-kopar, .btn-ghost {
+  display: inline-block;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: .32em; text-transform: uppercase;
+  padding: 15px 34px;
+  transition: background .35s, color .35s, border-color .35s, letter-spacing .6s var(--ease);
+}
+.btn-kopar { background: var(--kopar); color: #120b06; }
+.btn-kopar:hover { background: var(--kopar-bright); }
+.btn-ghost { border: 1px solid var(--line); color: var(--ull); }
+.btn-ghost:hover { border-color: var(--kopar); color: var(--kopar-bright); }
+
+/* ---------- status chip ---------- */
+.status {
+  display: inline-block;
+  font-size: 10.5px; font-weight: 600;
+  letter-spacing: .26em; text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid var(--line);
+  color: var(--kopar);
+}
+.status--dim { color: var(--ull-faint); border-color: var(--line-soft); }
+
+/* ---------- plates (imagery) ---------- */
+.plate {
+  position: relative;
+  background:
+    radial-gradient(80% 70% at 50% 38%, rgba(192,122,77,.07), transparent 70%),
+    var(--natt-2);
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+}
+.plate img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: filter 1s var(--ease);
+}
+a:hover .plate img, .plate:hover img { filter: brightness(1.06); }
+
+/* ceremonial pending state — until a plate is hung */
+.plate-pending { position: absolute; inset: 0; display: grid; place-items: center; }
+.plate-pending .nov { margin-bottom: 14px; }
+.plate-pending span {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .4em; text-transform: uppercase;
+  color: var(--ull-faint);
+}
+
+/* ---------- spec placard — tar-black timber card ---------- */
+.specs {
+  background: var(--tjaere) var(--grain);
+  border: 1px solid var(--line-soft);
+  padding: var(--s4);
+  display: grid; gap: var(--s3);
+}
+.specs div { display: grid; gap: 4px; }
+.specs dt {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .32em; text-transform: uppercase;
+  color: var(--kopar);
+}
+.specs dd { font-family: var(--display); font-size: 17px; color: var(--ull); }
+
+/* ---------- section furniture ---------- */
+.sect-head { display: flex; align-items: baseline; gap: var(--s3); margin-bottom: var(--s6); }
+.sect-head .rule { flex: 1; height: 1px; background: var(--line-soft); align-self: center; }
+
+.kopar-rule { width: 64px; height: 1px; background: var(--kopar); }
+
+.folio {
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: .18em;
+  color: var(--kopar-faint);
+}
+
+/* ---------- the scribe — the ring archive's range input ----------
+   A native range input, styled as the scribe line across the log:
+   hairline track, a copper scribe-bar thumb. Keyboard access for free. */
+.scribe { width: 100%; }
+.scribe input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+.scribe input[type="range"]:focus-visible {
+  outline: 1px solid var(--kopar-bright);
+  outline-offset: 6px;
+}
+.scribe input[type="range"]::-webkit-slider-runnable-track {
+  height: 1px;
+  background: linear-gradient(90deg, var(--kopar-faint), var(--line));
+}
+.scribe input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 3px; height: 24px;
+  margin-top: -11.5px;
+  background: var(--kopar);
+  transition: background .3s;
+}
+.scribe input[type="range"]::-webkit-slider-thumb:hover { background: var(--kopar-bright); }
+.scribe input[type="range"]::-moz-range-track {
+  height: 1px;
+  background: var(--line);
+}
+.scribe input[type="range"]::-moz-range-thumb {
+  width: 3px; height: 24px;
+  border: 0; border-radius: 0;
+  background: var(--kopar);
+}
+
+/* ---------- footer ----------
+   the guest steps back out into the dark; the last warmth is the
+   doorway's glow — void settling toward the hearth at the very bottom */
+.site-footer {
+  position: relative;
+  background: linear-gradient(180deg, var(--void), var(--aare) 78%);
+  border-top: 1px solid var(--line-soft);
+  padding: var(--s7) var(--gutter) var(--s6);
+}
+.footer-grid {
+  max-width: 1280px; margin-inline: auto;
+  display: grid; gap: var(--s5);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+.footer-mark { font-family: var(--display); font-size: 20px; letter-spacing: .3em; text-transform: uppercase; }
+.footer-col h4 { margin-bottom: var(--s3); }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 10px; font-size: 13.5px; color: var(--ull-dim); }
+.footer-col a { transition: color .3s; }
+.footer-col a:hover { color: var(--kopar-bright); }
+.footer-legal {
+  max-width: 1280px; margin: var(--s6) auto 0;
+  padding-top: var(--s4);
+  border-top: 1px solid var(--line-soft);
+  display: flex; flex-wrap: wrap; gap: var(--s3);
+  justify-content: space-between;
+  font-size: 11.5px; color: var(--ull-faint); letter-spacing: .08em;
+}
+
+/* ---------- custom cursor (fine pointers only) ---------- */
+@media (pointer: fine) {
+  html.js.cursor-on, html.js.cursor-on a, html.js.cursor-on button { cursor: none; }
+  .cursor {
+    position: fixed; top: 0; left: 0; z-index: 999; pointer-events: none;
+    width: 34px; height: 34px; margin: -17px 0 0 -17px;
+    border: 1px solid var(--kopar-faint);
+    border-radius: 50%;
+    transition: transform .28s var(--ease), border-color .28s, background .28s;
+    will-change: transform;
+  }
+  .cursor::after {
+    content: ""; position: absolute; inset: 0; margin: auto;
+    width: 5px; height: 5px;
+    background: var(--kopar);
+    clip-path: polygon(36% 0, 64% 0, 64% 36%, 100% 36%, 100% 64%, 64% 64%, 64% 100%, 36% 100%, 36% 64%, 0 64%, 0 36%, 36% 36%);
+  }
+  .cursor.is-link {
+    transform: scale(1.7);
+    border-color: var(--kopar);
+    background: rgba(192,122,77,.06);
+  }
+}
+.cursor { display: none; }
+html.js.cursor-on .cursor { display: block; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor { display: none !important; }
+}
+
+/* focus visibility */
+a:focus-visible, button:focus-visible {
+  outline: 1px solid var(--kopar-bright);
+  outline-offset: 4px;
+}

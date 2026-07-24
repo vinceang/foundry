@@ -1,0 +1,475 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { daylight, houses, rings } from '../data/site';
+
+const masters =
+  'Halvor I · Torstein II · Halvor III · Knut IV · Margit V · Olav VI · Torgeir VII · Embret VIII';
+---
+
+<Layout>
+  <main>
+    <!-- ============ HERO — the house is the only lamp ============ -->
+    <section class="hero">
+      <div class="hero-media" aria-hidden="true">
+        <img src="/plates/hero.jpg" alt="" fetchpriority="high" data-parallax="30" />
+        <div class="hero-shade"></div>
+      </div>
+      <div class="hero-inner">
+        <p class="label rv" style="--d:0">Nore i Numedal · laftehus since 1791</p>
+        <h1 class="display hero-title">
+          <span class="rv-line" style="--d:1"><span>Three houses leave</span></span>
+          <span class="rv-line" style="--d:2"><span>this valley each year.</span></span>
+        </h1>
+        <p class="reading hero-reading rv" style="--d:3">
+          Hewn in malmfuru, raised by hand — built to sink two centimetres a metre, and to stand three hundred years.
+        </p>
+        <div class="hero-ctas rv" style="--d:4">
+          <a class="btn-kopar" href="/tinging/">Begin a tinging</a>
+          <a class="btn-ghost" href="#tun">Walk the tun</a>
+        </div>
+        <p class="daylight rv" style="--d:5" data-daylight>{daylight.noscript}</p>
+      </div>
+    </section>
+
+    <!-- ============ I · THE WORKSHOP ============ -->
+    <section class="chapter" id="workshop">
+      <div class="measure">
+        <div class="sect-head rv">
+          <span class="folio">I</span>
+          <h2 class="label">The workshop</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <p class="display chapter-title rv">We do not build cabins.<br />We raise houses.</p>
+        <div class="cols rv">
+          <p>
+            Malmfuru is the Loftsgård family’s workshop at Nore, in the valley Norwegians
+            call <em>middelalderdalen</em> — the medieval valley, where more log buildings stand from the
+            Middle Ages than anywhere else in the country. The houses around us have been carrying
+            their own weight for seven hundred years. They are the standard we work under.
+          </p>
+          <p>
+            Since 1791 the workshop has done one thing: <em>laft</em> — walls of whole logs, carried
+            entirely by their corner joints. Eight generations have cut the same six-sided notch,
+            the Nore-nov, with axes only. No saw touches the joint; a sawn face drinks water, an
+            axe-burnished face turns it away.
+          </p>
+        </div>
+        <p class="masters rv" aria-label="The masters of the workshop">{masters} — <span style="white-space: nowrap;">Sigrid IX, apprenticed 2021</span></p>
+      </div>
+    </section>
+
+    <!-- ============ II · THE TIMBER ============ -->
+    <section class="chapter chapter--raised" id="timber">
+      <div class="wide">
+        <div class="sect-head rv">
+          <span class="folio">II</span>
+          <h2 class="label">The timber</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="timber-grid">
+          <div class="timber-copy">
+            <p class="display chapter-title rv">A tree is answered<br />seven winters ahead.</p>
+            <div class="rv">
+              <p>
+                <em>Malmfuru</em> — ore-pine — is pine grown slowly enough that most of the trunk has
+                turned to resin-dense heartwood. It is the timber of the stave churches, and it is not
+                bought; it is found, standing, in the steep sides of this valley.
+              </p>
+              <p style="margin-top: 16px;">
+                We blaze a chosen tree seven winters before we fell it. Barked at the blaze, the tree
+                spends those years driving resin into its own wound — sealing itself for the work
+                ahead. Felling happens in the two coldest weeks of January, when the sap stands
+                still, and the logs dry seven more years under the open sheds at Nore before an axe
+                touches them.
+              </p>
+            </div>
+            <dl class="specs rv" style="margin-top: 40px;">
+              <div><dt>Timber</dt><dd>Malmfuru, 140–230 years standing</dd></div>
+              <div><dt>Blazed</dt><dd>Seven winters before felling</dd></div>
+              <div><dt>Felled</dt><dd>The two coldest weeks of January</dd></div>
+              <div><dt>Dried</dt><dd>Seven years under open sheds</dd></div>
+            </dl>
+          </div>
+          <figure class="plate timber-plate rv" style="--d:1">
+            <img src="/plates/timber.jpg" alt="Stacks of hand-hewn pine logs air-drying under an open shed roof, dusted with snow" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ III · ÅRRINGENE — the ring archive ============ -->
+    <section class="chapter" id="ringer">
+      <div class="wide">
+        <div class="sect-head rv">
+          <span class="folio">III</span>
+          <h2 class="label">Årringene · the ring archive</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <p class="display chapter-title rv">The tree and the workshop<br />are the same age.</p>
+        <p class="ring-lede rv">
+          The pine cross-cut in the workshop doorway was felled in January 2019 with two hundred and
+          twenty-eight rings. It germinated in 1791 — the winter Halvor Loftsgård raised his first
+          loft. Draw the scribe across the log; every stop is a recorded ring.
+        </p>
+
+        <div class="ring-grid rv">
+          <figure class="plate ring-figure" data-cursor>
+            <img src="/plates/rings.jpg" alt="Cross-section of a 228-ring malmfuru log, resin-rich heartwood glowing in warm light" loading="lazy" />
+            <svg class="ring-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <circle data-ring-marker cx="50" cy="50" r="8" fill="none" stroke="var(--kopar-bright)" stroke-width="0.45" opacity="0.9" />
+            </svg>
+          </figure>
+
+          <div class="ring-live">
+            <p class="ring-year display" data-ring-year>{rings[0].year}</p>
+            <div aria-live="polite">
+              <p class="ring-title" data-ring-title>{rings[0].title}</p>
+              <p class="ring-body" data-ring-body>{rings[0].body}</p>
+            </div>
+            <div class="scribe">
+              <label class="label label--dim" for="scribe" style="display:block; margin-bottom: 14px;">The scribe · 1791–2019</label>
+              <input
+                id="scribe"
+                type="range"
+                min="0"
+                max={rings.length - 1}
+                step="1"
+                value="0"
+                aria-valuetext={`${rings[0].year} — ${rings[0].title}`}
+              />
+              <div class="scribe-ends" aria-hidden="true"><span>pith · 1791</span><span>bark · 2019</span></div>
+            </div>
+          </div>
+
+          <!-- The full record, for guests without JS (and the ?nofx loop). -->
+          <ol class="ring-static">
+            {rings.map((r) => (
+              <li>
+                <span class="display ring-static-year">{r.year}</span>
+                <div>
+                  <p class="ring-title">{r.title}</p>
+                  <p class="ring-body">{r.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ IV · THE NOV — inside the house (the one warm chapter) ============ -->
+    <section class="chapter chapter--aare" id="nov">
+      <div class="wide">
+        <div class="sect-head rv">
+          <span class="folio">IV</span>
+          <h2 class="label">The nov · inside the house</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <div class="nov-grid">
+          <figure class="plate nov-plate-tall rv" style="--d:1">
+            <img src="/plates/nov.jpg" alt="A laft corner joint: hand-hewn log ends lapped in a six-sided notch, dusted with snow" loading="lazy" />
+          </figure>
+          <div class="nov-copy">
+            <p class="display chapter-title rv">Six faces. No saw.<br />No nail in the wall.</p>
+            <div class="rv">
+              <p>
+                A laft wall is carried entirely at its corners. Each log is scribed to the one below
+                with the <em>medrag</em> — a groove drawn along its underside with a two-pointed
+                scribe, then hollowed so the log rides its neighbour without a gap. Into the groove
+                goes <em>husmose</em>, moss gathered in August and laid dry. No foam, no sealant,
+                nothing the house cannot outlive.
+              </p>
+              <p style="margin-top: 16px;">
+                The Nore-nov itself is cut blind: six faces inside the joint that no one will see
+                again once the next log settles over them. Between four and seven thousand axe-hours
+                go into a house, and most of them are spent here, at the corners, on faces that
+                disappear.
+              </p>
+            </div>
+            <figure class="plate nov-plate-wide rv" style="--d:2">
+              <img src="/plates/aarestua.jpg" alt="Firelight from an open hearth raking across hand-hewn log walls inside the workshop's oldest room" loading="lazy" />
+              <figcaption class="plate-caption">The old stue at Nore — the room the workshop eats in. Smoke has been blackening these walls since Torstein II.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ V · THE TUN ============ -->
+    <section class="chapter" id="tun">
+      <div class="wide">
+        <div class="sect-head rv">
+          <span class="folio">V</span>
+          <h2 class="label">The tun · the houses</h2>
+          <span class="rule" aria-hidden="true"></span>
+        </div>
+        <p class="display chapter-title rv">Four houses, one yard.</p>
+        <p class="ring-lede rv">
+          A <em>tun</em> is the yard a farm’s buildings stand around. Ours holds what the workshop
+          has in hand and what it will not forget: the open tinging, the promised, the raised.
+        </p>
+
+        <div class="tun-rows">
+          {houses.map((h, i) => (
+            <article class={`tun-row ${i % 2 ? 'tun-row--flip' : ''}`}>
+              <figure class="plate tun-plate rv" style={`aspect-ratio: ${h.ratio};`}>
+                <img src={h.plate} alt={`${h.name} — ${h.reading}`} loading="lazy" />
+              </figure>
+              <div class="tun-copy">
+                <p class="tun-meta rv"><span class="display tun-hb">{h.hb}</span><span class={`status ${h.status === 'Raised' ? 'status--dim' : ''}`}>{h.status}</span></p>
+                <h3 class="display tun-name rv">{h.name}</h3>
+                <p class="reading rv">{h.reading}</p>
+                <p class="tun-body rv">{h.body}</p>
+                <ul class="tun-facts rv" role="list">
+                  {h.facts.map(([k, v]) => (
+                    <li><span class="tun-fact-key">{k}</span><span class="display tun-fact-val">{v}</span></li>
+                  ))}
+                </ul>
+                <p class="tun-note rv">
+                  {h.status === 'Open to tinging' ? (
+                    <a class="btn-ghost" href={`/tinging/?hus=${h.slug}`}>Ask after {h.name}</a>
+                  ) : (
+                    <span class="tun-status-note">{h.statusNote}</span>
+                  )}
+                </p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VI · SETNING & THE HUSBOK ============ -->
+    <section class="chapter chapter--raised" id="setning">
+      <div class="wide setning-grid">
+        <div>
+          <div class="sect-head rv">
+            <span class="folio">VI</span>
+            <h2 class="label">Setning · the admission</h2>
+            <span class="rule" aria-hidden="true"></span>
+          </div>
+          <p class="display chapter-title rv">The house sinks.<br />We build for it.</p>
+          <div class="rv">
+            <p>
+              Every log house settles. As the moss packs and the timber finds its weight, a new wall
+              sinks about two centimetres for every metre of its height, across its first seven
+              winters. We do not hide this. Doors, windows and chimney are built to ride
+              the <em>setning</em> — sliding jambs, clearance over every frame — and in the seventh
+              winter we come back, unasked, to ease the doors. Then the house is done sinking, and
+              it stands.
+            </p>
+          </div>
+          <div class="husbok specs rv" style="margin-top: 48px;">
+            <div>
+              <dt>The husbok</dt>
+              <dd style="max-width: 44ch;">
+                Every house leaves with its book: each log numbered, its felling winter and its
+                forest recorded. Kept since 1889. Three hundred and eighty-four houses stand in it.
+              </dd>
+            </div>
+            <div><dt>A wall of three metres</dt><dd>Sinks about six centimetres</dd></div>
+            <div><dt>The seventh winter</dt><dd>We return and ease the doors</dd></div>
+          </div>
+        </div>
+        <figure class="plate setning-plate rv" style="--d:1">
+          <img src="/plates/axe.jpg" alt="A Norwegian broad axe resting on a half-hewn malmfuru log, pine shavings curled around it" loading="lazy" />
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ VII · THE TINGING ============ -->
+    <section class="chapter tinging-invite">
+      <div class="measure" style="text-align: center;">
+        <div class="rv"><span class="nov nov--faint" aria-hidden="true"></span></div>
+        <h2 class="label rv" style="margin-top: 24px;">VII · The tinging</h2>
+        <p class="display chapter-title rv" style="margin-top: 28px;">Write to Nore.</p>
+        <p class="tinging-lede rv">
+          A first letter needs no drawings. Tell us where the house would stand, what it is for, and
+          who will grow old in it. The timber for one more house is drying now; the book for 2028
+          holds one open place.
+        </p>
+        <p class="rv" style="margin-top: 40px;">
+          <a class="btn-kopar" href="/tinging/">Begin a tinging</a>
+        </p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: grid;
+    align-items: end;
+    padding: var(--s8) var(--gutter) var(--s7);
+    overflow: hidden;
+  }
+  .hero-media { position: absolute; inset: 0; }
+  .hero-media img { width: 100%; height: 100%; object-fit: cover; }
+  /* on a portrait crop, keep the lit window — the whole thesis — in frame */
+  @media (max-width: 760px) {
+    .hero-media img { object-position: 66% 50%; }
+  }
+  .hero-shade {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(6,8,11,.55), rgba(6,8,11,.15) 40%, rgba(6,8,11,.82) 88%),
+      linear-gradient(90deg, rgba(6,8,11,.5), transparent 55%);
+  }
+  .hero-inner { position: relative; max-width: 1280px; margin-inline: auto; width: 100%; }
+  .hero-title {
+    font-size: clamp(42px, 6.4vw, 92px);
+    margin-top: 22px;
+    text-wrap: balance;
+  }
+  .hero-reading { font-size: clamp(16px, 1.6vw, 19px); margin-top: 22px; max-width: 52ch; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
+  .daylight {
+    margin-top: 56px;
+    font-size: 12.5px;
+    letter-spacing: .06em;
+    color: var(--ull-faint);
+  }
+
+  /* ---------- chapters ---------- */
+  .chapter { padding: var(--s9) var(--gutter); }
+  .chapter--raised { background: linear-gradient(180deg, var(--void), var(--natt-2) 18%, var(--natt-2) 82%, var(--void)); }
+  .chapter--aare { background: linear-gradient(180deg, var(--void), var(--aare) 16%, var(--aare) 84%, var(--void)); }
+  .measure { max-width: 880px; margin-inline: auto; }
+  .wide { max-width: 1280px; margin-inline: auto; }
+  .chapter-title { font-size: clamp(30px, 3.6vw, 52px); margin-bottom: 32px; text-wrap: balance; }
+  .cols { display: grid; gap: var(--s4); color: var(--ull-dim); }
+  @media (min-width: 900px) { .cols { grid-template-columns: 1fr 1fr; } }
+  .masters {
+    margin-top: var(--s6);
+    padding-top: var(--s3);
+    border-top: 1px solid var(--line-soft);
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ull-faint);
+  }
+
+  /* ---------- II timber ---------- */
+  .timber-grid { display: grid; gap: var(--s6); align-items: start; }
+  @media (min-width: 980px) { .timber-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 6fr); } }
+  .timber-copy p { color: var(--ull-dim); max-width: 58ch; }
+  .timber-copy .chapter-title { color: var(--ull); }
+  .timber-plate { aspect-ratio: 4 / 5; }
+  @media (min-width: 980px) { .timber-plate { position: sticky; top: 96px; } }
+
+  /* ---------- III rings ---------- */
+  .ring-lede { color: var(--ull-dim); max-width: 62ch; margin-bottom: var(--s6); }
+  .ring-grid { display: grid; gap: var(--s6); align-items: center; }
+  @media (min-width: 980px) { .ring-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .ring-figure { aspect-ratio: 1; }
+  .ring-overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .ring-overlay circle { transition: r 1s var(--ease); }
+  .ring-year { font-size: clamp(64px, 8vw, 120px); line-height: 1; color: var(--kopar); }
+  .ring-title { font-family: var(--display); font-size: 22px; margin-top: 18px; letter-spacing: .03em; }
+  .ring-body { color: var(--ull-dim); margin-top: 10px; max-width: 48ch; min-height: 5.2em; }
+  .ring-live .scribe { margin-top: 40px; }
+  .scribe-ends {
+    display: flex; justify-content: space-between;
+    margin-top: 10px;
+    font-size: 10px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--ull-faint);
+  }
+  /* the full record is the no-JS rendering; JS swaps in the live panel */
+  .ring-static { display: none; }
+  html:not(.js) .ring-live { display: none; }
+  html:not(.js) .ring-static {
+    display: grid; gap: var(--s4);
+    list-style: none;
+  }
+  .ring-static li { display: grid; grid-template-columns: 92px 1fr; gap: var(--s3); align-items: baseline; }
+  .ring-static-year { font-size: 24px; color: var(--kopar); }
+  .ring-static .ring-body { min-height: 0; }
+
+  /* ---------- IV nov / hearth ---------- */
+  .nov-grid { display: grid; gap: var(--s6); align-items: start; }
+  @media (min-width: 980px) { .nov-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); } }
+  .nov-plate-tall { aspect-ratio: 2 / 3; }
+  @media (min-width: 980px) { .nov-plate-tall { position: sticky; top: 96px; } }
+  .nov-copy p { color: var(--ull-dim); max-width: 60ch; }
+  .nov-copy .chapter-title { color: var(--ull); }
+  .nov-plate-wide { aspect-ratio: 16 / 9; margin-top: var(--s6); }
+  .plate-caption {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 40px 20px 14px;
+    background: linear-gradient(180deg, transparent, rgba(6,8,11,.85));
+    font-size: 12px; letter-spacing: .04em; color: var(--ull-dim);
+  }
+
+  /* ---------- V tun ---------- */
+  .tun-rows { display: grid; gap: var(--s8); margin-top: var(--s7); }
+  .tun-row { display: grid; gap: var(--s5); align-items: center; }
+  @media (min-width: 980px) {
+    .tun-row { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--s7); }
+    .tun-row--flip .tun-plate { order: 2; }
+    .tun-row--flip .tun-copy { order: 1; }
+  }
+  .tun-plate { max-width: 460px; }
+  .tun-row--flip .tun-plate { justify-self: end; }
+  .tun-meta { display: flex; align-items: center; gap: 18px; }
+  .tun-hb { font-size: 15px; letter-spacing: .18em; color: var(--kopar-faint); }
+  .tun-name { font-size: clamp(30px, 3.2vw, 44px); margin-top: 14px; }
+  .tun-body { color: var(--ull-dim); margin-top: 18px; max-width: 58ch; }
+  .tun-facts {
+    list-style: none;
+    margin-top: 28px;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 28px;
+    max-width: 520px;
+  }
+  .tun-facts li { border-top: 1px solid var(--line-soft); padding-top: 10px; display: grid; gap: 2px; }
+  .tun-fact-key {
+    font-size: 10px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--ull-faint);
+  }
+  .tun-fact-val { font-size: 16px; color: var(--ull); }
+  .tun-note { margin-top: 32px; }
+  .tun-status-note {
+    font-size: 11px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase;
+    color: var(--ull-faint);
+  }
+
+  /* ---------- VI setning ---------- */
+  .setning-grid { display: grid; gap: var(--s6); align-items: start; }
+  @media (min-width: 980px) { .setning-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
+  .setning-grid p { color: var(--ull-dim); max-width: 58ch; }
+  .setning-grid .chapter-title { color: var(--ull); }
+  .setning-plate { aspect-ratio: 2 / 3; max-width: 440px; justify-self: end; }
+  @media (min-width: 980px) { .setning-plate { position: sticky; top: 96px; } }
+
+  /* ---------- VII tinging ---------- */
+  .tinging-invite { padding-bottom: calc(var(--s9) + var(--s6)); }
+  .tinging-lede { color: var(--ull-dim); max-width: 52ch; margin-inline: auto; }
+</style>
+
+<script>
+  import { rings } from '../data/site';
+
+  // ---- the scribe: draw across the log, read the rings ----
+  const input = document.getElementById('scribe') as HTMLInputElement | null;
+  if (input) {
+    const year = document.querySelector('[data-ring-year]') as HTMLElement;
+    const title = document.querySelector('[data-ring-title]') as HTMLElement;
+    const body = document.querySelector('[data-ring-body]') as HTMLElement;
+    const marker = document.querySelector('[data-ring-marker]') as SVGCircleElement;
+    const R_MIN = 5.5; // % of figure — the pith
+    const R_MAX = 46; // % — the bark
+    const set = (i: number) => {
+      const r = rings[i];
+      if (!r) return;
+      year.textContent = String(r.year);
+      title.textContent = r.title;
+      body.textContent = r.body;
+      marker.setAttribute('r', String(R_MIN + r.t * (R_MAX - R_MIN)));
+      input.setAttribute('aria-valuetext', `${r.year} — ${r.title}`);
+    };
+    input.addEventListener('input', () => set(+input.value));
+    set(+input.value);
+  }
+</script>

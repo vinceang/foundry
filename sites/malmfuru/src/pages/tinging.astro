@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { footer } from '../data/site';
+
+const matters = [
+  { value: 'tinging', label: 'A new house — the tinging' },
+  { value: 'skavlen', label: 'Ask after Skavlen (HB 384)' },
+  { value: 'seventh', label: 'A seventh-winter visit' },
+  { value: 'visit', label: 'A visit to the workshop at Nore' },
+];
+---
+
+<Layout
+  title="The tinging — write to Nore · Malmfuru"
+  description="Commissioning a house from Malmfuru begins with a letter. Tell us where the house would stand and what it is for; the master answers within a week."
+>
+  <main class="desk-main">
+    <section class="desk-wrap">
+      <div class="desk-head">
+        <p class="label rv">The tinging · since 1791 it begins the same way</p>
+        <h1 class="display desk-title rv">A house begins<br />as a letter.</h1>
+        <p class="desk-lede rv">
+          No drawings are needed, and nothing is decided yet. Tell us where the house would stand,
+          what it is for, and who will grow old in it. The letter leaves from your own hand — the
+          workshop holds no forms, and the master answers within a week.
+        </p>
+      </div>
+
+      <form class="desk rv" method="post" action={`mailto:${footer.corrMail}`} data-desk>
+        <div class="desk-field">
+          <label class="label label--dim" for="f-name">Your name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required />
+        </div>
+        <div class="desk-field">
+          <label class="label label--dim" for="f-place">Where the house would stand</label>
+          <input id="f-place" name="place" type="text" placeholder="A valley, a shore, a shoulder of ridge — as exact or as loose as you know it" />
+        </div>
+        <div class="desk-field">
+          <label class="label label--dim" for="f-matter">The matter</label>
+          <select id="f-matter" name="matter">
+            {matters.map((m) => (
+              <option value={m.value}>{m.label}</option>
+            ))}
+          </select>
+        </div>
+        <div class="desk-field">
+          <label class="label label--dim" for="f-letter">The letter</label>
+          <textarea id="f-letter" name="letter" rows="9" required></textarea>
+        </div>
+        <div class="desk-actions">
+          <button class="btn-kopar" type="submit">Send the letter</button>
+          <p class="desk-note">
+            Sending opens the letter in your own mail client, addressed to
+            <span style="color: var(--ull);">{footer.corrMail}</span>.
+          </p>
+        </div>
+      </form>
+
+      <div class="desk-facts rv">
+        <p><span class="nov nov--faint" aria-hidden="true" style="margin-right: 14px; vertical-align: -1px;"></span>Three houses leave the valley each year. The timber for one more is drying now; the book for 2028 holds one open place.</p>
+        <p>A tinging runs long by design: seven years from blaze to felling, seven from felling to walls. Most of our letters are answered by the next master to hold the axe. That is normal here.</p>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .desk-main {
+    min-height: 100svh;
+    padding: calc(var(--s9) + 40px) var(--gutter) var(--s9);
+    background:
+      radial-gradient(70% 50% at 50% 0%, rgba(192, 122, 77, 0.05), transparent 70%),
+      var(--natt);
+  }
+  .desk-wrap { max-width: 760px; margin-inline: auto; }
+  .desk-title { font-size: clamp(36px, 4.6vw, 64px); margin-top: 22px; }
+  .desk-lede { color: var(--ull-dim); margin-top: 24px; max-width: 56ch; }
+
+  .desk {
+    margin-top: var(--s7);
+    background: var(--tjaere) var(--grain);
+    border: 1px solid var(--line-soft);
+    padding: clamp(24px, 4vw, 56px);
+    display: grid;
+    gap: var(--s5);
+  }
+  .desk-field { display: grid; gap: 12px; }
+  .desk input,
+  .desk select,
+  .desk textarea {
+    font-family: var(--body);
+    font-size: 15.5px;
+    color: var(--ull);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 10px 2px;
+    border-radius: 0;
+    transition: border-color 0.35s;
+  }
+  .desk textarea { font-family: var(--display); font-size: 18px; line-height: 1.7; resize: vertical; }
+  .desk select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .desk option { background: var(--tjaere); color: var(--ull); }
+  .desk input::placeholder, .desk textarea::placeholder { color: var(--ull-faint); }
+  .desk input:focus-visible, .desk select:focus-visible, .desk textarea:focus-visible {
+    outline: none;
+    border-bottom-color: var(--kopar-bright);
+  }
+  .desk-actions { display: grid; gap: 20px; justify-items: start; }
+  .desk-note { font-size: 12.5px; color: var(--ull-faint); max-width: 44ch; }
+
+  .desk-facts {
+    margin-top: var(--s7);
+    display: grid;
+    gap: var(--s4);
+    padding-top: var(--s5);
+    border-top: 1px solid var(--line-soft);
+    color: var(--ull-dim);
+    font-size: 14px;
+  }
+</style>
+
+<script>
+  // The writing desk: submitting composes the letter in the guest's own
+  // mail client — the workshop never holds a form submission.
+  // `?hus=<slug>` preselects the matter (Tun CTAs use it).
+  const form = document.querySelector<HTMLFormElement>('[data-desk]');
+  if (form) {
+    const params = new URLSearchParams(location.search);
+    const hus = params.get('hus');
+    const select = form.querySelector<HTMLSelectElement>('#f-matter');
+    if (hus && select) {
+      const opt = Array.from(select.options).find((o) => o.value === hus);
+      if (opt) select.value = hus;
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = (id: string) => (form.querySelector(`#${id}`) as HTMLInputElement | HTMLTextAreaElement).value.trim();
+      const matter = (form.querySelector('#f-matter') as HTMLSelectElement);
+      const matterLabel = matter.options[matter.selectedIndex]?.text ?? 'A new house';
+      const subject = `${matterLabel} — ${v('f-name')}`;
+      const body = [
+        v('f-letter'),
+        '',
+        v('f-place') ? `Where the house would stand: ${v('f-place')}` : '',
+        `— ${v('f-name')}`,
+      ]
+        .filter(Boolean)
+        .join('\n');
+      location.href = `mailto:post@malmfuru.no?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+</script>
