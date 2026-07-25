@@ -128,12 +128,38 @@ thresholds and in small structural fields, not as a generic luxury wallpaper.
 This is project-specific and must not become the visual shorthand for every
 Aubade.
 
-## Signature interaction family
+## Signature interaction — and the light-over-time trap
 
-Aubade projects may use **light over time** as a recurring family resemblance,
-but each must interpret it through its subject. For a hotel, a vertical sun
-line can move through the guest’s day. For a residence, light might reveal how
-rooms change by orientation. Never paste the same animation onto every site.
+**Light over time is no longer a family resemblance to reach for; it is a
+mannerism to avoid by default.** It was distinctive once, but the collection
+has now spent it four times over — Lagar do Sol's day line, Aresta's
+orientation-and-light, Dar el Warda's sundial, Larès's forecast-written day —
+and a device that appears on every dwelling stops reading as atmosphere and
+starts reading as pretension. If the next hotel also "watches the light move
+through the day," it is wrong on arrival.
+
+So: **survey what the built sites already do (their DESIGN.md signatures)
+before choosing, and if time-of-day / sun-position / day-length is already
+well represented — it heavily is — pick a different axis.** Reach for
+time only when the subject makes it genuinely inevitable rather than
+decorative (a literal sundial, a lighthouse's timed character), and even then
+prefer a fresher take.
+
+The stronger signatures in the collection are the ones that leave time alone
+and interrogate the subject itself — proof there is rich territory elsewhere:
+
+- **Material / process:** a goblet's glow cooling to glass; a maple plate's
+  graduation mapped as contours; varnish building coat by coat.
+- **Spatial / structural:** a corner joint assembling as you scroll; a
+  flight profile flown down a rail.
+- **Configurable / made-to-order (the current favorite):** the product
+  redrawn live from the buyer's own inputs, the order placed in the same act
+  (Veta's "draw your board"). See SKILL.md Phase 2.
+- **Provenance / archive:** a tree-ring record scrubbed from pith to bark; a
+  ledger of what is on the bench, promised, and gone.
+
+Interpret through the subject, never paste the same animation onto every
+site — and now, never default to the sun.
 
 ## Floors
 
