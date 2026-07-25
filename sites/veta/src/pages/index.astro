@@ -1,0 +1,788 @@
+---
+import "../styles/global.css";
+
+const stock = [
+  {
+    name: "No. 214 — the everyday shortboard",
+    img: "stock",
+    desc: "A round-tail thruster foiled for Zicatela on a clean morning. Enough foam under the chest to make the drop, thin enough in the tail to hold the wall.",
+    dims: "6'2\" × 19 ¼\" × 2 ½\"",
+    vol: "31.2 L",
+    glass: "6 + 4 oz deck, 6 oz bottom",
+    fins: "Thruster (FCS II)",
+    price: "$980",
+  },
+  {
+    name: "No. 207 — the step-up",
+    img: "stock-b",
+    desc: "Pulled-in pin, extra nose lift, glassed heavier for the bigger days at the point. Drawn narrow so it sits in a steep face without chattering.",
+    dims: "6'8\" × 18 ¾\" × 2 ⅝\"",
+    vol: "32.0 L",
+    glass: "6 + 6 oz deck, 6 oz bottom",
+    fins: "Thruster (glass-on)",
+    price: "$1,140",
+  },
+  {
+    name: "No. 219 — the twin, teal tint",
+    img: "stock-c",
+    desc: "A wide swallow-tail twin for smaller, softer days — fast off the bottom, loose off the top. Laminated with a single seam of sea-green resin tint down the deck.",
+    dims: "5'8\" × 20 ½\" × 2 ½\"",
+    vol: "33.4 L",
+    glass: "4 + 4 oz deck, 6 oz bottom",
+    fins: "Twin + trailer",
+    price: "$1,020",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Veta — a one-bench surfboard shaping bay above Playa Zicatela, Puerto Escondido, Oaxaca. Boards drawn to one rider, one wave, one line. Order a custom board."
+    />
+    <title>Veta — shaping bay, Puerto Escondido, Oaxaca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..500,0..80,0..1;1,9..144,300..500,0..80,0..1&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero-bench.jpg" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2ece0'/%3E%3Cpath d='M16 3 C11 9 10 22 16 29 C22 22 21 9 16 3 Z' fill='none' stroke='%235f8177' stroke-width='1.6'/%3E%3Cline x1='16' y1='3' x2='16' y2='29' stroke='%237d5a34' stroke-width='1'/%3E%3C/svg%3E"
+    />
+    <script is:inline>
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.classList.add("js");
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#bench">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top">
+        <svg class="tick" viewBox="0 0 30 12" aria-hidden="true"><path d="M0 11 C10 11 20 3 30 1" /></svg>
+        Veta <small>Zicatela</small>
+      </a>
+      <nav class="site-nav" aria-label="Sections">
+        <a class="quiet" href="#bench">The bench</a>
+        <a class="quiet" href="#line">The line</a>
+        <a class="quiet" href="#made">Made</a>
+        <a class="quiet" href="#maker">The maker</a>
+        <a class="quiet" href="#stock">The stock</a>
+        <a class="nav-order" href="#order">Order</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ hero ============ -->
+      <section class="hero" aria-label="Veta">
+        <div class="frame">
+          <img
+            src="/images/hero-bench.jpg"
+            srcset="/images/hero-bench-800.jpg 800w, /images/hero-bench.jpg 1536w"
+            sizes="100vw"
+            alt="A bare white foam surfboard blank on padded racks in a shaping bay, its basswood stringer line catching light, foam dust hanging in a shaft of daylight."
+            fetchpriority="high"
+          />
+        </div>
+        <p class="hero-caption">Blank No. 220<br />on the racks · 6'2" outline</p>
+        <div class="hero-copy">
+          <p class="eyebrow">Aubade · 15°51′ N — 97°04′ W · Puerto Escondido, Oaxaca</p>
+          <h1 class="hero-title">Veta</h1>
+          <p class="hero-statement">One line down the blank decides the whole board.</p>
+          <div class="hero-actions">
+            <a class="text-link" href="#line">Draw a board <span class="arrow">→</span></a>
+            <a class="text-link" href="#order">Order a board <span class="arrow">→</span></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ the bench ============ -->
+      <section class="section" id="bench" aria-labelledby="bench-h">
+        <div class="bench-grid">
+          <div class="bench-copy reveal">
+            <p class="eyebrow">The bench</p>
+            <h2 class="statement" id="bench-h">One bench, one pair of hands, one board at a time.</h2>
+            <p>
+              Veta is a single shaping bay a five-minute walk from Playa Zicatela, where the
+              sand-bottom point throws the heavy, line-driven waves the boards are read for.
+              Tomás Rivera has planed foam here since 2011. Every blank is skinned, drawn,
+              and foiled by hand, then glassed by eye — no two rockers off the same template,
+              because no two riders stand the same on a wave.
+            </p>
+            <p>
+              A board that carries a rider well is a matter of a few thousandths of an inch of
+              foam moved from one place to another. That is the whole craft, and it is why
+              each board leaves the bay with a number, not a model name.
+            </p>
+            <dl class="facts">
+              <div><dt>Since</dt><dd class="num">2011</dd></div>
+              <div><dt>Boards / year</dt><dd class="num">~70</dd></div>
+              <div><dt>Shaped by</dt><dd>One</dd></div>
+              <div><dt>Lead time</dt><dd class="num">6 wks</dd></div>
+            </dl>
+          </div>
+          <figure class="bench-figure reveal">
+            <img
+              src="/images/hand-plane.jpg"
+              srcset="/images/hand-plane-800.jpg 800w, /images/hand-plane.jpg 1536w"
+              sizes="(max-width: 900px) 100vw, 44vw"
+              alt="A shaper's hands running a small block plane down the rail of a foam blank, thin curls of foam peeling up, face just lit at the edge of frame."
+              loading="lazy"
+            />
+            <figcaption class="caption-row"><span>Planing the rail</span><span>Block plane, by hand</span></figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <div class="rail-rule" aria-hidden="true">
+        <svg viewBox="0 0 1200 26" preserveAspectRatio="none"><path d="M0 24 C300 24 520 2 600 2 C680 2 900 24 1200 24" /></svg>
+      </div>
+
+      <!-- ================= THE LINE — signature ================= -->
+      <section class="section line-section" id="line" aria-labelledby="line-h">
+        <div class="section-head reveal">
+          <p class="eyebrow">The line</p>
+          <h2 class="statement" id="line-h">Draw the board before it is foam.</h2>
+          <p class="lede">
+            Tell the bench who is riding and where. The outline, the rocker, and the fins
+            redraw together in one motion — the way a shaper pencils a template over the
+            blank. What you draw here is the board Tomás starts from.
+          </p>
+        </div>
+
+        <div class="line-stage reveal">
+          <div class="line-draw">
+            <svg id="board-svg" viewBox="0 0 900 440" role="img"
+              aria-label="A live drawing of a surfboard: plan outline above, rocker profile below. Default: a 6 foot point-break board for a 6 foot 2 rider, drive style, thruster fins.">
+              <!-- PLAN (top-down), horizontal centre line, nose at left.
+                   The d values below are the default board (6'2" rider / point /
+                   drive) drawn statically so the panel is complete with JS off;
+                   the script recomputes them on interaction. -->
+              <g id="plan-group">
+                <path id="plan-ghost" class="board-plan ghost" d="" />
+                <path id="plan-outline" class="board-plan" d="M 70 150 C 141 124, 241.5 76, 365.7 76 C 488.5 76, 570.4 118, 638.6 118 C 656.6 142, 656.6 174, 638.6 198 C 570.4 198, 488.5 240, 365.7 240 C 241.5 240, 141 192, 70 166 Q 64 158 70 150 Z" />
+                <path id="plan-active" class="board-active" d="M 70 150 C 141 124, 241.5 76, 365.7 76 C 488.5 76, 570.4 118, 638.6 118 C 656.6 142, 656.6 174, 638.6 198 C 570.4 198, 488.5 240, 365.7 240 C 241.5 240, 141 192, 70 166 Q 64 158 70 150 Z" />
+                <line id="plan-stringer" class="board-stringer" x1="70" y1="158" x2="638.6" y2="158" />
+                <g id="fins"><path class="board-fin" d="M 592.6 158 q 15.6 -4.3 31.2 1.4 q -9.9 8.5 -21.3 9.9 Z" /><path class="board-fin" d="M 602.6 134.8 q 13.4 -3.6 26.7 1.2 q -8.5 7.3 -18.2 8.5 Z" /><path class="board-fin" d="M 602.6 181.2 q 13.4 -3.6 26.7 1.2 q -8.5 7.3 -18.2 8.5 Z" /></g>
+                <text x="40" y="46" class="draw-label">Outline · plan</text>
+              </g>
+              <!-- ROCKER (side), nose at left -->
+              <g id="rocker-group">
+                <line id="rocker-base" class="rocker-base" x1="70" y1="372" x2="638.6" y2="372" />
+                <path id="rocker-path" class="rocker-line" d="M 70 284.6 C 245.1 335.3, 318.4 372, 388.4 372 C 448.4 372, 533.6 357.6, 638.6 324" />
+                <text x="40" y="326" class="draw-label">Rocker · profile</text>
+              </g>
+            </svg>
+          </div>
+
+          <form class="line-controls" id="line-form" aria-label="Board parameters">
+            <p class="eyebrow">Draw your board</p>
+
+            <div class="control">
+              <span class="control-label" id="height-lab">
+                Rider height <span class="val" id="height-val">6'2"</span>
+              </span>
+              <input type="range" id="height" name="height" min="62" max="78" step="1" value="74"
+                aria-labelledby="height-lab" list="height-ticks" />
+              <datalist id="height-ticks">
+                <option value="62"></option><option value="70"></option><option value="78"></option>
+              </datalist>
+            </div>
+
+            <div class="control">
+              <span class="control-label">Wave</span>
+              <div class="seg" role="radiogroup" aria-label="Wave type">
+                <label class="on"><input type="radio" name="wave" value="point" checked /><span>Point</span></label>
+                <label><input type="radio" name="wave" value="beach" /><span>Beach</span></label>
+                <label><input type="radio" name="wave" value="reef" /><span>Reef</span></label>
+              </div>
+            </div>
+
+            <div class="control">
+              <span class="control-label">Style</span>
+              <div class="seg" role="radiogroup" aria-label="Riding style">
+                <label class="on"><input type="radio" name="style" value="drive" checked /><span>Drive</span></label>
+                <label><input type="radio" name="style" value="flow" /><span>Flow</span></label>
+                <label><input type="radio" name="style" value="loose" /><span>Loose</span></label>
+              </div>
+            </div>
+
+            <div class="spec-out" aria-live="polite">
+              <dl>
+                <div><dt>Length</dt><dd id="spec-length" class="num">6'0"</dd></div>
+                <div><dt>Volume</dt><dd id="spec-vol" class="num">32.6 L</dd></div>
+                <div><dt>Rocker N / T</dt><dd id="spec-rocker" class="num">4.8 / 2.5"</dd></div>
+                <div><dt>Fins</dt><dd id="spec-fins">Thruster</dd></div>
+                <div style="grid-column:1/-1"><dt>Glassing</dt><dd id="spec-glass" class="num" style="font-size:19px">6 + 4 oz</dd></div>
+              </dl>
+              <button type="button" class="start-board" id="start-board">
+                Start this board <span aria-hidden="true">→</span>
+              </button>
+              <p class="aside line-note">A drawing, not a catalogue. Tomás reads the final rocker off your weight and stance — the numbers here get you to the bench.</p>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <div class="rail-rule" aria-hidden="true">
+        <svg viewBox="0 0 1200 26" preserveAspectRatio="none"><path d="M0 24 C300 24 520 2 600 2 C680 2 900 24 1200 24" /></svg>
+      </div>
+
+      <!-- ============ made (materials) ============ -->
+      <section class="section" id="made" aria-labelledby="made-h">
+        <div class="made-grid">
+          <div class="made-lead reveal">
+            <p class="eyebrow">Made</p>
+            <h2 class="statement" id="made-h">Foam, wood, cloth, resin. Nothing else.</h2>
+          </div>
+          <figure class="reveal">
+            <img src="/images/stringer.jpg" srcset="/images/stringer-800.jpg 800w, /images/stringer.jpg 1024w" sizes="(max-width: 560px) 100vw, 30vw" alt="Close view of a basswood stringer line running down the centre of a bare white foam blank with faint pencil template marks." loading="lazy" />
+            <figcaption class="caption-row"><span>The stringer</span><span>Basswood, 4 mm</span></figcaption>
+          </figure>
+          <figure class="reveal">
+            <img src="/images/resin-tint.jpg" srcset="/images/resin-tint-800.jpg 800w, /images/resin-tint.jpg 1024w" sizes="(max-width: 560px) 100vw, 30vw" alt="Sea-green teal resin being drawn across woven fibreglass cloth on a surfboard deck, the weave visible under the wet tint." loading="lazy" />
+            <figcaption class="caption-row"><span>The tint</span><span>Sea-green resin</span></figcaption>
+          </figure>
+          <figure class="reveal">
+            <img src="/images/fin.jpg" srcset="/images/fin-800.jpg 800w, /images/fin.jpg 1024w" sizes="(max-width: 560px) 100vw, 30vw" alt="A set of three foiled surfboard fins on a workbench, sharp trailing edges catching daylight." loading="lazy" />
+            <figcaption class="caption-row"><span>The fins</span><span>Foiled by hand</span></figcaption>
+          </figure>
+
+          <div class="made-register reveal">
+            <dl class="register">
+              <dt>Blank</dt><dd>US Blanks polyurethane, or recycled EPS for the lighter builds.</dd>
+              <dt>Stringer</dt><dd>Basswood down the centre; paulownia when the board wants more spring.</dd>
+              <dt>Cloth</dt><dd>Warp-woven E-glass, 4 and 6 oz — the schedule set to the rider's weight.</dd>
+              <dt>Resin</dt><dd>Silmar polyester, or epoxy on EPS; hot-coated and sanded by hand.</dd>
+              <dt>Fins</dt><dd>Foiled from marine ply or glass-on; FCS II boxes routed to spec.</dd>
+            </dl>
+            <p class="aside register-note">
+              Five materials, and the whole board is one or another of them. A 6+4 schedule
+              means six ounces over four on the deck where your chest lands, four alone under
+              the tail where it needs to flex. The weight goes where the wear is.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ the maker ============ -->
+      <section class="section" id="maker" aria-labelledby="maker-h">
+        <div class="maker-grid">
+          <figure class="maker-figure reveal">
+            <img src="/images/maker.jpg" srcset="/images/maker-800.jpg 800w, /images/maker.jpg 1024w" sizes="(max-width: 900px) 100vw, 40vw" alt="A surfboard shaper in a dust-flecked apron standing beside a finished board against a plaster wall, foam dust in soft daylight." loading="lazy" />
+            <figcaption class="caption-row"><span>Tomás Rivera</span><span>At the racks</span></figcaption>
+          </figure>
+          <div class="maker-copy reveal">
+            <p class="eyebrow">The maker</p>
+            <h2 class="statement" id="maker-h">The hand that reads the rail is the whole shop.</h2>
+            <p>
+              Tomás shaped his first blank in 2004 and opened the bay above Zicatela in 2011.
+              He surfs the point most mornings before the bay opens, which is where the boards
+              are actually designed — a rocker gets changed because a wave the week before asked
+              for it, not because a catalogue turned over.
+            </p>
+            <p>
+              He works to the rider, not to a range. Send him the board you ride now and what it
+              does wrong, and the next one corrects it. That is the only brief he needs.
+            </p>
+            <p class="maker-sign">— Tomás</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ the stock ============ -->
+      <section class="section" id="stock" aria-labelledby="stock-h">
+        <div class="section-head reveal">
+          <p class="eyebrow">The stock</p>
+          <h2 class="statement" id="stock-h">A few boards are finished and on the rack now.</h2>
+          <p class="lede">
+            When a build leaves foam over, or Tomás wants to try a shape, it goes on the wall
+            ready to ride. These are the ones standing there this week.
+          </p>
+        </div>
+        <div class="stock-list">
+          {stock.map((b) => (
+            <article class="stock-item reveal">
+              <figure class="stock-fig">
+                <img src={`/images/${b.img}.jpg`} srcset={`/images/${b.img}-800.jpg 800w, /images/${b.img}.jpg 1536w`} sizes="(max-width: 860px) 100vw, 300px" alt={`Finished surfboard: ${b.name}`} loading="lazy" />
+              </figure>
+              <div class="stock-body">
+                <h3 class="stock-name">{b.name}</h3>
+                <p class="stock-desc">{b.desc}</p>
+                <div class="stock-spec">
+                  <span><b>Dims</b>{b.dims}</span>
+                  <span><b>Volume</b>{b.vol}</span>
+                  <span><b>Glass</b>{b.glass}</span>
+                  <span><b>Fins</b>{b.fins}</span>
+                </div>
+              </div>
+              <div class="stock-action">
+                <div class="stock-price num">{b.price}</div>
+                <a class="reserve" href={`mailto:taller@veta.mx?subject=Reserve%20${encodeURIComponent(b.name)}&body=I'd%20like%20to%20reserve%20${encodeURIComponent(b.name)}%20(${encodeURIComponent(b.dims)}).%20My%20details%3A%0A%0AName%3A%0AWhere%20I%20surf%3A`}>Reserve</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- ============ order ============ -->
+      <section class="order-section" id="order" aria-labelledby="order-h">
+        <div class="order-inner">
+          <div class="order-grid">
+            <div class="order-intro reveal">
+              <p class="eyebrow">Order a board</p>
+              <h2 class="statement" id="order-h">Start a board drawn to you.</h2>
+              <p>
+                This is the order, not a checkout. Fill in what you know — the fields carried
+                from <a class="link" href="#line">the line</a> are already here — and Tomás
+                replies within two days with the rocker he'd draw, the price, and the lead time.
+                No card is taken here; the board is confirmed by correspondence and paid when
+                it's booked in.
+              </p>
+              <figure style="margin-top:32px">
+                <img src="/images/order.jpg" srcset="/images/order-800.jpg 800w, /images/order.jpg 1536w" sizes="(max-width: 900px) 100vw, 32vw" alt="A shaper's bench with a wooden template, pencil, tape, block plane, and a blank spec sheet — the start of a commission." loading="lazy" />
+                <figcaption class="caption-row"><span>The bench, ready</span><span>Where your order lands</span></figcaption>
+              </figure>
+              <p class="order-price">A custom board runs $850–$1,400, glassing and fins in.</p>
+            </div>
+
+            <form class="order-form reveal" id="order-form" action="mailto:taller@veta.mx" method="post" enctype="text/plain">
+              <fieldset class="form-block">
+                <legend>The board</legend>
+                <div class="field-grid three">
+                  <div class="field">
+                    <label for="length">Length</label>
+                    <input id="length" name="length" type="text" placeholder="6'2&quot;" />
+                  </div>
+                  <div class="field">
+                    <label for="width">Width</label>
+                    <input id="width" name="width" type="text" placeholder="19 ¼&quot;" />
+                  </div>
+                  <div class="field">
+                    <label for="thickness">Thickness</label>
+                    <input id="thickness" name="thickness" type="text" placeholder="2 ½&quot;" />
+                  </div>
+                </div>
+                <div class="field-grid" style="margin-top:18px">
+                  <div class="field">
+                    <label for="volume">Volume target (L)</label>
+                    <input id="volume" name="volume" type="text" placeholder="31.5" />
+                    <span class="hint">Or leave blank — shape to my weight.</span>
+                  </div>
+                  <div class="field">
+                    <label for="wave">Wave</label>
+                    <select id="wave" name="wave">
+                      <option value="point">Point</option>
+                      <option value="beach">Beach</option>
+                      <option value="reef">Reef</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="field-grid" style="margin-top:18px">
+                  <div class="field">
+                    <label for="style">Style</label>
+                    <select id="style" name="style">
+                      <option value="drive">Drive</option>
+                      <option value="flow">Flow</option>
+                      <option value="loose">Loose</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="rocker">Rocker (nose / tail)</label>
+                    <input id="rocker" name="rocker" type="text" placeholder="4.6 / 2.4&quot;" />
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-block">
+                <legend>Construction</legend>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="blank">Blank</label>
+                    <select id="blank" name="blank">
+                      <option value="pu">Polyurethane (PU)</option>
+                      <option value="eps">Recycled EPS / epoxy</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="stringer">Stringer</label>
+                    <select id="stringer" name="stringer">
+                      <option value="basswood">Basswood, 4 mm</option>
+                      <option value="paulownia">Paulownia</option>
+                      <option value="none">Stringerless</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="glass">Glassing schedule</label>
+                    <select id="glass" name="glass">
+                      <option value="4+4">4 + 4 oz — light</option>
+                      <option value="6+4" selected>6 + 4 oz — standard</option>
+                      <option value="6+6">6 + 6 oz — heavy</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="fins">Fin setup</label>
+                    <select id="fins" name="fins">
+                      <option value="single">Single</option>
+                      <option value="2+1">2 + 1</option>
+                      <option value="thruster" selected>Thruster</option>
+                      <option value="quad">Quad</option>
+                      <option value="twin">Twin + trailer</option>
+                    </select>
+                  </div>
+                  <div class="field wide">
+                    <label for="tint">Tint</label>
+                    <select id="tint" name="tint">
+                      <option value="clear">Clear over foam</option>
+                      <option value="teal">Sea-green resin tint (deck seam)</option>
+                      <option value="amber">Amber resin tint</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-block">
+                <legend>The rider</legend>
+                <div class="field-grid three">
+                  <div class="field">
+                    <label for="rheight">Height</label>
+                    <input id="rheight" name="rider-height" type="text" placeholder="6'2&quot;" />
+                  </div>
+                  <div class="field">
+                    <label for="weight">Weight</label>
+                    <input id="weight" name="weight" type="text" placeholder="78 kg" />
+                  </div>
+                  <div class="field">
+                    <label for="ability">Ability</label>
+                    <select id="ability" name="ability">
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                      <option value="expert">Expert</option>
+                    </select>
+                  </div>
+                  <div class="field wide">
+                    <label for="current">The board you ride now — and what it does wrong</label>
+                    <textarea id="current" name="current-board" placeholder="e.g. a 6'0 that's too loose in the pocket at Zicatela on a bigger day"></textarea>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset class="form-block">
+                <legend>You</legend>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" required />
+                  </div>
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="name@example.com" required />
+                  </div>
+                  <div class="field wide">
+                    <label for="where">Where you surf</label>
+                    <input id="where" name="where-you-surf" type="text" placeholder="La Punta most mornings; travel a few times a year" />
+                  </div>
+                </div>
+              </fieldset>
+
+              <button class="order-submit" type="submit">Send the order</button>
+              <p class="order-fine">
+                Sends an order request to Tomás by email — no payment is taken on this page.
+                He replies within two days. Works with JavaScript off.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ correspondence ============ -->
+    <footer class="footer" id="correspondence">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div>
+            <p class="wordmark">
+              <svg class="tick" viewBox="0 0 30 12" aria-hidden="true"><path d="M0 11 C10 11 20 3 30 1" /></svg>
+              Veta <small>Zicatela</small>
+            </p>
+            <address>
+              Calle del Morro, La Punta<br />
+              Puerto Escondido, Oaxaca, México<br />
+              <a href="mailto:taller@veta.mx">taller@veta.mx</a><br />
+              <a href="tel:+525419540000">+52 954 195 40 00</a>
+            </address>
+          </div>
+          <div>
+            <h3>Sections</h3>
+            <ul>
+              <li><a href="#bench">The bench</a></li>
+              <li><a href="#line">The line</a></li>
+              <li><a href="#made">Made</a></li>
+              <li><a href="#maker">The maker</a></li>
+              <li><a href="#stock">The stock</a></li>
+              <li><a href="#order">Order a board</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3>The swell letter</h3>
+            <p class="aside" style="margin-top:14px; font-size:14px; color:rgba(242,236,224,0.72); max-width:32ch;">
+              A note when boards come off the rack and when the point turns on. A few times a year, no more.
+            </p>
+            <form class="letter-field" action="mailto:taller@veta.mx" method="post" enctype="text/plain">
+              <label class="sr-only" for="letter-email">Your email</label>
+              <input id="letter-email" name="email" type="email" placeholder="Leave an email" required />
+              <button type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>Veta · Aubade — a fictional Foundry house</span>
+        <span>Puerto Escondido, Oaxaca · shaped one at a time</span>
+      </div>
+    </footer>
+
+    <script is:inline>
+      // ---------- header: inherit the wall color past the hero ----------
+      const header = document.querySelector(".site-header");
+      const onScroll = () => header.classList.toggle("scrolled", scrollY > innerHeight * 0.82);
+      addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // ---------- reveals ----------
+      if (document.documentElement.classList.contains("fx")) {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((e) => {
+            if (e.isIntersecting) { e.target.classList.add("shown"); io.unobserve(e.target); }
+          }),
+          { threshold: 0.14, rootMargin: "0px 0px -40px 0px" }
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("shown"));
+      }
+
+      // ================= THE LINE — the board redraws live =================
+      // Plan is drawn top-down in a 900x460 viewBox. Nose at left (x small),
+      // tail at right. Centre line y=150. We build the outline parametrically
+      // from a handful of measurements so outline, rocker, and fins all move
+      // from one set of numbers.
+      (function () {
+        const svg = document.getElementById("board-svg");
+        if (!svg) return;
+
+        const el = (id) => document.getElementById(id);
+        const planOutline = el("plan-outline");
+        const planActive = el("plan-active");
+        const planGhost = el("plan-ghost");
+        const stringer = el("plan-stringer");
+        const rocker = el("rocker-path");
+        const rockerBase = el("rocker-base");
+        const finsG = el("fins");
+
+        // plan geometry constants (viewBox units)
+        const CY = 158;            // plan centre line
+        const X0 = 70;             // nose x
+        const XLEN = 760;          // max drawing length at longest board
+        const RY = 372;            // rocker baseline y
+
+        // Build a symmetric board outline path from measurements.
+        // len 0..1 (fraction of XLEN), noseW/midW/tailW in viewBox half-widths,
+        // tail: "pin" | "round" | "swallow", widePoint 0..1 (where mid width sits)
+        function outlinePath(p) {
+          const x0 = X0;
+          const x1 = X0 + XLEN * p.len;
+          const wide = x0 + (x1 - x0) * p.widePoint;
+          const nx = x0, tx = x1;
+          const nW = p.noseW, mW = p.midW, tW = p.tailW;
+          // top rail (nose -> wide -> tail), then tail curve, then bottom rail back
+          const noseTip = 8; // small rounded nose, not a needle
+          let d = `M ${nx} ${CY - noseTip} `;
+          // nose to wide point (top)
+          d += `C ${nx + (wide - nx) * 0.24} ${CY - nW}, ${wide - (wide - nx) * 0.42} ${CY - mW}, ${wide} ${CY - mW} `;
+          // wide to tail (top)
+          d += `C ${wide + (tx - wide) * 0.45} ${CY - mW}, ${tx - (tx - wide) * 0.25} ${CY - tW}, ${tx} ${CY - tW} `;
+          // tail shape
+          if (p.tail === "pin") {
+            d += `C ${tx + 18} ${CY - tW * 0.4}, ${tx + 18} ${CY + tW * 0.4}, ${tx} ${CY + tW} `;
+          } else if (p.tail === "round") {
+            d += `C ${tx + 26} ${CY - tW * 0.5}, ${tx + 26} ${CY + tW * 0.5}, ${tx} ${CY + tW} `;
+          } else { // swallow — shallow rounded V
+            d += `Q ${tx + 8} ${CY - tW * 0.5} ${tx + 2} ${CY - tW * 0.18} `;
+            d += `Q ${tx - 16} ${CY} ${tx + 2} ${CY + tW * 0.18} `;
+            d += `Q ${tx + 8} ${CY + tW * 0.5} ${tx} ${CY + tW} `;
+          }
+          // tail to wide (bottom)
+          d += `C ${tx - (tx - wide) * 0.25} ${CY + tW}, ${wide + (tx - wide) * 0.45} ${CY + mW}, ${wide} ${CY + mW} `;
+          // wide to nose (bottom)
+          d += `C ${wide - (wide - nx) * 0.42} ${CY + mW}, ${nx + (wide - nx) * 0.24} ${CY + nW}, ${nx} ${CY + noseTip} `;
+          // round the nose tip
+          d += `Q ${nx - 6} ${CY} ${nx} ${CY - noseTip} Z`;
+          return { d, x0, x1, tW };
+        }
+
+        function rockerPath(p) {
+          // side profile: nose lift up at left, tail lift up at right, from baseline RY.
+          // Exaggerated ~1.9x in the drawing so the curve reads as a rocker, not a line.
+          const x0 = X0, x1 = X0 + XLEN * p.len;
+          const noseLift = p.noseRock * 1.9, tailLift = p.tailRock * 2.4;
+          const mid = x0 + (x1 - x0) * 0.56; // apex of contact sits behind centre
+          let d = `M ${x0} ${RY - noseLift} `;
+          d += `C ${x0 + (mid - x0) * 0.55} ${RY - noseLift * 0.42}, ${mid - 70} ${RY}, ${mid} ${RY} `;
+          d += `C ${mid + 60} ${RY}, ${x1 - (x1 - mid) * 0.42} ${RY - tailLift * 0.3}, ${x1} ${RY - tailLift} `;
+          return { d, x0, x1 };
+        }
+
+        function finSet(p, tailX, tW) {
+          // returns array of {cx, cy, s} fin positions on the plan tail
+          const base = tailX - 46;
+          const set = p.fins;
+          if (set === "single") return [{ x: base, y: CY, s: 1.4 }];
+          if (set === "twin") return [{ x: base, y: CY - tW * 0.55, s: 1.05 }, { x: base, y: CY + tW * 0.55, s: 1.05 }];
+          if (set === "quad")
+            return [
+              { x: base + 8, y: CY - tW * 0.62, s: 0.82 }, { x: base + 8, y: CY + tW * 0.62, s: 0.82 },
+              { x: base - 16, y: CY - tW * 0.3, s: 0.7 }, { x: base - 16, y: CY + tW * 0.3, s: 0.7 },
+            ];
+          // thruster
+          return [
+            { x: base, y: CY, s: 1.05 },
+            { x: base + 10, y: CY - tW * 0.58, s: 0.9 }, { x: base + 10, y: CY + tW * 0.58, s: 0.9 },
+          ];
+        }
+
+        function finPath(f) {
+          // a small swept fin, apex trailing toward tail (right)
+          const s = f.s * 1.35, x = f.x, y = f.y;
+          return `M ${x} ${y} q ${11 * s} ${-3 * s} ${22 * s} ${1 * s} q ${-7 * s} ${6 * s} ${-15 * s} ${7 * s} Z`;
+        }
+
+        // ---- model: derive measurements from the three controls ----
+        const waveShape = {
+          point: { midW: 82, tailW: 40, noseW: 34, widePoint: 0.5, noseRock: 46, tailRock: 24 },
+          beach: { midW: 96, tailW: 52, noseW: 44, widePoint: 0.46, noseRock: 40, tailRock: 20 },
+          reef:  { midW: 78, tailW: 38, noseW: 32, widePoint: 0.54, noseRock: 58, tailRock: 28 },
+        };
+        const styleShape = {
+          drive: { tail: "pin", fins: "thruster", widePush: 0.02, tailTrim: -4 },
+          flow:  { tail: "round", fins: "thruster", widePush: 0.0, tailTrim: 0 },
+          loose: { tail: "swallow", fins: "quad", widePush: -0.03, tailTrim: 6 },
+        };
+        const styleFinsLabel = { drive: "Thruster", flow: "Thruster", loose: "Quad" };
+
+        function feetInches(totalIn) {
+          const ft = Math.floor(totalIn / 12);
+          const inch = Math.round(totalIn - ft * 12);
+          if (inch === 12) return `${ft + 1}'0"`;
+          return `${ft}'${inch}"`;
+        }
+
+        let first = true;
+        function compute() {
+          const h = +document.getElementById("height").value; // rider height inches 62..78
+          const wave = svg.dataset.wave = (document.querySelector('input[name="wave"]:checked') || {}).value || "point";
+          const style = svg.dataset.style = (document.querySelector('input[name="style"]:checked') || {}).value || "drive";
+          const w = waveShape[wave], st = styleShape[style];
+
+          // board length: a performance shortboard runs a few inches under the rider.
+          // A 6'2" (74") rider rides ~a 6'0" (72"); point boards a touch longer, beach
+          // a touch shorter and looser. Range lands ~5'6"..6'8".
+          const waveLenAdj = wave === "point" ? 1 : wave === "beach" ? -1 : 0;
+          const boardIn = Math.round((h - 62) * 0.72 + 62 + waveLenAdj); // ~62..74 in
+          const lenFrac = 0.62 + (boardIn - 62) / 78; // map to drawing fraction ~0.62..0.77
+          const p = {
+            len: Math.min(0.95, lenFrac),
+            noseW: w.noseW, midW: w.midW, tailW: w.tailW,
+            widePoint: Math.min(0.6, Math.max(0.4, w.widePoint + st.widePush)),
+            tail: st.tail, fins: st.fins,
+            noseRock: w.noseRock, tailRock: w.tailRock + st.tailTrim,
+          };
+
+          // ---- draw ----
+          const out = outlinePath(p);
+          if (!first) planGhost.setAttribute("d", planOutline.getAttribute("d") || out.d);
+          planOutline.setAttribute("d", out.d);
+          planActive.setAttribute("d", out.d);
+          stringer.setAttribute("x1", out.x0); stringer.setAttribute("y1", CY);
+          stringer.setAttribute("x2", out.x1); stringer.setAttribute("y2", CY);
+
+          const rk = rockerPath(p);
+          rocker.setAttribute("d", rk.d);
+          rockerBase.setAttribute("x1", rk.x0); rockerBase.setAttribute("x2", rk.x1);
+
+          const fins = finSet(p, out.x1, out.tW);
+          finsG.innerHTML = fins.map((f) => `<path class="board-fin" d="${finPath(f)}" />`).join("");
+
+          // ghost fade
+          if (!first) {
+            planGhost.style.opacity = "1";
+            planGhost.getBoundingClientRect();
+            planGhost.style.transition = "opacity .8s ease";
+            planGhost.style.opacity = "0";
+          }
+          first = false;
+
+          // ---- spec readout (performance-shortboard ranges) ----
+          // ~27L at 5'6" climbing to ~34L at 6'8"; beach fuller, reef trimmer, loose +float.
+          const vol = (27 + (boardIn - 62) * 0.6 + (wave === "beach" ? 1.8 : wave === "reef" ? -0.8 : 0) + (style === "loose" ? 1.2 : style === "drive" ? -0.4 : 0)).toFixed(1);
+          const noseRockIn = (4.0 + w.noseRock / 60).toFixed(1);   // ~4.6..5.0"
+          const tailRockIn = (2.2 + (w.tailRock + st.tailTrim) / 60).toFixed(1); // ~2.4..2.7"
+          const glass = style === "loose" && boardIn <= 70 ? "4 + 4 oz" : (boardIn >= 74 || wave === "reef") ? "6 + 6 oz" : "6 + 4 oz";
+          const finsLabel = styleFinsLabel[style];
+
+          document.getElementById("height-val").textContent = feetInches(h);
+          document.getElementById("spec-length").textContent = feetInches(boardIn);
+          document.getElementById("spec-vol").textContent = vol + " L";
+          document.getElementById("spec-rocker").textContent = noseRockIn + " / " + tailRockIn + '"';
+          document.getElementById("spec-fins").textContent = finsLabel;
+          document.getElementById("spec-glass").textContent = glass;
+
+          svg.setAttribute("aria-label",
+            `Surfboard drawing: ${feetInches(boardIn)}, ${vol} litres, ${wave} outline, ${finsLabel.toLowerCase()} fins, rocker ${noseRockIn} nose ${tailRockIn} tail inches.`);
+
+          // stash current spec for the order form
+          svg._spec = {
+            length: feetInches(boardIn), volume: vol, rocker: `${noseRockIn} / ${tailRockIn}"`,
+            wave, style, glass, fins: finsLabel,
+          };
+        }
+
+        // segmented button visual state
+        document.querySelectorAll(".seg").forEach((seg) => {
+          seg.addEventListener("change", () => {
+            seg.querySelectorAll("label").forEach((l) => l.classList.toggle("on", l.querySelector("input").checked));
+          });
+        });
+        document.getElementById("line-form").addEventListener("input", compute);
+        document.getElementById("line-form").addEventListener("change", compute);
+
+        // ---- Start this board: carry spec into the order form ----
+        document.getElementById("start-board").addEventListener("click", () => {
+          const s = svg._spec; if (!s) return;
+          const set = (id, v) => { const e = document.getElementById(id); if (e) e.value = v; };
+          set("length", s.length);
+          set("volume", s.volume);
+          set("rocker", s.rocker);
+          const waveSel = document.getElementById("wave"); if (waveSel) waveSel.value = s.wave;
+          const styleSel = document.getElementById("style"); if (styleSel) styleSel.value = s.style;
+          const glassSel = document.getElementById("glass"); if (glassSel) glassSel.value = s.glass.replace(/ /g, "");
+          const finMap = { Thruster: "thruster", Quad: "quad" };
+          const finSel = document.getElementById("fins"); if (finSel && finMap[s.fins]) finSel.value = finMap[s.fins];
+          document.getElementById("order").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+          setTimeout(() => document.getElementById("length").focus(), 500);
+        });
+
+        compute();
+      })();
+    </script>
+  </body>
+</html>
