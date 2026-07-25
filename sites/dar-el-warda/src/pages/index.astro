@@ -1,0 +1,616 @@
+---
+import "../styles/global.css";
+
+// ---- the sundial: five hours of the court ----
+// north is up in the plan; the sun travels the square rim east→south→west.
+// sun [cx,cy] on the plan rim; wedge = the lit floor cast from the far wall.
+const hours = [
+  {
+    id: "h0730",
+    time: "07:30",
+    img: "court-0730",
+    where: "The east gallery",
+    note: "First sun strikes the east wall and its green zellige dado. The court is still cool and blue-shadowed below; bread, msemen and the first pot of coffee are set out in the bhou.",
+    caption: "07:30 — the east wall takes the first light",
+    alt: "The courtyard at 07:30: low warm sun on the east wall and its green zellige dado, the rest of the court in cool morning shade.",
+    sun: [82, 30],
+    halo: [82, 30],
+    wedge: "M14 14 L48 14 L38 50 L14 62 Z",
+  },
+  {
+    id: "h1000",
+    time: "10:00",
+    img: "court-1000",
+    where: "The four orange trees",
+    note: "By mid-morning the light has swung into the court itself. The fountain brightens, the bitter-orange leaves turn glossy, and the whole floor of bejmat brick warms through.",
+    caption: "10:00 — the court fills; the fountain brightens",
+    alt: "The courtyard at 10:00: bright mid-morning sun filling most of the court, the fountain lit and the orange trees glossy.",
+    sun: [72, 20],
+    halo: [72, 20],
+    wedge: "M18 14 L70 14 L64 60 L26 60 Z",
+  },
+  {
+    id: "h1300",
+    time: "13:00",
+    img: "court-1300",
+    where: "Overhead — the whole court",
+    note: "At noon the sun stands over the open square of sky and drops straight down. Shadows shorten to nothing beneath the orange trees; the court is at its brightest and, in summer, its stillest.",
+    caption: "13:00 — the sun stands over the open square of sky",
+    alt: "The courtyard at 13:00: overhead noon sun flooding the whole court vertically, short shadows beneath the orange trees.",
+    sun: [50, 12],
+    halo: [50, 12],
+    wedge: "M28 22 L72 22 L68 72 L32 72 Z",
+  },
+  {
+    id: "h1630",
+    time: "16:30",
+    img: "court-1630",
+    where: "The west wall & upper gallery",
+    note: "The light climbs the west wall and the carved cedar of the upper gallery. Long shadows rake across the floor from the orange trees, and the lower court softens into warm shade.",
+    caption: "16:30 — the light climbs the west wall and cedar gallery",
+    alt: "The courtyard at 16:30: warm low sun on the west wall and carved cedar upper gallery, long raking shadows on the floor.",
+    sun: [22, 26],
+    halo: [22, 26],
+    wedge: "M52 14 L86 14 L86 62 L62 50 Z",
+  },
+  {
+    id: "h1915",
+    time: "19:15",
+    img: "court-1915",
+    where: "The terrace & the square of sky",
+    note: "The sun leaves the court but still catches the top of the cedar cornice and the square of sky. Tea moves up to the terrace over the medina; the first gallery lamps come on below.",
+    caption: "19:15 — the sun leaves the court for the terrace and the sky",
+    alt: "The courtyard at 19:15: dusk, only the top cornice and the square of sky still catching warm afterglow, the court in soft warm shade.",
+    sun: [30, 84],
+    halo: [30, 84],
+    wedge: "M14 40 L34 52 L28 86 L14 86 Z",
+  },
+];
+
+const rooms = [
+  {
+    name: "Nakhla",
+    gloss: "the palm",
+    light: "East gallery · first light 07:30",
+    img: "room-nakhla",
+    alt: "A calm guest room on the east gallery, low morning sun across a bed dressed in cream and faded-rose linen, a small zellige niche and cedar door onto the bright court.",
+    body: "A ground-floor room on the east gallery, so the first sun of the day reaches the foot of the bed before it reaches the fountain. Cream tadelakt walls, a niche of green zellige, a Berber rug on the bejmat floor, and a cedar door straight onto the court.",
+    facts: [["Floor", "Ground"], ["Sleeps", "Two"], ["Bath", "Tadelakt"], ["Light", "07:30 – 10:00"]],
+  },
+  {
+    name: "Ward",
+    gloss: "the rose",
+    light: "North gallery · under the damask rose",
+    img: "room-ward",
+    flip: true,
+    alt: "A first-floor room under a climbing damask rose, a bed in cream linen with a faded rose-pink blanket, carved cedar ceiling and doors onto the gallery above the court.",
+    body: "Above the court on the north gallery, under the old damask rose the house is named for. It keeps an even light all day and holds the scent of the rose in May. Carved cedar ceiling, a rose-wool blanket, doors onto the balustrade over the fountain.",
+    facts: [["Floor", "First"], ["Sleeps", "Two"], ["Bath", "Tadelakt"], ["Light", "Even, all day"]],
+  },
+];
+
+const moreRooms = [
+  ["Bahia", "The bhou suite — vaulted, cool at noon, off the court."],
+  ["Stah", "The terrace room — last light and the medina roofline."],
+  ["Nkhil", "West gallery — warm afternoon light on cedar."],
+  ["Louz", "Almond — a quiet single above the passage."],
+  ["Toub", "Ground floor, earth-walled and cool through summer."],
+  ["Qamar", "First floor, the moon on the court after dark."],
+  ["Zitoun", "Olive — the corner room, two galleries of light."],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Dar el Warda — a restored nine-room dar in the Marrakech medina. A house with no view but the sky, told by the sun crossing its court. Rooms named for when the light reaches them."
+    />
+    <title>Dar el Warda — a dar in the Marrakech medina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter+Tight:wght@400..600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero.jpg" />
+    <script is:inline>
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.classList.add("js");
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#house">Skip to content</a>
+
+    <header class="site-header" id="top">
+      <a class="wordmark" href="#top">Dar el Warda <small>Marrakech</small></a>
+      <nav class="site-nav" aria-label="Sections">
+        <a class="quiet" href="#house">The house</a>
+        <a class="quiet" href="#court">The court</a>
+        <a class="quiet" href="#rooms">Rooms</a>
+        <a class="quiet" href="#table">The table</a>
+        <a class="quiet" href="#medina">The medina</a>
+        <a class="nav-stay" href="#stay">Enquire</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ============ HERO ============ -->
+      <section class="hero" aria-label="Dar el Warda">
+        <div class="hero-copy">
+          <p class="eyebrow">Aubade · 31°37′ N · Mouassine, Marrakech medina</p>
+          <h1 class="hero-title">
+            Dar el Warda
+            <span class="thin">the house of the rose</span>
+          </h1>
+          <p class="statement">A house with no view but the sky.</p>
+          <div class="hero-actions">
+            <a class="text-link" href="#court">The court in a day <span class="arrow">→</span></a>
+            <a class="text-link" href="#stay">Enquire to stay <span class="arrow">→</span></a>
+          </div>
+        </div>
+        <figure class="hero-figure">
+          <img
+            src="/images/hero.jpg"
+            srcset="/images/hero-640.jpg 640w, /images/hero.jpg 1024w"
+            sizes="(max-width: 820px) 100vw, 50vw"
+            alt="Looking from a shaded carved-cedar gallery arch down into the sunlit square courtyard: a bitter-orange tree, a low marble fountain, a green zellige dado, and the open square of pale morning sky above."
+            fetchpriority="high"
+            width="1024"
+            height="1536"
+          />
+          <p class="hero-caption">The court from the north gallery<br />09:40, October</p>
+        </figure>
+      </section>
+
+      <!-- ============ THE HOUSE ============ -->
+      <section class="section" id="house" aria-labelledby="house-h">
+        <div class="house">
+          <div class="house-body reveal">
+            <p class="eyebrow">The house</p>
+            <h2 class="statement" id="house-h">A <em class="aside">dar</em> turns its back on the street and opens to the sky.</h2>
+            <p>
+              A <em class="aside">dar</em> is a medina courtyard house: no windows of
+              consequence face the lane, and every room opens inward onto a central
+              court — the <em class="aside">wast ad-dar</em>, "the middle of the
+              house." Dar el Warda is a restored eighteenth-century one on a quiet
+              <em class="aside">derb</em>, a dead-end lane off the Mouassine quarter.
+            </p>
+            <p>
+              Nine rooms rise over two galleries around a court six metres square,
+              paved in <em class="aside">bejmat</em> around a marble fountain and four
+              bitter-orange trees. It is a <em class="aside">dar</em>, not a
+              <em class="aside">riad</em> — the court is paved, not planted with a
+              sunken garden — so the day itself, moving down the walls, is the view.
+            </p>
+            <dl class="house-facts">
+              <div><dt>Rooms</dt><dd>Nine, over two floors</dd></div>
+              <div><dt>Court</dt><dd>6 m square, open to the sky</dd></div>
+              <div><dt>Built</dt><dd>18th c., restored 2019</dd></div>
+              <div><dt>Quarter</dt><dd>Mouassine, medina</dd></div>
+            </dl>
+          </div>
+          <figure class="house-figure reveal">
+            <img
+              src="/images/derb.jpg"
+              loading="lazy"
+              width="1000"
+              height="1500"
+              alt="A narrow dead-end medina lane in warm afternoon light, rose-ochre earth walls and a single studded cedar door ajar onto a glimpse of a zellige-tiled entrance passage."
+            />
+          </figure>
+        </div>
+      </section>
+
+      <hr class="threshold" aria-hidden="true" />
+
+      <!-- ============ SIGNATURE: THE COURT IN A DAY ============ -->
+      <section class="section court" id="court" aria-labelledby="court-h">
+        <div class="section-head reveal">
+          <hr class="rule" />
+          <p class="eyebrow">The signature</p>
+          <h2 class="statement" id="court-h">The court in a day.</h2>
+          <p class="lead">
+            The house tells the time by where the sun is on its walls. Move through the
+            day and watch the light cross the court — from the east wall at breakfast to
+            the terrace at dusk.
+          </p>
+        </div>
+
+        <!-- interactive (JS) -->
+        <div class="court-grid court-live">
+          <div class="court-frame" aria-live="polite">
+            {hours.map((h, i) => (
+              <img
+                id={`frame-${h.id}`}
+                class={i === 0 ? "on" : ""}
+                src={`/images/${h.img}.jpg`}
+                loading={i === 0 ? "eager" : "lazy"}
+                width="1000"
+                height="1000"
+                alt={h.alt}
+              />
+            ))}
+            <p class="court-caption" id="court-caption">{hours[0].caption}</p>
+          </div>
+
+          <div class="court-panel">
+            <fieldset class="sun-hours">
+              <legend>Choose an hour</legend>
+              {hours.map((h, i) => (
+                <span class="sun-hour">
+                  <input
+                    type="radio"
+                    name="sun"
+                    id={h.id}
+                    value={h.id}
+                    checked={i === 0}
+                    aria-controls={`frame-${h.id}`}
+                  />
+                  <label for={h.id}>{h.time}</label>
+                </span>
+              ))}
+            </fieldset>
+
+            <div class="court-readout">
+              <figure class="court-plan-fig">
+                <svg class="court-plan" viewBox="-8 -8 116 116" role="img" aria-label="Plan of the court seen from above, north at the top, with the sun's position for the chosen hour.">
+                  <text class="compass" x="50" y="-1" text-anchor="middle">N</text>
+                  <text class="compass" x="105" y="53" text-anchor="middle">E</text>
+                  <text class="compass" x="50" y="112" text-anchor="middle">S</text>
+                  <text class="compass" x="-5" y="53" text-anchor="middle">W</text>
+                  <rect class="court-sq" x="14" y="14" width="72" height="72" />
+                  <path class="wedge" id="sun-wedge" d={hours[0].wedge} />
+                  <circle class="court-fount" cx="50" cy="50" r="6" />
+                  <circle class="court-tree" cx="26" cy="26" r="3.4" />
+                  <circle class="court-tree" cx="74" cy="26" r="3.4" />
+                  <circle class="court-tree" cx="26" cy="74" r="3.4" />
+                  <circle class="court-tree" cx="74" cy="74" r="3.4" />
+                  <circle class="sun-halo" id="sun-halo" cx={hours[0].halo[0]} cy={hours[0].halo[1]} r="6" />
+                  <circle class="sun" id="sun-dot" cx={hours[0].sun[0]} cy={hours[0].sun[1]} r="3.2" />
+                </svg>
+                <figcaption>The court from above · the sun on its rim</figcaption>
+              </figure>
+              <div class="court-text">
+                <p class="court-hour" id="court-hour">{hours[0].time}</p>
+                <p class="court-where" id="court-where">{hours[0].where}</p>
+                <p class="court-note" id="court-note">{hours[0].note}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- JS-off / no-JS: the five hours as an editorial sequence -->
+        <div class="court-stack">
+          {hours.map((h) => (
+            <figure>
+              <div class="court-frame">
+                <img src={`/images/${h.img}.jpg`} width="1000" height="1000" alt={h.alt} loading="lazy" />
+              </div>
+              <figcaption>
+                <span class="stack-hour">{h.time} — {h.where}</span>
+                {h.note}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+
+        <script
+          is:inline
+          define:vars={{ hours: hours.map((h) => ({ id: h.id, time: h.time, where: h.where, note: h.note, caption: h.caption, sun: h.sun, halo: h.halo, wedge: h.wedge })) }}
+        >
+          (function () {
+            const data = Object.fromEntries(hours.map((h) => [h.id, h]));
+            const frames = {};
+            hours.forEach((h) => (frames[h.id] = document.getElementById("frame-" + h.id)));
+            const dot = document.getElementById("sun-dot");
+            const halo = document.getElementById("sun-halo");
+            const wedge = document.getElementById("sun-wedge");
+            const hourEl = document.getElementById("court-hour");
+            const whereEl = document.getElementById("court-where");
+            const noteEl = document.getElementById("court-note");
+            const capEl = document.getElementById("court-caption");
+            function show(id) {
+              const h = data[id];
+              if (!h) return;
+              Object.values(frames).forEach((f) => f.classList.remove("on"));
+              frames[id].classList.add("on");
+              dot.setAttribute("cx", h.sun[0]);
+              dot.setAttribute("cy", h.sun[1]);
+              halo.setAttribute("cx", h.halo[0]);
+              halo.setAttribute("cy", h.halo[1]);
+              wedge.setAttribute("d", h.wedge);
+              hourEl.textContent = h.time;
+              whereEl.textContent = h.where;
+              noteEl.textContent = h.note;
+              capEl.textContent = h.caption;
+            }
+            document.querySelectorAll('input[name="sun"]').forEach((r) => {
+              r.addEventListener("change", () => show(r.value));
+            });
+          })();
+        </script>
+      </section>
+
+      <!-- ============ ROOMS ============ -->
+      <section class="section" id="rooms" aria-labelledby="rooms-h">
+        <div class="section-head reveal">
+          <hr class="rule" />
+          <p class="eyebrow">The rooms</p>
+          <h2 class="statement" id="rooms-h">Nine rooms, named for when the light reaches them.</h2>
+          <p class="lead">
+            No two rooms take the sun at the same hour. We give you the room whose
+            light suits how you keep the day.
+          </p>
+        </div>
+
+        {rooms.map((r) => (
+          <article class={`room${r.flip ? " flip" : ""} reveal`}>
+            <figure class="room-figure">
+              <img src={`/images/${r.img}.jpg`} loading="lazy" width="1000" height="1250" alt={r.alt} />
+            </figure>
+            <div class="room-body">
+              <h3 class="room-name">{r.name} <span class="gloss">{r.gloss}</span></h3>
+              <p class="room-light">{r.light}</p>
+              <p>{r.body}</p>
+              <div class="room-facts">
+                {r.facts.map((f) => (
+                  <span><b>{f[0]}</b>{f[1]}</span>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+
+        <div class="more-rooms reveal">
+          {moreRooms.map((m) => (
+            <p class="mr"><b>{m[0]}</b><span>{m[1]}</span></p>
+          ))}
+        </div>
+      </section>
+
+      <!-- ============ THE TABLE (hosting) ============ -->
+      <section class="table" id="table" aria-labelledby="table-h">
+        <div class="table-body reveal">
+          <p class="eyebrow">The table</p>
+          <h2 class="statement" id="table-h">Mint tea is poured from a height at eleven.</h2>
+          <p>
+            Breakfast is set in the <em class="aside">bhou</em>, the vaulted alcove open
+            to the court: <em class="aside">msemen</em> and bread still warm, olives,
+            oranges from the court's own trees, and tea poured in a high thin stream to
+            raise the froth.
+          </p>
+          <p>
+            The rosewater on the sweets is distilled in the house each April, from the
+            damask rose on the north gallery. Dinner is by the fountain, or up on the
+            <em class="aside">stah</em> when the evening is warm.
+          </p>
+        </div>
+        <figure class="table-figure reveal">
+          <img
+            src="/images/tea.jpg"
+            loading="lazy"
+            width="1000"
+            height="1500"
+            alt="A host's hands pouring mint tea in a high thin arc from a silver pot into a glass, on a low table set with warm msemen, olives and oranges, in the vaulted alcove off the court."
+          />
+        </figure>
+      </section>
+
+      <!-- ============ HAMMAM & TERRACE ============ -->
+      <section class="section" id="rituals" aria-labelledby="rituals-h">
+        <div class="section-head reveal">
+          <hr class="rule" />
+          <p class="eyebrow">Water & roof</p>
+          <h2 class="statement" id="rituals-h">A hammam below, a terrace above.</h2>
+        </div>
+        <div class="pair">
+          <figure class="reveal">
+            <div class="pair-figure">
+              <img
+                src="/images/hammam.jpg"
+                loading="lazy"
+                width="1000"
+                height="1500"
+                alt="A small private hammam in warm rose-grey tadelakt plaster, a marble bench and copper bowl, a single shaft of daylight from a star-shaped ceiling vent falling through soft steam."
+              />
+            </div>
+            <figcaption>
+              <b>The hammam</b>
+              <p>
+                A private steam room in <em class="aside">tadelakt</em> — lime plaster
+                burnished with a stone and sealed with black soap, so it holds heat and
+                water without a tile. A star vent drops one shaft of daylight. Booked by
+                the hour, warmed in the morning.
+              </p>
+            </figcaption>
+          </figure>
+          <figure class="reveal">
+            <div class="pair-figure">
+              <img
+                src="/images/terrace.jpg"
+                loading="lazy"
+                width="1000"
+                height="1500"
+                alt="The rooftop terrace at dusk over the Marrakech medina, warm apricot afterglow behind a distant minaret, a low cushioned banquette and a small table set with tea and oranges."
+              />
+            </div>
+            <figcaption>
+              <b>The terrace</b>
+              <p>
+                The <em class="aside">stah</em> takes the last of the light the court
+                has already lost. Tea comes up at sunset; the medina roofline and the
+                call to prayer carry across from the Mouassine minaret.
+              </p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ THE MEDINA (place) ============ -->
+      <section class="section" id="medina" aria-labelledby="medina-h">
+        <div class="medina">
+          <figure class="medina-figure reveal">
+            <img
+              src="/images/mat-zellige.jpg"
+              loading="lazy"
+              width="1000"
+              height="1500"
+              alt="A close detail of a hand-cut zellige dado: deep glazed-green and saffron eight-point stars meeting cream tadelakt plaster above, in raking light that shows the chipped edges."
+            />
+          </figure>
+          <div class="medina-body reveal">
+            <p class="eyebrow">The medina</p>
+            <h2 class="statement" id="medina-h">Everything you see was cut by hand.</h2>
+            <p>
+              The dado is <em class="aside">zellige</em> — glazed terracotta tiles fired,
+              glazed, then chipped into pieces by hand and set face-down into a plaster
+              bed, one star at a time. The floors are <em class="aside">bejmat</em>, laid
+              on the diagonal; the cornices are cedar and carved
+              <em class="aside">mqarnas</em> plaster.
+            </p>
+            <p>
+              The <em class="aside">derb</em> outside is two minutes from the Mouassine
+              fountain and the dyers' souk, and ten from the Jemaa el-Fna — near enough
+              to walk to everything, far enough that the house stays quiet. We meet you
+              at the car and walk you in; cars do not reach the door.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="threshold saffron" aria-hidden="true" />
+
+      <!-- ============ STAY — enquiry form ============ -->
+      <section class="section stay" id="stay" aria-labelledby="stay-h">
+        <div class="stay-grid">
+          <div class="stay-intro reveal">
+            <hr class="rule" />
+            <p class="eyebrow">Enquire to stay</p>
+            <h2 class="statement" id="stay-h">Tell us your dates and the light you like.</h2>
+            <p>
+              Send the dates, and we will reply with the rooms free and their rates —
+              usually within the day. Nothing is charged here; this only opens the
+              conversation.
+            </p>
+            <p class="whole-house">
+              Taking the whole house — nine rooms, the court and the terrace, for a
+              wedding or a gathering? <a href="mailto:sabah@darelwarda.example?subject=Whole-house%20enquiry%20%E2%80%94%20Dar%20el%20Warda">Write to Sabah directly.</a>
+            </p>
+          </div>
+
+          <form
+            class="enquiry reveal"
+            action="mailto:sabah@darelwarda.example"
+            method="post"
+            enctype="text/plain"
+            aria-labelledby="stay-h"
+          >
+            <div class="field">
+              <label for="arrive">Arrival</label>
+              <input type="date" id="arrive" name="Arrival" required />
+            </div>
+            <div class="field">
+              <label for="depart">Departure</label>
+              <input type="date" id="depart" name="Departure" required />
+            </div>
+            <div class="field">
+              <label for="guests">Guests</label>
+              <select id="guests" name="Guests">
+                <option>1 guest</option>
+                <option selected>2 guests</option>
+                <option>3 guests</option>
+                <option>4 guests</option>
+                <option>5 or more</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="room">Room</label>
+              <select id="room" name="Room">
+                <option selected>No preference — advise us</option>
+                <option>Nakhla · east, first light</option>
+                <option>Ward · under the rose</option>
+                <option>Bahia · the bhou suite</option>
+                <option>Stah · the terrace room</option>
+                <option>Another room</option>
+              </select>
+            </div>
+            <div class="field wide">
+              <label for="name">Your name</label>
+              <input type="text" id="name" name="Name" autocomplete="name" required />
+            </div>
+            <div class="field wide">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="Email" autocomplete="email" required />
+              <span class="field-note">We reply here, usually within the day.</span>
+            </div>
+            <div class="field wide">
+              <label for="note">Anything we should know</label>
+              <textarea id="note" name="Note" placeholder="A first trip to Marrakech, an early arrival, a quiet room…"></textarea>
+            </div>
+            <div class="enquiry-submit">
+              <button class="book" type="submit">Send enquiry</button>
+              <span class="fineprint">
+                Opens your mail app with the details filled in. No card, no deposit —
+                we settle rates by reply.
+              </span>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-mark">
+          Dar el Warda
+          <small>Derb el Ferrane, Mouassine · Marrakech medina</small>
+        </div>
+        <div>
+          <h4>The house</h4>
+          <ul>
+            <li><a href="#house">The house</a></li>
+            <li><a href="#court">The court in a day</a></li>
+            <li><a href="#rooms">Rooms</a></li>
+            <li><a href="#table">The table</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Stay</h4>
+          <ul>
+            <li><a href="#stay">Enquire</a></li>
+            <li><a href="mailto:sabah@darelwarda.example">sabah@darelwarda.example</a></li>
+            <li><a href="#medina">Finding the derb</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-fine">
+        <span>Aubade · a house that opens to the morning.</span>
+        <span>31°37′ N, 7°59′ W · Marrakech, Morocco</span>
+      </div>
+    </footer>
+
+    <!-- reveal-on-scroll (skipped for nofx / reduced-motion / no-js) -->
+    <script is:inline>
+      if (document.documentElement.classList.contains("fx")) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -12% 0px", threshold: 0.08 }
+        );
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

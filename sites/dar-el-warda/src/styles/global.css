@@ -1,0 +1,882 @@
+/* ============================================================
+   DAR EL WARDA — a nine-room dar in the Marrakech medina
+   Third Aubade. Warm inward daylight; the court is the sundial.
+   ============================================================ */
+
+:root {
+  /* materials of the house */
+  --lime-wash: #f3ead9;   /* lightest ground — wall in full sun */
+  --plaster: #e7d8bf;     /* default warm surface */
+  --plaster-shade: #d8c6a8;
+  --rose: #c17e6c;        /* damask-rose note; links, warm emphasis */
+  --rose-deep: #a45f4d;
+  --saffron: #b9781f;     /* rare spice glint; rules, hover */
+  --zellige: #33574a;     /* glazed-tile green — interaction, structure */
+  --zellige-deep: #274035;
+  --bejmat: #8f5236;      /* terracotta floor tone; grounded fields */
+  --ink: #221a12;         /* type, carved cedar, contrast */
+  --ink-soft: #4a3c2c;    /* secondary text */
+
+  --measure: 34rem;
+  --pad: clamp(1.25rem, 5vw, 5rem);
+  --bay: clamp(3rem, 7vw, 6rem);
+
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Inter Tight", system-ui, -apple-system, sans-serif;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--lime-wash);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: clamp(1rem, 0.55vw + 0.9rem, 1.075rem);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 1.08;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+a { color: inherit; }
+
+em, .aside {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* --- skip link + focus --- */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -3rem;
+  background: var(--ink);
+  color: var(--lime-wash);
+  padding: 0.55rem 0.9rem;
+  z-index: 200;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 0.75rem; }
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--zellige);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* --- shared type helpers --- */
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--bejmat);
+  margin: 0 0 1.1rem;
+}
+.statement {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3.4vw, 2.7rem);
+  line-height: 1.12;
+  color: var(--ink);
+}
+.lead {
+  font-size: clamp(1.08rem, 1vw + 0.9rem, 1.25rem);
+  color: var(--ink-soft);
+  max-width: 30rem;
+}
+.arabic {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--rose-deep);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem var(--pad);
+  background: color-mix(in srgb, var(--lime-wash) 88%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.wordmark {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.wordmark small {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bejmat);
+  margin-left: 0.55rem;
+  vertical-align: middle;
+}
+.site-nav {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.7rem, 1.6vw, 1.6rem);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+}
+.site-nav a { text-decoration: none; }
+.site-nav .quiet {
+  color: var(--ink-soft);
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+.site-nav .quiet:hover { color: var(--ink); border-bottom-color: var(--saffron); }
+.nav-stay {
+  color: var(--lime-wash);
+  background: var(--zellige);
+  padding: 0.4rem 0.85rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+.nav-stay:hover { background: var(--zellige-deep); }
+@media (max-width: 720px) {
+  .site-nav .quiet { display: none; }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  min-height: min(88vh, 780px);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.hero-copy {
+  padding: clamp(2.5rem, 6vw, 5.5rem) var(--pad);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--plaster);
+  position: relative;
+}
+.hero-copy .eyebrow { color: var(--bejmat); }
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  line-height: 0.98;
+  margin: 0 0 1.2rem;
+  letter-spacing: -0.02em;
+}
+.hero-title .thin {
+  display: block;
+  font-size: 0.42em;
+  letter-spacing: 0.02em;
+  color: var(--rose-deep);
+  font-style: italic;
+  margin-top: 0.3rem;
+}
+.hero .statement { max-width: 22rem; margin-bottom: 1.8rem; }
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+}
+.text-link {
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--saffron);
+  padding-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: gap 0.2s ease;
+}
+.text-link .arrow { color: var(--rose-deep); transition: transform 0.2s ease; }
+.text-link:hover .arrow { transform: translateX(3px); }
+.hero-figure {
+  position: relative;
+  overflow: hidden;
+  background: var(--plaster-shade);
+}
+.hero-figure img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero-caption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--lime-wash);
+  text-align: right;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+  line-height: 1.4;
+}
+@media (max-width: 820px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .hero-figure { min-height: 58vh; order: -1; }
+}
+
+/* ============================================================
+   SECTION SCAFFOLD
+   ============================================================ */
+.section {
+  padding: var(--bay) var(--pad);
+  position: relative;
+}
+.section-head { max-width: var(--measure); margin-bottom: 2.5rem; }
+.rule {
+  width: 3.5rem;
+  height: 2px;
+  background: var(--saffron);
+  margin: 0 0 1.4rem;
+  border: 0;
+}
+
+/* zellige threshold band — a restrained eight-point-star geometry drawn
+   from real zellige, at low opacity. A structural line, never wallpaper. */
+.threshold {
+  height: 26px;
+  border: 0;
+  margin: 0;
+  background-color: transparent;
+  background-image:
+    conic-gradient(from 22.5deg at 50% 50%,
+      var(--zellige) 0deg 45deg, transparent 45deg 90deg,
+      var(--zellige) 90deg 135deg, transparent 135deg 180deg,
+      var(--zellige) 180deg 225deg, transparent 225deg 270deg,
+      var(--zellige) 270deg 315deg, transparent 315deg 360deg);
+  background-size: 26px 26px;
+  background-position: 0 0;
+  opacity: 0.09;
+}
+.threshold.saffron { background-image:
+    conic-gradient(from 22.5deg at 50% 50%,
+      var(--saffron) 0deg 45deg, transparent 45deg 90deg,
+      var(--saffron) 90deg 135deg, transparent 135deg 180deg,
+      var(--saffron) 180deg 225deg, transparent 225deg 270deg,
+      var(--saffron) 270deg 315deg, transparent 315deg 360deg);
+  opacity: 0.11;
+}
+
+/* ============================================================
+   THE HOUSE (intro)
+   ============================================================ */
+.house {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+.house-body { max-width: 32rem; }
+.house-body p { color: var(--ink-soft); }
+.house-figure {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  background: var(--plaster-shade);
+}
+.house-figure img { width: 100%; height: 100%; object-fit: cover; }
+.house-facts {
+  margin: 1.8rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem 2rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+.house-facts dt {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bejmat);
+  margin-bottom: 0.15rem;
+}
+.house-facts dd { margin: 0; color: var(--ink); }
+@media (max-width: 780px) {
+  .house { grid-template-columns: 1fr; }
+  .house-figure { aspect-ratio: 4 / 5; order: -1; }
+}
+
+/* ============================================================
+   SIGNATURE — THE COURT IN A DAY (the sundial)
+   ============================================================ */
+.court {
+  background: var(--plaster);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.court-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+}
+.court-frame {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--plaster-shade);
+  border: 1px solid color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.court-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+.court-frame img.on { opacity: 1; }
+.fx .court-frame img { transition: opacity 0.9s ease; }
+:root:not(.js) .court-frame img { position: relative; opacity: 1; }
+
+.court-caption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  padding: 1.6rem 1.1rem 0.9rem;
+  background: linear-gradient(to top, rgba(20, 14, 8, 0.72), transparent);
+  color: var(--lime-wash);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  z-index: 3;
+}
+:root:not(.js) .court-caption { display: none; }
+
+.court-panel { align-self: stretch; }
+
+/* the hour selector — a real radio/tab group */
+.sun-hours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1.6rem;
+  padding: 0;
+  border: 0;
+}
+.sun-hours legend {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bejmat);
+  padding: 0;
+  margin-bottom: 0.8rem;
+  width: 100%;
+}
+.sun-hour {
+  position: relative;
+}
+.sun-hour input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.sun-hour label {
+  display: block;
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.92rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.sun-hour input:hover + label { border-color: var(--saffron); }
+.sun-hour input:focus-visible + label {
+  outline: 2px solid var(--zellige);
+  outline-offset: 2px;
+}
+.sun-hour input:checked + label {
+  background: var(--zellige);
+  color: var(--lime-wash);
+  border-color: var(--zellige);
+}
+
+/* the readout: plan + text as one block */
+.court-readout {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+  align-items: start;
+  margin-top: 0.4rem;
+}
+.court-plan-fig { margin: 0; }
+.court-plan-fig figcaption {
+  margin-top: 0.7rem;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--bejmat);
+  line-height: 1.4;
+}
+.court-text { padding-top: 0.2rem; }
+
+/* the court plan glyph — a square, sun travelling the rim */
+.court-plan {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  overflow: visible;
+}
+.court-plan .compass {
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  fill: var(--bejmat);
+}
+.court-plan .court-sq { fill: none; stroke: var(--ink); stroke-width: 1.4; opacity: 0.35; }
+.court-plan .court-tree { fill: var(--zellige); opacity: 0.45; }
+.court-plan .court-fount { fill: none; stroke: var(--bejmat); stroke-width: 1.4; opacity: 0.6; }
+.court-plan .wedge {
+  fill: var(--saffron);
+  opacity: 0.16;
+  transition: d 0.6s ease, opacity 0.6s ease;
+}
+.court-plan .sun {
+  fill: var(--saffron);
+  transition: cx 0.6s cubic-bezier(0.4, 0, 0.2, 1), cy 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.court-plan .sun-halo {
+  fill: var(--saffron);
+  opacity: 0.25;
+  transition: cx 0.6s cubic-bezier(0.4, 0, 0.2, 1), cy 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .court-plan .sun, .court-plan .sun-halo, .court-plan .wedge,
+  .court-frame img { transition: none; }
+}
+
+.court-hour {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+  color: var(--ink);
+  margin: 0 0 0.3rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.court-where {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--zellige);
+  margin: 0 0 1rem;
+  font-weight: 600;
+}
+.court-note { color: var(--ink-soft); max-width: 28rem; }
+
+/* JS-off fallback: stacked editorial sequence */
+.court-stack { display: none; }
+:root:not(.js) .court-live { display: none; }
+:root:not(.js) .court-stack {
+  display: grid;
+  gap: var(--bay);
+}
+.court-stack .court-frame { opacity: 1; }
+.court-stack figure { margin: 0; }
+.court-stack figcaption {
+  margin-top: 0.9rem;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.court-stack .stack-hour {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+@media (max-width: 860px) {
+  .court-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .court-readout { grid-template-columns: 130px 1fr; gap: 1rem; }
+}
+
+/* ============================================================
+   ROOMS (editorial spreads, not cards)
+   ============================================================ */
+.room {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  margin-top: var(--bay);
+}
+.room:first-of-type { margin-top: 0; }
+.room.flip .room-figure { order: 2; }
+.room-figure {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--plaster-shade);
+}
+.room-figure img { width: 100%; height: 100%; object-fit: cover; }
+.room-body { max-width: 30rem; }
+.room-name {
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  margin: 0 0 0.2rem;
+}
+.room-name .gloss {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bejmat);
+  vertical-align: middle;
+  margin-left: 0.7rem;
+}
+.room-light {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--zellige);
+  font-weight: 600;
+  margin: 0 0 1rem;
+}
+.room-body p { color: var(--ink-soft); }
+.room-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  margin-top: 1.4rem;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+}
+.room-facts span { color: var(--ink); }
+.room-facts b {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bejmat);
+  font-weight: 600;
+}
+.more-rooms {
+  margin-top: var(--bay);
+  padding-top: 2rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.4rem 2rem;
+}
+.more-rooms .mr {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+.more-rooms .mr b {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--ink);
+}
+.more-rooms .mr span { color: var(--ink-soft); }
+@media (max-width: 780px) {
+  .room, .room.flip { grid-template-columns: 1fr; }
+  .room.flip .room-figure { order: -1; }
+  .room-figure { order: -1; }
+}
+
+/* ============================================================
+   THE TABLE (hosting) + HAMMAM/TERRACE
+   ============================================================ */
+.table {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  background: var(--zellige-deep);
+  color: var(--lime-wash);
+  padding: var(--bay) var(--pad);
+}
+.table .eyebrow { color: var(--saffron); }
+.table .statement { color: var(--lime-wash); }
+.table p { color: color-mix(in srgb, var(--lime-wash) 82%, transparent); }
+.table .aside { color: var(--rose); }
+.table-figure {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--zellige);
+}
+.table-figure img { width: 100%; height: 100%; object-fit: cover; }
+.table-body { max-width: 30rem; }
+@media (max-width: 780px) {
+  .table { grid-template-columns: 1fr; }
+  .table-figure { order: -1; aspect-ratio: 4 / 5; }
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  margin-top: 2.5rem;
+}
+.pair figure { margin: 0; }
+.pair-figure {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--plaster-shade);
+}
+.pair-figure img { width: 100%; height: 100%; object-fit: cover; }
+.pair figcaption {
+  margin-top: 0.9rem;
+  max-width: 26rem;
+}
+.pair figcaption b {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.pair figcaption p { color: var(--ink-soft); font-size: 0.95rem; }
+@media (max-width: 640px) {
+  .pair { grid-template-columns: 1fr; gap: var(--bay); }
+}
+
+/* ============================================================
+   THE MEDINA (place)
+   ============================================================ */
+.medina {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.medina-figure {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--plaster-shade);
+}
+.medina-figure img { width: 100%; height: 100%; object-fit: cover; }
+.medina-body { max-width: 30rem; }
+.medina-body p { color: var(--ink-soft); }
+@media (max-width: 780px) {
+  .medina { grid-template-columns: 1fr; }
+  .medina-figure { order: -1; aspect-ratio: 4 / 5; }
+}
+
+/* ============================================================
+   STAY — the enquiry form
+   ============================================================ */
+.stay {
+  background: var(--plaster);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.stay-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+.stay-intro { max-width: 26rem; }
+.stay-intro p { color: var(--ink-soft); }
+.stay-intro .whole-house {
+  margin-top: 1.8rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 15%, transparent);
+  font-size: 0.92rem;
+}
+.stay-intro .whole-house a { color: var(--rose-deep); }
+
+form.enquiry {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem 1.4rem;
+}
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+.field.wide { grid-column: 1 / -1; }
+.field label {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bejmat);
+  font-weight: 600;
+}
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--lime-wash);
+  border: 1px solid color-mix(in srgb, var(--ink) 28%, transparent);
+  border-radius: 0;
+  padding: 0.6rem 0.7rem;
+  width: 100%;
+}
+.field textarea { resize: vertical; min-height: 4.5rem; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid var(--zellige);
+  outline-offset: 1px;
+  border-color: var(--zellige);
+}
+.field-note {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+}
+.enquiry-submit {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+button.book {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--lime-wash);
+  background: var(--zellige);
+  border: 0;
+  padding: 0.75rem 1.6rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+button.book:hover { background: var(--zellige-deep); }
+.enquiry-submit .fineprint {
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  max-width: 20rem;
+}
+@media (max-width: 820px) {
+  .stay-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  form.enquiry { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background: var(--ink);
+  color: var(--lime-wash);
+  padding: var(--bay) var(--pad) 2.5rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.footer-mark {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+}
+.footer-mark small {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--lime-wash) 60%, transparent);
+  margin-top: 0.5rem;
+}
+.site-footer h4 {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--saffron);
+  margin: 0 0 0.9rem;
+  font-weight: 600;
+}
+.site-footer ul { list-style: none; margin: 0; padding: 0; font-size: 0.92rem; line-height: 2; }
+.site-footer a { color: color-mix(in srgb, var(--lime-wash) 85%, transparent); text-decoration: none; }
+.site-footer a:hover { color: var(--lime-wash); border-bottom: 1px solid var(--saffron); }
+.footer-fine {
+  margin-top: var(--bay);
+  padding-top: 1.6rem;
+  border-top: 1px solid color-mix(in srgb, var(--lime-wash) 18%, transparent);
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--lime-wash) 55%, transparent);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-mark { grid-column: 1 / -1; }
+}
+
+/* ============================================================
+   ENTRANCE FX — disabled for ?nofx / reduced-motion / no-js
+   ============================================================ */
+.reveal { opacity: 1; }
+.fx .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.fx .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx .reveal { opacity: 1; transform: none; transition: none; }
+}
