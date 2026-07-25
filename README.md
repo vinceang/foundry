@@ -34,6 +34,9 @@ The two series share standards, not styling. Read
 | [Tyri](https://tyri.vercel.app) | Pastorale | Hand-hewn log yard in snow-light | Norway · Rollag, Numedal | [`sites/tyri`](sites/tyri) · live |
 | [Malmfuru](https://malmfuru.vercel.app) | Nocturne | Hand-hewn log houses on a midwinter night | Norway · Nore, Numedal | [`sites/malmfuru`](sites/malmfuru) · live |
 | [Bottega Sant'Agata](https://santagata.vercel.app) | Nocturne | Single-maker violin bottega, est. 1911 | Italy · Cremona, Lombardy | [`sites/santagata`](sites/santagata) · live |
+| [Dar el Warda](https://dar-el-warda.vercel.app) | Aubade | Nine-room riad, courtyard as a sundial | Morocco · Marrakech medina | [`sites/dar-el-warda`](sites/dar-el-warda) · live |
+| [Larès](https://lares-vincent-angs-projects.vercel.app) | Aubade | Mountain refuge, rooms by altitude and weather | Italy · Dolomites, Val Gardena | [`sites/lares`](sites/lares) · live |
+| [Veta](https://veta-vincent-angs-projects.vercel.app) | Aubade | Custom surfboard shaping bay | Mexico · Oaxacan coast | [`sites/veta`](sites/veta) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 

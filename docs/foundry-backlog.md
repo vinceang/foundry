@@ -39,26 +39,12 @@ _(nothing in progress)_
 - **Signature interaction:** the unit fitted to a real backyard — plan and section redraw to a lot's dimensions and setback, or the interior unfolding/compacting as you scroll
 - **Notes:** dwellings run well above $5,000 → commission model, but stock plans and finish packages could sit under it → an order form there (commitment 7). Must not read as the Nordic log houses (Tyri/Malmfuru) — a modern material system and voice, not heritage.
 
-### Marrakech riad
-- **Series:** Aubade
-- **Place idea:** the medina, Marrakech — a nine-room courtyard house
-- **Why it earns a place:** zellige, tadelakt, and light shafts moving across a courtyard; the court is a sundial
-- **Signature interaction:** the courtyard sun — the house shown at five hours of the day
-- **Notes:** cultural vocabulary must be real and right, never costume — the taste-profile rule applies doubly here
-
 ### Private jet charter
 - **Series:** dusk register — civil twilight, not Nocturne chiaroscuro (likely opens a third series alongside the lighthouse entry)
 - **Place idea:** deliberately placeless — a tail number, a hangar, three cities
 - **Why it earns a place:** Vince-named; tarmac at last light, cabin glow at altitude, utmost discretion as the brand itself
 - **Signature interaction:** a route board — great-circle lines drawn between city pairs, times in local light
 - **Notes:** rehearsed twice in skill dry-runs 2026-07-24. Vince judged the twilight take ("Velum": blue-black + apricot horizon, Spectral + Plex Mono) better than the chiaroscuro take ("Sable" — too dark). Build toward Velum's register.
-
-### Alpine refuge hotel
-- **Series:** Aubade
-- **Place idea:** Dolomites, above the tree line
-- **Why it earns a place:** thin bright light on larch and stone, weather as the host
-- **Signature interaction:** rooms by altitude and weather — the day's forecast rewrites what the house offers
-- **Notes:** must not share a skin with Aresta (also mineral/architectural); its warmth is shelter, not composition
 
 ### Custom bicycle frame builder
 - **Series:** Nocturne
@@ -97,13 +83,6 @@ _(nothing in progress)_
 - **Place idea:** La Chaux-de-Fonds or Geneva — a dial studio for lacquer, enamel, guilloché, and applied indices
 - **Why it earns a place:** Dials are tiny but visually dense, which makes them perfect for close-up macro imagery, slow reveals, and a premium audience that understands finishing as status.
 - **Signature interaction:** Layer-by-layer dial assembly, where textures, markers, lume, and hands appear one at a time as the user scrolls.
-
-### Custom surfboard shaper
-
-- **Series:** Aubade
-- **Place idea:** Southern California, Oaxaca, or Byron Bay — a shaping bay for performance and line-driven boards
-- **Why it earns a place:** Surfboards combine art, engineering, and coastal identity, with resin color, outline, and rocker giving you a strong visual system and a discerning audience.
-- **Signature interaction:** The board redraws live from rider height, wave type, and style, adjusting outline, fins, and rocker in one motion.
 
 ### Specialist equestrian bootmaker
 
@@ -157,3 +136,6 @@ _(nothing in progress)_
 | Lagar do Sol | Aubade | Olive-estate hotel, Alentejo | https://lagar-do-sol.vercel.app |
 | Aresta | Aubade | Architecture-led hotel, Costa Vicentina | https://aresta-azure.vercel.app |
 | Bottega Sant'Agata | Nocturne | Cremonese single-maker violin bottega | https://santagata.vercel.app |
+| Dar el Warda | Aubade | Marrakech riad, courtyard as a sundial | https://dar-el-warda.vercel.app |
+| Larès | Aubade | Dolomites refuge, rooms by altitude and weather | https://lares-vincent-angs-projects.vercel.app |
+| Veta | Aubade | Oaxacan surfboard shaping bay | https://veta-vincent-angs-projects.vercel.app |
