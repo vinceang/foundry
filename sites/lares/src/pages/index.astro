@@ -1,0 +1,356 @@
+---
+import "../styles/global.css";
+
+// The four skies. Each rewrites the whole house.
+const skies = [
+  {
+    id: "bluebird",
+    label: "Bluebird",
+    gloss: "Clear high pressure",
+    temp: "+8°C",
+    wind: "Calm, 6 km/h W",
+    freezing: "3,200 m",
+    kitchen: "Terrace lunch: speck, mountain cheese, rye.",
+    aside: "On a bluebird morning the doors stand open before the sun clears the towers. Come up early.",
+    places: {
+      stua:   { state: "open",   line: "Long table, terrace doors open to the Sella." },
+      tabia:  { state: "open",   line: "Larch bunks under the eaves, the window full of peaks." },
+      jeuf:   { state: "open",   line: "Dawn start at five for the pass and the ferrata." },
+    },
+    // elevation profile bands (as % of the section height, 0 = valley floor at bottom)
+    snowline: 78, cloudsea: null, cap: null,
+  },
+  {
+    id: "cloudsea",
+    label: "Cloud sea",
+    gloss: "Inversion below",
+    temp: "+5°C",
+    wind: "Light, 10 km/h N",
+    freezing: "2,900 m",
+    kitchen: "Bright above the cloud: broth at noon, cake at four.",
+    aside: "The valley is drowned in white and we are the only island. Down there it is grey all day; up here it is blue.",
+    places: {
+      stua:   { state: "open",   line: "Coffee on the terrace above a sea of cloud." },
+      tabia:  { state: "open",   line: "Wake to peaks floating on white. Wool is enough." },
+      jeuf:   { state: "open",   line: "Guided start; the pass clears once the sun burns the cloud." },
+    },
+    snowline: 74, cloudsea: 40, cap: null,
+  },
+  {
+    id: "fohn",
+    label: "Föhn",
+    gloss: "Warm dry wind",
+    temp: "+12°C",
+    wind: "Gusting 55 km/h S",
+    freezing: "3,600 m",
+    kitchen: "Warm wind, warm plates: polenta and game stew.",
+    aside: "The föhn makes the rock look close enough to touch — and it lies. The pass goes, but roped and early, and back before the cloud caps the tower.",
+    places: {
+      stua:   { state: "open",   line: "Windows latched; the warm wind hums in the flue." },
+      tabia:  { state: "open",   line: "Shutters half-closed against the gusts; still warm." },
+      jeuf:   { state: "care",   line: "Open with a guardian only — the wind writes the hour." },
+    },
+    snowline: 88, cloudsea: null, cap: 92,
+  },
+  {
+    id: "storm",
+    label: "Storm",
+    gloss: "Front closing in",
+    temp: "−2°C",
+    wind: "Gale 80 km/h, sleet",
+    freezing: "2,300 m",
+    kitchen: "Barley broth and the stove all day. Bread when it comes out.",
+    aside: "When the mountain shuts, we shut with it. The stove stays lit, the pot stays full, and no one goes higher than this room.",
+    places: {
+      stua:   { state: "open",   line: "The whole house draws in around the stove." },
+      tabia:  { state: "open",   line: "Wool doubled, shutters closed, warm from the flue below." },
+      jeuf:   { state: "closed", line: "Closed. The mountain keeps it until the front passes." },
+    },
+    snowline: 55, cloudsea: null, cap: 30,
+  },
+];
+
+const defaultSky = skies[0]; // bluebird — the server-rendered, JS-off state
+const places = [
+  { key: "stua",  name: "La Stüa",       gloss: "the stube",     alt: "2,410 m", img: "/wx-bluebird.jpg", py: 46 },
+  { key: "tabia", name: "Ël Tabià",      gloss: "the loft beds", alt: "2,410 m", img: "/wx-cloudsea.jpg", py: 46 },
+  { key: "jeuf",  name: "Jëuf de Sela",  gloss: "the pass camp", alt: "2,680 m", img: "/wx-fohn.jpg",     py: 92 },
+].map((p) => ({ ...p, ...defaultSky.places[p.key] }));
+
+const nav = [
+  ["#weather", "The weather"],
+  ["#material", "Larch & stone"],
+  ["#stube", "The stube"],
+  ["#guardians", "The guardians"],
+  ["#book", "Book a bed"],
+];
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Larès — a refuge above the tree line, Dolomites</title>
+  <meta name="description" content="Larès is a larch-and-stone refuge at 2,410 m on the Sella massif in the Ladin Dolomites. Twelve beds, one stove, one dinner a night. The weather decides the day." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
+  <script is:inline>
+    // ?nofx disables reveals + forces eager loading (critique loop depends on it)
+    if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
+  </script>
+</head>
+<body>
+
+<a class="skip" href="#weather">Skip to the house</a>
+
+<header class="site-head">
+  <div class="wrap head-inner">
+    <a class="mark" href="#top" aria-label="Larès, home">
+      <span class="mark-word">Larès</span>
+      <span class="mark-alt">2,410 m · Dolomites</span>
+    </a>
+    <nav class="site-nav" aria-label="Sections">
+      {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-h">
+    <img class="hero-img" src="/hero.jpg" alt="A low larch-and-drystone refuge on the last grassy shelf below the pale limestone towers of the Sella massif, under fast broken cloud." width="1440" height="960" fetchpriority="high" />
+    <div class="wrap hero-copy">
+      <p class="eyebrow">Ütia · a Ladin refuge · rebuilt 1962</p>
+      <h1 id="hero-h">A refuge above<br />the tree line,<br /><span class="hero-em">where the weather<br />decides the day.</span></h1>
+      <p class="hero-lede">Twelve beds, one masonry stove, one dinner a night, at 2,410 metres on the Sella massif. The mountain is the host. Larès only keeps you warm and high while the sky writes the rest.</p>
+      <a class="cta" href="#weather">See today on the mountain</a>
+    </div>
+  </section>
+
+  <!-- SIGNATURE: the day the weather writes -->
+  <section id="weather" class="weather" aria-labelledby="weather-h" data-sky="bluebird">
+    <div class="wrap">
+      <div class="weather-head">
+        <div>
+          <p class="eyebrow">The day the weather writes</p>
+          <h2 id="weather-h">Rooms by altitude<br />and weather</h2>
+        </div>
+        <p class="weather-intro">Larès does not sell tiers. It offers three places on the mountain, and the forecast decides which are warm, which are open, and what the kitchen sends up. Choose today's sky.</p>
+      </div>
+
+      <!-- the sky control -->
+      <div class="sky-row" role="tablist" aria-label="Today's forecast">
+        {skies.map((s, i) => (
+          <button
+            class="sky-btn"
+            role="tab"
+            id={`sky-tab-${s.id}`}
+            aria-selected={i === 0 ? "true" : "false"}
+            aria-controls="weather-panel"
+            data-sky-set={s.id}
+            tabindex={i === 0 ? "0" : "-1"}
+          >
+            <span class="sky-glyph" data-g={s.id} aria-hidden="true"></span>
+            <span class="sky-label">{s.label}</span>
+            <span class="sky-gloss">{s.gloss}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="weather-grid" id="weather-panel" role="tabpanel" aria-live="polite">
+        <!-- left: elevation profile + facts -->
+        <div class="mountain-col">
+          <figure class="profile" aria-hidden="false">
+            <figcaption class="sr-only">Elevation profile of the Sella side. Valley station 1,540 m, refuge 2,410 m, pass camp 2,680 m, showing today's snow line and weather.</figcaption>
+            <svg viewBox="0 0 300 220" class="profile-svg" preserveAspectRatio="none" role="img" aria-label="Mountain elevation profile">
+              <!-- sky wash -->
+              <rect class="sky-wash" x="0" y="0" width="300" height="220" />
+              <!-- storm cap / föhn cap band -->
+              <rect class="wx-cap" x="0" y="0" width="300" height="0" />
+              <!-- cloud sea band -->
+              <rect class="wx-cloudsea" x="0" y="120" width="300" height="0" />
+              <!-- the mountain silhouette (valley -> refuge shelf -> pass tower) -->
+              <path class="mtn" d="M0,220 L0,158 L58,158 L98,132 L152,130 L198,92 L236,62 L266,62 L300,104 L300,220 Z" />
+              <!-- snow line -->
+              <line class="snowline" x1="0" y1="130" x2="300" y2="130" />
+              <!-- the three places, plotted at their real height on the section, each with a leader tick -->
+              <g class="pt pt-valley"><line class="pt-tick" x1="28" y1="158" x2="28" y2="176" /><circle cx="28" cy="158" r="4.5" /></g>
+              <g class="pt pt-refuge"><line class="pt-tick" x1="124" y1="131" x2="124" y2="176" /><circle cx="124" cy="131" r="5.5" /></g>
+              <g class="pt pt-jeuf"><line class="pt-tick" x1="248" y1="62" x2="248" y2="176" /><circle cx="248" cy="62" r="5" /></g>
+            </svg>
+            <ul class="profile-key">
+              <li><span class="pk pk-jeuf"></span>Jëuf de Sela — 2,680 m</li>
+              <li><span class="pk pk-refuge"></span>Larès — 2,410 m</li>
+              <li><span class="pk pk-valley"></span>Valley station — 1,540 m</li>
+            </ul>
+          </figure>
+
+          <dl class="wx-facts">
+            <div><dt>At the refuge</dt><dd data-fact="temp">+8°C</dd></div>
+            <div><dt>Wind</dt><dd data-fact="wind">Calm, 6 km/h W</dd></div>
+            <div><dt>Freezing level</dt><dd data-fact="freezing">3,200 m</dd></div>
+            <div class="wx-kitchen"><dt>From the kitchen</dt><dd data-fact="kitchen">Terrace lunch: speck, mountain cheese, rye.</dd></div>
+          </dl>
+
+          <p class="aside" data-fact="aside">On a bluebird morning the doors stand open before the sun clears the towers. Come up early.</p>
+        </div>
+
+        <!-- right: the three places -->
+        <ol class="places">
+          {places.map((p) => (
+            <li class="place" data-place={p.key} data-open={p.state}>
+              <div class="place-fig">
+                <img src={p.img} alt="" width="1024" height="1536" loading="lazy" style={`object-position:50% ${p.py}%`} />
+                <span class="wx-relight" aria-hidden="true"></span>
+                <span class="place-state" data-state={p.state}>{p.state === "closed" ? "closed" : p.state === "care" ? "with a guardian" : "open"}</span>
+              </div>
+              <div class="place-body">
+                <p class="place-alt">{p.alt}</p>
+                <h3 class="place-name">{p.name} <span class="place-gloss">{p.gloss}</span></h3>
+                <p class="place-line" data-place-line>{p.line}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+
+    <!-- JS-off / progressive data island: full state for every sky, read by the script -->
+    <script type="application/json" id="sky-data" set:html={JSON.stringify(skies)} />
+  </section>
+
+  <hr class="contour" />
+
+  <!-- MATERIAL -->
+  <section id="material" class="material" aria-labelledby="mat-h">
+    <div class="wrap mat-grid">
+      <figure class="mat-fig reveal">
+        <img src="/mat-larch-wool.jpg" alt="Close detail of weathered larch wall boards with resin knots beside rolled grey-green loden wool blankets bound with a leather strap." width="1440" height="960" loading="lazy" />
+      </figure>
+      <div class="mat-copy reveal">
+        <p class="eyebrow">Larch & stone</p>
+        <h2 id="mat-h">Built of the one tree<br />that climbs this high.</h2>
+        <p>The walls are drystone below and larch above — <span class="serif-italic">larès</span> in the valley's Ladin, the last timber before the mountain gives way to rock. The wood was cut on the slope, the stone lifted from the scree. Nothing here was carried up that the mountain did not already hold.</p>
+        <p>Warmth is felted, not heated: grey loden wool doubled on every bunk, boots dried overnight on the larch rack, the stove fed with split larch that smells of resin when it catches.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUBE / DINNER -->
+  <section id="stube" class="stube" aria-labelledby="stube-h">
+    <div class="wrap stube-grid">
+      <div class="stube-copy reveal">
+        <p class="eyebrow">The stube · one dinner a night</p>
+        <h2 id="stube-h">One pot, one table,<br />whoever made it up.</h2>
+        <p>Dinner is at seven and it is the same for everyone: a black pot of barley and speck broth, dark bread, a wedge of mountain cheese, water from the spring. Climbers, walkers, and the guardian's family eat at one long larch table around the stove.</p>
+        <p class="stube-note">Half board — bed, dinner, and breakfast before the dawn start — is <strong>€72</strong> a person. Day guests are welcome at the table when there is room.</p>
+      </div>
+      <figure class="stube-fig reveal">
+        <img src="/dinner.jpg" alt="A refuge supper on a bare larch table: a black iron pot of barley and speck broth, dark bread, a wedge of cheese and enamel bowls in low evening light." width="1440" height="960" loading="lazy" />
+      </figure>
+    </div>
+  </section>
+
+  <!-- GUARDIANS -->
+  <section id="guardians" class="guardians" aria-labelledby="guard-h">
+    <img class="guard-img" src="/host-guardian.jpg" alt="An older refuge guardian in a grey loden wool jacket crouched feeding split larch logs into the black masonry stove, firelight and cold window light on her face." width="1440" height="960" loading="lazy" />
+    <div class="wrap guard-copy reveal">
+      <p class="eyebrow">The guardians · three generations</p>
+      <h2 id="guard-h">The stove is lit<br />before you arrive.</h2>
+      <p>Marta Comploj keeps Larès as her grandmother did: up before the guests, the stove drawing by five, the pot on by six. In a storm she stays awake with it. She reads the sky the way the valley taught her — which is why the forecast on this page is hers, not a satellite's.</p>
+      <p class="aside">“The mountain decides. I only keep the fire and the door.”</p>
+    </div>
+  </section>
+
+  <!-- WALK UP + BOOKING -->
+  <section id="book" class="book" aria-labelledby="book-h">
+    <div class="wrap book-grid">
+      <figure class="book-fig reveal">
+        <img src="/walkup.jpg" alt="A refuge drying room: worn mountaineering boots on a larch rack, shells and coiled rope on pegs, an open door to the bright stony path climbing toward the peaks." width="1440" height="960" loading="lazy" />
+        <figcaption>
+          <p class="eyebrow">The walk up</p>
+          <p>Two hours and forty minutes from the valley station, or a chairlift and one hour on foot. The path is marked <strong>2</strong> and <strong>2A</strong>. Bring layers; the last shelf holds the wind.</p>
+          <ul class="season">
+            <li><span>Season</span> late June – early October</li>
+            <li><span>Beds</span> 12, in the loft</li>
+            <li><span>Reach</span> Sella side, from Passo Gardena</li>
+          </ul>
+        </figcaption>
+      </figure>
+
+      <div class="book-form-col reveal">
+        <p class="eyebrow">Book a bed</p>
+        <h2 id="book-h">Write to the guardian.</h2>
+        <p class="book-lede">Larès takes bookings by enquiry — the mountain is small and every bed is answered by hand. <span class="serif-italic">The guardian answers by evening.</span></p>
+
+        <form class="book-form" id="book-form" novalidate>
+          <div class="field">
+            <label for="arrival">Arrival</label>
+            <input type="date" id="arrival" name="arrival" />
+          </div>
+          <div class="field">
+            <label for="nights">Nights</label>
+            <input type="number" id="nights" name="nights" min="1" max="14" value="1" inputmode="numeric" />
+          </div>
+          <div class="field">
+            <label for="beds">Beds</label>
+            <input type="number" id="beds" name="beds" min="1" max="12" value="2" inputmode="numeric" />
+          </div>
+          <div class="field field-wide">
+            <label for="place">Where on the mountain</label>
+            <select id="place" name="place">
+              <option value="La Stüa — day guest at the table">La Stüa — day guest at the table</option>
+              <option value="Ël Tabià — bed &amp; half board" selected>Ël Tabià — bed &amp; half board (€72 pp)</option>
+              <option value="Jëuf de Sela — guided pass start">Jëuf de Sela — guided pass start</option>
+            </select>
+          </div>
+          <div class="field field-wide">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" autocomplete="name" />
+          </div>
+          <div class="field field-wide">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" />
+          </div>
+          <div class="field field-wide">
+            <label for="note">A note for the guardian <span class="opt">— diet, arrival hour, climbing plans</span></label>
+            <textarea id="note" name="note" rows="3"></textarea>
+          </div>
+          <button type="submit" class="submit">Send the enquiry</button>
+          <p class="form-foot">No card, no deposit online. The guardian confirms the bed and the weather by return, and you settle at the table.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <div>
+      <p class="foot-word serif">Larès</p>
+      <p class="foot-sub">Ütia · 2,410 m · Sella · Val Gherdëina · Dolomiti</p>
+    </div>
+    <div class="foot-cols">
+      <div>
+        <p class="foot-h">Reach</p>
+        <p>Passo Gardena, then path 2 / 2A<br />2 h 40 on foot from the valley station</p>
+      </div>
+      <div>
+        <p class="foot-h">The guardian</p>
+        <p>Marta Comploj<br /><a href="mailto:marta@lares-utia.example">marta@lares-utia.example</a></p>
+      </div>
+      <div>
+        <p class="foot-h">Season</p>
+        <p>Late June – early October<br />Booked by enquiry, answered by evening</p>
+      </div>
+    </div>
+  </div>
+  <p class="foot-fine wrap">A Foundry house · Aubade · a fictional refuge, built as a study in light.</p>
+</footer>
+
+<script src="/lares.js" is:inline></script>
+</body>
+</html>
