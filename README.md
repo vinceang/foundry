@@ -37,6 +37,7 @@ The two series share standards, not styling. Read
 | [Dar el Warda](https://dar-el-warda.vercel.app) | Aubade | Nine-room riad, courtyard as a sundial | Morocco · Marrakech medina | [`sites/dar-el-warda`](sites/dar-el-warda) · live |
 | [Larès](https://lares-vincent-angs-projects.vercel.app) | Aubade | Mountain refuge, rooms by altitude and weather | Italy · Dolomites, Val Gardena | [`sites/lares`](sites/lares) · live |
 | [Veta](https://veta-vincent-angs-projects.vercel.app) | Aubade | Custom surfboard shaping bay | Mexico · Oaxacan coast | [`sites/veta`](sites/veta) · live |
+| [Ibushi (燻)](https://ibushi.vercel.app) | Aubade | Minka builder — nōka, gyoka, machiya, gasshō | Japan · Hida, Gifu | [`sites/ibushi`](sites/ibushi) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 

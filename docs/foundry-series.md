@@ -41,6 +41,17 @@ The opening pair establishes range inside the series:
 Lagar do Sol welcomes the guest into a life. Hotel Two gives the guest a new way
 to see space. They share Aubade doctrine but must not share a skin.
 
+The series has since been extended past hospitality to *builders of dwellings*,
+on the argument that Aubade's subject is the dwelling rather than the host:
+
+- **Ibushi — smoke-cured and inhabited.** A Hida workshop raising, moving, and
+  reviving *minka*, the traditional houses of rural Japan, in four typologies
+  (nōka, gyoka, machiya, gasshō-zukuri). Its thesis makes habitation
+  structural: the irori's smoke soot-lacquers the frame, so a house is
+  literally preserved by being lived in. Warm interior daylight, cold mountain
+  morning outside — deliberately not the Nocturne lamp that Kaji and Shokunin
+  already hold over Japan.
+
 ## Vespers
 
 The third register is the hour between — civil twilight, passage, discretion.

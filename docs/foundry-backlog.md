@@ -138,4 +138,5 @@ _(nothing in progress)_
 | Bottega Sant'Agata | Nocturne | Cremonese single-maker violin bottega | https://santagata.vercel.app |
 | Dar el Warda | Aubade | Marrakech riad, courtyard as a sundial | https://dar-el-warda.vercel.app |
 | Larès | Aubade | Dolomites refuge, rooms by altitude and weather | https://lares-vincent-angs-projects.vercel.app |
+| Ibushi | Aubade | Minka builder, Hida — four villager-house typologies | https://ibushi.vercel.app |
 | Veta | Aubade | Oaxacan surfboard shaping bay | https://veta-vincent-angs-projects.vercel.app |
