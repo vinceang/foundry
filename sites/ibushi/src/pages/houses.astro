@@ -1,0 +1,358 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Plate from "../components/Plate.astro";
+import "../styles/drawing.css";
+import { computeHouse, TYPOLOGIES, TYPOLOGY_ORDER } from "../lib/house.js";
+import { renderProfile } from "../lib/draw.js";
+import { HOUSE_PAGES } from "../data/houses.js";
+
+const rows = TYPOLOGY_ORDER.map((k) => {
+  const t = TYPOLOGIES[k];
+  const exposure = k === "gyoka" ? "coastal" : k === "gassho" ? "snow" : "inland";
+  const h = computeHouse({
+    typology: k,
+    widthKen: t.ken.w[2],
+    depthKen: t.ken.d[2],
+    exposure,
+  });
+  return { k, t, h, page: HOUSE_PAGES[k], profile: renderProfile(h) };
+});
+
+const r1 = (v) => Math.round(v * 10) / 10;
+---
+
+<Layout
+  title="The four houses | Ibushi 燻"
+  description="Nōka, gyoka, machiya, and gasshō-zukuri — the four kinds of minka, compared by the things that actually differ: roof pitch, plan, cladding, and the weather each was an answer to."
+  nav="houses"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">The four houses · 四つの民家</span>
+      <h1>Four answers to<br />four problems.</h1>
+      <div class="head-cols">
+        <p>
+          <span class="term">Minka</span> 民家 means "the houses of the people" —
+          everyone who was not samurai, priest, or noble. It is not a style, and
+          it is not one building. It is four, and what separates them is not
+          taste but climate, tax, and how the household earned its living.
+        </p>
+        <p class="spec gloss">
+          This is the one page on the site where a comparison earns a grid.
+          Everything below is drawn to a single scale so the pitches can be read
+          against each other: a merchant's tile roof at four and a half sun, a
+          gasshō at seventeen.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- the comparison -->
+  <section class="compare">
+    <div class="wrap">
+      <div class="profiles" role="group" aria-label="The four roof profiles at one scale">
+        {
+          rows.map(({ k, t, h, profile }) => (
+            <a class="pf" href={`/houses/${k}`}>
+              <div class="pf-draw" set:html={profile} />
+              <p class="pf-kobai spec">{r1(h.kobai)} sun · {Math.round(h.deg)}°</p>
+              <h2 class="pf-name">
+                {t.label} <span class="jp pf-jp">{t.jp}</span>
+              </h2>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="table-scroll">
+        <table class="cmp">
+          <caption class="spec gloss">
+            Typical figures for each house at the size it is usually built, on
+            the Inakama module.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">&nbsp;</th>
+              {rows.map(({ t }) => <th scope="col">{t.label}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Where</th>
+              {rows.map(({ page }) => <td>{page.place.split("—")[0].trim()}</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Footprint</th>
+              {rows.map(({ h }) => <td>{h.widthKen} × {h.depthKen} ken</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Area</th>
+              {rows.map(({ h }) => <td>{r1(h.tsubo)} tsubo</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Kōbai</th>
+              {rows.map(({ h }) => <td>{r1(h.kobai)} sun · {Math.round(h.deg)}°</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Ridge</th>
+              {rows.map(({ h }) => <td>{r1(h.ridgeH)} m</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Roof</th>
+              {rows.map(({ h }) => <td>{h.thatch > 0 ? "Kaya thatch" : "Kawara tile"}</td>)}
+            </tr>
+            <tr>
+              <th scope="row">Cladding</th>
+              {
+                rows.map(({ h }) => (
+                  <td>
+                    {h.clad === "yakisugi"
+                      ? "Charred cedar"
+                      : h.clad === "koshi"
+                        ? "Lattice + plaster"
+                        : "Earth plaster"}
+                  </td>
+                ))
+              }
+            </tr>
+            <tr>
+              <th scope="row">Shaped by</th>
+              <td>Farming and the fire</td>
+              <td>Salt wind</td>
+              <td>A tax on frontage</td>
+              <td>Two metres of snow</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- each house, in turn -->
+  {
+    rows.map(({ k, t, page }, i) => (
+      <>
+        <section class="house rise">
+          <div class={`wrap house-grid ${i % 2 ? "flip" : ""}`}>
+            <div class="house-media">
+              <Plate name={page.img} alt={page.alt} ratio="3 / 2" />
+            </div>
+            <div class="house-text">
+              <h2>
+                {t.label} <span class="jp house-jp">{t.jp}</span>
+              </h2>
+              <p class="kicker house-gloss">{t.gloss} · {page.place}</p>
+              <p class="house-thesis">{page.thesis}</p>
+              <p>{page.lede}</p>
+              <a class="quiet-link" href={`/houses/${k}`}>
+                Read the {t.label} →
+              </a>
+            </div>
+          </div>
+        </section>
+        <hr class="snap-hair" />
+      </>
+    ))
+  }
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <h2>Draw one.</h2>
+        <p>
+          Set the bays, the weather, and the earth floor, and watch the section
+          and plan follow. The specification it makes is what we build from.
+        </p>
+      </div>
+      <a class="btn" href="/sumitsuke">Sumitsuke — snap a line</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .head {
+    padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .head h1 {
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .head-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1.5rem, 4vw, 4rem);
+    max-width: 62rem;
+  }
+
+  /* --- comparison ------------------------------------------------------- */
+
+  .compare {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .profiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+    border-top: 1px solid var(--susu);
+    border-bottom: 1px solid var(--susu);
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .pf {
+    display: block;
+    padding: 1.5rem 1.25rem 1.6rem;
+    text-decoration: none;
+    border-right: 1px solid var(--susu);
+    transition: background 160ms ease;
+  }
+
+  .pf:last-child {
+    border-right: 0;
+  }
+
+  .pf:hover {
+    background: var(--washi-lit);
+  }
+
+  .pf-draw {
+    margin-bottom: 1rem;
+  }
+
+  .pf-kobai {
+    margin: 0 0 0.3rem;
+    font-weight: 600;
+    color: var(--okibi);
+  }
+
+  .pf-name {
+    font-size: 1.4rem;
+  }
+
+  .pf-jp {
+    font-size: 0.62em;
+    color: var(--sugi-deep);
+    margin-left: 0.3rem;
+  }
+
+  /* --- table ------------------------------------------------------------ */
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  .cmp {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    min-width: 44rem;
+  }
+
+  .cmp caption {
+    text-align: left;
+    margin-bottom: 0.9rem;
+  }
+
+  .cmp th,
+  .cmp td {
+    text-align: left;
+    padding: 0.6rem 1rem 0.6rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--sugi) 28%, transparent);
+    vertical-align: top;
+  }
+
+  .cmp thead th {
+    border-bottom: 1px solid var(--susu);
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .cmp tbody th {
+    font-weight: 400;
+    color: var(--sugi-deep);
+    white-space: nowrap;
+    padding-right: 1.5rem;
+  }
+
+  /* --- each house ------------------------------------------------------- */
+
+  .house {
+    padding-block: clamp(2.75rem, 6vw, 5rem);
+  }
+
+  .house-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: center;
+  }
+
+  .house-grid.flip .house-media {
+    order: 2;
+  }
+
+  .house-jp {
+    font-size: 0.52em;
+    color: var(--sugi-deep);
+    margin-left: 0.5rem;
+  }
+
+  .house-gloss {
+    margin: 0.7rem 0 1.2rem;
+  }
+
+  .house-thesis {
+    font-size: 1.15rem;
+    line-height: 1.45;
+  }
+
+  .quiet-link {
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    color: var(--sugi-deep);
+    text-decoration: none;
+    border-bottom: 1px solid var(--okibi);
+    padding-bottom: 2px;
+  }
+
+  .quiet-link:hover {
+    color: var(--susu);
+  }
+
+  /* --- cta -------------------------------------------------------------- */
+
+  .cta {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  .cta-in {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta p {
+    margin: 0.8rem 0 0;
+    max-width: 32rem;
+  }
+
+  @media (max-width: 62rem) {
+    .house-grid {
+      grid-template-columns: 1fr;
+    }
+    .house-grid.flip .house-media {
+      order: 0;
+    }
+    .pf {
+      border-right: 0;
+      border-bottom: 1px solid var(--susu);
+    }
+  }
+</style>

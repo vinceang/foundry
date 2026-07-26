@@ -1,0 +1,142 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { TYPOLOGIES } from "../lib/house.js";
+
+// The munafuda 棟札 is the tag nailed inside the ridge when a frame is raised:
+// who built it, for whom, and when. It is the closest thing a Japanese house
+// has to a signature, and it is only found when the roof comes off.
+const TAGS = [
+  { year: "2026", house: "gassho", place: "Ogimachi, Shirakawa-mura", work: "Re-thatch, north slope", client: "Yamashita", ken: "5 × 11", note: "Eleven thousand bundles. One day, ninety-one people, of whom fifty-two were not from the village. The lashings were re-tensioned; two neso ties in the second truss were renewed.", state: "Fire lit" },
+  { year: "2025", house: "noka", place: "Kamioka, Hida-shi", work: "Revival", client: "Furuya", ken: "4 × 7", note: "Empty nineteen years. Sills and post feet scarfed on the north and west runs; roof stripped to the bamboo and re-laid. The daikokubashira was sound and was not touched.", state: "Fire lit, 2025" },
+  { year: "2025", house: "machiya", place: "Sanmachi, Takayama", work: "Frontage and tōriniwa", client: "Kubota", ken: "3 × 14", note: "Kōshi lattice recut to the 1890 profile from a photograph in the town archive. The hibukuro had been ceiled over in 1974; reopened.", state: "In use" },
+  { year: "2024", house: "gyoka", place: "Sosogi, Wajima", work: "Relocation", client: "Not recorded", ken: "3 × 6", note: "Taken down over one winter and re-raised four hundred metres inland. Yakisugi recharred on site; ridge stones lifted and relaid in the same order they came off.", state: "Fire lit, 2024" },
+  { year: "2023", house: "noka", place: "Miyagawa, Hida-shi", work: "New frame on the old methods", client: "Ōtani", ken: "4 × 6", note: "The first frame we raised entirely from timber cut within the valley. Ishiba-date on stones dug from the river below the site.", state: "Fire lit, 2023" },
+  { year: "2022", house: "gassho", place: "Ainokura, Nanto", work: "Structural survey and truss repair", client: "Village association", ken: "6 × 12", note: "No re-thatch. Two principal rafters had checked badly along the grain; splinted and re-lashed. Recommended the hearth be relit and it was.", state: "Fire lit, 2022" },
+  { year: "2021", house: "noka", place: "Furukawa, Hida-shi", work: "Revival", client: "Ibushi", ken: "4 × 5", note: "Our own shed. Bought as a collapsing storehouse, re-raised as the workshop. Everything we know how to do wrong, we did wrong here first.", state: "Fire lit" },
+  { year: "2019", house: "machiya", place: "Ōjinmachi, Takayama", work: "Revival", client: "Not recorded", ken: "2 × 12", note: "Two ken to the street — the narrowest we have worked on. The tsuboniwa had been roofed over; reopened, and the back rooms got a through-draught for the first time in fifty years.", state: "In use" },
+];
+
+const counts = TAGS.reduce((a, t) => ((a[t.house] = (a[t.house] ?? 0) + 1), a), {});
+---
+
+<Layout
+  title="The record | Ibushi 燻"
+  description="Every house Ibushi has raised, moved, or revived, entered as a munafuda — the tag nailed inside the ridge naming who built it, for whom, and when."
+  nav="munafuda"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">The record · 棟札</span>
+      <h1>A house signs itself<br />where nobody looks.</h1>
+      <div class="head-cols">
+        <p>
+          When a frame is raised, a wooden tablet is written in ink and nailed
+          up inside the ridge: the date, the owner, the tōryō, and a line asking
+          for the building's safety. It is called a <span class="term">munafuda</span> 棟札, and it faces into the dark of
+          the roof void where no one will read it again until the thatch comes
+          off, thirty or forty years later.
+        </p>
+        <p class="spec gloss">
+          That is the record below. Everything this workshop has put its name
+          inside since 1968 — with the one line that matters at the end of each,
+          which is whether the fire is lit.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="tally">
+    <div class="wrap">
+      <dl class="tally-list">
+        <div><dt>Entries shown</dt><dd>{TAGS.length}</dd></div>
+        <div><dt>Nōka</dt><dd>{counts.noka ?? 0}</dd></div>
+        <div><dt>Gasshō-zukuri</dt><dd>{counts.gassho ?? 0}</dd></div>
+        <div><dt>Machi-ya</dt><dd>{counts.machiya ?? 0}</dd></div>
+        <div><dt>Gyoka</dt><dd>{counts.gyoka ?? 0}</dd></div>
+        <div><dt>Surveyed, all told</dt><dd>340</dd></div>
+        <div><dt>Of those, gone</dt><dd>61</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="tags">
+    <div class="wrap">
+      <ol class="tag-list">
+        {TAGS.map((t) => (
+          <li class="tag rise">
+            <div class="tag-plate" aria-hidden="true">
+              <span class="tag-year">{t.year}</span>
+              <span class="jp tag-jp">棟札</span>
+            </div>
+            <div class="tag-body">
+              <h2>
+                {t.place}
+                <span class="tag-house"> · {TYPOLOGIES[t.house].label} <span class="jp">{TYPOLOGIES[t.house].jp}</span></span>
+              </h2>
+              <dl class="tag-meta">
+                <div><dt>Work</dt><dd>{t.work}</dd></div>
+                <div><dt>For</dt><dd>{t.client}</dd></div>
+                <div><dt>Frame</dt><dd>{t.ken} ken</dd></div>
+                <div><dt>Hearth</dt><dd class="tag-fire">{t.state}</dd></div>
+              </dl>
+              <p class="tag-note">{t.note}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="spec gloss tag-fine">
+        Entries before 2019 are transcribed from the paper survey books. Where a
+        client asked not to be named, the line reads "not recorded" and stays
+        that way.
+      </p>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <h2>Add one.</h2>
+        <p>Tell us the site and the weather. If it comes off well, your name goes up inside the ridge where nobody will see it.</p>
+      </div>
+      <a class="btn" href="/commission">Begin a commission</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .head { padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem); }
+  .head h1 { margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+  .head-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: clamp(1.5rem, 4vw, 4rem); max-width: 62rem; }
+  .tally { padding-block: clamp(1.75rem, 3vw, 2.75rem); }
+  .tally-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 1.25rem 1.5rem; margin: 0; }
+  .tally-list dt { font-family: var(--sans); font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sugi-deep); margin-bottom: 0.3rem; }
+  .tally-list dd { margin: 0; font-family: var(--serif); font-size: 2rem; line-height: 1; font-variant-numeric: tabular-nums; }
+  .tags { padding-block: clamp(2.5rem, 5vw, 4.5rem); }
+  .tag-list { list-style: none; margin: 0; padding: 0; }
+  .tag { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: clamp(1.25rem, 4vw, 3rem); padding: clamp(1.75rem, 3vw, 2.5rem) 0; border-top: 1px solid var(--susu); }
+  .tag:last-child { border-bottom: 1px solid var(--susu); }
+  /* the tablet itself: a board with a shouldered head, as they are cut */
+  .tag-plate { background: var(--tsuchikabe); border: 1px solid var(--susu); clip-path: polygon(50% 0, 100% 12%, 100% 100%, 0 100%, 0 12%); display: grid; place-items: center; align-content: center; gap: 0.4rem; padding: 1.5rem 0.5rem 1.1rem; height: max-content; }
+  .tag-year { font-family: var(--sans); font-size: 1.05rem; font-weight: 600; letter-spacing: 0.1em; font-variant-numeric: tabular-nums; }
+  .tag-jp { font-size: 0.9rem; color: var(--sugi-deep); letter-spacing: 0.2em; }
+  .tag-body h2 { font-size: clamp(1.4rem, 1.1rem + 1.1vw, 2rem); margin-bottom: 0.9rem; }
+  .tag-house { color: var(--sugi-deep); font-size: 0.62em; }
+  .tag-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.75rem 1.5rem; margin: 0 0 1rem; padding-bottom: 0.9rem; border-bottom: 1px solid color-mix(in srgb, var(--sugi) 28%, transparent); }
+  .tag-meta dt { font-family: var(--sans); font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sugi-deep); margin-bottom: 0.2rem; }
+  .tag-meta dd { margin: 0; font-family: var(--sans); font-size: 0.8125rem; }
+  .tag-fire { color: var(--okibi); font-weight: 600; }
+  .tag-note { margin: 0; max-width: 42rem; font-size: 0.9375rem; }
+  .tag-fine { margin-top: 1.5rem; max-width: 40rem; }
+  .cta { padding-block: clamp(3rem, 6vw, 5rem); }
+  .cta-in { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .cta p { margin: 0.8rem 0 0; max-width: 32rem; }
+  @media (max-width: 62rem) {
+    .tag { grid-template-columns: 5.5rem minmax(0, 1fr); }
+  }
+</style>

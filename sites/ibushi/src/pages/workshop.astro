@@ -1,0 +1,226 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Plate from "../components/Plate.astro";
+
+const PEOPLE = [
+  ["Ōno Sōhachi", "大野宗八", "Tōryō — master carpenter", "Sixth of his line to hold the title. Marks every frame himself; has not let an apprentice cut a daikokubashira in thirty-one years."],
+  ["Mizuno Kaneko", "水野兼子", "Kayabuki-shi — master thatcher", "Runs the workshop's kayaba above Furukawa and grades every bundle that goes onto a roof. Twenty-two years thatching, the last nine leading."],
+  ["Ōno Rika", "大野理香", "Carpenter, and the office", "Handles the surveys and the drawings, and cuts. Took the survey work over in 2019 when the archive was digitised."],
+  ["Six carpenters", "", "Daiku 大工", "Between four and twenty-six years at the bench. Two of them came out of the Takayama machiya trade and brought the lattice work with them."],
+  ["Two apprentices", "", "Deshi 弟子", "Five-year terms. The first year is sharpening, sweeping, and carrying, and nobody has ever been talked out of it."],
+  ["Nakai Tomo", "中井とも", "Sakan — plasterer", "Mixes earth from the site where it can be dug. Works to the season: no finish coat between December and March."],
+];
+
+const RECORD = [
+  ["1968", "Ōno Sōhachi's grandfather registers the workshop in Furukawa. Three men, all roof work."],
+  ["1979", "First full relocation — a gasshō from a valley flooded for the Miboro dam, taken down over one winter."],
+  ["1994", "The kayaba above Furukawa is bought outright after two seasons of buying thatch in."],
+  ["2004", "Sōhachi takes the title of tōryō at thirty-eight."],
+  ["2019", "The survey archive is digitised: 340 houses measured, of which 61 no longer stand."],
+  ["2026", "Eleven people. Four houses on the books, two of them revivals with the fire already relit."],
+];
+---
+
+<Layout
+  title="The workshop | Ibushi 燻"
+  description="Eleven people in Furukawa, Hida — a tōryō, a master thatcher, six carpenters, two apprentices and a plasterer — working in the lineage of the Hida no Takumi."
+  nav="workshop"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">The workshop · 工房 · Furukawa, Hida</span>
+      <h1>Eleven people,<br />and a grass field.</h1>
+      <div class="head-cols">
+        <p>
+          Ibushi works out of a timber shed on the edge of Furukawa, forty
+          minutes north of Takayama. Everything we build goes up within about
+          two hours of it: the farm valleys of the Hida basin, the gasshō
+          villages over the pass, Takayama's merchant streets, and the Noto
+          coast.
+        </p>
+        <p class="spec gloss">
+          We take three or four houses a year. That is not scarcity marketing —
+          it is how many frames one tōryō can mark, and he marks all of them.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero-media"><div class="wrap">
+    <Plate name="toryo" alt="A master carpenter in his sixties crouched over a squared timber in a timber-framed workshop, snapping a straight ink line onto the wood with a traditional ink pot and cord, his face lit by daylight from a large open doorway." ratio="16 / 9" eager={true} />
+  </div></section>
+
+  <hr class="snap" />
+
+  <section class="takumi">
+    <div class="wrap takumi-grid">
+      <div>
+        <span class="kicker">The lineage · 飛騨の匠</span>
+        <h2>Hida paid its tax in carpenters.</h2>
+        <p>
+          Hida is mountains. Under the Ritsuryō system of the eighth century a
+          province owed the capital rice and cloth, and Hida could produce
+          neither in quantity — so it was permitted, uniquely, to pay in labour
+          instead. Each year the province sent men to build in Nara and later
+          Kyoto: roughly ten from each village, for a year at a time.
+        </p>
+        <p>
+          They were called the <span class="term">Hida no Takumi</span> 飛騨の匠,
+          and they built at the capital for something like four hundred years.
+          The skill came back up the valley with them every year, and it is the
+          only reason a remote snow province has a carpentry tradition of that
+          order.
+        </p>
+        <p class="spec gloss">
+          It is the one claim of pedigree this workshop makes, and it is a claim
+          about a place rather than about a family. Anyone working timber in
+          Hida is working downstream of it.
+        </p>
+      </div>
+      <div>
+        <Plate name="kigumi" alt="Two large squared cedar timbers with an intricate interlocking joint halfway home, a wooden mallet and chisels beside them." ratio="4 / 5" caption="A pulled-apart lap joint on the bench. Cut for two specific timbers and no others." />
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="people">
+    <div class="wrap">
+      <span class="kicker">The bench · 職人</span>
+      <h2>Who does the work.</h2>
+      <ul class="people-list">
+        {PEOPLE.map(([name, jp, role, line]) => (
+          <li>
+            <h3>{name} {jp && <span class="jp p-jp">{jp}</span>}</h3>
+            <p class="p-role spec">{role}</p>
+            <p class="p-line">{line}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="kayaba">
+    <div class="wrap kayaba-grid">
+      <div class="kayaba-media">
+        <Plate name="kayaba" alt="A cut grassland of tall miscanthus thatching reed on a mountain slope in late autumn, pale golden stems standing in tied bundles in rows across the field." ratio="3 / 2" />
+      </div>
+      <div>
+        <span class="kicker">The kayaba · 茅場</span>
+        <h2>You cannot buy this in a hurry.</h2>
+        <p>
+          A <span class="term">kayaba</span> is a grassland held and burned off
+          each spring for one purpose: to grow miscanthus for thatch. Ours is
+          eleven hectares on a south slope above Furukawa, cut in late autumn
+          after the first frosts have taken the moisture out of the stem, then
+          stood in bundles in the field to finish drying.
+        </p>
+        <p>
+          A gasshō roof takes something on the order of ten thousand bundles. No
+          merchant holds that; it has to be grown, and it has to be grown
+          nearby, because carriage costs more than the grass. Villages held
+          kayaba in common for exactly this reason and lost them when the roofs
+          went to tile.
+        </p>
+        <p class="spec gloss">
+          We bought ours outright in 1994 after two seasons of trying to buy
+          thatch in and finding there was none to buy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="yui">
+    <div class="wrap yui-grid">
+      <div>
+        <span class="kicker">Yui · 結い</span>
+        <h2>Forty people, one slope, one day.</h2>
+        <p>
+          Re-thatching is not a job you can hire your way through. One slope of
+          a gasshō roof is stripped and re-laid in a single day, because a roof
+          opened to the weather cannot be left open, and that takes forty pairs
+          of hands at once.
+        </p>
+        <p>
+          <span class="term">Yui</span> is the mutual-aid system that supplied
+          them: the village turned out for one household, the household fed
+          everyone, and the debt was written down and repaid when it was
+          someone else's roof. It is a labour ledger, and it is the reason these
+          villages held together as villages.
+        </p>
+        <p class="spec gloss">
+          We still work to it. We bring the scaffold, the grading, the ridge and
+          the tōryō; the village brings the hands. Where there is no longer a
+          village to bring them, we say so before we quote.
+        </p>
+      </div>
+      <div class="yui-media">
+        <Plate name="yui-rethatch" alt="About twenty villagers on the steep thatched roof of a farmhouse, passing up bundles of golden miscanthus and combing new thatch flush, old grey thatch stripped from one half." ratio="3 / 2" />
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="record">
+    <div class="wrap">
+      <span class="kicker">Since 1968 · 沿革</span>
+      <h2>The short history.</h2>
+      <dl class="years">
+        {RECORD.map(([y, t]) => (
+          <div class="year"><dt>{y}</dt><dd>{t}</dd></div>
+        ))}
+      </dl>
+      <a class="quiet-link" href="/munafuda">Every house, as a ridge tag →</a>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <h2>Come and see it.</h2>
+        <p>The shed is open to visitors by arrangement, Tuesday to Friday. There is usually a frame on the ground.</p>
+      </div>
+      <a class="btn" href="/commission">Write to the workshop</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .head { padding-block: clamp(2.5rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2.5rem); }
+  .head h1 { margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+  .head-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: clamp(1.5rem, 4vw, 4rem); max-width: 62rem; }
+  .hero-media { padding-block: 0 clamp(2rem, 4vw, 3rem); }
+  .takumi, .kayaba, .yui { padding-block: clamp(3rem, 6vw, 5.5rem); }
+  .takumi-grid, .kayaba-grid, .yui-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: clamp(1.75rem, 5vw, 5rem); align-items: center; }
+  .kayaba-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); }
+  .takumi h2, .kayaba h2, .yui h2, .people h2, .record h2 { margin-bottom: 1.3rem; }
+  .people { padding-block: clamp(3rem, 6vw, 5rem); }
+  .people-list { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0; border-top: 1px solid var(--susu); }
+  .people-list li { padding: 1.4rem 1.5rem 1.5rem 0; border-bottom: 1px solid color-mix(in srgb, var(--sugi) 30%, transparent); }
+  .people-list h3 { font-size: 1.35rem; }
+  .p-jp { font-size: 0.68em; color: var(--sugi-deep); margin-left: 0.3rem; }
+  .p-role { margin: 0.3rem 0 0.6rem; color: var(--okibi); font-weight: 600; }
+  .p-line { font-size: 0.9375rem; margin: 0; max-width: 26rem; }
+  .record { padding-block: clamp(3rem, 6vw, 5rem); }
+  .years { margin: 2rem 0; border-top: 1px solid var(--susu); max-width: 52rem; }
+  .year { display: grid; grid-template-columns: 5rem 1fr; gap: 0.5rem 2rem; padding: 0.85rem 0; border-bottom: 1px solid color-mix(in srgb, var(--sugi) 28%, transparent); }
+  .year dt { font-family: var(--sans); font-size: 0.8125rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .year dd { margin: 0; font-size: 0.9375rem; }
+  .quiet-link { font-family: var(--sans); font-size: 0.8125rem; color: var(--sugi-deep); text-decoration: none; border-bottom: 1px solid var(--okibi); padding-bottom: 2px; }
+  .quiet-link:hover { color: var(--susu); }
+  .cta { padding-block: clamp(3rem, 6vw, 5rem); }
+  .cta-in { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .cta p { margin: 0.8rem 0 0; max-width: 32rem; }
+  @media (max-width: 62rem) {
+    .takumi-grid, .kayaba-grid, .yui-grid { grid-template-columns: 1fr; }
+    .kayaba-media, .yui-media { order: -1; }
+  }
+</style>

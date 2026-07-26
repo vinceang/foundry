@@ -1,0 +1,665 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Plate from "../components/Plate.astro";
+
+// The house in the order you actually walk it: earth, then the step, then
+// the raised floor, then the fire, then the rooms the fire made possible.
+const SEATS = [
+  {
+    key: "yokoza",
+    name: "Yokoza",
+    jp: "横座",
+    who: "The head of the household",
+    side: "Back to the wall, facing the doma",
+    line: "His seat and no one else's, even when he is out. A guest offered it would refuse. From here he sees the entrance, so he sees who comes in before they see him.",
+  },
+  {
+    key: "kakaza",
+    name: "Kakaza",
+    jp: "嬶座",
+    who: "The wife",
+    side: "The kitchen side",
+    line: "Nearest the pots, the stove, and the water. She controls the fire itself — the ash, the charcoal, and the height of the kettle on the hook. Practically, the most powerful seat at the hearth.",
+  },
+  {
+    key: "kyakuza",
+    name: "Kyakuza",
+    jp: "客座",
+    who: "The guest",
+    side: "Opposite the kakaza",
+    line: "Set so the guest faces the fire with the household's food side across from him and the head of the house to his side. He is warmed first and served first, and he is never seated with his back to the door.",
+  },
+  {
+    key: "kijiri",
+    name: "Kijiri",
+    jp: "木尻",
+    who: "Children, apprentices, the lowest-ranking",
+    side: "The wood's end",
+    line: "Literally 'the end of the wood' — the side the firewood is fed in from, so it takes the smoke, the sparks, and the traffic. You sat here until someone decided you no longer had to.",
+  },
+];
+
+const PARTS = [
+  {
+    key: "doma",
+    name: "Doma",
+    jp: "土間",
+    gloss: "the earth floor",
+    img: "doma",
+    alt: "The earth-floored working entrance of a farmhouse: packed dark earth, straw baskets and hand tools against a plaster wall, a clay stove, and the raised wooden floor edge at the right.",
+    body: [
+      "You come in at ground level, onto packed earth. The doma is not a hallway — it is the working half of the house, and in a nōka it can be a third of the whole floor plan. Threshing, hulling, pickling, tool repair, and in a hard winter the ox itself, brought inside where the family could hear it.",
+      "The floor is earth stabilised with lime and bittern and beaten hard, called tataki. It is swept, never washed. It is cold, and it is meant to be: everything done here is done in outdoor shoes.",
+    ],
+    spec: [
+      ["Floor", "Tataki — beaten earth, lime, bittern"],
+      ["Footwear", "Kept on"],
+      ["Also holds", "Kamado 竈, the clay cooking stove"],
+    ],
+  },
+  {
+    key: "kamachi",
+    name: "Agarikamachi",
+    jp: "上がり框",
+    gloss: "the step up",
+    body: [
+      "One timber, a single heavy beam laid along the edge where the earth floor stops and the raised floor begins. It is the most important line in a Japanese house: below it you are outside, above it you are inside, and the whole distinction is enforced by a step about fourteen sun high.",
+      "You sit on it to take your shoes off. Every visitor who is not quite a guest — the postman, a neighbour returning a tool — is received here, sitting on the kamachi with their feet still on the earth. It is a threshold you can hold a conversation on.",
+    ],
+    spec: [
+      ["Height", "Roughly 14 sun · 420 mm"],
+      ["Material", "One beam, usually zelkova or chestnut"],
+      ["Marks", "Where shoes come off"],
+    ],
+  },
+  {
+    key: "yuka",
+    name: "Yuka",
+    jp: "床",
+    gloss: "the raised floor",
+    body: [
+      "Boards laid over a joisted frame, lifted clear of the ground so air moves underneath and the damp never reaches them. This is where the household lives: eats, sleeps, works in the evening, and receives anyone who matters.",
+      "Nearest the doma it is bare board — the ita-no-ma, scrubbed and hard-wearing. Further in it becomes matted. The house gets softer, quieter, and more formal the deeper you go, and nobody has to be told.",
+    ],
+    spec: [
+      ["Structure", "Boards on joists, ventilated beneath"],
+      ["Nearest the doma", "Ita-no-ma 板の間 — bare board"],
+      ["Deeper in", "Tatami"],
+    ],
+  },
+  {
+    key: "irori",
+    name: "Irori",
+    jp: "囲炉裏",
+    gloss: "the sunken hearth",
+    img: "irori",
+    alt: "A sunken square hearth set into a dark wooden floor, edged with a timber curb, charcoal glowing in a bed of ash, with a heavy iron kettle hanging above it from an adjustable hook.",
+    body: [
+      "A square cut in the raised floor, lined with clay and filled with ash, kerbed with four timbers. It heats the house, cooks the food, dries the clothes, lights the evening, and holds the family in a fixed arrangement around it.",
+      "And it keeps the building standing. There is no chimney. The smoke rises through the open frame and out through the thatch, and on the way it lays down soot on every beam and every stem of straw it passes. That soot repels insects, drives out moisture, and stops rot. A minka whose fire goes out for a decade is a minka that has begun to fail — which is why an empty one is a structural emergency and not merely a sad thing.",
+    ],
+    spec: [
+      ["Size", "Around 3 shaku square"],
+      ["Lining", "Clay, filled with wood ash"],
+      ["Chimney", "None — the smoke is the point"],
+    ],
+  },
+  {
+    key: "jizaikagi",
+    name: "Jizaikagi",
+    jp: "自在鉤",
+    gloss: "the adjustable hook",
+    img: "jizaikagi",
+    alt: "An adjustable pot hook over a hearth: a carved wooden fish counterweight blackened by smoke, hanging on a hemp cord with an iron hook below it.",
+    body: [
+      "A hook on a cord from the beam above, with a wooden lever and counterweight that lock it at any height. Raise it to simmer, drop it to boil. Jizai means 'as one pleases' — the whole apparatus exists so a kettle can be moved through the fire's heat without touching the fire.",
+      "The counterweight is almost always carved as a fish. Two reasons, and households will give you either: a fish never closes its eyes, so it watches the fire all night; and a fish belongs to water, which is what you want hanging over the one thing that could burn the house down.",
+    ],
+    spec: [
+      ["Mechanism", "Lever and counterweight, friction-locked"],
+      ["Counterweight", "Carved keyaki, usually a fish"],
+      ["Made to order", "¥94,000 — see the bench"],
+    ],
+  },
+  {
+    key: "tatami",
+    name: "Tatami",
+    jp: "畳",
+    gloss: "the mats",
+    img: "tatami-shoji",
+    alt: "A tatami-matted room in the morning: pale straw mats in a grid, translucent paper screens glowing with low sun and casting their lattice across the floor.",
+    body: [
+      "A compressed rice-straw core, faced with woven soft rush and bound at two edges with cloth. One mat is half a tsubo — about 1.65 square metres — and rooms are not measured in metres but in mats: a six-mat room, an eight-mat room.",
+      "Which means the mat is not furnishing. It is the module. In the Kyōma system of western Japan the mat is standardised first and the posts are set around it; in the Inakama system of the east and north, including Hida, the post spacing comes first and the mats are cut to fit what is left. Two houses of 'eight mats' are therefore different sizes, and a carpenter must know which country he is in before he cuts anything.",
+    ],
+    spec: [
+      ["One mat", "½ tsubo · 1.65 m²"],
+      ["Inakama 田舎間", "Posts first, mats cut to fit — Hida"],
+      ["Kyōma 京間", "Mats first, posts set around them"],
+    ],
+  },
+  {
+    key: "screens",
+    name: "Shoji & Fusuma",
+    jp: "障子・襖",
+    gloss: "the sliding screens",
+    body: [
+      "Shoji are a light cedar lattice faced on one side with kōzo paper. They are the outer skin: they hold weather out and let a remarkable amount of daylight through, diffused so evenly that a room with shoji on one wall has no bright side. In snow country they turn a white landscape into a lit wall.",
+      "Fusuma are the inner ones — opaque, papered both sides over a light frame, running in the same grooves. They divide rooms, and they are removable. Take the fusuma out and four rooms become one hall, which is how a farmhouse held a funeral or a wedding without owning a room big enough for either.",
+    ],
+    spec: [
+      ["Shoji 障子", "Kōzo paper on cedar lattice, translucent"],
+      ["Fusuma 襖", "Papered both sides, opaque, removable"],
+      ["Above them", "Ranma 欄間 — carved transoms, for air"],
+    ],
+  },
+  {
+    key: "tokonoma",
+    name: "Tokonoma",
+    jp: "床の間",
+    gloss: "the alcove",
+    img: "tokonoma",
+    alt: "A tokonoma alcove: a raised recessed bay with a dark timber post at one side, a plain hanging scroll at the back, and a single seasonal branch in a rough ceramic vessel.",
+    body: [
+      "A shallow raised recess in the wall of the zashiki, the formal room at the deep end of the house. It holds one scroll and one arrangement, changed with the season, and nothing else. Its whole function is to be the one place in a working building where something is displayed rather than used.",
+      "The post at its open edge, the tokobashira, is the only timber in the house chosen for its face rather than its strength — often left round, with the bark line still on it. The guest of highest rank is seated with their back to the alcove. They cannot see it, and everyone else can see them in front of it.",
+    ],
+    spec: [
+      ["Contains", "One scroll, one arrangement"],
+      ["Tokobashira 床柱", "Chosen for its face, often left round"],
+      ["Seating", "The honoured guest sits before it, back to it"],
+    ],
+  },
+  {
+    key: "engawa",
+    name: "Engawa",
+    jp: "縁側",
+    gloss: "the veranda",
+    img: "engawa",
+    alt: "The veranda of a house seen along its length: a strip of dark polished boards outside the paper screens, storm shutters slid back, mossy garden beyond, low sun raking the boards.",
+    body: [
+      "A strip of polished board running outside the shoji and under the eave — neither in the house nor out of it. In summer the screens are slid away entirely and the engawa becomes the edge of a room that now includes the garden. In winter it is a buffer of still air.",
+      "Outside it again are the amado, heavy wooden storm shutters that slide out of a box at one end and close the house completely against a typhoon or a blizzard. Closing them at dusk and drawing them back at dawn was a daily act, and the sound of it was how a village knew a house was still lived in.",
+    ],
+    spec: [
+      ["Position", "Outside the shoji, under the eave"],
+      ["Amado 雨戸", "Storm shutters, stored in a box at one end"],
+      ["Summer", "Screens removed — the garden joins the room"],
+    ],
+  },
+];
+---
+
+<Layout
+  title="The rooms | Ibushi 燻"
+  description="The parts of a minka in the order you walk them: the earth floor, the step where shoes come off, the raised floor, the hearth that preserves the building, the mats that are the module, the screens, the alcove, and the veranda."
+  nav="rooms"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">The rooms · 間取り</span>
+      <h1>You come in<br />at ground level.</h1>
+      <div class="head-cols">
+        <p>
+          A minka is walked, not toured. It goes earth, then a step, then board,
+          then matting — colder to warmer, rougher to finer, public to private —
+          and every change underfoot tells you what you are now allowed to do.
+        </p>
+        <p class="spec gloss">
+          What follows is the house in that order. The Japanese terms are given
+          once with a plain gloss, then used, because they are the names of real
+          things and there are no English equivalents that mean the same.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  {
+    PARTS.map((p, i) => (
+      <>
+        <section class="part rise" id={p.key}>
+          <div class={`wrap part-grid ${i % 2 ? "flip" : ""}`}>
+            <div class="part-text">
+              <h2>
+                {p.name} <span class="jp part-jp">{p.jp}</span>
+              </h2>
+              <p class="kicker part-gloss">{p.gloss}</p>
+              {p.body.map((b) => <p>{b}</p>)}
+              <dl class="mini">
+                {p.spec.map(([k, v]) => (
+                  <div class="mini-row">
+                    <dt>{k}</dt>
+                    <dd>{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div class="part-media">
+              {p.img ? (
+                <Plate name={p.img} alt={p.alt} ratio="3 / 2" />
+              ) : (
+                <div class="part-mark" aria-hidden="true">
+                  <span class="jp">{p.jp}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+        <hr class="snap-hair" />
+      </>
+    ))
+  }
+
+  <!-- ================= the four seats ================= -->
+  <section class="seats" id="seats">
+    <div class="wrap">
+      <span class="kicker">The second interaction · 座順</span>
+      <h2>Four sides, four ranks.</h2>
+      <p class="seats-lede">
+        Nothing about a hearth is symmetrical except its shape. Each side of an
+        irori has a name and a rank, and the arrangement held in nearly every
+        minka in Japan. The fire organised the family — where you sat said who
+        you were, and moving seats meant something had changed.
+      </p>
+
+      <div class="seats-grid">
+        <div class="hearth" role="group" aria-label="The four seats of an irori">
+          <button class="seat seat-yokoza" type="button" data-seat="yokoza">
+            <span class="seat-jp jp">横座</span>
+            <span class="seat-name">Yokoza</span>
+          </button>
+          <button class="seat seat-kakaza" type="button" data-seat="kakaza">
+            <span class="seat-jp jp">嬶座</span>
+            <span class="seat-name">Kakaza</span>
+          </button>
+          <div class="fire" aria-hidden="true">
+            <span class="fire-jp jp">囲炉裏</span>
+          </div>
+          <button class="seat seat-kyakuza" type="button" data-seat="kyakuza">
+            <span class="seat-jp jp">客座</span>
+            <span class="seat-name">Kyakuza</span>
+          </button>
+          <button class="seat seat-kijiri" type="button" data-seat="kijiri">
+            <span class="seat-jp jp">木尻</span>
+            <span class="seat-name">Kijiri</span>
+          </button>
+          <p class="hearth-note spec gloss" aria-hidden="true">
+            ↑ toward the doma
+          </p>
+        </div>
+
+        <div class="seats-read">
+          <dl class="seat-list" id="seat-list">
+            {
+              SEATS.map((s) => (
+                <div class="seat-item" data-seat-item={s.key}>
+                  <dt>
+                    <span class="seat-item-name">{s.name}</span>
+                    <span class="jp seat-item-jp">{s.jp}</span>
+                  </dt>
+                  <dd>
+                    <p class="seat-who spec">{s.who}</p>
+                    <p class="seat-side spec gloss">{s.side}</p>
+                    <p class="seat-line">{s.line}</p>
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="next">
+    <div class="wrap next-in">
+      <div>
+        <h2>Now set the bays.</h2>
+        <p>
+          These rooms sit on a grid before they are rooms at all. Snap a line
+          and watch the plan take them.
+        </p>
+      </div>
+      <a class="btn" href="/sumitsuke">Sumitsuke — draw a house</a>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Focus or hover a side of the hearth and its entry lifts. With JS off all
+  // four entries are simply present and readable, which is the whole content —
+  // the interaction only foregrounds one at a time.
+  const list = document.getElementById("seat-list");
+  const seats = document.querySelectorAll("[data-seat]");
+  if (list && seats.length) {
+    list.classList.add("is-live");
+    const show = (key) => {
+      for (const el of document.querySelectorAll("[data-seat-item]")) {
+        el.classList.toggle("is-on", el.dataset.seatItem === key);
+      }
+      for (const s of seats) {
+        s.setAttribute("aria-pressed", String(s.dataset.seat === key));
+      }
+    };
+    for (const s of seats) {
+      s.setAttribute("aria-pressed", "false");
+      for (const ev of ["mouseenter", "focus", "click"]) {
+        s.addEventListener(ev, () => show(s.dataset.seat));
+      }
+    }
+    show("yokoza");
+  }
+</script>
+
+<style>
+  .head {
+    padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .head h1 {
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .head-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1.5rem, 4vw, 4rem);
+    max-width: 62rem;
+  }
+
+  /* --- the parts -------------------------------------------------------- */
+
+  .part {
+    padding-block: clamp(2.75rem, 6vw, 5.5rem);
+  }
+
+  .part-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .part-grid.flip .part-text {
+    order: 2;
+  }
+
+  .part-text h2 {
+    font-size: clamp(1.9rem, 1.3rem + 2.2vw, 3rem);
+  }
+
+  .part-jp {
+    font-size: 0.52em;
+    color: var(--sugi-deep);
+    margin-left: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  .part-gloss {
+    margin: 0.7rem 0 1.4rem;
+  }
+
+  .part-media {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .part-mark {
+    aspect-ratio: 3 / 2;
+    background: var(--tsuchikabe);
+    border: 1px solid var(--susu);
+    display: grid;
+    place-items: center;
+  }
+
+  .part-mark .jp {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: color-mix(in srgb, var(--susu) 42%, transparent);
+  }
+
+  .mini {
+    margin: 1.6rem 0 0;
+    border-top: 1px solid var(--susu);
+  }
+
+  .mini-row {
+    display: grid;
+    grid-template-columns: minmax(6rem, 0.5fr) 1fr;
+    gap: 0.5rem 1.25rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--sugi) 28%, transparent);
+  }
+
+  .mini dt,
+  .mini dd {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    margin: 0;
+  }
+
+  .mini dt {
+    color: var(--sugi-deep);
+  }
+
+  /* --- the four seats --------------------------------------------------- */
+
+  .seats {
+    padding-block: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  .seats h2 {
+    margin-bottom: 1.2rem;
+  }
+
+  .seats-lede {
+    max-width: 40rem;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .seats-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr);
+    gap: clamp(1.75rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .hearth {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: 2px;
+    background: var(--susu);
+    border: 1px solid var(--susu);
+    position: relative;
+  }
+
+  .seat {
+    font-family: var(--sans);
+    background: var(--washi-lit);
+    border: 0;
+    padding: 1.1rem 0.75rem;
+    cursor: pointer;
+    display: grid;
+    gap: 0.25rem;
+    justify-items: center;
+    text-align: center;
+    color: var(--susu);
+    transition: background 150ms ease, color 150ms ease;
+  }
+
+  .seat-jp {
+    font-size: 1.15rem;
+    color: var(--sugi-deep);
+  }
+
+  .seat-name {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .seat-yokoza {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .seat-kakaza {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .fire {
+    grid-column: 2;
+    grid-row: 2;
+    background: var(--okibi);
+    display: grid;
+    place-items: center;
+    min-height: 8.5rem;
+  }
+  .fire-jp {
+    color: var(--washi-lit);
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
+  }
+  .seat-kyakuza {
+    grid-column: 3;
+    grid-row: 2;
+  }
+  .seat-kijiri {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .hearth-note {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    background: var(--washi);
+    margin: 0;
+    padding: 0.55rem 0.75rem;
+    text-align: center;
+  }
+
+  .seat:hover,
+  .seat[aria-pressed="true"] {
+    background: var(--susu);
+    color: var(--washi);
+  }
+
+  .seat:hover .seat-jp,
+  .seat[aria-pressed="true"] .seat-jp {
+    color: var(--kaya);
+  }
+
+  .seat:focus-visible {
+    outline: 2px solid var(--okibi);
+    outline-offset: -3px;
+  }
+
+  /* --- the reading ------------------------------------------------------ */
+
+  .seat-list {
+    margin: 0;
+  }
+
+  .seat-item {
+    border-top: 1px solid color-mix(in srgb, var(--sugi) 34%, transparent);
+    padding: 1rem 0;
+  }
+
+  .seat-item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .seat-item dt {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .seat-item-name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+  }
+
+  .seat-item-jp {
+    color: var(--sugi-deep);
+    font-size: 0.95rem;
+  }
+
+  .seat-item dd {
+    margin: 0;
+  }
+
+  .seat-who {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .seat-side {
+    margin: 0 0 0.5rem;
+  }
+
+  .seat-line {
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  /* With JS the list dims to one entry at a time; without it, all four read
+     normally, which is the same content. */
+  .seat-list.is-live .seat-item {
+    opacity: 0.4;
+    transition: opacity 220ms ease;
+  }
+
+  .seat-list.is-live .seat-item.is-on {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .seat-list.is-live .seat-item {
+      transition: none;
+    }
+  }
+
+  /* --- next ------------------------------------------------------------- */
+
+  .next {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .next-in {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .next p {
+    margin: 0.8rem 0 0;
+    max-width: 30rem;
+  }
+
+  /* --- mobile ----------------------------------------------------------- */
+
+  @media (max-width: 62rem) {
+    .part-grid,
+    .seats-grid {
+      grid-template-columns: 1fr;
+    }
+    .part-grid.flip .part-text {
+      order: 0;
+    }
+    .part-media {
+      position: static;
+      order: -1;
+      margin-bottom: 1.5rem;
+    }
+    .hearth {
+      max-width: 26rem;
+    }
+  }
+</style>

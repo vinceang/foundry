@@ -1,0 +1,72 @@
+---
+import { existsSync } from "node:fs";
+
+interface Props {
+  /** Base name in public/images, without extension or width suffix. */
+  name: string;
+  alt: string;
+  /** CSS aspect-ratio for the frame, e.g. "3 / 2". */
+  ratio?: string;
+  /** Above-the-fold plates load eagerly and are never lazy. */
+  eager?: boolean;
+  caption?: string;
+}
+
+const { name, alt, ratio = "3 / 2", eager = false, caption } = Astro.props;
+
+// If a plate has not been generated yet the frame falls back to a solid
+// material block at the intended crop — never a grey box, so the critique loop
+// still judges composition honestly (skill, Phase 4).
+const has = existsSync(`./public/images/${name}.jpg`);
+---
+
+<figure class="plate" style={`--ratio:${ratio}`}>
+  {
+    has ? (
+      <img
+        src={`/images/${name}.jpg`}
+        srcset={`/images/${name}-800.jpg 800w, /images/${name}.jpg 1536w`}
+        sizes="(max-width: 62rem) 92vw, 46vw"
+        alt={alt}
+        width="1536"
+        height="1024"
+        loading={eager ? "eager" : "lazy"}
+        decoding={eager ? "sync" : "async"}
+      />
+    ) : (
+      <div class="plate-hold" role="img" aria-label={alt} />
+    )
+  }
+  {caption && <figcaption class="spec gloss">{caption}</figcaption>}
+</figure>
+
+<style>
+  .plate {
+    margin: 0;
+  }
+
+  .plate img,
+  .plate-hold {
+    width: 100%;
+    aspect-ratio: var(--ratio);
+    object-fit: cover;
+    display: block;
+    background: var(--tsuchikabe);
+  }
+
+  .plate-hold {
+    background: repeating-linear-gradient(
+      -45deg,
+      var(--tsuchikabe),
+      var(--tsuchikabe) 14px,
+      var(--kaya) 14px,
+      var(--kaya) 28px
+    );
+    border: 1px solid var(--susu);
+  }
+
+  .plate figcaption {
+    margin-top: 0.7rem;
+    max-width: 34rem;
+  }
+</style>

@@ -1,0 +1,578 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {
+  TYPOLOGIES,
+  TYPOLOGY_ORDER,
+  EXPOSURES,
+  EXPOSURE_ORDER,
+  MODULES,
+  MODULE_ORDER,
+} from "../lib/house.js";
+
+// Small work the bench sells outright. Commitment 7: anything with a real
+// variant under $5,000 gets a proper order form, not a "write to us" gesture.
+const BENCH = [
+  {
+    name: "Susutake",
+    jp: "煤竹",
+    line: "Bamboo pulled from a roof at re-thatch, hardened and coloured by a century and a half of hearth smoke. Graded by depth of colour. Tea-utensil makers take most of it, and there is only ever as much as that roof had.",
+    unit: "per pole, to 1.8 m",
+    price: "¥28,000",
+  },
+  {
+    name: "Jizaikagi",
+    jp: "自在鉤",
+    line: "The adjustable pot hook, cut and forged to order: a keyaki counterweight carved as a fish — fish do not close their eyes, so they watch the fire — on a hemp cord with a hand-forged iron hook.",
+    unit: "complete, carved and forged",
+    price: "¥94,000",
+  },
+  {
+    name: "Chōna-finished board",
+    jp: "名栗板",
+    line: "A single cedar or zelkova board finished by adze rather than plane, leaving the scalloped nagurime face. Shelf, bench top, or counter. Widths as the tree allowed.",
+    unit: "per board, to 2.4 m",
+    price: "¥62,000 — ¥180,000",
+  },
+  {
+    name: "Kaya thatch",
+    jp: "茅",
+    line: "Miscanthus cut from the workshop's own kayaba above Furukawa in late autumn, dried standing, tied in bundles. For repairs to a roof you already own.",
+    unit: "per 100 bundles",
+    price: "¥140,000",
+  },
+];
+---
+
+<Layout
+  title="Commission | Ibushi 燻"
+  description="Begin a commission — a house raised, moved, or revived — or an order from the bench. Both reach the tōryō as a written brief, never a checkout."
+  nav="commission"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">Commission · 依頼</span>
+      <h1>Tell us the site<br />and the weather.</h1>
+      <div class="head-cols">
+        <p>
+          A house begins with a visit. Before that, this brief tells us enough to
+          know whether we are the right workshop for it — what you have, where it
+          stands, and what you want it to become. If you arrived from
+          <a href="/sumitsuke">Sumitsuke</a>, your drawing is already in the fields
+          below.
+        </p>
+        <p class="spec gloss">
+          Nothing here takes a payment. It is a written request that reaches Ōno
+          Sōhachi and the office in Furukawa, and we answer every one, usually
+          within the week. A revival of a small nōka begins around ¥18,000,000; a
+          full gasshō relocation runs into the hundreds of millions. We will say
+          plainly if a budget will not carry the work.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= a house ================= -->
+  <section class="form-sec">
+    <div class="wrap form-grid">
+      <div class="form-aside">
+        <h2>A house</h2>
+        <p class="spec gloss">
+          Raised new on the old methods, dismantled and moved, or revived where it
+          stands. All three are the same craft — only the first hundred years
+          differ.
+        </p>
+        <p class="spec gloss">
+          If a field does not apply, leave it. A short brief with a real site on it
+          is worth more than a long one without.
+        </p>
+      </div>
+
+      <form class="form" action="mailto:toryo@ibushi.jp" method="post" enctype="text/plain">
+        <fieldset class="fs">
+          <legend>The work</legend>
+          <div class="row">
+            <label class="f">
+              <span>What it is</span>
+              <select name="Work" required>
+                <option value="Revive a house where it stands">Revive a house where it stands</option>
+                <option value="Dismantle and move a house">Dismantle and move a house</option>
+                <option value="Raise a new house on the old methods">Raise a new house on the old methods</option>
+                <option value="A repair - roof, frame, or floor">A repair — roof, frame, or floor</option>
+                <option value="An assessment only">An assessment only</option>
+              </select>
+            </label>
+            <label class="f">
+              <span>Typology</span>
+              <select name="Typology" id="c-typology">
+                <option value="Not yet decided">Not yet decided</option>
+                {
+                  TYPOLOGY_ORDER.map((k) => (
+                    <option value={TYPOLOGIES[k].label}>
+                      {TYPOLOGIES[k].label} — {TYPOLOGIES[k].gloss}
+                    </option>
+                  ))
+                }
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="fs">
+          <legend>The site</legend>
+          <div class="row">
+            <label class="f">
+              <span>Where it stands</span>
+              <input
+                type="text"
+                name="Site"
+                placeholder="Prefecture, town, or nearest station"
+                required
+              />
+            </label>
+            <label class="f">
+              <span>Exposure</span>
+              <select name="Exposure" id="c-exposure">
+                {
+                  EXPOSURE_ORDER.map((k) => (
+                    <option value={EXPOSURES[k].label}>{EXPOSURES[k].label}</option>
+                  ))
+                }
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label class="f">
+              <span>Bays across the front <span class="gloss">(ken)</span></span>
+              <input type="number" name="Width in ken" id="c-w" min="2" max="18" />
+            </label>
+            <label class="f">
+              <span>Bays back <span class="gloss">(ken)</span></span>
+              <input type="number" name="Depth in ken" id="c-d" min="2" max="24" />
+            </label>
+            <label class="f">
+              <span>Module</span>
+              <select name="Module" id="c-module">
+                {
+                  MODULE_ORDER.map((k) => (
+                    <option value={MODULES[k].label}>
+                      {MODULES[k].label} — {MODULES[k].shaku} shaku
+                    </option>
+                  ))
+                }
+              </select>
+            </label>
+          </div>
+          <label class="f">
+            <span>Earth floor <span class="gloss">(share of the ground plane)</span></span>
+            <input type="text" name="Doma" id="c-doma" placeholder="e.g. 35%" />
+          </label>
+        </fieldset>
+
+        <fieldset class="fs">
+          <legend>The drawing</legend>
+          <label class="f">
+            <span>Specification from Sumitsuke</span>
+            <textarea
+              name="Specification"
+              id="c-spec"
+              rows="3"
+              placeholder="Snap a line on the Sumitsuke page and it arrives here written out. Or describe the house in your own words."></textarea>
+          </label>
+          <p class="spec gloss note" id="c-from">
+            Nothing carried over yet. <a href="/sumitsuke">Draw one first</a> if you
+            would like the numbers filled in.
+          </p>
+        </fieldset>
+
+        <fieldset class="fs">
+          <legend>The rest</legend>
+          <div class="row">
+            <label class="f">
+              <span>Intended use</span>
+              <select name="Use">
+                <option value="A family home">A family home</option>
+                <option value="A second house">A second house</option>
+                <option value="Lodging or a guesthouse">Lodging or a guesthouse</option>
+                <option value="A workshop or studio">A workshop or studio</option>
+                <option value="Public or cultural">Public or cultural</option>
+              </select>
+            </label>
+            <label class="f">
+              <span>When</span>
+              <select name="Timeline">
+                <option value="Within a year">Within a year</option>
+                <option value="One to three years">One to three years</option>
+                <option value="Beyond three years">Beyond three years</option>
+                <option value="Not yet fixed">Not yet fixed</option>
+              </select>
+            </label>
+          </div>
+          <label class="f">
+            <span>Budget band</span>
+            <select name="Budget">
+              <option value="Under 30 million yen">Under ¥30,000,000</option>
+              <option value="30 to 80 million yen">¥30,000,000 — ¥80,000,000</option>
+              <option value="80 to 200 million yen">¥80,000,000 — ¥200,000,000</option>
+              <option value="Above 200 million yen">Above ¥200,000,000</option>
+              <option value="Not yet known">Not yet known</option>
+            </select>
+          </label>
+          <label class="f">
+            <span>Anything the drawing cannot say</span>
+            <textarea
+              name="Notes"
+              rows="4"
+              placeholder="The house as you found it, what stands and what has gone, who will live in it, and whether the fire will be lit."></textarea>
+          </label>
+        </fieldset>
+
+        <fieldset class="fs">
+          <legend>You</legend>
+          <div class="row">
+            <label class="f">
+              <span>Name</span>
+              <input type="text" name="Name" required />
+            </label>
+            <label class="f">
+              <span>Email</span>
+              <input type="email" name="Email" required />
+            </label>
+            <label class="f">
+              <span>Telephone <span class="gloss">(optional)</span></span>
+              <input type="tel" name="Telephone" />
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="send">
+          <button class="btn" type="submit">Send the brief</button>
+          <p class="spec gloss">
+            Opens your mail programme with the brief written out. Nothing leaves
+            your machine until you send it, and no card is ever taken here.
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= the bench ================= -->
+  <section class="form-sec">
+    <div class="wrap form-grid">
+      <div class="form-aside">
+        <h2>From the bench</h2>
+        <p class="spec gloss">
+          Small work, sold outright. Most of it comes off houses we are already
+          working on — the susutake is pulled from a roof the week it is stripped.
+        </p>
+        <p class="spec gloss">
+          Prices are ex-workshop, before carriage. Everything is cut or made to
+          order except the susutake, which is graded from stock.
+        </p>
+      </div>
+
+      <form class="form" action="mailto:hanbai@ibushi.jp" method="post" enctype="text/plain">
+        <fieldset class="fs">
+          <legend>The order</legend>
+          {
+            BENCH.map((b) => (
+              <div class="bench-row">
+                <div class="bench-head">
+                  <h3>
+                    {b.name} <span class="jp bench-jp">{b.jp}</span>
+                  </h3>
+                  <p class="spec bench-price">{b.price}</p>
+                </div>
+                <p class="spec gloss bench-line">{b.line}</p>
+                <div class="bench-buy">
+                  <span class="spec gloss">{b.unit}</span>
+                  <label class="qty">
+                    <span class="spec">Quantity</span>
+                    <input
+                      type="number"
+                      name={`${b.name} (${b.unit})`}
+                      min="0"
+                      max="99"
+                      value="0"
+                    />
+                  </label>
+                </div>
+              </div>
+            ))
+          }
+        </fieldset>
+
+        <fieldset class="fs">
+          <legend>You</legend>
+          <div class="row">
+            <label class="f">
+              <span>Name</span>
+              <input type="text" name="Name" required />
+            </label>
+            <label class="f">
+              <span>Email</span>
+              <input type="email" name="Email" required />
+            </label>
+          </div>
+          <label class="f">
+            <span>Where it is going</span>
+            <textarea
+              name="Delivery"
+              rows="3"
+              placeholder="Address for carriage, and anything we should know about the piece you want."></textarea>
+          </label>
+        </fieldset>
+
+        <div class="send">
+          <button class="btn" type="submit">Send the order</button>
+          <p class="spec gloss">
+            An order request, not a payment. We confirm stock and carriage, then
+            invoice.
+          </p>
+        </div>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // Carry a Sumitsuke drawing into the brief. The signature submits here by GET,
+  // so the specification arrives as query parameters and is written out in the
+  // craft's own units rather than as a picture.
+  import { computeHouse, specSummary } from "../lib/house.js";
+
+  const q = new URLSearchParams(location.search);
+  if (q.has("typology")) {
+    const h = computeHouse({
+      typology: q.get("typology"),
+      widthKen: Number(q.get("w")),
+      depthKen: Number(q.get("d")),
+      exposure: q.get("exposure") ?? "inland",
+      module: q.get("module") ?? "inakama",
+      domaRatio: Number(q.get("doma") ?? 35) / 100,
+    });
+
+    const set = (id, value) => {
+      const el = document.getElementById(id);
+      if (el && value != null) el.value = String(value);
+    };
+    set("c-typology", h.t.label);
+    set("c-exposure", h.ex.label);
+    set("c-module", h.mod.label);
+    set("c-w", h.widthKen);
+    set("c-d", h.depthKen);
+    set("c-doma", `${Math.round(h.domaRatio * 100)}%`);
+    set("c-spec", specSummary(h));
+
+    const from = document.getElementById("c-from");
+    if (from) {
+      from.innerHTML = `Carried over from <a href="/sumitsuke?${q.toString()}">your drawing</a> — ${h.t.label}, ${h.widthKen}×${h.depthKen} ken. Change anything below.`;
+    }
+  }
+</script>
+
+<style>
+  .head {
+    padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .head h1 {
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .head-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1.5rem, 4vw, 4rem);
+    max-width: 62rem;
+  }
+
+  .form-sec {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .form-aside {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .form-aside h2 {
+    margin-bottom: 1.1rem;
+  }
+
+  .form-aside p {
+    max-width: 26rem;
+  }
+
+  .fs {
+    border: 0;
+    border-top: 1px solid var(--susu);
+    margin: 0 0 2.1rem;
+    padding: 1.15rem 0 0;
+  }
+
+  legend {
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 0;
+    margin-bottom: 1.1rem;
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    gap: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .f {
+    display: grid;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .row .f {
+    margin-bottom: 0;
+  }
+
+  .f > span {
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    color: var(--susu);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    font-family: var(--sans);
+    font-size: 0.875rem;
+    color: var(--susu);
+    background: var(--washi-lit);
+    border: 1px solid var(--sugi);
+    border-radius: 0;
+    padding: 0.6rem 0.7rem;
+    width: 100%;
+    appearance: none;
+  }
+
+  select {
+    background-image: linear-gradient(45deg, transparent 50%, var(--susu) 50%),
+      linear-gradient(135deg, var(--susu) 50%, transparent 50%);
+    background-position: calc(100% - 15px) 55%, calc(100% - 10px) 55%;
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2rem;
+  }
+
+  textarea {
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--okibi);
+    outline-offset: 1px;
+    border-color: var(--susu);
+  }
+
+  .note {
+    margin: 0.4rem 0 0;
+  }
+
+  .send {
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+  }
+
+  .send p {
+    margin: 0;
+    max-width: 26rem;
+  }
+
+  /* --- the bench ------------------------------------------------------- */
+
+  .bench-row {
+    border-top: 1px solid color-mix(in srgb, var(--sugi) 34%, transparent);
+    padding: 1.15rem 0;
+  }
+
+  .bench-row:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .bench-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .bench-head h3 {
+    font-size: 1.35rem;
+  }
+
+  .bench-jp {
+    font-size: 0.95rem;
+    color: var(--sugi-deep);
+    margin-left: 0.35rem;
+  }
+
+  .bench-price {
+    font-weight: 600;
+    white-space: nowrap;
+    margin: 0;
+  }
+
+  .bench-line {
+    margin-bottom: 0.85rem;
+    max-width: 34rem;
+  }
+
+  .bench-buy {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .qty {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .qty input {
+    width: 5rem;
+  }
+
+  @media (max-width: 62rem) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+    .form-aside {
+      position: static;
+    }
+  }
+</style>

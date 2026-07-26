@@ -1,0 +1,601 @@
+---
+import Layout from "../layouts/Layout.astro";
+import "../styles/drawing.css";
+import {
+  computeHouse,
+  specRows,
+  TYPOLOGIES,
+  TYPOLOGY_ORDER,
+  EXPOSURES,
+  EXPOSURE_ORDER,
+  MODULES,
+  MODULE_ORDER,
+  DEFAULTS,
+} from "../lib/house.js";
+import { renderDrawing } from "../lib/draw.js";
+
+// The JS-off default. The same module renders the live redraw, so the static
+// sheet and the interactive one can never drift apart.
+const house = computeHouse(DEFAULTS);
+const svg = renderDrawing(house);
+const rows = specRows(house);
+const nk = TYPOLOGIES.noka;
+---
+
+<Layout
+  title="Sumitsuke 墨付け — snap a line for your house | Ibushi 燻"
+  description="Nothing is cut until the line is drawn. Set the typology, the bays in ken, the site, and the earth floor, and the section and plan redraw to your house — then send the drawing to the workshop."
+  nav="sumitsuke"
+>
+  <section class="intro">
+    <div class="wrap">
+      <span class="kicker">The signature · 墨付け</span>
+      <h1>Nothing is cut<br />until the line is drawn.</h1>
+      <div class="intro-cols">
+        <div>
+          <p>
+            <span class="term">Sumitsuke</span> <span class="jp">墨付け</span> is
+            the marking. Before a single joint is cut, the <span class="term"
+              >tōryō</span
+            > walks the stacked timber with a <span class="term">sumitsubo</span
+            > — an ink pot with a chalked cord — and snaps a dead-straight line
+            onto every crooked log. The line decides the house. The cutting only
+            obeys it.
+          </p>
+          <p>
+            Snap yours here. Four houses, the bay module they are built on, the
+            weather the site actually gets, and how much of the ground stays
+            earth. The section and plan below are drawn from those numbers and
+            nothing else — at a real scale, which changes as the house does.
+          </p>
+        </div>
+        <div>
+          <p class="spec gloss">
+            A house is a modular grid before it is a shape. Everything here is
+            measured in the carpenter's units: the bay
+            (<span class="term">ken</span> 間), the foot
+            (<span class="term">shaku</span> 尺), the pitch stated as rise in <span class="term">sun</span> 寸 per ten of run, and
+            floor area in <span class="term">tsubo</span> 坪 and mats
+            (<span class="term">jō</span> 畳).
+          </p>
+          <p class="spec gloss">
+            When the drawing is right, send it. It arrives at the workshop as a
+            written specification, not a picture.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="board" id="board">
+    <div class="wrap board-grid">
+      <!-- ---------------- the sheet ---------------- -->
+      <div class="sheet-col">
+        <figure class="sheet">
+          <div class="sheet-in" id="sheet" set:html={svg} />
+          <figcaption class="spec gloss" id="sheet-cap">
+            {nk.label} <span class="jp">{nk.jp}</span> — {nk.gloss}. {nk.line}
+          </figcaption>
+        </figure>
+      </div>
+
+      <!-- ---------------- the marks ---------------- -->
+      <div class="ctrl-col">
+        <form
+          id="mark"
+          class="marks"
+          action="/commission"
+          method="get"
+          aria-describedby="mark-help"
+        >
+          <p id="mark-help" class="spec gloss mark-help">
+            Adjust the marks. The drawing redraws with them. With JavaScript
+            off the sheet shows the default house and this form still carries
+            your choices to the workshop.
+          </p>
+
+          <fieldset class="fs">
+            <legend>The house</legend>
+            <div class="seg seg-4">
+              {
+                TYPOLOGY_ORDER.map((k) => (
+                  <label class="seg-i">
+                    <input
+                      type="radio"
+                      name="typology"
+                      value={k}
+                      checked={k === DEFAULTS.typology}
+                    />
+                    <span class="seg-l">
+                      <span class="seg-jp jp">{TYPOLOGIES[k].jp}</span>
+                      <span class="seg-t">{TYPOLOGIES[k].label}</span>
+                      <span class="seg-g">{TYPOLOGIES[k].gloss}</span>
+                    </span>
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend>The bays <span class="jp">間</span></legend>
+            <div class="rng">
+              <label for="w">Across the front</label>
+              <input
+                type="range"
+                id="w"
+                name="w"
+                min={nk.ken.w[0]}
+                max={nk.ken.w[1]}
+                step="1"
+                value={DEFAULTS.widthKen}
+              />
+              <output for="w" id="w-out">{DEFAULTS.widthKen} ken</output>
+            </div>
+            <div class="rng">
+              <label for="d">Back from the street</label>
+              <input
+                type="range"
+                id="d"
+                name="d"
+                min={nk.ken.d[0]}
+                max={nk.ken.d[1]}
+                step="1"
+                value={DEFAULTS.depthKen}
+              />
+              <output for="d" id="d-out">{DEFAULTS.depthKen} ken</output>
+            </div>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend>The site</legend>
+            <div class="seg seg-3">
+              {
+                EXPOSURE_ORDER.map((k) => (
+                  <label class="seg-i">
+                    <input
+                      type="radio"
+                      name="exposure"
+                      value={k}
+                      checked={k === DEFAULTS.exposure}
+                    />
+                    <span class="seg-l">
+                      <span class="seg-jp jp">{EXPOSURES[k].jp}</span>
+                      <span class="seg-t">{EXPOSURES[k].label}</span>
+                    </span>
+                  </label>
+                ))
+              }
+            </div>
+            <p class="spec gloss note" id="ex-note">{EXPOSURES.inland.note}</p>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend>The earth floor <span class="jp">土間</span></legend>
+            <div class="rng">
+              <label for="doma">Share of the ground plane</label>
+              <input
+                type="range"
+                id="doma"
+                name="doma"
+                min="15"
+                max="60"
+                step="5"
+                value={Math.round(DEFAULTS.domaRatio * 100)}
+              />
+              <output for="doma" id="doma-out"
+                >{Math.round(DEFAULTS.domaRatio * 100)}%</output
+              >
+            </div>
+            <p class="spec gloss note">
+              The <span class="term">doma</span> is worked in, not lived in: tools,
+              threshing, the stove, an animal in winter. The rest steps up to the
+              raised floor at the <span class="term">agarikamachi</span>, where the
+              shoes come off.
+            </p>
+          </fieldset>
+
+          <fieldset class="fs">
+            <legend>The module <span class="jp">間</span></legend>
+            <div class="seg seg-2">
+              {
+                MODULE_ORDER.map((k) => (
+                  <label class="seg-i">
+                    <input
+                      type="radio"
+                      name="module"
+                      value={k}
+                      checked={k === DEFAULTS.module}
+                    />
+                    <span class="seg-l">
+                      <span class="seg-jp jp">{MODULES[k].jp}</span>
+                      <span class="seg-t">{MODULES[k].label}</span>
+                      <span class="seg-g">{MODULES[k].shaku} shaku</span>
+                    </span>
+                  </label>
+                ))
+              }
+            </div>
+            <p class="spec gloss note" id="mod-note">{MODULES.inakama.note}</p>
+          </fieldset>
+
+          <!-- the spec block — a drawing's title block -->
+          <div class="title-block">
+            <h2 class="tb-h">
+              <span class="kicker tb-k">Specification</span>
+            </h2>
+            <dl class="tb" id="spec">
+              {
+                rows.map(([label, a, b]) => (
+                  <div class="tb-row">
+                    <dt>{label}</dt>
+                    <dd class="tb-a">{a}</dd>
+                    <dd class="tb-b">{b}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+
+          <div class="send">
+            <button class="btn" type="submit">Snap this line</button>
+            <p class="spec gloss">
+              Carries the whole specification into a commission brief. Nothing
+              is sent until you read it and press send there.
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    computeHouse,
+    specRows,
+    TYPOLOGIES,
+    EXPOSURES,
+    MODULES,
+  } from "../lib/house.js";
+  import { renderDrawing } from "../lib/draw.js";
+
+  const form = document.getElementById("mark");
+  const sheet = document.getElementById("sheet");
+  const cap = document.getElementById("sheet-cap");
+  const spec = document.getElementById("spec");
+  const exNote = document.getElementById("ex-note");
+  const modNote = document.getElementById("mod-note");
+  const wIn = document.getElementById("w");
+  const dIn = document.getElementById("d");
+  const outs = {
+    w: document.getElementById("w-out"),
+    d: document.getElementById("d-out"),
+    doma: document.getElementById("doma-out"),
+  };
+
+  if (form && sheet) {
+    const fx = document.documentElement.classList.contains("fx");
+    let lastTypology = form.typology.value;
+
+    const read = () => {
+      const fd = new FormData(form);
+      return {
+        typology: String(fd.get("typology")),
+        widthKen: Number(fd.get("w")),
+        depthKen: Number(fd.get("d")),
+        exposure: String(fd.get("exposure")),
+        module: String(fd.get("module")),
+        domaRatio: Number(fd.get("doma")) / 100,
+      };
+    };
+
+    // Each house is built on its own range of bays. A machiya is two to four
+    // ken to the street and up to eighteen back; a nōka is nothing like it.
+    const retuneBays = (typology) => {
+      const t = TYPOLOGIES[typology];
+      for (const [el, r] of [
+        [wIn, t.ken.w],
+        [dIn, t.ken.d],
+      ]) {
+        el.min = String(r[0]);
+        el.max = String(r[1]);
+        el.value = String(r[2]);
+      }
+    };
+
+    const paint = () => {
+      const input = read();
+      if (input.typology !== lastTypology) {
+        lastTypology = input.typology;
+        retuneBays(input.typology);
+      }
+      const h = computeHouse(read());
+
+      sheet.innerHTML = renderDrawing(h, { live: true });
+      const svg = sheet.querySelector("svg");
+      if (fx && svg) {
+        svg.classList.add("is-redrawing");
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => svg.classList.remove("is-redrawing"))
+        );
+      }
+
+      outs.w.textContent = `${h.widthKen} ken`;
+      outs.d.textContent = `${h.depthKen} ken`;
+      outs.doma.textContent = `${Math.round(h.domaRatio * 100)}%`;
+      // keep the sliders honest after a clamp
+      wIn.value = String(h.widthKen);
+      dIn.value = String(h.depthKen);
+
+      exNote.textContent = h.ex.note;
+      modNote.textContent = h.mod.note;
+      cap.innerHTML = `${h.t.label} <span class="jp">${h.t.jp}</span> — ${h.t.gloss}. ${h.t.line}`;
+
+      spec.innerHTML = specRows(h)
+        .map(
+          ([label, a, b]) =>
+            `<div class="tb-row"><dt>${label}</dt><dd class="tb-a">${a}</dd><dd class="tb-b">${b}</dd></div>`
+        )
+        .join("");
+    };
+
+    // Deep links: /sumitsuke?typology=gassho arrives from the house pages with
+    // that house already on the board. With JS off the sheet shows the default,
+    // which is a degradation, not a break.
+    const q = new URLSearchParams(location.search);
+    if (q.has("typology") && TYPOLOGIES[q.get("typology")]) {
+      form.typology.value = q.get("typology");
+      lastTypology = q.get("typology");
+      retuneBays(lastTypology);
+    }
+    for (const [key, el] of [["w", wIn], ["d", dIn], ["doma", form.doma]]) {
+      if (q.has(key) && Number.isFinite(Number(q.get(key)))) el.value = q.get(key);
+    }
+    for (const [key, table] of [["exposure", EXPOSURES], ["module", MODULES]]) {
+      const v = q.get(key);
+      if (v && table[v]) form[key].value = v;
+    }
+
+    form.addEventListener("input", paint);
+    form.addEventListener("change", paint);
+    paint();
+  }
+</script>
+
+<style>
+  .intro {
+    padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .intro h1 {
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .intro-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1.5rem, 4vw, 4rem);
+    max-width: 62rem;
+  }
+
+  .board {
+    padding-block: 0 clamp(3rem, 6vw, 6rem);
+  }
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .sheet-col {
+    position: sticky;
+    top: 5.5rem;
+  }
+
+  .sheet {
+    margin: 0;
+    padding: 0;
+  }
+
+  .sheet-in {
+    border: 1px solid var(--susu);
+    background: var(--washi-lit);
+  }
+
+  .ctrl-col {
+    padding-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .mark-help {
+    margin-bottom: 2rem;
+    max-width: 30rem;
+  }
+
+  /* --- fieldsets ------------------------------------------------------- */
+
+  .fs {
+    border: 0;
+    border-top: 1px solid var(--susu);
+    margin: 0 0 1.9rem;
+    padding: 1.15rem 0 0;
+  }
+
+  legend {
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--susu);
+    padding: 0;
+    margin-bottom: 0.9rem;
+  }
+
+  legend .jp {
+    text-transform: none;
+    letter-spacing: 0.1em;
+    color: var(--sugi-deep);
+  }
+
+  .note {
+    margin: 0.9rem 0 0;
+    max-width: 30rem;
+  }
+
+  /* --- segmented controls ---------------------------------------------- */
+
+  .seg {
+    display: grid;
+    border: 1px solid var(--susu);
+  }
+
+  .seg-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .seg-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .seg-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .seg-i {
+    position: relative;
+    display: block;
+    cursor: pointer;
+  }
+
+  .seg-i input {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .seg-l {
+    display: block;
+    padding: 0.8rem 0.85rem 0.85rem;
+    border-right: 1px solid var(--susu);
+    border-bottom: 1px solid var(--susu);
+    height: 100%;
+    transition: background 140ms ease, color 140ms ease;
+  }
+
+  .seg-4 .seg-i:nth-child(2n) .seg-l,
+  .seg-3 .seg-i:nth-child(3n) .seg-l,
+  .seg-2 .seg-i:nth-child(2n) .seg-l {
+    border-right: 0;
+  }
+  .seg-4 .seg-i:nth-child(n + 3) .seg-l,
+  .seg-3 .seg-l,
+  .seg-2 .seg-l {
+    border-bottom: 0;
+  }
+
+  .seg-jp {
+    display: block;
+    font-family: var(--mincho);
+    font-size: 1.05rem;
+    letter-spacing: 0.08em;
+    color: var(--sugi-deep);
+    margin-bottom: 0.28rem;
+  }
+
+  .seg-t {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .seg-g {
+    display: block;
+    font-family: var(--sans);
+    font-size: 0.6875rem;
+    color: var(--sugi-deep);
+    margin-top: 0.15rem;
+  }
+
+  /* selected state without JS */
+  .seg-i:has(input:checked) .seg-l {
+    background: var(--susu);
+    color: var(--washi);
+  }
+  .seg-i:has(input:checked) .seg-jp,
+  .seg-i:has(input:checked) .seg-g {
+    color: var(--kaya);
+  }
+  .seg-i:has(input:focus-visible) .seg-l {
+    outline: 2px solid var(--okibi);
+    outline-offset: -2px;
+  }
+  .seg-i:hover:not(:has(input:checked)) .seg-l {
+    background: var(--tsuchikabe);
+  }
+
+  /* --- ranges ----------------------------------------------------------- */
+
+  .rng {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+    gap: 0.4rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .rng label {
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    color: var(--sugi-deep);
+  }
+
+  .rng output {
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rng input[type="range"] {
+    grid-column: 1 / -1;
+    width: 100%;
+    accent-color: var(--susu);
+    margin: 0;
+  }
+
+  .send {
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+  }
+
+  .send p {
+    margin: 0;
+    max-width: 26rem;
+  }
+
+  /* --- mobile: the sheet stacks, it does not shrink -------------------- */
+
+  @media (max-width: 62rem) {
+    .board-grid {
+      grid-template-columns: 1fr;
+    }
+    .sheet-col {
+      position: static;
+    }
+    .ctrl-col {
+      padding-top: 0;
+    }
+    .seg-4 {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

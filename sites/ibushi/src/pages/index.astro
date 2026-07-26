@@ -1,0 +1,478 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Plate from "../components/Plate.astro";
+import "../styles/drawing.css";
+import { computeHouse, TYPOLOGIES, TYPOLOGY_ORDER } from "../lib/house.js";
+import { renderProfile } from "../lib/draw.js";
+
+const houses = TYPOLOGY_ORDER.map((k) => {
+  const t = TYPOLOGIES[k];
+  const h = computeHouse({
+    typology: k,
+    widthKen: t.ken.w[2],
+    depthKen: t.ken.d[2],
+    exposure: k === "gyoka" ? "coastal" : k === "gassho" ? "snow" : "inland",
+  });
+  return { k, t, h, profile: renderProfile(h) };
+});
+---
+
+<Layout
+  title="Ibushi 燻 — minka raised, moved, and revived | Hida, Gifu"
+  description="A workshop in Hida building traditional Japanese villager houses — nōka, gyoka, machiya, and gasshō-zukuri — on the old methods. A minka is cured by the smoke of being lived in."
+  nav=""
+>
+  <!-- ================= hero ================= -->
+  <section class="hero">
+    <div class="hero-media">
+      <Plate
+        name="hero-smoke"
+        alt="A thatched farmhouse at first light across a frosted rice field, one straight column of woodsmoke standing off the ridge into cold blue air, mountains behind."
+        ratio="16 / 9"
+        eager={true}
+      />
+    </div>
+    <div class="wrap hero-text">
+      <h1>A minka is cured<br />by the smoke of<br />being lived in.</h1>
+      <div class="hero-cols">
+        <p>
+          There is no chimney. The fire in the floor sends its smoke up through
+          the open frame and out through the thatch, and on the way it lays
+          soot on every beam and every stem of straw it passes. That soot kills
+          the insects, drives out the damp, and stops the rot.
+        </p>
+        <p class="spec gloss">
+          Which means the building is preserved by being inhabited. A house
+          whose fire goes out begins to fail — not sentimentally, structurally.
+          We raise, move, and revive these houses in Hida, and we ask every
+          client the same question before anything else: will the fire be lit?
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= the argument ================= -->
+  <section class="argument">
+    <div class="wrap arg-grid">
+      <div class="arg-media">
+        <Plate
+          name="susu-beam"
+          alt="Extreme close detail of two hundred years of hearth soot lacquered onto a massive zelkova beam, the adze-cut scallops still legible beneath, raking daylight across the surface."
+          ratio="4 / 5"
+          caption="Two hundred years of soot on a keyaki tie-beam. The adze marks are still legible under it."
+        />
+      </div>
+      <div class="arg-text">
+        <span class="kicker">Why the smoke matters · 煤</span>
+        <h2>Soot is a finish, not a stain.</h2>
+        <p>
+          A beam over a working irori takes on a hard, near-black lacquer that
+          you cannot buy and cannot fake. It takes decades. Insects will not
+          bore it, water will not sit on it, and the fungi that destroy
+          untreated timber cannot get a hold.
+        </p>
+        <p>
+          The same smoke rises into the roof and hardens the thatch from
+          beneath, which is why a smoked kayabuki roof lasts three or four
+          times as long as one over a house that stands empty. It is also why
+          the bamboo taken out of an old roof at re-thatch — <span class="term"
+            >susutake</span
+          > — is worth more than the bamboo that went in.
+        </p>
+        <p class="spec gloss">
+          The trade-off is real and we will not pretend otherwise: an open
+          hearth means smoke in the room, and a house run this way is warmer,
+          darker at the ceiling, and needs its fire kept. Clients who want the
+          look without the fire get a building that will need us again in
+          thirty years.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= the four houses ================= -->
+  <section class="four">
+    <div class="wrap">
+      <span class="kicker">The four houses · 四つの民家</span>
+      <h2>One valley, four answers.</h2>
+      <p class="four-lede">
+        <span class="term">Minka</span> 民家 means, plainly, "the houses of the
+        people" — everyone who was not a samurai or a priest. It is not one
+        building type. It is four, and the differences between them are not
+        style: they are answers to four different climates and four different
+        ways of earning a living. From this workshop all four are within a
+        morning's drive.
+      </p>
+
+      <ul class="four-list">
+        {
+          houses.map(({ k, t, h, profile }) => (
+            <li class="four-item">
+              <a href={`/houses/${k}`}>
+                <div class="four-profile" set:html={profile} />
+                <h3>
+                  {t.label} <span class="jp four-jp">{t.jp}</span>
+                </h3>
+                <p class="four-gloss spec">{t.gloss}</p>
+                <p class="four-line">{t.line}</p>
+                <dl class="four-spec">
+                  <div>
+                    <dt>Kōbai</dt>
+                    <dd>
+                      {Math.round(h.kobai * 10) / 10} sun · {Math.round(h.deg)}°
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Roof</dt>
+                    <dd>{h.thatch > 0 ? "Kaya thatch" : "Kawara tile"}</dd>
+                  </div>
+                </dl>
+                <span class="four-go spec">Read the house →</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= the signature ================= -->
+  <section class="sig">
+    <div class="wrap sig-grid">
+      <div class="sig-text">
+        <span class="kicker">Sumitsuke · 墨付け</span>
+        <h2>Nothing is cut until the line is drawn.</h2>
+        <p>
+          Before a joint is cut, the <span class="term">tōryō</span> walks the
+          stacked timber with an ink pot and a chalked cord and snaps a
+          dead-straight line onto every crooked log. That marking is called <span class="term">sumitsuke</span>, and it decides the house.
+        </p>
+        <p>
+          Snap yours. Choose the house, the bays in <span class="term">ken</span
+          >, the weather the site actually gets, and how much of the ground stays
+          earth — and the section and plan redraw from those numbers alone, at a
+          real drafting scale that changes as the house does. The specification
+          it produces is what we would build from.
+        </p>
+        <a class="btn" href="/sumitsuke">Snap a line</a>
+      </div>
+      <div class="sig-media">
+        <Plate
+          name="toryo"
+          alt="A master carpenter in his sixties crouched over a squared timber, snapping a straight ink line onto the wood with a traditional ink pot and cord, his face lit by daylight from a large open doorway."
+          ratio="4 / 5"
+          caption="Ōno Sōhachi marking a tie-beam. Sixth of his line to hold the title of tōryō."
+        />
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= the frame + the record ================= -->
+  <section class="ends">
+    <div class="wrap ends-grid">
+      <article class="end">
+        <Plate
+          name="magari-bari"
+          alt="Looking up into a roof frame: enormous naturally curved pine beams left in the shape the tree grew, crossing overhead, joined without nails and blackened by hearth smoke."
+          ratio="3 / 2"
+        />
+        <h3>The frame</h3>
+        <p>
+          Posts standing loose on stones so the house can ride an earthquake.
+          Beams left in the curve the tree grew. Joints cut to hold without a
+          single nail — because a nail rusts, and a joint does not.
+        </p>
+        <a class="quiet-link" href="/frame">Kigumi, ishiba-date, and the great pillar →</a>
+      </article>
+
+      <article class="end">
+        <Plate
+          name="tatami-shoji"
+          alt="A tatami-matted room in the morning, paper screens glowing with low sun and casting their lattice across the mats, a timber-framed panel half open to a further room."
+          ratio="3 / 2"
+        />
+        <h3>The rooms</h3>
+        <p>
+          Earth, then a step, then board, then matting. The house gets softer,
+          quieter, and more formal the deeper you walk, and nobody has to be
+          told where they may go.
+        </p>
+        <a class="quiet-link" href="/rooms">Doma to engawa, in order →</a>
+      </article>
+
+      <article class="end">
+        <Plate
+          name="yui-rethatch"
+          alt="About twenty villagers on the steep thatched roof of a farmhouse, passing up bundles of golden miscanthus and combing the new thatch flush, old grey thatch stripped from one half."
+          ratio="3 / 2"
+        />
+        <h3>The record</h3>
+        <p>
+          Every house we have raised, moved, or revived, entered as a <span class="term">munafuda</span> — the tag nailed inside the ridge
+          naming who built it, for whom, and when.
+        </p>
+        <a class="quiet-link" href="/munafuda">The record since 1968 →</a>
+      </article>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <h2>Will the fire be lit?</h2>
+        <p>
+          It is the first thing we ask. Tell us the site and the weather, and we
+          will tell you plainly whether we are the right workshop for it.
+        </p>
+      </div>
+      <a class="btn" href="/commission">Begin a commission</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* --- hero -------------------------------------------------------------- */
+
+  .hero {
+    padding-block: 0 clamp(3rem, 6vw, 6rem);
+  }
+
+  .hero-media :global(.plate img),
+  .hero-media :global(.plate-hold) {
+    max-height: 74vh;
+  }
+
+  .hero-text {
+    padding-top: clamp(2rem, 5vw, 4rem);
+  }
+
+  .hero h1 {
+    margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  }
+
+  .hero-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1.5rem, 4vw, 4rem);
+    max-width: 62rem;
+  }
+
+  /* --- argument ---------------------------------------------------------- */
+
+  .argument {
+    padding-block: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  .arg-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .arg-text h2 {
+    margin-bottom: 1.4rem;
+  }
+
+  /* --- the four ---------------------------------------------------------- */
+
+  .four {
+    padding-block: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  .four h2 {
+    margin-bottom: 1.2rem;
+  }
+
+  .four-lede {
+    max-width: 42rem;
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .four-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    border-top: 1px solid var(--susu);
+  }
+
+  .four-item {
+    border-bottom: 1px solid var(--susu);
+    border-right: 1px solid var(--susu);
+  }
+
+  .four-item:last-child {
+    border-right: 0;
+  }
+
+  .four-item a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem 1.35rem 1.6rem;
+    text-decoration: none;
+    transition: background 160ms ease;
+  }
+
+  .four-item a:hover {
+    background: var(--washi-lit);
+  }
+
+  .four-profile {
+    margin-bottom: 1.1rem;
+  }
+
+  .four-item h3 {
+    font-size: 1.5rem;
+  }
+
+  .four-jp {
+    font-size: 0.62em;
+    color: var(--sugi-deep);
+    margin-left: 0.35rem;
+  }
+
+  .four-gloss {
+    margin: 0.3rem 0 0.9rem;
+    color: var(--sugi-deep);
+  }
+
+  .four-line {
+    font-size: 0.9375rem;
+    margin-bottom: 1.1rem;
+  }
+
+  .four-spec {
+    margin: 0 0 1.1rem;
+    border-top: 1px solid color-mix(in srgb, var(--sugi) 30%, transparent);
+  }
+
+  .four-spec > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--sugi) 20%, transparent);
+  }
+
+  .four-spec dt,
+  .four-spec dd {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    margin: 0;
+  }
+
+  .four-spec dt {
+    color: var(--sugi-deep);
+  }
+
+  .four-go {
+    color: var(--sugi-deep);
+    margin-top: auto;
+  }
+
+  .four-item a:hover .four-go {
+    color: var(--okibi);
+  }
+
+  /* --- signature --------------------------------------------------------- */
+
+  .sig {
+    padding-block: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  .sig-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .sig-text h2 {
+    margin-bottom: 1.4rem;
+  }
+
+  .sig-text .btn {
+    margin-top: 0.9rem;
+  }
+
+  /* --- ends -------------------------------------------------------------- */
+
+  .ends {
+    padding-block: clamp(3.5rem, 7vw, 6rem);
+  }
+
+  .ends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: clamp(1.75rem, 4vw, 3.5rem);
+  }
+
+  .end h3 {
+    margin: 1.1rem 0 0.7rem;
+  }
+
+  .end p {
+    font-size: 0.9375rem;
+  }
+
+  .quiet-link {
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    color: var(--sugi-deep);
+    text-decoration: none;
+    border-bottom: 1px solid var(--okibi);
+    padding-bottom: 2px;
+  }
+
+  .quiet-link:hover {
+    color: var(--susu);
+  }
+
+  /* --- cta --------------------------------------------------------------- */
+
+  .cta {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .cta-in {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta p {
+    margin: 0.8rem 0 0;
+    max-width: 32rem;
+  }
+
+  /* --- mobile ------------------------------------------------------------ */
+
+  @media (max-width: 62rem) {
+    .arg-grid,
+    .sig-grid {
+      grid-template-columns: 1fr;
+    }
+    .arg-media,
+    .sig-media {
+      order: -1;
+    }
+    .four-item {
+      border-right: 0;
+    }
+  }
+</style>

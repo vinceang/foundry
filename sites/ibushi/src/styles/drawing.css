@@ -1,0 +1,369 @@
+/* The ink drawing. Susu on washi, one drafting weight per element class,
+   and okibi only where a fire actually is. */
+
+.drawing {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: var(--washi-lit);
+}
+
+.drawing text {
+  font-family: var(--sans);
+  fill: var(--sugi-deep);
+}
+
+/* --- ink weights -------------------------------------------------------- */
+
+.d-ink {
+  fill: none;
+  stroke: var(--susu);
+  stroke-width: 1.4;
+  stroke-linejoin: miter;
+}
+
+.d-ink-heavy {
+  stroke-width: 2.6;
+}
+
+.d-wall {
+  fill: none;
+}
+
+.d-hair {
+  fill: none;
+  stroke: var(--susu);
+  stroke-width: 0.8;
+  opacity: 0.5;
+}
+
+.d-attic {
+  stroke-width: 1.8;
+}
+
+/* --- materials ---------------------------------------------------------- */
+
+.d-thatch {
+  fill: var(--kaya);
+  fill-opacity: 0.42;
+  fill-rule: evenodd;
+}
+
+.d-tile {
+  fill: var(--susu);
+  fill-opacity: 0.2;
+  fill-rule: evenodd;
+}
+
+.d-comb {
+  fill: none;
+  stroke: var(--sugi);
+  stroke-width: 0.7;
+  opacity: 0.55;
+}
+
+.d-timber {
+  fill: var(--susu);
+  fill-opacity: 0.86;
+  stroke: none;
+}
+
+.d-daikoku {
+  fill-opacity: 1;
+}
+
+.d-stone {
+  fill: var(--sugi);
+  fill-opacity: 0.5;
+  stroke: var(--susu);
+  stroke-width: 0.9;
+}
+
+.d-hatch {
+  fill: none;
+  stroke: var(--sugi);
+  stroke-width: 0.7;
+  opacity: 0.45;
+}
+
+/* --- the fire ----------------------------------------------------------- */
+
+.d-irori,
+.d-irori-plan {
+  fill: var(--okibi);
+  fill-opacity: 0.5;
+  stroke: var(--susu);
+  stroke-width: 1.4;
+}
+
+.d-smoke {
+  fill: none;
+  stroke: var(--okibi);
+  stroke-width: 2.1;
+  stroke-linecap: round;
+  opacity: 0.55;
+  stroke-dasharray: 6 7;
+}
+
+.d-proj {
+  fill: none;
+  stroke: var(--sugi);
+  stroke-width: 0.7;
+  opacity: 0.34;
+  stroke-dasharray: 3 5;
+}
+
+.d-daikoku-plan {
+  fill: var(--susu);
+  stroke: var(--washi-lit);
+  stroke-width: 1.6;
+}
+
+/* --- plan --------------------------------------------------------------- */
+
+.d-grid {
+  fill: none;
+  stroke: var(--sugi);
+  stroke-width: 0.8;
+  opacity: 0.5;
+  stroke-dasharray: 6 5;
+}
+
+.d-doma {
+  fill: var(--tsuchikabe);
+  stroke: none;
+}
+
+.d-doma-l {
+  fill: var(--sugi-deep);
+  letter-spacing: 0.22em;
+  font-size: 17px;
+}
+
+.d-engawa {
+  fill: var(--kaya);
+  fill-opacity: 0.3;
+  stroke: var(--susu);
+  stroke-width: 0.9;
+}
+
+.d-kamachi {
+  stroke: var(--susu);
+  stroke-width: 3.4;
+  stroke-linecap: square;
+}
+
+.d-tatami {
+  fill: none;
+  stroke: var(--koke);
+  stroke-width: 1;
+  opacity: 0.75;
+}
+
+.d-toko {
+  fill: var(--sugi);
+  fill-opacity: 0.28;
+  stroke: var(--susu);
+  stroke-width: 1.1;
+}
+
+.d-tsubo {
+  fill: var(--koke);
+  fill-opacity: 0.22;
+  stroke: var(--susu);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+
+.d-post {
+  fill: var(--susu);
+}
+
+.d-cut line {
+  stroke: var(--susu);
+  stroke-width: 1.1;
+  stroke-dasharray: 14 4 3 4;
+  opacity: 0.75;
+}
+
+/* --- drafting furniture ------------------------------------------------- */
+
+.d-dim line {
+  stroke: var(--sugi-deep);
+  stroke-width: 0.9;
+}
+
+.d-label {
+  font-size: 17px;
+  letter-spacing: 0.05em;
+}
+
+.d-note {
+  font-size: 15px;
+  fill: var(--sugi-deep);
+  letter-spacing: 0.08em;
+}
+
+.d-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  fill: var(--susu);
+}
+
+.d-scalebar line {
+  stroke: var(--susu);
+  stroke-width: 1.3;
+}
+
+.d-scale {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  fill: var(--susu);
+}
+
+/* --- the redraw: wet ink sits on the timber for one beat ---------------- */
+
+.fx .drawing.is-redrawing .d-ink,
+.fx .drawing.is-redrawing .d-attic,
+.fx .drawing.is-redrawing .d-kamachi,
+.fx .drawing.is-redrawing .d-wall {
+  stroke: var(--okibi);
+}
+
+.fx .drawing .d-ink,
+.fx .drawing .d-attic,
+.fx .drawing .d-kamachi,
+.fx .drawing .d-wall {
+  transition: stroke 620ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx .drawing.is-redrawing .d-ink,
+  .fx .drawing.is-redrawing .d-attic,
+  .fx .drawing.is-redrawing .d-kamachi,
+  .fx .drawing.is-redrawing .d-wall {
+    stroke: var(--susu);
+  }
+  .fx .drawing * {
+    transition: none !important;
+  }
+}
+
+/* --- the title block -----------------------------------------------------
+   Global, not scoped: the client rewrites this markup on every redraw, and
+   Astro's scoping attribute does not survive an innerHTML replacement. */
+
+.title-block {
+  border: 1px solid var(--susu);
+  padding: 1.1rem 1.15rem 1.25rem;
+  margin-bottom: 1.9rem;
+  background: var(--washi-lit);
+}
+
+.tb {
+  margin: 0;
+}
+
+.tb-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 0.35rem 0.9rem;
+  padding: 0.4rem 0;
+  border-top: 1px solid color-mix(in srgb, var(--sugi) 30%, transparent);
+  align-items: baseline;
+}
+
+.tb-row:first-child {
+  border-top: 0;
+}
+
+.tb dt {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  color: var(--sugi-deep);
+  min-width: 0;
+}
+
+.tb dd {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tb-a {
+  font-weight: 600;
+}
+
+.tb-b {
+  color: var(--sugi-deep);
+  font-size: 0.75rem;
+}
+
+.sheet figcaption {
+  margin-top: 0.9rem;
+  max-width: 36rem;
+}
+
+/* the kōbai triangle: ten of run against the rise, marked on the slope */
+.d-kobai path {
+  fill: none;
+  stroke: var(--susu);
+  stroke-width: 1.2;
+}
+
+.d-kobai text {
+  font-size: 16px;
+  font-weight: 600;
+  fill: var(--susu);
+}
+
+/* the kōbai triangle: ten of run against the rise, marked on the slope */
+.d-kobai path {
+  fill: none;
+  stroke: var(--susu);
+  stroke-width: 1.2;
+}
+
+.d-kobai text {
+  font-size: 16px;
+  font-weight: 600;
+  fill: var(--susu);
+}
+
+/* --- the profile mark --------------------------------------------------- */
+
+.profile {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.p-ground {
+  stroke: var(--susu);
+  stroke-width: 1.4;
+}
+
+.p-wall {
+  fill: var(--tsuchikabe);
+  stroke: var(--susu);
+  stroke-width: 1.2;
+}
+
+.p-roof {
+  fill: var(--kaya);
+  fill-opacity: 0.55;
+  stroke: var(--susu);
+  stroke-width: 1.8;
+  stroke-linejoin: miter;
+}
+
+.p-ridge {
+  stroke: var(--susu);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}

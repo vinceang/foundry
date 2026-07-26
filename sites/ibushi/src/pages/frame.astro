@@ -1,0 +1,185 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Plate from "../components/Plate.astro";
+
+const PARTS = [
+  {
+    key: "ishiba",
+    name: "Ishiba-date",
+    jp: "石場建て",
+    gloss: "standing on stones",
+    img: "ishiba-date",
+    alt: "The base of a large squared timber post standing directly on a rounded natural foundation stone, its foot cut to fit the stone's irregular curve exactly, not fastened to it.",
+    body: [
+      "The posts are not fixed to the ground. Each one stands on a foundation stone, and the foot of the post is scribed and cut to fit that particular stone's irregular top face — a technique called hikari-tsuke, where the carpenter transfers the stone's profile onto the timber and cuts to it.",
+      "Nothing bolts it down. In an earthquake the building is free to shift, rock, and settle back rather than transmit the ground's movement straight up into the frame. A rigidly anchored house resists until something breaks; this one moves and then stops moving. The mass of the roof, which looks like the danger, is actually what returns it to rest.",
+    ],
+    spec: [["Fixing", "None"], ["Fitting", "Hikari-tsuke — scribed to the stone"], ["Behaviour", "The house rides the ground"]],
+  },
+  {
+    key: "kigumi",
+    name: "Kigumi",
+    jp: "木組み",
+    gloss: "timber, joined",
+    img: "kigumi",
+    alt: "Two large squared cedar timbers with an intricate interlocking joint halfway home, a wooden mallet and a set of chisels resting on the timber beside them.",
+    body: [
+      "No nails, no plates, no screws. The timbers are cut so that they hold each other — mortise and tenon, lapped scarfs, wedged and pinned with hardwood where a joint needs locking. A hundred and fifty joints in a small nōka, each one cut to a specific pair of timbers and to no others.",
+      "The argument is not romantic. A steel fastener in a timber that moves seasonally works its hole loose and then rusts, and the rust breaks down the wood around it. A cut joint has no such failure mode: it is the same material as the thing it joins, it moves with it, and when it does wear it can be shimmed and re-wedged rather than replaced.",
+    ],
+    spec: [["Fasteners", "None — hardwood pins and wedges only"], ["Marking", "Sumitsuke 墨付け, before any cut"], ["Repair", "Shimmed and re-wedged, not replaced"]],
+  },
+  {
+    key: "daikoku",
+    name: "Daikokubashira",
+    jp: "大黒柱",
+    gloss: "the great pillar",
+    img: "daikokubashira",
+    alt: "The great central pillar of an old farmhouse: a single massive squared zelkova post, dark with soot but polished to a warm sheen at hand height by generations of touch, rising into blackened beams.",
+    body: [
+      "One post, usually zelkova, usually the largest single piece of timber in the building, standing at the junction of the doma and the raised floor where the main beams cross. It is named for Daikoku, one of the seven gods of fortune, and a household's standing could be read off its girth.",
+      "Structurally it takes the crossing of the principal beams and carries a large share of the roof. Socially it is the fixed point of the house: the family's height marks were cut into it, and the phrase is still used of a person who holds a household together. In a revival it is the one timber we will go to great lengths not to replace — a house that loses its daikokubashira has, in the view of most of the families we work for, become a different house.",
+    ],
+    spec: [["Species", "Keyaki (zelkova), sometimes chestnut"], ["Section", "Commonly 1 shaku square or more"], ["Position", "Where the doma meets the raised floor"]],
+  },
+  {
+    key: "magari",
+    name: "Magari-bari",
+    jp: "曲がり梁",
+    gloss: "the curved beam",
+    img: "magari-bari",
+    alt: "Looking up into a roof frame: enormous naturally curved pine beams left in the shape the tree grew, crossing each other overhead, joined without nails and blackened by hearth smoke.",
+    body: [
+      "The great tie-beams are not straight and were never meant to be. Mountain pine grown on a slope leans, and the carpenter selects for that lean rather than against it, setting the beam with its natural curve arched upwards so the load pushes into the grain rather than across it.",
+      "It also means every beam is unique, which is precisely why the ink line matters. A straight line snapped along a crooked timber gives the carpenter a true datum on an untrue object; every cut is then measured from the line, not from the wood. Straight lines on crooked timber is the whole of Japanese carpentry in one image.",
+    ],
+    spec: [["Species", "Mountain pine (akamatsu)"], ["Selection", "Chosen for the curve, set arch-up"], ["Datum", "The snapped ink line, never the timber's face"]],
+  },
+];
+---
+
+<Layout
+  title="The frame | Ibushi 燻"
+  description="Posts standing loose on stones so the house can ride an earthquake, beams left in the curve the tree grew, joints cut to hold without a single nail — and the soot that preserves all of it."
+  nav="frame"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">The frame · 木組み</span>
+      <h1>Nothing is fastened.<br />Everything holds.</h1>
+      <div class="head-cols">
+        <p>
+          A minka is a post-and-beam frame carrying a very heavy roof, standing
+          on stones it is not attached to, cut so that no part of it needs a
+          nail. Take the walls away and it stands. Take the roof away and it
+          stands. The walls are infill and the roof is a consumable.
+        </p>
+        <p class="spec gloss">
+          Every choice below has a reason that is structural before it is
+          cultural, and each one is still how we work — because the failure
+          modes the old carpenters were designing against have not changed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  {PARTS.map((p, i) => (
+    <>
+      <section class="part rise" id={p.key}>
+        <div class={`wrap part-grid ${i % 2 ? "flip" : ""}`}>
+          <div class="part-text">
+            <h2>{p.name} <span class="jp part-jp">{p.jp}</span></h2>
+            <p class="kicker part-gloss">{p.gloss}</p>
+            {p.body.map((b) => <p>{b}</p>)}
+            <dl class="mini">
+              {p.spec.map(([k, v]) => (
+                <div class="mini-row"><dt>{k}</dt><dd>{v}</dd></div>
+              ))}
+            </dl>
+          </div>
+          <div class="part-media">
+            <Plate name={p.img} alt={p.alt} ratio="4 / 5" />
+          </div>
+        </div>
+      </section>
+      <hr class="snap-hair" />
+    </>
+  ))}
+
+  <section class="soot">
+    <div class="wrap soot-grid">
+      <div class="soot-media">
+        <Plate
+          name="susu-beam"
+          alt="Extreme close detail of two hundred years of hearth soot lacquered onto a zelkova beam, the adze-cut scallops still legible beneath, raking daylight across the surface."
+          ratio="3 / 2"
+        />
+      </div>
+      <div class="soot-text">
+        <span class="kicker">And then the smoke · 煤</span>
+        <h2>The frame is finished by being used.</h2>
+        <p>
+          None of the timber above is treated, painted, oiled, or sealed. It is
+          cut, fitted, and then left to the fire. Over decades the hearth smoke
+          lays down a hard carbon lacquer on every exposed surface — insects
+          will not bore it, water will not sit on it, and rot cannot take hold.
+        </p>
+        <p>
+          The bamboo lattice up in the roof gets the same treatment and becomes <span class="term">susutake</span> 煤竹, which after a century is
+          harder, darker, and worth considerably more than the bamboo that went
+          in. We pull it at re-thatch and sell it by the pole.
+        </p>
+        <p class="spec gloss">
+          It is the reason we ask whether the fire will be lit. A frame like
+          this, kept dry and kept smoked, will outlast several owners. The same
+          frame in an unheated house is on a thirty-year clock.
+        </p>
+        <a class="quiet-link" href="/commission">Susutake, by the pole →</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <h2>See it in section.</h2>
+        <p>The posts, the stones, the tie-beam and the hearth, drawn to scale for a house you set yourself.</p>
+      </div>
+      <a class="btn" href="/sumitsuke">Sumitsuke — snap a line</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .head { padding-block: clamp(2.5rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.5rem); }
+  .head h1 { margin-bottom: clamp(2rem, 4vw, 3.25rem); }
+  .head-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: clamp(1.5rem, 4vw, 4rem); max-width: 62rem; }
+  .part { padding-block: clamp(2.75rem, 6vw, 5.5rem); }
+  .part-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: clamp(1.75rem, 5vw, 5rem); align-items: start; }
+  .part-grid.flip .part-text { order: 2; }
+  .part-text h2 { font-size: clamp(1.9rem, 1.3rem + 2.2vw, 3rem); }
+  .part-jp { font-size: 0.52em; color: var(--sugi-deep); margin-left: 0.5rem; letter-spacing: 0.1em; }
+  .part-gloss { margin: 0.7rem 0 1.4rem; }
+  .part-media { position: sticky; top: 5.5rem; }
+  .mini { margin: 1.6rem 0 0; border-top: 1px solid var(--susu); }
+  .mini-row { display: grid; grid-template-columns: minmax(6rem, 0.5fr) 1fr; gap: 0.5rem 1.25rem; padding: 0.5rem 0; border-bottom: 1px solid color-mix(in srgb, var(--sugi) 28%, transparent); }
+  .mini dt, .mini dd { font-family: var(--sans); font-size: 0.75rem; margin: 0; }
+  .mini dt { color: var(--sugi-deep); }
+  .soot { padding-block: clamp(3.5rem, 7vw, 6.5rem); }
+  .soot-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.75rem, 5vw, 5rem); align-items: center; }
+  .soot-text h2 { margin-bottom: 1.3rem; }
+  .quiet-link { font-family: var(--sans); font-size: 0.8125rem; color: var(--sugi-deep); text-decoration: none; border-bottom: 1px solid var(--okibi); padding-bottom: 2px; }
+  .quiet-link:hover { color: var(--susu); }
+  .cta { padding-block: clamp(3rem, 6vw, 5rem); }
+  .cta-in { display: flex; align-items: end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .cta p { margin: 0.8rem 0 0; max-width: 32rem; }
+  @media (max-width: 62rem) {
+    .part-grid, .soot-grid { grid-template-columns: 1fr; }
+    .part-grid.flip .part-text { order: 0; }
+    .part-media { position: static; order: -1; margin-bottom: 1.5rem; }
+  }
+</style>

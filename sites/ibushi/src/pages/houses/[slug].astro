@@ -1,0 +1,404 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Plate from "../../components/Plate.astro";
+import "../../styles/drawing.css";
+import { computeHouse, TYPOLOGIES, TYPOLOGY_ORDER } from "../../lib/house.js";
+import { renderDrawing, renderProfile } from "../../lib/draw.js";
+import { HOUSE_PAGES } from "../../data/houses.js";
+
+export function getStaticPaths() {
+  return TYPOLOGY_ORDER.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const t = TYPOLOGIES[slug];
+const page = HOUSE_PAGES[slug];
+
+const exposure = slug === "gyoka" ? "coastal" : slug === "gassho" ? "snow" : "inland";
+const house = computeHouse({
+  typology: slug,
+  widthKen: t.ken.w[2],
+  depthKen: t.ken.d[2],
+  exposure,
+});
+const svg = renderDrawing(house);
+
+const deepLink = `/sumitsuke?typology=${slug}&w=${t.ken.w[2]}&d=${t.ken.d[2]}&exposure=${exposure}&module=inakama&doma=${Math.round(t.doma * 100)}`;
+
+const others = TYPOLOGY_ORDER.filter((k) => k !== slug).map((k) => ({
+  k,
+  t: TYPOLOGIES[k],
+  profile: renderProfile(
+    computeHouse({
+      typology: k,
+      widthKen: TYPOLOGIES[k].ken.w[2],
+      depthKen: TYPOLOGIES[k].ken.d[2],
+      exposure: k === "gyoka" ? "coastal" : k === "gassho" ? "snow" : "inland",
+    })
+  ),
+}));
+---
+
+<Layout
+  title={`${t.label} ${t.jp} — ${t.gloss} | Ibushi 燻`}
+  description={page.lede}
+  nav="houses"
+>
+  <section class="head">
+    <div class="wrap">
+      <a class="back spec" href="/houses">← The four houses</a>
+      <span class="kicker">
+        {t.gloss} · {page.place}
+      </span>
+      <h1>
+        {t.label} <span class="jp head-jp">{t.jp}</span>
+      </h1>
+      <p class="thesis">{page.thesis}</p>
+    </div>
+  </section>
+
+  <section class="hero-media">
+    <div class="wrap">
+      <Plate name={page.img} alt={page.alt} ratio="16 / 9" eager={true} />
+    </div>
+  </section>
+
+  <section class="lede-sec">
+    <div class="wrap lede-grid">
+      <p class="lede">{page.lede}</p>
+      <dl class="facts">
+        {
+          page.facts.map(([k, v]) => (
+            <div class="fact">
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- the drawing, at the typical size for this house -->
+  <section class="draw-sec">
+    <div class="wrap draw-grid">
+      <div class="draw-sheet">
+        <figure class="sheet">
+          <div class="sheet-in" set:html={svg} />
+          <figcaption class="spec gloss">
+            A typical {t.label} at {house.widthKen} × {house.depthKen} ken on the
+            Inakama module — {Math.round(house.tsubo * 10) / 10} tsubo, {
+              Math.round(house.kobai * 10) / 10
+            } sun kōbai, ridge {Math.round((house.ridgeH / 0.30303) * 10) / 10} shaku.
+          </figcaption>
+        </figure>
+      </div>
+      <div class="draw-text">
+        <span class="kicker">The drawing · 図面</span>
+        <h2>Section and plan.</h2>
+        <p>
+          Drawn from the same model that runs Sumitsuke, at the size this house
+          is usually built. Open it there and the bays, the site exposure, the
+          earth floor, and the module all become yours to set.
+        </p>
+        <a class="btn" href={deepLink}>Open this house in Sumitsuke</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- the argument, in chapters -->
+  {
+    page.body.map((sec, i) => (
+      <>
+        <section class="chap rise">
+          <div class="wrap chap-in">
+            <p class="chap-num spec gloss">
+              {String(i + 1).padStart(2, "0")}
+            </p>
+            <div class="chap-text">
+              <h2>{sec.h}</h2>
+              {sec.p.map((para) => (
+                <p>{para}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+        <hr class="snap-hair" />
+      </>
+    ))
+  }
+
+  <!-- the other three -->
+  <section class="others">
+    <div class="wrap">
+      <span class="kicker">The other three · 他の三つ</span>
+      <h2>Same valley, different weather.</h2>
+      <ul class="others-list">
+        {
+          others.map((o) => (
+            <li>
+              <a href={`/houses/${o.k}`}>
+                <div class="others-profile" set:html={o.profile} />
+                <h3>
+                  {o.t.label} <span class="jp others-jp">{o.t.jp}</span>
+                </h3>
+                <p class="spec gloss">{o.t.gloss}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="cta">
+    <div class="wrap cta-in">
+      <div>
+        <h2>Raise one, move one, or bring one back.</h2>
+        <p>
+          Tell us the site and the weather. We answer every brief, and we will
+          say plainly if we are not the right workshop for it.
+        </p>
+      </div>
+      <a class="btn" href="/commission">Begin a commission</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .head {
+    padding-block: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .back {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--sugi-deep);
+    margin-bottom: 1.6rem;
+  }
+
+  .back:hover {
+    color: var(--susu);
+  }
+
+  .head-jp {
+    font-size: 0.42em;
+    color: var(--sugi-deep);
+    margin-left: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .thesis {
+    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.55rem);
+    line-height: 1.45;
+    max-width: 38rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero-media {
+    padding-block: 0;
+  }
+
+  .lede-sec {
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .lede-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .lede {
+    font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+    max-width: 38rem;
+  }
+
+  .facts {
+    margin: 0;
+    border-top: 1px solid var(--susu);
+  }
+
+  .fact {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 0.7fr) 1fr;
+    gap: 0.5rem 1.25rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--sugi) 28%, transparent);
+  }
+
+  .fact dt,
+  .fact dd {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    margin: 0;
+  }
+
+  .fact dt {
+    color: var(--sugi-deep);
+  }
+
+  .fact dd {
+    font-weight: 500;
+  }
+
+  /* --- drawing ---------------------------------------------------------- */
+
+  .draw-sec {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .draw-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .sheet {
+    margin: 0;
+  }
+
+  .sheet-in {
+    border: 1px solid var(--susu);
+    background: var(--washi-lit);
+  }
+
+  .draw-text h2 {
+    margin-bottom: 1.2rem;
+  }
+
+  .draw-text .btn {
+    margin-top: 0.6rem;
+  }
+
+  /* --- chapters --------------------------------------------------------- */
+
+  .chap {
+    padding-block: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  .chap-in {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: start;
+  }
+
+  .chap-num {
+    margin: 0.5rem 0 0;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+  }
+
+  .chap-text {
+    max-width: 44rem;
+  }
+
+  .chap-text h2 {
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.4rem);
+    margin-bottom: 1.2rem;
+  }
+
+  .chap-text p {
+    max-width: 40rem;
+  }
+
+  /* --- others ----------------------------------------------------------- */
+
+  .others {
+    padding-block: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .others h2 {
+    margin-bottom: 2rem;
+  }
+
+  .others-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    border-top: 1px solid var(--susu);
+  }
+
+  .others-list li {
+    border-bottom: 1px solid var(--susu);
+    border-right: 1px solid var(--susu);
+  }
+
+  .others-list li:last-child {
+    border-right: 0;
+  }
+
+  .others-list a {
+    display: block;
+    padding: 1.4rem 1.25rem 1.5rem;
+    text-decoration: none;
+    height: 100%;
+    transition: background 160ms ease;
+  }
+
+  .others-list a:hover {
+    background: var(--washi-lit);
+  }
+
+  .others-profile {
+    margin-bottom: 0.9rem;
+  }
+
+  .others-list h3 {
+    font-size: 1.3rem;
+  }
+
+  .others-jp {
+    font-size: 0.62em;
+    color: var(--sugi-deep);
+    margin-left: 0.3rem;
+  }
+
+  .others-list p {
+    margin: 0.25rem 0 0;
+  }
+
+  /* --- cta -------------------------------------------------------------- */
+
+  .cta {
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  .cta-in {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .cta p {
+    margin: 0.8rem 0 0;
+    max-width: 32rem;
+  }
+
+  @media (max-width: 62rem) {
+    .lede-grid,
+    .draw-grid {
+      grid-template-columns: 1fr;
+    }
+    .chap-in {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+    .others-list li {
+      border-right: 0;
+    }
+  }
+</style>
