@@ -22,3 +22,6 @@ tools/.cache/
 
 # design-review screenshots (critique-loop artifacts, kept local)
 shots/
+
+# raw generated imagery (optimized files ship from public/)
+sites/*/assets-src/

@@ -109,13 +109,34 @@ through the visit — but never below the hour (Vesper commitment 1).
 
 ## Imagery
 
-Constant phrase for the whole batch: *"civil twilight, deep blue sky still
-luminous overhead, low apricot afterglow at the horizon, subject fully
-modelled by the remaining daylight and its own warm instrument lights, no
-text."* Dry-run finals (≤6): the apron hero, the cabin aloft, one material
-close-up (cabin detail in lamp light), one human-presence shot (the steward
-— the crew are the hosts of the in-between hour). Placeholders elsewhere
-are solid palette materials, never grey boxes.
+Two registers, and the split is the point.
+
+**The evening (hero, Aloft).** Constant phrase: *"civil twilight, deep blue
+sky still luminous overhead, low apricot afterglow at the horizon, subject
+fully modelled by the remaining daylight and its own warm instrument lights,
+no text."* Finals: the apron hero, the cabin aloft, one material close-up
+(cabin detail in lamp light), one human-presence shot (the steward — the
+crew are the hosts of the in-between hour).
+
+**The daylight (Tails, added 2026-07-26).** The fleet is the one section
+photographed in full light — the aircraft are documented, not staged.
+Constant phrase: *"the aircraft is completely blank — glossy bare white
+paint, unmarked fuselage, nose and fin; no writing, letters, numbers,
+registration, logo, emblem, stripe or livery anywhere. Bright and airy
+under a soft luminous overcast, nothing blown out. Extremely sharp: panel
+lines, rivets, polished aluminium leading edges. Cool blue-grey and pale
+aluminium with a single warm apricot accent. No text, watermark, caption or
+border in the frame."* Each plate carries one distant, back-turned crew
+figure for scale. Because these run bright against a dusk ground, the frame
+does the seating: a hairline border and a faint scrim at the foot.
+
+Generated with `tools/gen-image.mjs --model gpt-image-2 --size 1536x1024`.
+Higgsfield `soul_2` was tried first and is the wrong tool for this subject —
+any prompt naming a runway, apron or "aviation photography" pulls it into
+aircraft-spotter reference imagery, and it returns invented registrations,
+tail liveries and photographer watermarks that no amount of negative
+prompting removes. Its hangar-interior frames were clean; its outdoor ones
+never were.
 
 ## Copy voice
 

@@ -84,6 +84,9 @@ const tails = [
     range: "7,700 nm",
     fact: "16 h 00",
     factLabel: "longest sector",
+    img: "/images/tail-capella.jpg",
+    alt: "Capella in the hangar with the door rolled open to daylight: a long unmarked white aircraft, airstair down and the cabin lit warm inside, an engineer standing small at the nose.",
+    ops: "Hangar 4, Farnborough — before the night sector",
   },
   {
     star: "Menkalinan",
@@ -93,6 +96,9 @@ const tails = [
     range: "6,450 nm",
     fact: "London — Riyadh",
     factLabel: "nonstop, either way",
+    img: "/images/tail-menkalinan.jpg",
+    alt: "Menkalinan from behind on a wet apron, all three engines in view — two on the fuselage and the third at the root of the fin — the white airframe carrying no marking of any kind.",
+    ops: "The apron after rain — three engines, no marking",
   },
   {
     star: "Hassaleh",
@@ -102,6 +108,9 @@ const tails = [
     range: "4,018 nm",
     fact: "1,000 m",
     factLabel: "runway, if it must",
+    img: "/images/tail-hassaleh.jpg",
+    alt: "Hassaleh alone on the concrete at a small country field, grass and a low treeline behind, airstair down and a pilot walking the wing on his checks.",
+    ops: "A field an hour from the city — the walk-around",
   },
 ];
 ---
@@ -234,14 +243,14 @@ const tails = [
         {
           tails.map((t, i) => (
             <article class={`tail-row reveal${i % 2 === 1 ? " flip" : ""}`}>
-              <div class="tail-media">
-                <div class="plate" role="img" aria-label={`${t.star}, ${t.type}, in the hangar at night — photography to follow`}>
-                  <svg viewBox="0 0 200 60" aria-hidden="true">
-                    <path d="M6 54 Q100 -14 194 54" />
-                  </svg>
-                  <span class="ops">PAINT: WHITE, UNMARKED · {t.greek.toUpperCase()}</span>
+              <figure class="tail-media">
+                <div class="tail-frame">
+                  <img src={t.img} alt={t.alt} width="1536" height="1024" loading="lazy" decoding="async" />
                 </div>
-              </div>
+                <figcaption class="tail-ops">
+                  {t.ops} <span class="tail-ops-code">· paint white, unmarked</span>
+                </figcaption>
+              </figure>
               <div class="tail-copy">
                 <span class="whisper">{t.greek}</span>
                 <h3 class="tail-name">{t.star}</h3>

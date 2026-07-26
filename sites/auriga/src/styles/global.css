@@ -363,49 +363,50 @@ a {
   order: 2;
 }
 
+/* The tails are photographed in daylight — the one place on the page where
+   full light is allowed. The frame keeps them from floating: a hairline and a
+   faint apricot glow tie the bright plate back to the dusk ground. */
 .tail-media {
+  margin: 0;
+}
+
+.tail-frame {
   aspect-ratio: 3 / 2;
   position: relative;
   overflow: hidden;
+  border: 1px solid var(--hairline);
+  background: var(--tarmac);
 }
 
-.tail-media img {
+.tail-frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-/* dry-run placeholder: a twilight sky band over darkened tarmac, sized to the
-   intended crop — stands in for the hangar plate in the site's own light so
-   the composition can be judged honestly (no gray boxes). */
-.plate {
+/* the daylight is bright enough to blow out against the page; a whisper of
+   shadow at the foot seats it on the ground it sits on */
+.tail-frame::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(120% 80% at 50% 108%, rgba(232, 162, 107, 0.14) 0%, rgba(232, 162, 107, 0) 42%),
-    linear-gradient(180deg, #131b27 0%, #141d29 46%, var(--tarmac) 100%);
-  display: grid;
-  place-items: center;
+  inset: auto 0 0 0;
+  height: 22%;
+  background: linear-gradient(180deg, rgba(15, 20, 29, 0) 0%, rgba(15, 20, 29, 0.34) 100%);
+  pointer-events: none;
 }
 
-.plate svg {
-  width: 46%;
-  opacity: 0.5;
+.tail-ops {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  line-height: 1.7;
+  color: var(--airframe);
 }
 
-.plate svg path {
-  fill: none;
-  stroke: var(--afterglow);
-  stroke-width: 1;
-}
-
-.plate .ops {
-  position: absolute;
-  left: 18px;
-  bottom: 14px;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  color: rgba(149, 160, 173, 0.7);
+.tail-ops-code {
+  color: rgba(149, 160, 173, 0.6);
+  white-space: nowrap;
 }
 
 .tail-copy .whisper {
