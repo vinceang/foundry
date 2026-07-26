@@ -1,6 +1,7 @@
 # Ibushi 燻 — build handoff
 
-**Started** 2026-07-25 · **Status:** in progress · **Site:** `sites/ibushi`
+**Started** 2026-07-25 · **Shipped** 2026-07-26 · **Live:** https://ibushi.vercel.app
+**Site:** `sites/ibushi`
 **Series:** Aubade · **Subject:** a builder of traditional Japanese villager
 houses (minka), Hida, Gifu — supplied by Vince, not from the backlog queue.
 
@@ -69,59 +70,103 @@ Higgsfield never blocked structural progress.
 - Ship optimized JPEGs from `public/images/`, ≤500KB each.
 - `rm` is deny-listed in this repo — move rejected assets aside.
 
-## What is done
+## What was built
 
-- [x] Phase 0 — doctrine read (README, foundry-series, aubade taste profile,
-      Veta's DESIGN.md as the most recent Aubade sibling)
-- [x] Phase 1 — subject accepted from Vince; four typologies confirmed real
-      and correctly distinguished
-- [x] Phase 2 — `sites/ibushi/DESIGN.md` written in full before any component
-- [x] Phase 3 (partial) — package.json / astro.config / tsconfig / install;
-      `src/styles/global.css` (token system, snapped-line rules, motion
-      classes); `src/layouts/Layout.astro` (masthead, nav, footer, `?nofx`)
+Eleven routes, against the collection's usual single page:
 
-## What remains
+`/` · `/houses` · `/houses/{noka,gyoka,machiya,gassho}` · `/frame` · `/rooms` ·
+`/sumitsuke` · `/workshop` · `/munafuda` · `/commission`
 
-- [ ] **Phase 3 finish** — favicon, the 11 route stubs
-- [ ] **Phase 5a — the signature, built and critiqued FIRST**: parametric
-      house model in `src/lib/house.js`, shared by the server render (JS-off
-      default) and the client redraw. Section + plan + tatami grid + hearth
-      from one model. Spec block in ken / shaku / sun / tsubo / jō
-- [ ] **Phase 5b** — `/`, `/houses` + four typology pages, `/frame`,
-      `/rooms` (incl. the irori seat-hierarchy interaction), `/workshop`,
-      `/munafuda`, `/commission` (both forms)
-- [ ] **Phase 4 — imagery**, ~22 finals, one constant art-direction phrase,
-      shot list already written in DESIGN.md. Human presence required
-- [ ] **Critique loop** — ≥3 passes per major section via `tools/shot-full.mjs`
-      and `tools/shot-clip.mjs` against `http://localhost:4321/?nofx`
-- [ ] **Floors** — JS-off, contrast, keyboard, reduced-motion, ≤500KB, 390px
-- [ ] **Phase 6 — ship**: build clean, README table + `docs/foundry-series.md`
-      + backlog entry, commit in house style (`Ibushi: what changed`), push,
-      `vercel link --yes` then `vercel deploy --prod --yes`, screenshot the
-      production URL to verify
+### The signature — Sumitsuke 墨付け
 
-## Anatomy coverage (Vince's brief, plus what was added)
+`src/lib/house.js` holds the parametric model; `src/lib/draw.js` renders section
+and plan from it. The same module is imported by the Astro page (server render,
+the JS-off default) and by the client script, so the static sheet and the live
+one cannot drift.
 
-Vince supplied: irori, jizaikagi, doma, yuka, tatami, shoji/fusuma, tokonoma.
-*(His note listed "hi-nawa 火縄" alongside jizaikagi; hi-nawa is a slow-match
-fire cord, not the pot hook — the site uses **jizaikagi 自在鉤** only, which
-is the correct term for the adjustable hook, including its carved fish
-counterweight.)*
+Five controls — typology, bays across, bays back, site exposure, doma ratio,
+ken module — feed one model driving one SVG. Section, plan, tatami grid, hearth
+and smoke all move in a single redraw. Derived and printed in the craft's units:
+tsubo, jō, kōbai in sun with the degree, ridge in shaku, roof area, post count,
+principal span.
 
-Added, because the house does not explain itself without them:
-**structure** — kigumi (nail-less joinery), ishiba-date (posts set loose on
-stones so the house rides an earthquake), daikokubashira (the great central
-pillar), magari-bari (naturally curved beams), munagi + muneage + munafuda
-(ridgepole, topping-out, and the ridge tag recording who built it);
-**envelope** — kayabuki thatch, kayaba (the reserved thatch grassland), neso
-withe lashings, yui (a village re-thatching one roof in a day), yakisugi
-charred cedar, amado storm shutters, engawa;
-**rooms** — agarikamachi (the step where shoes come off), kamado, ranma
-(carved transoms), zashiki, tōriniwa and hibukuro (the machiya's earth
-corridor and smoke-well), tsushi-nikai, kōshi lattice, tsuboniwa;
-**the thesis made physical** — susu (soot) and susutake (bamboo blackened by
-a century of hearth smoke, harvested at re-thatch);
-**the social fact** — the four named seats around the irori (yokoza, kakaza,
-kyakuza, kijiri) and who sat in each. This became the site's second,
-smaller interaction because it proves the argument better than any adjective:
-the fire organised the family.
+The drawing picks a **real drafting scale** (1:30 … 1:300, whichever largest
+still fits the sheet) and prints it with a graphic scale bar — so a nōka draws
+at 1:100 and a fourteen-ken machiya drops to 1:200, exactly as a drawing would.
+
+Deep links work: `/sumitsuke?typology=gassho&w=5&d=10&exposure=snow` — each
+house page opens the configurator preloaded. "Snap this line" GETs the whole
+configuration into `/commission`, which writes it out as a specification.
+
+### Critique passes on the signature (four)
+
+1. Spec block collapsed after the client repaint — the JS wrote **unscoped**
+   HTML, so Astro's scoped `.tb-row` grid stopped matching. Title-block CSS
+   moved to `drawing.css` (global). *This is the trap to remember: any markup
+   the client rewrites via innerHTML must not depend on scoped styles.*
+2. Coarse scale steps left the house small in its sheet → finer scale ladder.
+3. `ō` rendering as a detached macron ("NoKa", "Gassho¯zukuri") — **IBM Plex
+   Sans JP lacks U+014D in the subset Google serves.** Fixed by putting the
+   Latin `IBM Plex Sans` ahead of the JP family; JP now only takes kana/kanji.
+4. Three labels fighting for 52px between section and plan; a steep gasshō
+   pushed its own title off the sheet. Fixed with GAP 2.2→3.6, explicit
+   TOP/BOT_RESERVE, projection lines tying plan to section, and the pitch
+   callout redrawn as a **kōbai triangle** (ten of run against the rise) which
+   cannot collide the way floating text did.
+
+### Imagery — 22 plates
+
+`assets-src/batch.mjs` (one constant art-direction phrase + a shared exposure
+directive + a shared negative) and `assets-src/optimise.mjs`.
+
+**The lesson worth keeping:** gpt-image underexposes this subject badly. The
+first four plates came back at mean luma 42–46 — Nocturne territory, and the
+exact failure the skill warns has been rejected before. Two fixes, both needed:
+
+- An explicit `EXPOSURE` clause in every prompt ("metered for the shadows,
+  nothing crushed to black, high-key"), which moved most shots into band.
+- An **adaptive gamma lift** in the optimiser: it measures each plate, solves
+  for the gamma that lands it in its band (exteriors 90–150, interiors 70–120),
+  and applies it before the JPEG pass. Per-image, not a blanket value — a lift
+  applied to an already-good plate only washes it out.
+
+`machiya-toriniwa` came back at 29 raw, too dark to rescue by lift, and was
+regenerated rather than pushed further. Final: all 22 in band, all ≤500KB
+(largest 368KB), shipped as full + `-800` variants.
+
+Rejected plates are in `assets-src/rejected/` (moved, not deleted — `rm` is
+deny-listed).
+
+## Floors verified
+
+- **JS off:** the signature renders fully drawn with the spec printed and all
+  five control groups as real radios/ranges; the form still submits the chosen
+  spec by GET. Both commission forms are native `mailto` with `text/plain`.
+- **Contrast** computed, not eyeballed: susu-on-washi 15.2:1, muted 7.9:1,
+  okibi 5.1:1, koke 5.5:1.
+- **Keyboard:** segmented controls are real radios; the four irori seats are
+  real buttons with `aria-pressed`.
+- **Reduced motion / `?nofx`:** finished static composition, eager images.
+- **Mobile:** 390px pass — the sheet stacks rather than shrinking.
+- `npm run build` clean, 12 pages.
+
+## Ship
+
+- Committed `9d57000` (in-progress snapshot, pushed by Vince mid-build) and
+  `c93b850`; both on `origin/main`.
+- `vercel link` + `vercel deploy --prod` → aliased **https://ibushi.vercel.app**.
+- Production verified by screenshot and by asserting the drawing, plan grid,
+  spec rows and kōbai triangle are all present in the served HTML. All nine
+  top-level routes return 200 in production.
+- README table, `docs/foundry-series.md`, and the backlog all updated.
+
+## If you pick this up again
+
+- **Higgsfield never became available** (see above). The exterior and interior
+  plates are the ones that would most benefit from `soul_2` — regenerating them
+  is a self-contained job; nothing else in the build depends on the generator.
+- The four typology pages share one route, `houses/[slug].astro`, driven by
+  `src/data/houses.js`. Adding a fifth typology means adding it to
+  `TYPOLOGIES` in `lib/house.js` *and* to `HOUSE_PAGES`.
+- No video was made. One loop over the hero (smoke rising off the ridge) is the
+  obvious candidate if Higgsfield returns.
