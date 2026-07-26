@@ -439,43 +439,6 @@ html.js .fp-rail { display: block; }
   object-fit: cover;
 }
 
-/* dry-run stand-in plate: stratus field with a mono tail mark, never a gray box */
-.plate-standin {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: flex-end;
-  padding: 26px;
-  background:
-    linear-gradient(160deg, #1a2130 0%, var(--stratus) 55%, #10141d 100%);
-}
-.plate-standin::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 38%;
-  height: 1px;
-  background: linear-gradient(90deg,
-    rgba(201,145,93,0) 0%, rgba(201,145,93,0.75) 50%, rgba(201,145,93,0) 100%);
-}
-.plate-standin::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 62%;
-  height: 120px;
-  background: linear-gradient(0deg, rgba(201,145,93,0.09) 0%, rgba(201,145,93,0) 100%);
-}
-.plate-standin span {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--airframe);
-}
-
 .tail-spec { padding-bottom: 6px; }
 .tail-reg {
   font-family: var(--mono);
