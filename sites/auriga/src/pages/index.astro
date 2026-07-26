@@ -1,79 +1,87 @@
 ---
 import "../styles/global.css";
+import { project, greatCircle, toPath, graticule, VIEW } from "../lib/geo.js";
+import { LAND } from "../data/land.js";
+
+// The six fields, at their real coordinates. Everything the chart draws —
+// coastline, dots, arcs — is projected from these by src/lib/geo.js, so the
+// chart cannot quietly disagree with the world.
+// `label` nudges the code clear of its dot — the three European fields sit
+// within 22px of each other, so they fan out rather than overprint.
+const FIELDS = {
+  TEB: { city: "Teterboro", at: [40.8501, -74.0608], label: [10, 16, "start"] },
+  FAB: { city: "Farnborough", at: [51.2758, -0.7763], label: [-8, 13, "end"] },
+  LBG: { city: "Le Bourget", at: [48.9694, 2.4414], label: [10, 3, "start"] },
+  GVA: { city: "Geneva", at: [46.2381, 6.109], label: [10, 15, "start"] },
+  RUH: { city: "Riyadh", at: [24.9576, 46.6988], label: [11, 5, "start"] },
+  HND: { city: "Tokyo Haneda", at: [35.5533, 139.7811], label: [-10, -8, "end"] },
+};
 
 // The Board — four standing routes. Times are computed once, at build,
 // against each field's local offset; every timestamp carries its local sky.
 const routes = [
   {
     id: "r1",
-    from: { code: "FAB", city: "Farnborough" },
-    to: { code: "TEB", city: "Teterboro" },
+    from: "FAB",
+    to: "TEB",
     dep: { time: "20:45", cond: "dusk", sky: "sky-dusk" },
     arr: { time: "23:05", cond: "night", sky: "sky-night", plus: "" },
     block: "7 H 20",
     tail: "MENKALINAN",
     note: "Westbound the evening holds — London’s dusk is still in the windows over Nova Scotia.",
-    arc: "M317.5 96.3 Q200 31 83 149.9",
-    ends: [
-      [317.5, 96.3],
-      [83, 149.9],
-    ],
   },
   {
     id: "r2",
-    from: { code: "LBG", city: "Le Bourget" },
-    to: { code: "RUH", city: "Riyadh" },
+    from: "LBG",
+    to: "RUH",
     dep: { time: "14:30", cond: "afternoon", sky: "sky-afternoon" },
     arr: { time: "21:25", cond: "dusk", sky: "sky-dusk", plus: "" },
     block: "5 H 55",
     tail: "HASSALEH",
     note: "Paris after lunch; Riyadh as the heat leaves the air.",
-    arc: "M327.8 108.2 Q398 156 469.4 231.6",
-    ends: [
-      [327.8, 108.2],
-      [469.4, 231.6],
-    ],
   },
   {
     id: "r3",
-    from: { code: "GVA", city: "Geneva" },
-    to: { code: "HND", city: "Tokyo Haneda" },
+    from: "GVA",
+    to: "HND",
     dep: { time: "10:00", cond: "morning", sky: "sky-morning" },
     arr: { time: "05:05", cond: "dawn", sky: "sky-dawn", plus: "+1" },
     block: "12 H 05",
     tail: "CAPELLA",
     note: "The long night over Siberia. Capella flies it without a stop.",
-    arc: "M339.6 122.2 Q553.5 -98 767.3 177.2",
-    ends: [
-      [339.6, 122.2],
-      [767.3, 177.2],
-    ],
   },
   {
     id: "r4",
-    from: { code: "TEB", city: "Teterboro" },
-    to: { code: "LBG", city: "Le Bourget" },
+    from: "TEB",
+    to: "LBG",
     dep: { time: "19:40", cond: "evening", sky: "sky-evening" },
     arr: { time: "08:20", cond: "morning", sky: "sky-morning", plus: "+1" },
     block: "6 H 40",
     tail: "MENKALINAN",
     note: "A night crossing that ends with Paris at breakfast.",
-    arc: "M83 149.9 Q205 40 327.8 108.2",
-    ends: [
-      [83, 149.9],
-      [327.8, 108.2],
-    ],
   },
 ];
 
-const cities = [
-  { code: "TEB", x: 83, y: 149.9, dx: 10, dy: 18, anchor: "start" },
-  { code: "FAB", x: 317.5, y: 96.3, dx: -9, dy: -8, anchor: "end" },
-  { code: "LBG", x: 327.8, y: 108.2, dx: 11, dy: 5, anchor: "start" },
-  { code: "GVA", x: 339.6, y: 122.2, dx: 9, dy: 17, anchor: "start" },
-  { code: "RUH", x: 469.4, y: 231.6, dx: 11, dy: 5, anchor: "start" },
-  { code: "HND", x: 767.3, y: 177.2, dx: -10, dy: -9, anchor: "end" },
-];
+// Chart geometry — every number below is derived from FIELDS, never eyeballed.
+const grid = graticule();
+
+const arcs = routes.map((r) => ({
+  id: r.id,
+  d: toPath(greatCircle(FIELDS[r.from].at, FIELDS[r.to].at)),
+  ends: [project(...FIELDS[r.from].at), project(...FIELDS[r.to].at)],
+}));
+
+const cities = Object.entries(FIELDS).map(([code, f]) => {
+  const [x, y] = project(...f.at);
+  const [dx, dy, anchor] = f.label;
+  return { code, city: f.city, x, y, dx, dy, anchor };
+});
+
+const chartLabel =
+  "Mercator chart, 100°W to 150°E. The four standing routes drawn as true " +
+  "great circles between " +
+  routes.map((r) => `${FIELDS[r.from].city} and ${FIELDS[r.to].city}`).join(", ") +
+  ".";
 
 const tails = [
   {
@@ -308,12 +316,13 @@ const tails = [
                 >
                   <span class="route-line">
                     <span class="route-pair">
-                      {r.from.code} <span aria-hidden="true">⟶</span> {r.to.code}
+                      {r.from} <span aria-hidden="true">⟶</span> {r.to}
                     </span>
                     <span class="route-block">{r.block}</span>
                   </span>
                   <span class="route-cities">
-                    {r.from.city} to {r.to.city} · {r.tail.charAt(0) + r.tail.slice(1).toLowerCase()}
+                    {FIELDS[r.from].city} to {FIELDS[r.to].city} ·{" "}
+                    {r.tail.charAt(0) + r.tail.slice(1).toLowerCase()}
                   </span>
                   <span class="route-times">
                     <span class={`sky ${r.dep.sky}`} aria-hidden="true"></span>
@@ -335,20 +344,21 @@ const tails = [
 
           <div class="chart-panel">
             <div class="chart-frame">
-              <svg viewBox="0 0 800 360" role="img" aria-label="Chart of the four standing routes drawn as great-circle arcs between Teterboro, Farnborough, Le Bourget, Geneva, Riyadh and Tokyo.">
+              <svg viewBox={`0 0 ${VIEW.w} ${VIEW.h}`} role="img" aria-label={chartLabel}>
                 <g class="graticule" aria-hidden="true">
-                  {[60, 140, 220, 300].map((y) => (
-                    <line x1="0" y1={y} x2="800" y2={y} />
+                  {grid.parallels.map((p) => (
+                    <line x1="0" y1={p.y} x2={VIEW.w} y2={p.y} />
                   ))}
-                  {[100, 200, 300, 400, 500, 600, 700].map((x) => (
-                    <line x1={x} y1="0" x2={x} y2="360" />
+                  {grid.meridians.map((m) => (
+                    <line x1={m.x} y1="0" x2={m.x} y2={VIEW.h} />
                   ))}
                 </g>
+                <path class="landmass" d={LAND} aria-hidden="true" />
                 {
-                  routes.map((r, i) => (
-                    <g class="gc" data-gc={r.id} aria-hidden="true">
-                      <path class={`gc-arc${i === 0 ? " on" : ""}`} d={r.arc} />
-                      {r.ends.map(([x, y]) => (
+                  arcs.map((a, i) => (
+                    <g class="gc" data-gc={a.id} aria-hidden="true">
+                      <path class={`gc-arc${i === 0 ? " on" : ""}`} d={a.d} pathLength="1" />
+                      {a.ends.map(([x, y]) => (
                         <circle class={`gc-end${i === 0 ? " on" : ""}`} cx={x} cy={y} r="3" />
                       ))}
                     </g>

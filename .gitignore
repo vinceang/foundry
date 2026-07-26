@@ -25,3 +25,4 @@ shots/
 
 # raw generated imagery (optimized files ship from public/)
 sites/*/assets-src/
+.vercel

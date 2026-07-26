@@ -638,6 +638,16 @@ a {
   stroke-dasharray: 1 5;
 }
 
+/* The land sits just above the panel ground — enough to read as coastline,
+   not enough to compete with the one apricot arc that matters. */
+.landmass {
+  fill: rgba(149, 160, 173, 0.085);
+  fill-rule: evenodd;
+  stroke: rgba(149, 160, 173, 0.26);
+  stroke-width: 0.6;
+  stroke-linejoin: round;
+}
+
 .city-dot {
   fill: var(--airframe);
 }
@@ -671,10 +681,12 @@ a {
   opacity: 1;
 }
 
+/* Arcs carry pathLength="1", so one dash length draws every route at the same
+   rate regardless of how long the sector actually is. */
 html.fx .gc-arc.on {
-  stroke-dasharray: 1200;
-  stroke-dashoffset: 1200;
-  animation: draw 2s var(--glide) forwards;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.6s var(--glide) forwards;
 }
 
 @keyframes draw {
