@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Plate from "../components/Plate.astro";
+import FilmPlate from "../components/FilmPlate.astro";
 import "../styles/drawing.css";
 import { computeHouse, TYPOLOGIES, TYPOLOGY_ORDER } from "../lib/house.js";
 import { renderProfile } from "../lib/draw.js";
@@ -25,32 +26,13 @@ const houses = TYPOLOGY_ORDER.map((k) => {
   <!-- ================= hero ================= -->
   <section class="hero">
     <div class="hero-media">
-      {/* The still is the real content — srcset, alt, eager. The film layers
-          over it and its first frame IS this still, so the fade-in is
-          invisible. It plays ONCE and holds on the lit frame: looping back to
-          a cold ridge would argue the opposite of the page. */}
-      <div class="hero-film" data-hero-film>
-        <img
-          class="hero-film-still"
-          src="/images/hero-akiya.jpg"
-          srcset="/images/hero-akiya-800.jpg 800w, /images/hero-akiya.jpg 1536w"
-          sizes="100vw"
-          width="1536"
-          height="1024"
-          alt="A thatched farmhouse standing empty in a snowbound mountain valley on a clear winter morning. No smoke at the ridge, storm shutters closed and one hanging loose, grass rooted in the slumped thatch, and snow lying unbroken to the door — but the frame still square and sound."
-          fetchpriority="high"
-        />
-        <video
-          class="hero-film-v"
-          muted
-          playsinline
-          preload="none"
-          aria-hidden="true"
-          tabindex="-1"
-        >
-          <source src="/video/first-smoke.mp4" type="video/mp4" />
-        </video>
-      </div>
+      <FilmPlate
+        name="hero-akiya"
+        video="first-smoke"
+        alt="A thatched farmhouse standing empty in a snowbound mountain valley on a clear winter morning. No smoke at the ridge, storm shutters closed and one hanging loose, grass rooted in the slumped thatch, and snow lying unbroken to the door — but the frame still square and sound."
+        maxHeight="74vh"
+        eager={true}
+      />
       <p class="hero-plate-note spec gloss">
         Empty since 2011, and sound to the frame. This is the morning the fire
         was lit again.
@@ -350,43 +332,6 @@ const houses = TYPOLOGY_ORDER.map((k) => {
   </section>
 </Layout>
 
-<script is:inline>
-  // The hero film. Only under .fx — ?nofx and prefers-reduced-motion both land
-  // on .nofx, and there the still stands alone, which is a complete picture on
-  // its own (the cold house is the point). Nothing is downloaded in that case
-  // either: preload="none" and we never call load().
-  (() => {
-    const wrap = document.querySelector("[data-hero-film]");
-    if (!wrap || !document.documentElement.classList.contains("fx")) return;
-    const v = wrap.querySelector("video");
-    if (!v || !v.canPlayType || !v.canPlayType("video/mp4")) return;
-
-    let started = false;
-    const start = () => {
-      if (started) return;
-      started = true;
-      v.addEventListener("playing", () => v.classList.add("is-playing"), { once: true });
-      // If autoplay is refused, the still simply stays — no broken state.
-      const p = v.play();
-      if (p && p.catch) p.catch(() => {});
-    };
-
-    if (!("IntersectionObserver" in window)) return start();
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            io.disconnect();
-            start();
-          }
-        }
-      },
-      { threshold: 0.25 }
-    );
-    io.observe(wrap);
-  })();
-</script>
-
 <style>
   /* --- hero -------------------------------------------------------------- */
 
@@ -397,56 +342,6 @@ const houses = TYPOLOGY_ORDER.map((k) => {
   .hero-media :global(.plate img),
   .hero-media :global(.plate-hold) {
     max-height: 74vh;
-  }
-
-  .hero-film {
-    position: relative;
-    line-height: 0;
-  }
-
-  .hero-film-still {
-    width: 100%;
-    max-height: 74vh;
-    object-fit: cover;
-    display: block;
-  }
-
-  .hero-film-v {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.6s linear;
-    pointer-events: none;
-  }
-
-  /* frame one of the film is the still, so this reads as nothing happening
-     until the smoke starts */
-  .hero-film-v.is-playing {
-    opacity: 1;
-  }
-
-  .hero-text {
-    padding-top: clamp(2rem, 5vw, 4rem);
-  }
-
-  .hero h1 {
-    margin-bottom: clamp(2rem, 4vw, 3.25rem);
-  }
-
-  .hero-cols {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
-    gap: clamp(1.5rem, 4vw, 4rem);
-    max-width: 62rem;
-  }
-
-  /* --- argument ---------------------------------------------------------- */
-
-  .argument {
-    padding-block: clamp(3.5rem, 7vw, 7rem);
   }
 
   /* --- akiya -------------------------------------------------------------

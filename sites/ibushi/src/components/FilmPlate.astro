@@ -1,0 +1,113 @@
+---
+// A still that plays once and holds.
+//
+// The still is the real content — it carries the srcset, the alt text and the
+// eager load, and it is a complete picture on its own. The film layers over it
+// and its first frame IS that still, so the crossfade is invisible: it simply
+// looks like nothing happening until the thing happens.
+//
+// It never loops. Both films on this site show an irreversible act — a fire
+// lit, a line printed — and looping would undo the act every five seconds,
+// which argues the opposite of the page.
+//
+// Under .nofx (?nofx or prefers-reduced-motion) nothing is even fetched:
+// preload="none" and the script never calls load().
+
+interface Props {
+  /** Base name in public/images, without extension or width suffix. */
+  name: string;
+  /** Base name in public/video, without extension. */
+  video: string;
+  alt: string;
+  /** Cap on the still's height, e.g. "74vh". */
+  maxHeight?: string;
+  eager?: boolean;
+}
+
+const { name, video, alt, maxHeight = "74vh", eager = false } = Astro.props;
+---
+
+<div class="film" data-film style={`--film-max:${maxHeight}`}>
+  <img
+    class="film-still"
+    src={`/images/${name}.jpg`}
+    srcset={`/images/${name}-800.jpg 800w, /images/${name}.jpg 1536w`}
+    sizes="100vw"
+    width="1536"
+    height="1024"
+    alt={alt}
+    loading={eager ? "eager" : "lazy"}
+    decoding={eager ? "sync" : "async"}
+    fetchpriority={eager ? "high" : undefined}
+  />
+  <video class="film-v" muted playsinline preload="none" aria-hidden="true" tabindex="-1">
+    <source src={`/video/${video}.mp4`} type="video/mp4" />
+  </video>
+</div>
+
+<style>
+  .film {
+    position: relative;
+    line-height: 0;
+  }
+
+  .film-still {
+    width: 100%;
+    max-height: var(--film-max);
+    object-fit: cover;
+    display: block;
+  }
+
+  .film-v {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s linear;
+    pointer-events: none;
+  }
+
+  .film-v.is-playing {
+    opacity: 1;
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    if (!document.documentElement.classList.contains("fx")) return;
+
+    for (const wrap of document.querySelectorAll("[data-film]")) {
+      const v = wrap.querySelector("video");
+      if (!v || !v.canPlayType || !v.canPlayType("video/mp4")) continue;
+
+      let started = false;
+      const start = () => {
+        if (started) return;
+        started = true;
+        v.addEventListener("playing", () => v.classList.add("is-playing"), { once: true });
+        // If autoplay is refused the still simply stays — no broken state.
+        const p = v.play();
+        if (p && p.catch) p.catch(() => {});
+      };
+
+      if (!("IntersectionObserver" in window)) {
+        start();
+        continue;
+      }
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              io.disconnect();
+              start();
+            }
+          }
+        },
+        { threshold: 0.25 }
+      );
+      io.observe(wrap);
+    }
+  })();
+</script>

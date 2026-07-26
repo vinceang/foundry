@@ -388,12 +388,53 @@ Shot list (≈20 finals across eleven pages):
 | `hero-akiya` | **Hero.** A thatched house standing empty in snow, ridge cold, no path cut to the door — frame still square. The problem, stated |
 | `mitate` | Human: the tōryō with a flat hand on the daikokubashira of an abandoned house, reading whether it will carry |
 | `declined` | A house past saving — ridge broken, roof folded in. Photographed plainly, from a middle distance: a record, not ruin porn |
+| `sumitsuke-line` | The inked cord held taut and lifted clear of a planed timber — first frame of the /sumitsuke film |
+| `bench-toryo`, `bench-thatcher`, `bench-rika`, `bench-daiku`, `bench-deshi`, `bench-sakan` | The bench, one working portrait each — mid-task, nobody looking at the camera |
 
 `hero-smoke` is **not** retired by the reposition — it is promoted. It now
 runs full-bleed lower on the home page as *the other end of the work*: the
 same kind of building, smoking at seven in the morning. The page opens on a
 cold house and closes the section on a lit one, which is the whole argument
 in two frames.
+
+**The bench portraits are working portraits, not headshots** (added
+2026-07-26). A row of posed faces would break the documentary register and
+contradict the human-presence doctrine, which asks for makers *at work*. It
+also solves a structural problem: two of the six bench entries are collectives
+("the carpenters", "two apprentices"), and a group photographs the same way a
+person does when the rule is "mid-task, no eye contact". One further note —
+the carpenters' heading was changed from "Six carpenters" to "The carpenters"
+and the number moved into the body text, because the plate shows eight figures
+at the bench (apprentices included) and a count directly above a countable
+photograph is a fight you lose.
+
+## Film
+
+Two, both through `src/components/FilmPlate.astro`:
+
+| File | Page | The act |
+|---|---|---|
+| `first-smoke.mp4` | `/` hero | A cold ridge, then the first smoke |
+| `ink-line.mp4` | `/sumitsuke` | The cord released, and one straight line printed |
+
+The pattern, and it is binding for any future film here: the **still is the
+real content** — it carries the srcset, the alt and the eager load, and it is
+a complete picture alone. The film layers over it and *its first frame is that
+still*, so the crossfade is invisible; it reads as nothing happening until the
+thing happens. Both are locked-off: no pan, no push, no drift.
+
+**Neither loops.** Both show an irreversible act — a fire lit, a line printed
+— and looping would undo it every five seconds, which argues the opposite of
+the page. They play once and hold.
+
+Under `.nofx` (the `?nofx` critique param or `prefers-reduced-motion`) the
+video is never fetched at all: `preload="none"` and the script never calls
+`load()`. Verified `readyState === 0`.
+
+Generated with Higgsfield `kling3_0_turbo`, passing the deployed still's public
+URL through `media_import_url` as `start_image`. Note it recommends an "IN THE
+DARK" preset for both prompts — decline it via `declined_preset_id`; it is
+exactly the chiaroscuro this register bans.
 
 Note the copy fix that came with it: the hero line read *"There is no
 chimney"* directly above a plate showing a ridge vent with smoke coming out

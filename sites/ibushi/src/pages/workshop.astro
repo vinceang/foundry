@@ -2,13 +2,49 @@
 import Layout from "../layouts/Layout.astro";
 import Plate from "../components/Plate.astro";
 
+// Working portraits, not headshots — everyone is mid-task and nobody is
+// looking at the camera. Two of the six entries are collectives, which is the
+// other reason this works: a group photographs the same way a person does.
 const PEOPLE = [
-  ["Ōno Sōhachi", "大野宗八", "Tōryō — master carpenter", "Sixth of his line to hold the title. Marks every frame himself; has not let an apprentice cut a daikokubashira in thirty-one years."],
-  ["Mizuno Kaneko", "水野兼子", "Kayabuki-shi — master thatcher", "Runs the workshop's kayaba above Furukawa and grades every bundle that goes onto a roof. Twenty-two years thatching, the last nine leading."],
-  ["Ōno Rika", "大野理香", "Carpenter, and the office", "Handles the surveys and the drawings, and cuts. Took the survey work over in 2019 when the archive was digitised."],
-  ["Six carpenters", "", "Daiku 大工", "Between four and twenty-six years at the bench. Two of them came out of the Takayama machiya trade and brought the lattice work with them."],
-  ["Two apprentices", "", "Deshi 弟子", "Five-year terms. The first year is sharpening, sweeping, and carrying, and nobody has ever been talked out of it."],
-  ["Nakai Tomo", "中井とも", "Sakan — plasterer", "Mixes earth from the site where it can be dug. Works to the season: no finish coat between December and March."],
+  {
+    name: "Ōno Sōhachi", jp: "大野宗八", role: "Tōryō — master carpenter",
+    line: "Sixth of his line to hold the title. Marks every frame himself; has not let an apprentice cut a daikokubashira in thirty-one years.",
+    img: "bench-toryo",
+    alt: "A master carpenter in his sixties in indigo workclothes, marking a squared cedar timber with a bamboo pen in a timber-framed workshop, absorbed in the mark, daylight from an open doorway behind him.",
+  },
+  {
+    name: "Mizuno Kaneko", jp: "水野兼子", role: "Kayabuki-shi — master thatcher",
+    line: "Runs the workshop's kayaba above Furukawa and grades every bundle that goes onto a roof. Twenty-two years thatching, the last nine leading.",
+    img: "bench-thatcher",
+    alt: "A thatcher in her forties in a cloth headwrap standing in a cut field of miscanthus, holding one tied bundle up at chest height and looking along it to grade it, bundles standing in rows behind her.",
+  },
+  {
+    name: "Ōno Rika", jp: "大野理香", role: "Carpenter, and the office",
+    line: "Handles the surveys and the drawings, and cuts. Took the survey work over in 2019 when the archive was digitised.",
+    img: "bench-rika",
+    alt: "A carpenter in her thirties leaning over a large architectural drawing spread on a plan chest, one hand flat on the paper and a scale rule in the other, rolled drawings behind and cold mountain light at the window.",
+  },
+  {
+    // Heading deliberately not "Six carpenters": the plate is the bench, and
+    // the bench has apprentices at it too. Keeping a number directly above a
+    // countable photograph is a fight you lose.
+    name: "The carpenters", jp: "", role: "Daiku 大工",
+    line: "Six, between four and twenty-six years at the bench. Two of them came out of the Takayama machiya trade and brought the lattice work with them.",
+    img: "bench-daiku",
+    alt: "Carpenters in indigo workclothes working along a long bench in a timber-framed workshop — planing, chiselling and fitting a joint — shavings across the floor and daylight through the open end of the shop.",
+  },
+  {
+    name: "Two apprentices", jp: "", role: "Deshi 弟子",
+    line: "Five-year terms. The first year is sharpening, sweeping, and carrying, and nobody has ever been talked out of it.",
+    img: "bench-deshi",
+    alt: "Two young apprentices crouched over a whetstone at the edge of a workshop, one showing the other the angle on a chisel, a water dish beside them and a row of chisels laid out on a cloth.",
+  },
+  {
+    name: "Nakai Tomo", jp: "中井とも", role: "Sakan — plasterer",
+    line: "Mixes earth from the site where it can be dug. Works to the season: no finish coat between December and March.",
+    img: "bench-sakan",
+    alt: "A plasterer in his fifties crouched beside a mortar tub, mixing earth plaster and straw by hand and holding up a trowel-load to judge it, buckets of dug earth beside him and a half-plastered wall behind.",
+  },
 ];
 
 const RECORD = [
@@ -90,11 +126,14 @@ const RECORD = [
       <span class="kicker">The bench · 職人</span>
       <h2>Who does the work.</h2>
       <ul class="people-list">
-        {PEOPLE.map(([name, jp, role, line]) => (
+        {PEOPLE.map((p) => (
           <li>
-            <h3>{name} {jp && <span class="jp p-jp">{jp}</span>}</h3>
-            <p class="p-role spec">{role}</p>
-            <p class="p-line">{line}</p>
+            <div class="p-media">
+              <Plate name={p.img} alt={p.alt} ratio="4 / 5" />
+            </div>
+            <h3>{p.name} {p.jp && <span class="jp p-jp">{p.jp}</span>}</h3>
+            <p class="p-role spec">{p.role}</p>
+            <p class="p-line">{p.line}</p>
           </li>
         ))}
       </ul>
@@ -203,8 +242,11 @@ const RECORD = [
   .kayaba-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr); }
   .takumi h2, .kayaba h2, .yui h2, .people h2, .record h2 { margin-bottom: 1.3rem; }
   .people { padding-block: clamp(3rem, 6vw, 5rem); }
-  .people-list { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0; border-top: 1px solid var(--susu); }
-  .people-list li { padding: 1.4rem 1.5rem 1.5rem 0; border-bottom: 1px solid color-mix(in srgb, var(--sugi) 30%, transparent); }
+  /* a contact sheet, not a team page — the plate leads and the name sits under
+     it like a caption, which is how a workshop's own record would read */
+  .people-list { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0 clamp(1.25rem, 3vw, 2.5rem); border-top: 1px solid var(--susu); }
+  .people-list li { padding: 1.4rem 0 1.6rem; border-bottom: 1px solid color-mix(in srgb, var(--sugi) 30%, transparent); }
+  .p-media { margin-bottom: 1.1rem; }
   .people-list h3 { font-size: 1.35rem; }
   .p-jp { font-size: 0.68em; color: var(--sugi-deep); margin-left: 0.3rem; }
   .p-role { margin: 0.3rem 0 0.6rem; color: var(--okibi); font-weight: 600; }
