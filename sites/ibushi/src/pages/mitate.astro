@@ -1,0 +1,408 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Plate from "../components/Plate.astro";
+
+// The four tests, published. The point of putting them on the site is that
+// "we are selective" is worthless as a claim and useful as a standard — an
+// owner should be able to read this page and know the answer before we drive
+// out. Each test is written so it can fail.
+const TESTS = [
+  {
+    n: "01",
+    name: "The frame",
+    jp: "軸組",
+    rule: "Pre-war, and cut by hand.",
+    body:
+      "We are looking for a frame jointed without nails — mortice, tenon and wedge — in timber taken from one valley. Post-1950 houses are dimensioned lumber on a plan drawn elsewhere, and there is nothing in them a carpenter can save that could not be bought new for less.",
+    fail: "Sawn stock, bolted plates, or a frame under seventy years old.",
+  },
+  {
+    n: "02",
+    name: "The great pillar",
+    jp: "大黒柱",
+    rule: "The daikokubashira sound to the core.",
+    body:
+      "One post carries the argument of the whole house. We sound it, we cut a small plug from its foot where the damp would have got in first, and we look at what comes out. A hollow heart at the base means the house has been drinking for twenty years and the frame around it has been quietly redistributing load ever since.",
+    fail: "Rot at the foot, or a pillar already sistered with steel.",
+  },
+  {
+    n: "03",
+    name: "The roof",
+    jp: "屋根",
+    rule: "Re-thatchable, not merely replaceable.",
+    body:
+      "The thatch itself is expected to be finished — it is a wearing surface and thirty years is a life. What must survive is the structure beneath it: the rafters, the tie-beams, and the lashings. If the ridge has broken and folded, the tie-beams have usually gone with it, and at that point we are not restoring a roof, we are building one on top of a souvenir.",
+    fail: "A broken ridge, or rafters carrying more rot than load.",
+  },
+  {
+    n: "04",
+    name: "The fire",
+    jp: "火",
+    rule: "Somebody will light it.",
+    body:
+      "This is not sentiment and it is not negotiable. A minka is preserved by its own smoke; a house restored and then left cold is a house we will be asked to rescue again inside thirty years. We ask who will live here, how often, and whether they understand that an open hearth means smoke in the room. A holiday let opened four weekends a year fails this test, and it is the test most often failed.",
+    fail: "Nobody in residence, or an owner who wants the look without the fire.",
+  },
+];
+---
+
+<Layout
+  title="The appraisal | Ibushi 燻"
+  description="Mitate 見立て — the standard Ibushi applies before taking on an abandoned minka. Four tests, published in full: the frame, the great pillar, the roof, and whether the fire will be lit. We are asked about forty houses a year and take four."
+  nav="mitate"
+>
+  <section class="head">
+    <div class="wrap">
+      <span class="kicker">The appraisal · 見立て</span>
+      <h1>We are asked about forty houses a year.<br />We take four.</h1>
+      <div class="head-cols">
+        <p>
+          <span class="term">Mitate</span> 見立て is the word a physician uses for
+          a diagnosis and a carpenter uses for reading a building. It is not a
+          valuation and it is not a survey for a bank. It is one question,
+          answered in a day on site: is this frame worth another two hundred
+          years of somebody's life?
+        </p>
+        <p class="spec gloss">
+          Most of the time the answer is no, and the useful thing we can do for
+          an owner is say so quickly and for a fixed fee, rather than slowly and
+          for a percentage. The four tests below are the whole standard. We
+          have not held anything back to keep the decision ours.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <figure class="mitate-hero">
+    <Plate
+      name="mitate"
+      alt="A master carpenter in working clothes stands in an empty long-abandoned farmhouse with one flat hand against the great central pillar, head tilted, reading the timber. Daylight falls through a hole in the roof; fallen thatch and dust lie across the floorboards, and the massive frame overhead is intact."
+      ratio="16 / 9"
+      eager={true}
+    />
+    <figcaption class="wrap spec gloss">
+      Ōno Sōhachi at the daikokubashira of a house near Furukawa, empty since
+      2009. Sound to the core. We took it.
+    </figcaption>
+  </figure>
+
+  <hr class="snap" />
+
+  <section class="tests">
+    <div class="wrap">
+      <span class="kicker">The four tests · 四つの見極め</span>
+      <h2>A frame either carries another two hundred years, or it does not.</h2>
+      <ol class="test-list">
+        {
+          TESTS.map((t) => (
+            <li class="test">
+              <span class="test-n" aria-hidden="true">{t.n}</span>
+              <div class="test-body">
+                <h3>
+                  {t.name} <span class="jp">{t.jp}</span>
+                </h3>
+                <p class="test-rule">{t.rule}</p>
+                <p>{t.body}</p>
+                <p class="test-fail">
+                  <span>Fails on</span> {t.fail}
+                </p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="decline">
+    <div class="wrap decline-grid">
+      <div>
+        <span class="kicker">What we decline · 断り</span>
+        <h2>Saying no is most of the work.</h2>
+        <p>
+          Thirty-six houses a year get a written answer that Ibushi is the wrong
+          workshop for them. It is not a soft letter. It says what we found,
+          which of the four tests it failed, what it would cost to proceed
+          anyway, and what we think the owner should do instead — which is
+          sometimes a demolition contractor and sometimes another trade
+          entirely.
+        </p>
+        <p>
+          We do this because the alternative is worse. An owner who is told a
+          frame can be saved when it cannot spends two years and a great deal of
+          money discovering it by other means. And a workshop of eleven people
+          that takes on a house it cannot honestly finish is a workshop that
+          will finish nothing else that year.
+        </p>
+        <p class="spec gloss">
+          There is one more reason, and it is the least comfortable. Every
+          kominka we take is one we can point at afterwards. If we take a house
+          that was never going to carry, the finished building argues against
+          everything on this site.
+        </p>
+      </div>
+      <div>
+        <Plate
+          name="declined"
+          alt="A thatched farmhouse past saving on a clear winter morning: the ridge broken and the roof folded inward, thatch collapsed into the interior, a gable wall leaning out, a corner post off its foundation stone."
+          ratio="3 / 2"
+          caption="Declined on test 03. When the ridge folds it takes the tie-beams, and what is left is not a roof with a problem — it is a pile with a shape."
+        />
+      </div>
+    </div>
+  </section>
+
+  <hr class="snap" />
+
+  <section class="how">
+    <div class="wrap">
+      <span class="kicker">How it runs · 段取り</span>
+      <div class="how-grid">
+        <ol class="how-list">
+          <li>
+            <h3>You write</h3>
+            <p>
+              Where the house is, roughly when it was built if you know, and how
+              long it has been empty. Photographs of the roof from outside and
+              of the largest post you can find inside are worth more than any
+              description.
+            </p>
+          </li>
+          <li>
+            <h3>We answer within the week</h3>
+            <p>
+              Sometimes the answer is already no, from the photographs, and we
+              will not charge for that. Sometimes it is a date.
+            </p>
+          </li>
+          <li>
+            <h3>One day on site</h3>
+            <p>
+              The tōryō and one carpenter. We sound the frame, plug the pillar,
+              go into the roof, and open one section of floor. It is a physical
+              inspection and it leaves small, repairable marks.
+            </p>
+          </li>
+          <li>
+            <h3>A written verdict</h3>
+            <p>
+              Within three weeks: the four tests answered one by one, the frame
+              drawn as we found it, and either a range for the work or the
+              reasons we are declining. Yours to keep and to show to anyone.
+            </p>
+          </li>
+        </ol>
+        <aside class="fee">
+          <h3>The fee</h3>
+          <dl>
+            <div><dt>Appraisal, Hida and Ōno</dt><dd>¥180,000</dd></div>
+            <div><dt>Elsewhere in Gifu</dt><dd>¥240,000</dd></div>
+            <div><dt>Beyond Gifu</dt><dd>¥240,000 + travel at cost</dd></div>
+            <div><dt>Declined from photographs</dt><dd>No charge</dd></div>
+            <div><dt>Credited against the work</dt><dd>In full, if we proceed</dd></div>
+          </dl>
+          <p class="spec gloss">
+            Fixed, and it does not move with the size of the house. We are
+            selling a day and an answer, not a percentage of your building.
+          </p>
+          <a class="fee-cta" href="/commission">Ask for an appraisal</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .head {
+    padding-block: clamp(2.5rem, 7vw, 6rem) clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .head h1 {
+    margin: 0.6rem 0 clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .head-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+    gap: clamp(1.25rem, 3vw, 3rem);
+    max-width: 62rem;
+  }
+
+  .mitate-hero figcaption {
+    margin-top: 0.8rem;
+  }
+
+  /* --- the four tests ----------------------------------------------------
+     Numbered rather than carded: this is a standard being published, and a
+     grid of tiles would make it look like a service menu. */
+
+  .tests h2 {
+    margin: 0.6rem 0 clamp(1.75rem, 4vw, 3rem);
+    max-width: 26ch;
+  }
+
+  .test-list {
+    list-style: none;
+    border-top: var(--rule);
+  }
+
+  .test {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+    border-bottom: var(--hair);
+  }
+
+  .test-n {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: var(--okibi);
+    padding-top: 0.45rem;
+  }
+
+  .test-body h3 .jp {
+    font-family: var(--mincho);
+    font-size: 0.72em;
+    color: var(--sugi-deep);
+    margin-left: 0.4em;
+  }
+
+  .test-rule {
+    margin: 0.35rem 0 0.9rem;
+    font-size: 1.05rem;
+    color: var(--susu);
+  }
+
+  .test-body > p:not(.test-rule):not(.test-fail) {
+    max-width: 54ch;
+    color: var(--sugi-deep);
+  }
+
+  .test-fail {
+    margin-top: 0.9rem;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--sugi-deep);
+  }
+
+  .test-fail span {
+    color: var(--okibi);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-right: 0.5rem;
+  }
+
+  /* --- decline ----------------------------------------------------------- */
+
+  .decline-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .decline-grid h2 {
+    margin: 0.6rem 0 1.4rem;
+  }
+
+  .decline-grid p + p {
+    margin-top: 1rem;
+  }
+
+  /* --- how --------------------------------------------------------------- */
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.7fr);
+    gap: clamp(1.75rem, 5vw, 4rem);
+    align-items: start;
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .how-list {
+    list-style: none;
+    counter-reset: step;
+    border-top: var(--rule);
+  }
+
+  .how-list li {
+    counter-increment: step;
+    padding: 1.25rem 0;
+    border-bottom: var(--hair);
+  }
+
+  .how-list h3::before {
+    content: counter(step, decimal-leading-zero);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--okibi);
+    margin-right: 0.8rem;
+    vertical-align: 0.25em;
+  }
+
+  .how-list p {
+    margin-top: 0.4rem;
+    max-width: 52ch;
+    color: var(--sugi-deep);
+  }
+
+  .fee {
+    background: var(--tsuchikabe);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .fee dl {
+    margin: 1rem 0 1.2rem;
+    border-top: var(--hair);
+  }
+
+  .fee dl > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: var(--hair);
+  }
+
+  .fee dt,
+  .fee dd {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+  }
+
+  .fee dd {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .fee-cta {
+    display: inline-block;
+    margin-top: 1.2rem;
+    background: var(--susu);
+    color: var(--washi);
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    padding: 0.7rem 1.3rem;
+  }
+
+  .fee-cta:hover {
+    background: var(--susu-soft);
+  }
+
+  @media (max-width: 62rem) {
+    .decline-grid,
+    .how-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .test {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+    }
+  }
+</style>

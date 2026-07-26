@@ -53,8 +53,54 @@ master carpenter), sixth of his line to hold the title. A thatcher, **Mizuno
 Kaneko**, who manages the workshop's own *kayaba*. Six carpenters, two
 apprentices, one plasterer.
 
-**Proposition:** houses raised, moved, and revived in the four traditions of
-one valley — and kept alive by their fires.
+**Proposition:** abandoned minka — *akiya* — brought back into use in the
+four traditions of one valley, and kept alive by their fires. Ibushi is
+asked about forty houses a year and takes four.
+
+## The akiya reposition (2026-07-26)
+
+The thesis always implied an antagonist and never named it. The site already
+said *"an empty one is a structural emergency and not merely a sad thing"* and
+closed on *"will the fire be lit?"* — that is an akiya business, argued but
+not declared. Naming it costs nothing and buys the stakes.
+
+**The condition, with real figures** (all published, all cited on the page):
+
+| Fact | Source |
+|---|---|
+| 9,000,000 vacant dwellings · 13.8% of the housing stock, double 1993 | 2023 Housing and Land Survey (MIC), published April 2024 |
+| ~60% inherited · >70% of those pre-1980 · >70% showing decay · ~60% vacated on the owner's death | MLIT, 2024 Survey on Akiya House Owners |
+| Kominka fell **13%** between 2008 and 2013 | MIC survey |
+| ~1,250,000 kominka thought to remain | Japan Kominka Association estimate |
+
+**The kominka figure is the one that belongs to Ibushi.** Nine million is a
+national statistic about empty flats in Osaka; −13% in five years is the
+specific building type this workshop works on, disappearing. Lead with the
+nine million for scale, land on the 13% for stakes.
+
+**Two rules that keep this from becoming a trend explainer:**
+
+1. **The fire stays primary.** Akiya is the *condition Ibushi works in*, not
+   the brand. The one-line brief does not change and the H1 does not change.
+   If a visitor leaves knowing the vacancy rate but not why smoke is
+   structural, the page has failed.
+2. **Never the "¥500 Japanese house" genre.** That content is everywhere and
+   is the exact inverse of this workshop. Ibushi does not sell a cheap house;
+   it tells you most of them cannot be saved.
+
+**Selectivity had to become a standard, not a claim.** "We are selective"
+reads as taste, which would be fatal here. `/mitate` publishes the whole rule
+— frame pre-war and hand-cut, daikokubashira sound to the core, roof
+re-thatchable rather than merely replaceable, and somebody who will light the
+fire — each written so it can fail, with what it fails on. Declining is then
+professional judgement rather than a pose, which is also the honest reading of
+the data: most akiya genuinely are post-1980 stock with nothing worth a
+carpenter's year.
+
+**The appraisal is the site's under-¥750,000 product** (order-form doctrine):
+a fixed-fee day on site and a written verdict, ¥180,000 in Hida, credited in
+full against the work. Fixed rather than a percentage, because a percentage
+gives the workshop a reason to say yes.
 
 ## The register argument (recorded because it was the call)
 
@@ -339,6 +385,21 @@ Shot list (≈20 finals across eleven pages):
 | `toryo` | Human: Ōno Sōhachi marking a timber with the sumitsubo ink line |
 | `kayaba` | The thatch grassland cut and standing in bundles |
 | `sumitsubo` | The ink pot and cord on a timber — the object behind the signature |
+| `hero-akiya` | **Hero.** A thatched house standing empty in snow, ridge cold, no path cut to the door — frame still square. The problem, stated |
+| `mitate` | Human: the tōryō with a flat hand on the daikokubashira of an abandoned house, reading whether it will carry |
+| `declined` | A house past saving — ridge broken, roof folded in. Photographed plainly, from a middle distance: a record, not ruin porn |
+
+`hero-smoke` is **not** retired by the reposition — it is promoted. It now
+runs full-bleed lower on the home page as *the other end of the work*: the
+same kind of building, smoking at seven in the morning. The page opens on a
+cold house and closes the section on a lit one, which is the whole argument
+in two frames.
+
+Note the copy fix that came with it: the hero line read *"There is no
+chimney"* directly above a plate showing a ridge vent with smoke coming out
+of it. Minka have no **flue from the hearth** — the smoke passes up through
+the open frame — but ridge smoke-vents are real and common. The copy now says
+"no flue", which is both true and no longer contradicted by the picture.
 
 Avoid: cherry blossom, red torii, geisha, Mount Fuji, koi ponds, "zen
 garden" raked gravel, calligraphy as wallpaper, generated Japanese text of

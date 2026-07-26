@@ -160,11 +160,68 @@ deny-listed).
   top-level routes return 200 in production.
 - README table, `docs/foundry-series.md`, and the backlog all updated.
 
+## The akiya reposition — 2026-07-26, after ship
+
+Vince asked whether Ibushi could position as craftsmen who restore *akiya*
+(Japan's abandoned houses) and are selective about which. It could, because
+the site was already arguing it: *"an empty one is a structural emergency and
+not merely a sad thing"*, and the page already closed on *"will the fire be
+lit?"* The reposition names an antagonist the thesis had always implied.
+
+Shipped:
+
+- **Homepage reframed.** New hero `hero-akiya` — a house standing empty, cold
+  ridge, snow unbroken. New `akiya` section carrying the figures, and
+  `hero-smoke` **promoted** (not retired — Vince asked explicitly that no
+  existing imagery be lost) to run full-bleed lower down as *the other end of
+  the work*. The page now opens on a cold house and closes that section on a
+  lit one.
+- **New route `/mitate`** — the appraisal. Four tests published in full, each
+  written so it can fail, with what it fails on. Plus a "what we decline"
+  section and a fixed-fee schedule (¥180,000 in Hida, credited against the
+  work). This is where "selective" becomes a standard instead of a pose.
+- **Three plates added**, none replaced: `hero-akiya`, `mitate` (the tōryō
+  reading a daikokubashira in an abandoned house), `declined` (a house past
+  saving, photographed plainly).
+- **DESIGN.md** carries the sourced figures and the two rules that keep this
+  from becoming a trend explainer.
+
+**Higgsfield was available this session** and the video finally exists:
+`public/video/first-smoke.mp4`, 112KB for 5s. `kling3_0_turbo`, with
+`hero-akiya.jpg` imported by public URL (`media_import_url`) as `start_image`,
+so frame one *is* the hero still and the fade-in is invisible. Note it
+suggested an "IN THE DARK" preset — declined via `declined_preset_id`, since
+that is exactly the chiaroscuro DESIGN.md bans.
+
+**It plays once and holds; it does not loop.** Looping back to a cold ridge
+would argue the opposite of the page. Under `.nofx` / reduced motion the video
+is never even fetched (`preload="none"`, verified `readyState === 0`) and the
+still stands alone.
+
+### A copy bug the reposition surfaced
+
+The hero read *"There is no chimney"* directly above a plate showing a ridge
+vent with smoke coming out of it. Minka have no **flue from the hearth** — the
+smoke goes up through the open frame — but ridge smoke-vents are real. Copy
+now says "no flue", which is true *and* uncontradicted by the picture. Fixed
+rather than regenerating the plate.
+
+### Optimiser: a second trigger
+
+`optimise.mjs` lifted on `mean < band floor` alone, which is blind to a
+high-contrast frame. `yuka` came in at mean 72 against a floor of 70 — nominally
+in band — with **43%** of the frame below luma 25, where its siblings run
+7–20%. A wall of sunlit shoji was carrying the average while half the plate sat
+crushed. There is now a `SHADOW_MAX = 0.25` second trigger. It changed exactly
+one plate; every other solve reproduced identically.
+
 ## If you pick this up again
 
-- **Higgsfield never became available** (see above). The exterior and interior
-  plates are the ones that would most benefit from `soul_2` — regenerating them
-  is a self-contained job; nothing else in the build depends on the generator.
+- The exterior and interior plates would still benefit from `soul_2` if you
+  want to A/B them — but gpt-image-2 is now the house default for stills (see
+  the Auriga notes), so this is optional rather than owed.
+- The obvious next film is the counterpart to `first-smoke`: the tōryō's ink
+  line being snapped, for `/sumitsuke`.
 - The four typology pages share one route, `houses/[slug].astro`, driven by
   `src/data/houses.js`. Adding a fifth typology means adding it to
   `TYPOLOGIES` in `lib/house.js` *and* to `HOUSE_PAGES`.

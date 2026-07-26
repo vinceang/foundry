@@ -18,37 +18,147 @@ const houses = TYPOLOGY_ORDER.map((k) => {
 ---
 
 <Layout
-  title="Ibushi 燻 — minka raised, moved, and revived | Hida, Gifu"
-  description="A workshop in Hida building traditional Japanese villager houses — nōka, gyoka, machiya, and gasshō-zukuri — on the old methods. A minka is cured by the smoke of being lived in."
+  title="Ibushi 燻 — akiya brought back to life | Hida, Gifu"
+  description="A workshop in Hida that takes on abandoned minka — akiya — and brings them back into use on the old methods. Japan has nine million empty houses. We are asked about forty a year and we take four. A minka is cured by the smoke of being lived in."
   nav=""
 >
   <!-- ================= hero ================= -->
   <section class="hero">
     <div class="hero-media">
-      <Plate
-        name="hero-smoke"
-        alt="A thatched farmhouse at first light across a frosted rice field, one straight column of woodsmoke standing off the ridge into cold blue air, mountains behind."
-        ratio="16 / 9"
-        eager={true}
-      />
+      {/* The still is the real content — srcset, alt, eager. The film layers
+          over it and its first frame IS this still, so the fade-in is
+          invisible. It plays ONCE and holds on the lit frame: looping back to
+          a cold ridge would argue the opposite of the page. */}
+      <div class="hero-film" data-hero-film>
+        <img
+          class="hero-film-still"
+          src="/images/hero-akiya.jpg"
+          srcset="/images/hero-akiya-800.jpg 800w, /images/hero-akiya.jpg 1536w"
+          sizes="100vw"
+          width="1536"
+          height="1024"
+          alt="A thatched farmhouse standing empty in a snowbound mountain valley on a clear winter morning. No smoke at the ridge, storm shutters closed and one hanging loose, grass rooted in the slumped thatch, and snow lying unbroken to the door — but the frame still square and sound."
+          fetchpriority="high"
+        />
+        <video
+          class="hero-film-v"
+          muted
+          playsinline
+          preload="none"
+          aria-hidden="true"
+          tabindex="-1"
+        >
+          <source src="/video/first-smoke.mp4" type="video/mp4" />
+        </video>
+      </div>
+      <p class="hero-plate-note spec gloss">
+        Empty since 2011, and sound to the frame. This is the morning the fire
+        was lit again.
+      </p>
     </div>
     <div class="wrap hero-text">
       <h1>A minka is cured<br />by the smoke of<br />being lived in.</h1>
       <div class="hero-cols">
         <p>
-          There is no chimney. The fire in the floor sends its smoke up through
-          the open frame and out through the thatch, and on the way it lays
-          soot on every beam and every stem of straw it passes. That soot kills
-          the insects, drives out the damp, and stops the rot.
+          There is no flue. The fire in the floor sends its smoke up through the
+          open frame, out through the thatch and the vent at the ridge, and on
+          the way it lays soot on every beam and every stem of straw it passes.
+          That soot kills the insects, drives out the damp, and stops the rot.
         </p>
         <p class="spec gloss">
-          Which means the building is preserved by being inhabited. A house
-          whose fire goes out begins to fail — not sentimentally, structurally.
-          We raise, move, and revive these houses in Hida, and we ask every
-          client the same question before anything else: will the fire be lit?
+          Which means the building is preserved by being inhabited — so a house
+          whose fire goes out is not sad, it is failing. Japan now has nine
+          million empty houses. We take the ones whose frames are still worth
+          the work, and we ask every owner the same question before anything
+          else: <em>will the fire be lit?</em>
         </p>
       </div>
     </div>
+  </section>
+
+  <hr class="snap" />
+
+  <!-- ================= akiya ================= -->
+  <section class="akiya">
+    <div class="wrap">
+      <span class="kicker">Akiya · 空き家</span>
+      <h2 class="akiya-h">
+        Nine million houses stand empty.<br />Most of them should come down.
+      </h2>
+
+      <div class="akiya-grid">
+        <div class="akiya-text">
+          <p>
+            An <span class="term">akiya</span> 空き家 is a house nobody lives in.
+            The 2023 Housing and Land Survey counted nine million of them —
+            13.8% of every dwelling in the country, double the number in 1993.
+            Around six in ten were inherited. In six in ten, the house went
+            quiet when its owner died.
+          </p>
+          <p>
+            We are not in that business, and we want to be exact about why.
+            Most akiya are post-war frame or prefab, built after 1980, with
+            nothing in them worth a carpenter's year. They have no
+            <span class="term">daikokubashira</span> 大黒柱 worth keeping, no
+            curved <span class="term">magari-bari</span> 曲がり梁 overhead, and
+            no roof that would take thatch again. The honest answer for those
+            houses is a demolition contractor, and we will tell an owner so in
+            the first hour.
+          </p>
+          <p>
+            The ones we take are <span class="term">kominka</span> 古民家 — the
+            old houses, pre-war and mostly pre-Meiji, built by hand out of one
+            valley's timber. Those are disappearing faster than the empty
+            flats. Between 2008 and 2013 the count of kominka fell
+            <strong>13%</strong>. The Japan Kominka Association puts what is
+            left at around 1,250,000. Every one taken down is a frame that
+            cannot be built again at any price, because the trees are gone and
+            so, nearly, are the men who cut the joints.
+          </p>
+          <p class="spec gloss">
+            So we are selective, and not out of taste. A frame either carries
+            another two hundred years or it does not, and saying yes to a house
+            that cannot is how a workshop spends four years proving a point to
+            a building that was always going to lose.
+          </p>
+          <a class="akiya-link" href="/mitate">
+            The standard we apply, in full <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="akiya-media">
+          <Plate
+            name="declined"
+            alt="A thatched farmhouse past saving on a clear winter morning: the ridge broken, the roof folded inward along its length, thatch fallen into the interior, one gable wall leaning out and a corner post off its stone."
+            ratio="3 / 2"
+            caption="Declined. The ridge has gone and taken the tie-beams with it; the frame is no longer carrying itself. Photographed for the record, not for the pity of it."
+          />
+          <dl class="akiya-figs">
+            <div><dt>Vacant dwellings, 2023</dt><dd>9,000,000 · 13.8%</dd></div>
+            <div><dt>Kominka, 2008–2013</dt><dd>−13%</dd></div>
+            <div><dt>Kominka thought to remain</dt><dd>~1,250,000</dd></div>
+            <div><dt>Asked of us each year</dt><dd>About forty</dd></div>
+            <div><dt>Taken</dt><dd>Four</dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+
+    <figure class="akiya-after">
+      <Plate
+        name="hero-smoke"
+        alt="A thatched farmhouse at first light across a frosted field, one straight column of woodsmoke standing off the ridge into cold blue air, mountains behind."
+        ratio="16 / 9"
+      />
+      <figcaption class="wrap">
+        <span class="kicker">The other end of the work · 再び</span>
+        <p>
+          A house we took, the second winter after. Smoke at the ridge before
+          seven in the morning — which is the only proof any of this works, and
+          the only one we accept.
+        </p>
+      </figcaption>
+    </figure>
   </section>
 
   <hr class="snap" />
@@ -240,6 +350,43 @@ const houses = TYPOLOGY_ORDER.map((k) => {
   </section>
 </Layout>
 
+<script is:inline>
+  // The hero film. Only under .fx — ?nofx and prefers-reduced-motion both land
+  // on .nofx, and there the still stands alone, which is a complete picture on
+  // its own (the cold house is the point). Nothing is downloaded in that case
+  // either: preload="none" and we never call load().
+  (() => {
+    const wrap = document.querySelector("[data-hero-film]");
+    if (!wrap || !document.documentElement.classList.contains("fx")) return;
+    const v = wrap.querySelector("video");
+    if (!v || !v.canPlayType || !v.canPlayType("video/mp4")) return;
+
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      v.addEventListener("playing", () => v.classList.add("is-playing"), { once: true });
+      // If autoplay is refused, the still simply stays — no broken state.
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    };
+
+    if (!("IntersectionObserver" in window)) return start();
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            io.disconnect();
+            start();
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(wrap);
+  })();
+</script>
+
 <style>
   /* --- hero -------------------------------------------------------------- */
 
@@ -250,6 +397,35 @@ const houses = TYPOLOGY_ORDER.map((k) => {
   .hero-media :global(.plate img),
   .hero-media :global(.plate-hold) {
     max-height: 74vh;
+  }
+
+  .hero-film {
+    position: relative;
+    line-height: 0;
+  }
+
+  .hero-film-still {
+    width: 100%;
+    max-height: 74vh;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-film-v {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.6s linear;
+    pointer-events: none;
+  }
+
+  /* frame one of the film is the still, so this reads as nothing happening
+     until the smoke starts */
+  .hero-film-v.is-playing {
+    opacity: 1;
   }
 
   .hero-text {
@@ -271,6 +447,89 @@ const houses = TYPOLOGY_ORDER.map((k) => {
 
   .argument {
     padding-block: clamp(3.5rem, 7vw, 7rem);
+  }
+
+  /* --- akiya -------------------------------------------------------------
+     The hero is now a cold house, so this section carries the argument for
+     why it is cold and what we do about it. It ends on hero-smoke — the same
+     kind of building, working — so the page opens on the problem and closes
+     the section on the proof. */
+
+  .hero-plate-note {
+    max-width: 34rem;
+    margin: 0.7rem auto 0;
+    padding-inline: var(--gut);
+  }
+
+  .akiya {
+    padding-block: clamp(2.5rem, 6vw, 5rem) 0;
+  }
+
+  .akiya-h {
+    margin: 0.6rem 0 clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .akiya-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    gap: clamp(1.75rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .akiya-text p + p {
+    margin-top: 1rem;
+  }
+
+  .akiya-link {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: var(--sans);
+    font-size: 0.82rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--okibi);
+    padding-bottom: 0.15rem;
+  }
+
+  /* the figures sit under the declined plate as a working table, not a
+     stat-card row — this is a record, not a pitch deck */
+  .akiya-figs {
+    margin-top: 1.6rem;
+    border-top: var(--rule);
+  }
+
+  .akiya-figs > div {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: var(--hair);
+  }
+
+  .akiya-figs dt {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    color: var(--sugi-deep);
+  }
+
+  .akiya-figs dd {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .akiya-after {
+    margin: clamp(2.5rem, 6vw, 5rem) 0 0;
+  }
+
+  .akiya-after figcaption {
+    margin-top: 1rem;
+  }
+
+  .akiya-after figcaption p {
+    max-width: 40rem;
+    margin-top: 0.4rem;
   }
 
   .arg-grid {
@@ -464,7 +723,8 @@ const houses = TYPOLOGY_ORDER.map((k) => {
 
   @media (max-width: 62rem) {
     .arg-grid,
-    .sig-grid {
+    .sig-grid,
+    .akiya-grid {
       grid-template-columns: 1fr;
     }
     .arg-media,

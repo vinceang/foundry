@@ -44,11 +44,13 @@ to see space. They share Aubade doctrine but must not share a skin.
 The series has since been extended past hospitality to *builders of dwellings*,
 on the argument that Aubade's subject is the dwelling rather than the host:
 
-- **Ibushi — smoke-cured and inhabited.** A Hida workshop raising, moving, and
-  reviving *minka*, the traditional houses of rural Japan, in four typologies
-  (nōka, gyoka, machiya, gasshō-zukuri). Its thesis makes habitation
+- **Ibushi — smoke-cured and inhabited.** A Hida workshop that takes on
+  *akiya*, Japan's abandoned houses, and brings *minka* back into use in four
+  typologies (nōka, gyoka, machiya, gasshō-zukuri). Its thesis makes habitation
   structural: the irori's smoke soot-lacquers the frame, so a house is
-  literally preserved by being lived in. Warm interior daylight, cold mountain
+  literally preserved by being lived in — which makes an empty one a
+  structural emergency rather than a sad one. It is asked about forty houses a
+  year and takes four, against a published four-test standard. Warm interior daylight, cold mountain
   morning outside — deliberately not the Nocturne lamp that Kaji and Shokunin
   already hold over Japan.
 
