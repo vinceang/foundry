@@ -1,0 +1,718 @@
+---
+import "../styles/global.css";
+import { buildFormule, markPositions, PARFUMS, FORMATS, DEFAULT_SPEC, PER_MARK, GRID } from "../formule.mjs";
+
+/* The default is BUILT AT BUILD TIME by the same model the client script uses,
+   so the page is complete and correct with JavaScript off. */
+const F = buildFormule(DEFAULT_SPEC);
+const fieldW = GRID.cols * GRID.cell;
+const fieldH = GRID.rows * GRID.cell;
+/* every position the frame can hold — drawn faintly, so the fill level reads
+   as a measure rather than as an accidental gap */
+const capacityPts = markPositions(GRID.cols * GRID.rows);
+const capacity = (GRID.cols * GRID.rows * PER_MARK).toLocaleString("en-GB");
+
+/* The jasmine glyph — the site's only ornament, and the counting unit in the
+   signature. Five petals, defined once in <defs> and instanced with <use>,
+   which matters when the largest bottle draws 373 of them. */
+const PETALS = [0, 72, 144, 216, 288];
+
+const cart = [
+  { key: "extrait-30", name: "Extrait, 30 ml", sub: "24% concentrate", price: 185 },
+  { key: "edp-50", name: "Eau de parfum, 50 ml", sub: "the ordinary bottle", price: 140 },
+  { key: "edp-100", name: "Eau de parfum, 100 ml", sub: "the only volume discount here", price: 210 },
+  { key: "recharge-100", name: "Recharge, 100 ml", sub: "your bottle stays on the shelf", price: 150 },
+  { key: "coffret", name: "Coffret de découverte", sub: "5 × 2 ml — refunded against a first full bottle", price: 28 },
+];
+
+const hours = [
+  { t: "04h30", p: "The pickers start. Jasmine is picked closed and cool, before the sun opens it and drives the oil off." },
+  { t: "08h00", p: "Baskets are weighed at the end of the row. A good picker does about four kilos in a morning; a kilo is roughly eight thousand blossoms." },
+  { t: "09h30", p: "The last basket reaches the workshop. Past this the flowers begin to ferment and the day's picking is worth measurably less." },
+  { t: "22h00", p: "Extraction finishes. What began as fifty kilos of flowers is now a few hundred grams of waxy concrete." },
+];
+
+const yields = [
+  { k: "One kilo of jasmine flowers", v: "≈ 8,000 blossoms" },
+  { k: "Flowers for one kilo of absolute", v: "≈ 700 kg" },
+  { k: "Rose centifolia for one kilo of absolute", v: "≈ 800 kg" },
+  { k: "Orris rhizome, before it is any use", v: "aged 3 years" },
+  { k: "Our jasmine harvest, a good year", v: "1,900 kg" },
+];
+
+const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
+  key,
+  ...p,
+  img: ["collection", "rose-mai", "restanque"][i],
+}));
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Rosée — a single-perfumer house in Plascassier, Pays de Grasse. Three perfumes made from a field we can point at. See exactly how many flowers are in the bottle, and order it."
+    />
+    <title>Rosée — parfumeur, Plascassier · Pays de Grasse</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..600;1,400..500&family=Jost:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero-cueillette.jpg" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f5ef'/%3E%3Cg fill='%239c5560'%3E%3Cpath d='M16 5 C20 9 24 11 24 16 C24 20.4 20.4 23 16 23 C11.6 23 8 20.4 8 16 C8 11 12 9 16 5 Z'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <script is:inline>
+      /* `js` gates the entrance animation in CSS, so a JS-off visitor gets the
+         finished composition instead of content stranded at opacity 0. */
+      document.documentElement.classList.add("js");
+      const q = new URLSearchParams(location.search);
+      if (q.has("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="wrap head-inner">
+        <a class="mark" href="#top" aria-label="Rosée — home">
+          <span class="mark-word">ROSÉE</span>
+          <span class="mark-gloss">Plascassier, Grasse</span>
+        </a>
+        <nav aria-label="Sections">
+          <a href="#cueillette">La cueillette</a>
+          <a href="#dedans">Ce qu'il y a dedans</a>
+          <a href="#collection">La collection</a>
+          <a href="#nez">Le nez</a>
+          <a class="nav-order" href="#commander">Commander</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-text">
+            <p class="whisper">Parfumeur · Plascassier · trois parfums</p>
+            <h1 class="statement">A 50 ml bottle is a field. We will tell you <em>exactly how much of one</em>.</h1>
+            <p class="lede">
+              Jasmine is picked before the sun reaches it, because heat drives
+              the oil off within the hour. Everything here follows from that —
+              the four-thirty start, the twenty mornings in May, and the reason
+              a small bottle costs what it costs.
+            </p>
+            <div class="hero-acts">
+              <a class="btn" href="#dedans">Count the field</a>
+              <a class="btn-quiet" href="#collection">The three perfumes</a>
+            </div>
+          </div>
+          <figure>
+            <img
+              src="/images/hero-cueillette.jpg"
+              width="1536"
+              height="1024"
+              alt="A picker's hands lifting small white jasmine blossoms into a woven wicker basket in a field at first light, dew still on the petals."
+              fetchpriority="high"
+            />
+            <figcaption>
+              Picking at Plascassier, a little before five. The blossoms are
+              still closed.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ LA CUEILLETTE ============ -->
+      <section id="cueillette" class="band-rosee">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">01 — La cueillette</p>
+              <h2 class="chapter-title">Why four in the morning</h2>
+              <p class="gloss">The constraint the whole year is built around</p>
+            </div>
+            <p class="lede">
+              This is not a romantic detail. Jasmine grandiflorum carries its
+              highest oil concentration before dawn and loses it measurably
+              once the sun is on the plant. Picked flowers also begin to heat
+              in the basket, so there is a hard window between the field and
+              the extraction vessel.
+            </p>
+          </div>
+          <div class="hours rise">
+            {
+              hours.map((h) => (
+                <div>
+                  <span class="h-t num">{h.t}</span>
+                  <p>{h.p}</p>
+                </div>
+              ))
+            }
+          </div>
+          <div class="two-figs rise" style="margin-top: clamp(48px, 6vw, 84px)">
+            <figure>
+              <img src="/images/champ.jpg" width="1536" height="1024" loading="lazy"
+                alt="Long rows of low jasmine bushes in a Provençal field at dawn with mist lying between the rows." />
+              <figcaption>The plots at Plascassier — 1.4 hectares, walled, on old restanques.</figcaption>
+            </figure>
+            <figure>
+              <img src="/images/jasmin.jpg" width="1024" height="1536" loading="lazy"
+                alt="Macro view of freshly picked white jasmine blossoms heaped in a wicker basket, dew on the petals." />
+              <figcaption>A kilo of these is about eight thousand flowers, and it is one picker's hour.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DE LA FLEUR À L'ABSOLUE ============ -->
+      <section id="absolue">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">02 — De la fleur à l'absolue</p>
+              <h2 class="chapter-title">What a field reduces to</h2>
+              <p class="gloss">Concrète, then absolue</p>
+            </div>
+            <p class="lede">
+              Flowers go into solvent and come out as <em>concrète</em>, a waxy
+              solid that still holds the plant's fats. Washing that with alcohol
+              and freezing out the wax leaves the <em>absolue</em> — a few
+              hundred grams of it from a room full of flowers. These are the
+              numbers everything on this site is computed from.
+            </p>
+          </div>
+          <div class="absolue-grid rise">
+            <figure>
+              <img src="/images/alambic.jpg" width="1024" height="1536" loading="lazy"
+                alt="A row of tall copper extraction vessels in a whitewashed stone workshop with morning light on the polished copper." />
+              <figcaption>The vessels run from mid-morning until about ten at night through the season.</figcaption>
+            </figure>
+            <dl class="yields">
+              {
+                yields.map((y) => (
+                  <div>
+                    <dt>{y.k}</dt>
+                    <dd class="y-v num">{y.v}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CE QU'IL Y A DEDANS — THE SIGNATURE ============ -->
+      <section id="dedans" class="band-rosee">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">03 — Ce qu'il y a dedans</p>
+              <h2 class="chapter-title">Count the field</h2>
+              <p class="gloss">Not notes. Flowers.</p>
+            </div>
+            <p class="lede">
+              Choose a perfume and a size and the page works backwards through
+              the yields to the raw plant matter that had to be grown, picked
+              before dawn, and carried. Every mark in the frame is{" "}
+              <span class="num">{PER_MARK}</span> flower heads. The frame is the
+              same size for all three, so you can see which of them is a bigger
+              field.
+            </p>
+          </div>
+
+          <div class="dedans-stage rise">
+            <div class="field-box">
+              <div class="field-head">
+                <span class="field-num" id="f-plant">{F.plantLabel}</span>
+                <span class="field-sub">
+                  of raw plant matter in one <span id="f-format">{F.format.label}</span>{" "}
+                  of <span id="f-parfum">{F.parfum.label}</span> — including{" "}
+                  <span class="num" id="f-flowers">{F.totalFlowersLabel}</span> flower heads.
+                </span>
+              </div>
+              <svg
+                id="field-svg"
+                viewBox={`0 0 ${fieldW} ${fieldH}`}
+                role="img"
+                aria-labelledby="field-title"
+              >
+                <title id="field-title">{F.headline}</title>
+                <defs>
+                  <g id="bl">
+                    {PETALS.map((a) => (
+                      <ellipse cx="0" cy="-3.1" rx="1.75" ry="3.1" transform={`rotate(${a})`} />
+                    ))}
+                    <circle cx="0" cy="0" r="1.15" fill="#f7f5ef" />
+                  </g>
+                </defs>
+                <g fill="#20231f" opacity="0.08" aria-hidden="true">
+                  {capacityPts.map((p) => <use href="#bl" x={p.x} y={p.y} />)}
+                </g>
+                <g id="marks" fill="#9c5560" opacity="0.92">
+                  {F.markPts.map((p) => <use href="#bl" x={p.x} y={p.y} />)}
+                </g>
+              </svg>
+              <p class="field-scale">
+                <svg viewBox="-7 -7 14 14" aria-hidden="true" fill="#9c5560">
+                  {PETALS.map((a) => (
+                    <ellipse cx="0" cy="-3.1" rx="1.75" ry="3.1" transform={`rotate(${a})`} />
+                  ))}
+                  <circle cx="0" cy="0" r="1.15" fill="#f7f5ef" />
+                </svg>
+                one mark = {PER_MARK} flower heads · the frame holds{" "}
+                <span class="num">{capacity}</span>
+              </p>
+            </div>
+
+            <div class="dedans-controls">
+              <form id="dedans-form">
+                <fieldset class="ctl">
+                  <legend class="whisper">Le parfum</legend>
+                  <div class="seg">
+                    {
+                      Object.entries(PARFUMS).map(([k, v]) => (
+                        <label>
+                          <input type="radio" name="parfum" value={k} checked={k === DEFAULT_SPEC.parfum} />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                  <p class="ctl-note" id="p-note">{F.parfum.line}</p>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">Le format</legend>
+                  <div class="seg seg-2">
+                    {
+                      Object.entries(FORMATS).map(([k, v]) => (
+                        <label>
+                          <input type="radio" name="format" value={k} checked={k === DEFAULT_SPEC.format} />
+                          <span>{v.short}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                  <p class="ctl-note" id="f-note">{F.format.note}</p>
+                </fieldset>
+              </form>
+
+              <div class="matieres" id="matieres">
+                {
+                  F.lines.map((l) => (
+                    <div class={`matieres-row ${l.kind === "synthetic" ? "is-synth" : ""}`}>
+                      <span class="m-pct num">{l.pct}%</span>
+                      <span>
+                        <span class="m-name">{l.label}</span>
+                        <span class="m-origin">{l.origin}</span>
+                      </span>
+                      <span class="m-qty">{l.qtyLabel}</span>
+                    </div>
+                  ))
+                }
+              </div>
+
+              <div class="buy-row">
+                <span class="buy-price" id="f-price">{F.priceLabel}</span>
+                <button class="btn" id="add" type="button">Ajouter à la commande</button>
+              </div>
+              <p class="buy-note">
+                The musks and woods are made in a laboratory. We say so because
+                the alternative — real deer musk, real oakmoss at the old
+                concentration — is either illegal, unsustainable, or both, and
+                pretending otherwise is how this industry earned its reputation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LA COLLECTION ============ -->
+      <section id="collection">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">04 — La collection</p>
+              <h2 class="chapter-title">Three, and no fourth yet</h2>
+              <p class="gloss">No flankers, no licensing, no seasonal editions</p>
+            </div>
+            <p class="lede">
+              Margaux has composed three. There will be a fourth when there is a
+              reason for one, which there has not been since 2021.
+            </p>
+          </div>
+          <div class="collection-list">
+            {
+              collection.map((c, i) => (
+                <article class={`col-item rise ${i % 2 ? "flip" : ""}`}>
+                  <figure>
+                    <img
+                      src={`/images/${c.img}.jpg`}
+                      width="1536"
+                      height="1024"
+                      loading="lazy"
+                      alt={`${c.label} — ${c.gloss}, photographed in cool Provençal dawn light.`}
+                    />
+                  </figure>
+                  <div class="col-text">
+                    <p class="whisper">{c.gloss}</p>
+                    <h3 class="chapter-title">{c.label}</h3>
+                    <p>{c.line}</p>
+                    <dl class="notes">
+                      <div><dt>Tête</dt><dd>{c.tete}</dd></div>
+                      <div><dt>Cœur</dt><dd>{c.coeur}</dd></div>
+                      <div><dt>Fond</dt><dd>{c.fond}</dd></div>
+                    </dl>
+                    <a class="btn-quiet" href={`#dedans`} data-jump={c.key}>
+                      Count this one
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LE NEZ ============ -->
+      <section id="nez" class="band-rosee">
+        <div class="wrap nez-grid rise">
+          <div class="nez-figs">
+            <figure>
+              <img src="/images/nez.jpg" width="1024" height="1536" loading="lazy"
+                alt="A woman perfumer at her perfumer's organ holding a paper smelling strip to her nose, surrounded by small glass bottles, lit by a large window." />
+            </figure>
+            <figure>
+              <img src="/images/orgue.jpg" width="1536" height="1024" loading="lazy"
+                alt="A perfumer's organ: tiered wooden shelves crowded with small amber and clear glass bottles of essences, with a stack of paper smelling strips in front." />
+              <figcaption>
+                The organ she trained on. About four hundred materials, of
+                which she uses perhaps sixty.
+              </figcaption>
+            </figure>
+          </div>
+          <div>
+            <p class="whisper">05 — Le nez</p>
+            <h2 class="chapter-title">Margaux Estève</h2>
+            <p class="lede">
+              Trained in Grasse, then eleven years composing for houses that
+              never printed her name on anything. She bought the plots at
+              Plascassier in 2016 with her brother, who runs the field.
+            </p>
+            <p>
+              She works from the same organ she trained on, and reformulates
+              nothing: when a material becomes restricted, the perfume is either
+              rebuilt honestly and renamed, or it is discontinued. Two have been
+              discontinued.
+            </p>
+            <p>
+              She smells about <span class="num">40</span> strips a day and
+              says the useful ones are the first six.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ COMMANDER — THE ORDER ============ -->
+      <section id="commander">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">06 — Commander</p>
+              <h2 class="chapter-title">The order</h2>
+              <p class="gloss">An order request — no card is taken here</p>
+            </div>
+            <p class="lede">
+              Set quantities against whatever you want. We reply within two
+              working days with a total including shipping and a payment link;
+              nothing is charged on this page, and nothing ships until you have
+              replied.
+            </p>
+          </div>
+
+          <div class="order-grid rise">
+            <form class="order-form" action="mailto:atelier@rosee-grasse.fr" method="post" enctype="text/plain">
+              <fieldset>
+                <legend class="whisper">Le parfum</legend>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Which perfume</span>
+                    <select name="Perfume" id="order-parfum">
+                      {Object.entries(PARFUMS).map(([k, v]) => <option value={k}>{v.label} — {v.gloss}</option>)}
+                    </select>
+                  </label>
+                  <label class="fld">
+                    <span>Or a mix — tell us below</span>
+                    <input type="text" name="Mixed order" placeholder="e.g. one Mai 50, one Restanque refill" />
+                  </label>
+                  <label class="fld">
+                    <span>Gift wrap</span>
+                    <select name="Gift wrap">
+                      <option>No</option>
+                      <option>Yes — plain box and twine, no charge</option>
+                    </select>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Quantités</legend>
+                <p class="field-note">
+                  Prices are per bottle and include French VAT.
+                  The <em>coffret</em> is refunded in full against your first
+                  full bottle, so ordering it first costs nothing in the end.
+                </p>
+                <div class="cart">
+                  {
+                    cart.map((c) => (
+                      <div class="cart-row" data-key={c.key}>
+                        <span class="cart-name">
+                          {c.name}
+                          <small>{c.sub}</small>
+                        </span>
+                        <input
+                          class="cart-qty"
+                          type="number"
+                          min="0"
+                          max="20"
+                          step="1"
+                          value="0"
+                          inputmode="numeric"
+                          name={`Qty — ${c.name}`}
+                          data-price={c.price}
+                          aria-label={`Quantity — ${c.name}, €${c.price} each`}
+                        />
+                        <span class="cart-price num">€{c.price}</span>
+                      </div>
+                    ))
+                  }
+                  <div class="cart-total">
+                    <span class="t-label">Subtotal</span>
+                    <span class="num" id="subtotal">€0</span>
+                  </div>
+                </div>
+                <input type="hidden" name="Subtotal (computed on page)" id="subtotal-field" value="€0" />
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Livraison — you</legend>
+                <div class="fld-row">
+                  <label class="fld"><span>Name</span><input type="text" name="Name" required /></label>
+                  <label class="fld"><span>Email</span><input type="email" name="Email" required /></label>
+                  <label class="fld"><span>Country</span><input type="text" name="Country" placeholder="France" /></label>
+                </div>
+                <label class="fld">
+                  <span>Address</span>
+                  <textarea name="Address" rows="3" placeholder="Street, city, postcode"></textarea>
+                </label>
+                <label class="fld">
+                  <span>Anything else</span>
+                  <textarea name="Notes" rows="2" placeholder="A perfume you already wear; something you cannot tolerate; a date it needs to arrive by."></textarea>
+                </label>
+              </fieldset>
+
+              <div class="order-submit">
+                <button class="btn" type="submit">Send the order request</button>
+                <p class="field-note">
+                  Opens your mail programme with the order written out. No
+                  payment is taken on this page.
+                </p>
+              </div>
+            </form>
+
+            <aside class="order-aside">
+              <figure>
+                <img src="/images/commander.jpg" width="1536" height="1024" loading="lazy"
+                  alt="A packing table from above: a plain glass bottle, a small wooden box lined with wood wool, blank labels, twine and scissors on pale stone." />
+              </figure>
+              <dl class="aside-facts">
+                <div>
+                  <dt>Shipping</dt>
+                  <dd>
+                    France <span class="num">€6</span>, EU{" "}
+                    <span class="num">€12</span>, elsewhere at cost. Perfume
+                    travels as dangerous goods by air, which is why it is not
+                    free and never will be.
+                  </dd>
+                </div>
+                <div>
+                  <dt>The coffret</dt>
+                  <dd>
+                    Five 2 ml samples for <span class="num">€28</span>, refunded
+                    against a first full bottle. Buying blind is a bad idea and
+                    we would rather you didn't.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Refills</dt>
+                  <dd>
+                    A 100 ml recharge is <span class="num">€150</span>{" "}
+                    against <span class="num">€210</span> for the bottled one.
+                    Same liquid, same field, no glass.
+                  </dd>
+                </div>
+                <div>
+                  <dt>If you hate it</dt>
+                  <dd>
+                    Unopened, thirty days, full refund. Opened, we will still
+                    take it back once — scent is not a thing anyone should be
+                    made to keep.
+                  </dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot-grid">
+        <div>
+          <p class="mark-word foot-mark">ROSÉE</p>
+          <p class="gloss">
+            Chemin des Restanques, Plascassier, 06130 Grasse, France.
+          </p>
+        </div>
+        <dl class="foot-facts">
+          <div><dt>The nose</dt><dd>Margaux Estève</dd></div>
+          <div><dt>The field</dt><dd>1.4 ha at Plascassier, since 2016</dd></div>
+          <div><dt>Write</dt><dd><a href="mailto:atelier@rosee-grasse.fr">atelier@rosee-grasse.fr</a></dd></div>
+          <div><dt>Visits</dt><dd>By arrangement, harvest mornings only</dd></div>
+        </dl>
+      </div>
+      <div class="wrap foot-fine">
+        <p>
+          A fictional house built for the Foundry collection. The place, the
+          materials, and the yields are real.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import { buildFormule, DEFAULT_SPEC } from "../formule.mjs";
+
+      const form = document.getElementById("dedans-form");
+      const $ = (s: string) => document.getElementById(s);
+
+      if (form) {
+        const read = () => {
+          const fd = new FormData(form as HTMLFormElement);
+          return {
+            parfum: String(fd.get("parfum") ?? DEFAULT_SPEC.parfum),
+            format: String(fd.get("format") ?? DEFAULT_SPEC.format),
+          };
+        };
+
+        const draw = () => {
+          const F = buildFormule(read());
+
+          const marks = $("marks");
+          if (marks) {
+            marks.innerHTML = F.markPts
+              .map((p) => `<use href="#bl" x="${p.x}" y="${p.y}"></use>`)
+              .join("");
+          }
+
+          const set = (id: string, v: string) => {
+            const el = $(id);
+            if (el) el.textContent = v;
+          };
+          set("f-plant", F.plantLabel);
+          set("f-flowers", F.totalFlowersLabel);
+          set("f-format", F.format.label);
+          set("f-parfum", F.parfum.label);
+          set("f-price", F.priceLabel);
+          set("p-note", F.parfum.line);
+          set("f-note", F.format.note);
+
+          const title = $("field-title");
+          if (title) title.textContent = F.headline;
+
+          const mat = $("matieres");
+          if (mat) {
+            mat.innerHTML = F.lines
+              .map(
+                (l) => `<div class="matieres-row ${l.kind === "synthetic" ? "is-synth" : ""}">
+                  <span class="m-pct num">${l.pct}%</span>
+                  <span><span class="m-name">${l.label}</span><span class="m-origin">${l.origin}</span></span>
+                  <span class="m-qty">${l.qtyLabel}</span>
+                </div>`,
+              )
+              .join("");
+          }
+          return F;
+        };
+
+        form.addEventListener("input", draw);
+        form.addEventListener("change", draw);
+        draw();
+
+        /* "Ajouter à la commande" — set the matching cart row to at least 1,
+           select the perfume, and take the buyer to the order. */
+        $("add")?.addEventListener("click", () => {
+          const F = draw();
+          const sel = $("order-parfum") as HTMLSelectElement | null;
+          if (sel) sel.value = F.spec.parfum;
+          const row = document.querySelector(`.cart-row[data-key="${F.spec.format}"]`);
+          const qty = row?.querySelector(".cart-qty") as HTMLInputElement | null;
+          if (qty) {
+            qty.value = String(Math.max(1, Number(qty.value) || 0));
+            qty.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+          row?.classList.add("is-active");
+          $("commander")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        /* "Count this one" from the collection drives the signature */
+        document.querySelectorAll("[data-jump]").forEach((el) => {
+          el.addEventListener("click", () => {
+            const k = (el as HTMLElement).dataset.jump;
+            const input = document.querySelector(
+              `input[name="parfum"][value="${k}"]`,
+            ) as HTMLInputElement | null;
+            if (input) {
+              input.checked = true;
+              draw();
+            }
+          });
+        });
+      }
+
+      /* the running subtotal */
+      const qtys = Array.from(document.querySelectorAll<HTMLInputElement>(".cart-qty"));
+      const total = () => {
+        const sum = qtys.reduce(
+          (a, q) => a + (Number(q.value) || 0) * Number(q.dataset.price || 0),
+          0,
+        );
+        const label = `€${sum.toLocaleString("en-GB")}`;
+        const el = $("subtotal");
+        if (el) el.textContent = label;
+        const hidden = $("subtotal-field") as HTMLInputElement | null;
+        if (hidden) hidden.value = label;
+        qtys.forEach((q) =>
+          q.closest(".cart-row")?.classList.toggle("is-active", (Number(q.value) || 0) > 0),
+        );
+      };
+      qtys.forEach((q) => q.addEventListener("input", total));
+      total();
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!document.documentElement.classList.contains("nofx") && !reduced) {
+        const io = new IntersectionObserver(
+          (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+          { rootMargin: "0px 0px -12% 0px" },
+        );
+        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+      }
+    </script>
+  </body>
+</html>
