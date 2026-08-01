@@ -1,0 +1,943 @@
+---
+import "../styles/global.css";
+import { buildCoat, COSTRUZIONE, TELA, SPALLA, IMPUNTURA, DEFAULT_SPEC } from "../coat.mjs";
+
+/* The default coat is BUILT AT BUILD TIME by the same model the client script
+   uses, so the page is complete and correct with JavaScript off. */
+const C = buildCoat(DEFAULT_SPEC);
+
+const leavesOut = [
+  {
+    n: "01",
+    t: "The shoulder padding",
+    p: "There is none. The sleeve head is gathered into the armhole in fine ripples and that gathering is the entire shoulder. A Savile Row coat builds a shoulder; this one borrows yours.",
+  },
+  {
+    n: "02",
+    t: "The lining",
+    p: "Usually absent, sometimes half. Removing it costs more, not less: every internal seam then has to be bound and finished by hand where nobody will ever look.",
+  },
+  {
+    n: "03",
+    t: "The stiff canvas",
+    p: "The canvas floats rather than fuses, and it is soft enough to take the shape of one chest over about four years. It is not there to impose a shape. It is there to remember one.",
+  },
+  {
+    n: "04",
+    t: "Three hundred grams",
+    p: "A fully built English coat of the same cloth finishes around 1,010 g. The lightest thing we make finishes at 740 g. That difference is the whole argument, and you can feel it on a stair.",
+  },
+];
+
+const prove = [
+  {
+    t: "L'imbastitura",
+    g: "the basted coat",
+    d: "The coat arrives held together with white basting thread and nothing else — no pockets, one sleeve, raw edges. Ciro cuts it off you as much as he fits it on you. Most of the real decisions are made in this hour.",
+  },
+  {
+    t: "La seconda prova",
+    g: "the second fitting",
+    d: "Sleeves set, pockets in, the shoulder settled. This is where the barchetta gets its rise marked with chalk against your actual chest, because the pocket's curve is drawn to a body and not to a pattern.",
+  },
+  {
+    t: "La finitura",
+    g: "the finish",
+    d: "Buttonholes cut and worked by hand, the impuntura run along the lapel, the edges pressed over a ham. Only for a fully lined coat is there a third fitting; unlined, there is nothing left to hide behind.",
+  },
+];
+
+const pronte = [
+  {
+    n: "No. 341",
+    name: "Tobacco hopsack · sfoderata",
+    img: "pronte",
+    desc: "Cut for a client in Milan who changed size before the second prova. A 310 g hopsack, entirely unlined, spalla a camicia, 12 mm impuntura down both edges. The lightest coat on the rail.",
+    cloth: "310 g hopsack, Caccioppoli",
+    build: "Sfoderata · tela intera",
+    size: "Chest 100 · sleeve 63 · length 73",
+    price: "€4,700",
+  },
+  {
+    n: "No. 336",
+    name: "Indigo flannel · mezza fodera",
+    img: "pronte-b",
+    desc: "A winter coat: 340 g flannel, half-lined across the shoulders, mappina shoulder. Made for a trunk client in London who took the trousers and left the jacket.",
+    cloth: "340 g flannel, Fox Brothers",
+    build: "Mezza fodera · tela intera",
+    size: "Chest 96 · sleeve 62 · length 72",
+    price: "€4,320",
+  },
+  {
+    n: "No. 329",
+    name: "Pale grey tropical · sfoderata",
+    img: "pronte-c",
+    desc: "A 280 g tropical wool for heat — no lining, half canvas, and no pick stitch at all, because at this weight a visible edge stitch reads as noise. The plainest coat we have made in two years.",
+    cloth: "280 g tropical wool, Drapers",
+    build: "Sfoderata · mezza tela",
+    size: "Chest 102 · sleeve 64 · length 74",
+    price: "€3,970",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Barchetta — a bespoke sartoria off Piazza dei Martiri, Naples. A Neapolitan coat is an argument about what to leave out. Open the coat, build your own, and order it."
+    />
+    <title>Barchetta — sartoria napoletana · Chiaia, Napoli</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,300..700;1,300..600&family=Chivo:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero-board.jpg" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314120e'/%3E%3Cpath d='M6 20 Q16 11 26 15' fill='none' stroke='%23c05a41' stroke-width='2'/%3E%3C/svg%3E"
+    />
+    <script is:inline>
+      /* `js` gates the entrance animation in CSS, so a JS-off visitor gets the
+         finished composition instead of content stranded at opacity 0.
+         `?nofx` disables the animation outright for the critique loop. */
+      document.documentElement.classList.add("js");
+      const q = new URLSearchParams(location.search);
+      if (q.has("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="wrap head-inner">
+        <a class="mark" href="#top" aria-label="Barchetta — home">
+          <span class="mark-word">BARCHETTA</span>
+          <span class="mark-gloss">Chiaia, Napoli</span>
+        </a>
+        <nav aria-label="Sections">
+          <a href="#taglio">Il taglio</a>
+          <a href="#interno">L'interno</a>
+          <a href="#prove">Le prove</a>
+          <a href="#maestro">Il maestro</a>
+          <a href="#pronte">Pronte</a>
+          <a class="nav-order" href="#ordinare">Ordinare</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-text">
+            <p class="whisper">Sartoria napoletana · dal 1978 · su misura</p>
+            <h1 class="statement">
+              A coat is an argument about what to <em>leave out</em>.
+            </h1>
+            <p class="lede">
+              Naples builds a jacket by removing things: the padding, the
+              lining, the stiffening, three hundred grams. The trouble with an
+              argument made of absences is that you cannot photograph one. So
+              this page opens the coat instead.
+            </p>
+            <div class="hero-acts">
+              <a class="btn" href="#interno">Open the coat</a>
+              <a class="btn-quiet" href="#taglio">What we leave out</a>
+            </div>
+          </div>
+          <figure>
+            <img
+              src="/images/hero-board.jpg"
+              width="1536"
+              height="1024"
+              alt="A half-made unlined jacket lying open on a worn wooden tailor's board under a single warm work lamp, white basting thread running through it beside chalk and steel shears."
+              fetchpriority="high"
+            />
+            <figcaption>
+              No. 341 on the board, opened. Everything the client will never see
+              again once it is closed.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ IL TAGLIO ============ -->
+      <section id="taglio" class="band-panno">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">01 — Il taglio</p>
+              <h2 class="chapter-title">Four things we take out</h2>
+              <p class="gloss">And what each one costs to remove</p>
+            </div>
+            <p class="lede">
+              Every one of these makes the coat lighter and the work longer.
+              That is the part the trade does not advertise: subtraction is the
+              expensive direction.
+            </p>
+          </div>
+          <div class="taglio-grid rise">
+            <div class="leaves-out">
+              {
+                leavesOut.map((l) => (
+                  <div>
+                    <span class="lo-n num">{l.n}</span>
+                    <div>
+                      <span class="lo-t">{l.t}</span>
+                      <p>{l.p}</p>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+            <figure>
+              <img
+                src="/images/crine.jpg"
+                width="1024"
+                height="1536"
+                loading="lazy"
+                alt="Macro view of layered horsehair canvas and a woollen chest piece pad-stitched together with rows of small hand stitches."
+              />
+              <figcaption>
+                The chest piece: haircloth and wool, pad-stitched together so it
+                curves before it is ever put into a coat.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="namesake rise">
+            <figure>
+              <img
+                src="/images/barchetta.jpg"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                alt="Macro detail of a curved boat-shaped breast pocket on a brown tailored jacket, its rising crescent hand-stitched, lit warmly from one side."
+              />
+            </figure>
+            <div>
+              <p class="whisper">The name</p>
+              <h3 class="chapter-title">Il taschino a barchetta</h3>
+              <p>
+                Every other tailoring tradition cuts the breast pocket square
+                and level. Naples cuts it as a shallow crescent that rises
+                toward the shoulder — a little boat, in a city built around a
+                bay. It is drawn freehand in chalk against the client&rsquo;s own
+                chest at the second fitting, which is why no two of ours have
+                quite the same curve.
+              </p>
+              <p>
+                It is also the only curve on this entire website. Everything
+                else here is a straight line between two chalk marks, because
+                that is what tailoring is.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ L'INTERNO — THE SIGNATURE ============ -->
+      <section id="interno">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">02 — L'interno</p>
+              <h2 class="chapter-title">Open the coat</h2>
+              <p class="gloss">The strata, and the four decisions that set them</p>
+            </div>
+            <p class="lede">
+              The right front is what the world sees. The left is swung open, the
+              way Ciro holds a coat across the board to show you what is in it.
+              Change any of the four below and the inside is rebuilt — the
+              canvas grows or stops, the lining closes over it, the shoulder
+              changes shape, the pick stitch moves.
+            </p>
+          </div>
+
+          <div class="coat-stage rise">
+            <div class="coat-draw">
+              <svg
+                class="coat"
+                id="coat-svg"
+                viewBox="20 40 450 520"
+                role="img"
+                aria-labelledby="coat-title coat-desc"
+              >
+                <title id="coat-title">The coat as specified, held open</title>
+                <desc id="coat-desc" set:html={C.summary}></desc>
+                <defs>
+                  <pattern id="hatch-canvas" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="0" x2="0" y2="7" stroke="#9c8a68" stroke-width="1.1" />
+                  </pattern>
+                  <pattern id="hatch-crine" width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+                    <line x1="0" y1="0" x2="0" y2="5" stroke="#b39a70" stroke-width="1.2" />
+                    <line x1="0" y1="0" x2="5" y2="0" stroke="#b39a70" stroke-width="1.2" />
+                  </pattern>
+                  <clipPath id="left-front">
+                    <path d="M 280 62 L 264 56 L 140 78 L 122 200 L 116 500 L 280 500 Z" />
+                  </clipPath>
+                </defs>
+
+                <!-- ======== the left front, swung open: the INSIDE ======== -->
+                <g transform="rotate(10 280 60)">
+                  <path
+                    d="M 280 62 L 264 56 L 140 78 L 122 200 L 116 500 L 280 500 Z"
+                    fill="#3b3121"
+                    stroke="#8a7c62"
+                    stroke-width="1.2"
+                  />
+                  <g clip-path="url(#left-front)">
+                    <!-- the floating canvas: it grows or stops at the chest -->
+                    <rect id="canvas-region" x={C.canvas.x} y={C.canvas.y}
+                      width={C.canvas.w} height={C.canvas.h}
+                      fill="url(#hatch-canvas)" opacity="0.8" />
+                    <rect id="canvas-outline" x={C.canvas.x} y={C.canvas.y}
+                      width={C.canvas.w} height={C.canvas.h}
+                      fill="none" stroke="#9c8a68" stroke-width="1" stroke-dasharray="4 3" />
+                    <!-- the haircloth chest piece, pad-stitched: always there,
+                         because it is what gives a chest its shape -->
+                    <g id="chest-piece">
+                      <path d="M 156 100 L 264 104 L 266 268 Q 208 296 160 276 Z"
+                        fill="url(#hatch-crine)" opacity="0.92" />
+                      <path d="M 156 100 L 264 104 L 266 268 Q 208 296 160 276 Z"
+                        fill="none" stroke="#c0a87c" stroke-width="1.2" />
+                      <g stroke="#e0cda2" stroke-width="0.7" opacity="0.5" fill="none">
+                        {C.pad.map((d) => <path d={d} />)}
+                      </g>
+                    </g>
+                    <!-- the lining, which CLOSES OVER the canvas when present -->
+                    <rect id="lining" x="112" y={C.lining ? C.lining.y : 62}
+                      width="172" height={C.lining ? C.lining.h : 0}
+                      fill="#433d60" opacity="0.95" />
+                    <!-- the front facing: always there, over the lining -->
+                    <path d="M 250 58 L 280 62 L 280 500 L 244 500 Z"
+                      fill="#2c2417" stroke="#8a7c62" stroke-width="1" />
+                    <!-- the inside breast pocket -->
+                    <g stroke="#c0a87c" stroke-width="1.1" fill="none" opacity="0.85">
+                      <path d="M 158 302 L 236 306" />
+                      <path d="M 158 302 L 158 310" />
+                      <path d="M 236 306 L 236 314" />
+                    </g>
+                    <!-- bound seams and taped edges: only an unlined coat needs
+                         them, and only an unlined coat shows them -->
+                    <g id="bound-seams" stroke="#cc6a4e" stroke-width="1.4" fill="none"
+                      opacity="0.8" stroke-dasharray="6 5">
+                      <path d="M 140 80 L 123 200 L 118 494" />
+                      <path d="M 244 502 L 119 500" />
+                    </g>
+                  </g>
+                  <text x="146" y="546" fill="#94866c" font-size="12"
+                    font-family="Chivo, sans-serif" letter-spacing="2.5">L&apos;INTERNO</text>
+                </g>
+
+                <!-- ======== the right front: the OUTSIDE ======== -->
+                <g>
+                  <path
+                    d="M 280 62 L 296 56 L 414 80 Q 438 122 440 208 L 444 500 L 280 500 Z"
+                    fill="#5c4c34"
+                    stroke="#a8977a"
+                    stroke-width="1.2"
+                  />
+                  <!-- the notch lapel -->
+                  <path
+                    d="M 280 64 L 298 55 L 338 88 L 320 108 L 358 134 L 296 250 L 280 250 Z"
+                    fill="#7b6644"
+                    stroke="#c0a87c"
+                    stroke-width="1.3"
+                  />
+                  <!-- the roll line: where the lapel actually folds over -->
+                  <path d="M 294 60 Q 286 158 296 250" fill="none"
+                    stroke="#c0a87c" stroke-width="1" opacity="0.5" stroke-dasharray="2 4" />
+                  <!-- the gorge seam, where collar meets lapel -->
+                  <path d="M 320 108 L 306 96" fill="none" stroke="#c0a87c"
+                    stroke-width="1" opacity="0.6" />
+                  <!-- the taschino a barchetta: the one curve on this site -->
+                  <g stroke="#e0cda2" stroke-width="1.6" fill="none">
+                    <path d="M 352 256 Q 390 232 428 241" />
+                    <path d="M 353 265 Q 390 241 428 250" stroke-width="1" opacity="0.65" />
+                  </g>
+                  <!-- the pick stitch, at the chosen distance from the edge -->
+                  <g class="pick-line" stroke="#cc6a4e" stroke-width="1.6" fill="none"
+                    stroke-dasharray="3 6" stroke-linecap="round">
+                    <path id="pick-lapel" d={C.pick ?? ""} opacity={C.pick ? 1 : 0} />
+                    <path id="pick-front" d={C.pickFront ?? ""} opacity={C.pickFront ? 1 : 0} />
+                  </g>
+                  <!-- three buttons, rolled to two, as Naples does -->
+                  <g fill="none" stroke="#e0cda2" stroke-width="1.3" opacity="0.8">
+                    <circle cx="300" cy="276" r="5.5" />
+                    <circle cx="300" cy="330" r="5.5" />
+                    <circle cx="300" cy="384" r="5.5" />
+                  </g>
+                  <!-- the gathered sleeve head — the whole shoulder -->
+                  <g class="ripple" stroke="#e0cda2" stroke-width="1.3" fill="none" opacity="0.9">
+                    {C.ripples.map((d) => <path d={d} />)}
+                  </g>
+                  <text x="352" y="546" fill="#94866c" font-size="12"
+                    font-family="Chivo, sans-serif" letter-spacing="2.5">IL DRITTO</text>
+                </g>
+              </svg>
+              <p class="draw-note">
+                The hatched fields are the canvas and the haircloth <em>chest piece</em>. The coral dashes are what a tailor puts in by hand &mdash; the bound seams of an unlined coat, and the <em>impuntura</em> along the lapel.
+              </p>
+            </div>
+
+            <div class="coat-controls">
+              <form id="coat-form">
+                <fieldset class="ctl">
+                  <legend class="whisper">Costruzione — how much is in it</legend>
+                  <div class="seg">
+                    {
+                      Object.entries(COSTRUZIONE).map(([k, v]) => (
+                        <label>
+                          <input type="radio" name="costruzione" value={k} checked={k === DEFAULT_SPEC.costruzione} />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                  <p class="ctl-note" id="cos-note">{C.cos.note}</p>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">Tela — how far the canvas runs</legend>
+                  <div class="seg" style="grid-template-columns: repeat(2, minmax(0, 1fr))">
+                    {
+                      Object.entries(TELA).map(([k, v]) => (
+                        <label>
+                          <input type="radio" name="tela" value={k} checked={k === DEFAULT_SPEC.tela} />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                  <p class="ctl-note" id="tela-note">{C.tela.note}</p>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">Spalla — the shoulder</legend>
+                  <div class="seg">
+                    {
+                      Object.entries(SPALLA).map(([k, v]) => (
+                        <label>
+                          <input type="radio" name="spalla" value={k} checked={k === DEFAULT_SPEC.spalla} />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                  <p class="ctl-note" id="spalla-note">{C.spalla.note}</p>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">Impuntura — the pick stitch</legend>
+                  <div class="seg">
+                    {
+                      Object.entries(IMPUNTURA).map(([k, v]) => (
+                        <label>
+                          <input type="radio" name="impuntura" value={k} checked={k === DEFAULT_SPEC.impuntura} />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                </fieldset>
+              </form>
+
+              <div class="readout">
+                <dl>
+                  <div>
+                    <dt>Finished weight</dt>
+                    <dd class="num"><span id="r-grams">{C.readout.grams}</span> g</dd>
+                  </div>
+                  <div>
+                    <dt>By hand</dt>
+                    <dd class="num"><span id="r-hours">{C.readout.hours}</span> hours</dd>
+                  </div>
+                  <div>
+                    <dt>Prove</dt>
+                    <dd class="num"><span id="r-fittings">{C.readout.fittings}</span> fittings</dd>
+                  </div>
+                  <div>
+                    <dt>Ready in</dt>
+                    <dd class="num">about <span id="r-weeks">{C.readout.weeks}</span> weeks</dd>
+                  </div>
+                </dl>
+                <p class="price">
+                  <span id="r-price">{C.readout.priceLabel}</span>
+                  <span class="price-note">the jacket alone</span>
+                </p>
+                <button class="btn" id="begin" type="button">Comincia questa giacca</button>
+                <p class="begin-gloss">
+                  “Begin this jacket” — carries the specification into the order
+                  below. Note that the lighter coat is the dearer one: taking
+                  the lining out adds fourteen hours of hand-finishing.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LE PROVE ============ -->
+      <section id="prove" class="band-panno">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">03 — Le prove</p>
+              <h2 class="chapter-title">Two or three fittings</h2>
+              <p class="gloss">What actually happens in the room</p>
+            </div>
+            <p class="lede">
+              Ciro will not cut from posted measurements. The first fitting has
+              to happen in front of him — in Naples, or on one of four trunk
+              visits a year — because a Neapolitan coat is fitted to a posture,
+              and a posture does not travel in a tape measure.
+            </p>
+          </div>
+          <div class="prove-grid rise">
+            <div class="prove-figs">
+            <figure>
+              <img
+                src="/images/imbastitura.jpg"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                alt="An Italian tailor's hands drawing a needle and white basting thread through jacket cloth and its canvas interlining, a thimble on the middle finger."
+              />
+              <figcaption>
+                Basting: the whole coat held together in white thread that will
+                be cut away and thrown out.
+              </figcaption>
+            </figure>
+            <figure>
+              <img
+                src="/images/prova.jpg"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                alt="A basted-together jacket on a wooden dress form, held with long white basting stitches, raw edges and pale canvas showing at the lapel and shoulder."
+              />
+              <figcaption>
+                What arrives at the first prova: canvas showing, one sleeve,
+                nothing finished. Clients find it alarming and it is the most
+                useful hour of the whole commission.
+              </figcaption>
+            </figure>
+            </div>
+            <dl class="prove-list">
+              {
+                prove.map((p) => (
+                  <div>
+                    <dt>{p.t}</dt>
+                    <dd class="gloss">{p.g}</dd>
+                    <dd>{p.d}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ IL MAESTRO ============ -->
+      <section id="maestro">
+        <div class="wrap makers-grid rise">
+          <figure>
+            <img
+              src="/images/maestro.jpg"
+              width="1024"
+              height="1536"
+              loading="lazy"
+              alt="An older Italian master tailor at his wooden board, chalk in hand, marking a pattern on cloth, his face lit warmly by a single work lamp."
+            />
+          </figure>
+          <div>
+            <p class="whisper">04 — Il maestro</p>
+            <h2 class="chapter-title">Ciro cuts. He does not sew.</h2>
+            <p class="lede">
+              Ciro Lanzetta has cut on this board since 1978 and has not made a
+              whole coat himself since 1994. He says so before anyone asks,
+              because the alternative is letting people assume otherwise.
+            </p>
+            <p>
+              The jackets are made by three <em>giacchettaie</em> — Rosaria,
+              Anna, and Carmela — who work at their own tables in the Chiaia
+              and on the Vomero, which is how Naples has organised this trade
+              for a century. Trousers go to Salvatore, a <em>pantalonaio</em>,
+              two streets away. Ciro cuts, fits, and takes the blame.
+            </p>
+            <p>
+              Between them they finish about <span class="num">90</span> coats a
+              year. Rosaria has made roughly <span class="num">1,400</span>, and
+              can tell whose pattern a coat came off by looking at the armhole.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PRONTE ============ -->
+      <section id="pronte" class="band-panno">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">05 — Pronte</p>
+              <h2 class="chapter-title">On the rail now</h2>
+              <p class="gloss">Finished, unclaimed, alterable</p>
+            </div>
+            <p class="lede">
+              Three coats made for commissions that ended. A sleeve, a hem, and
+              a waist we can move; a shoulder we cannot. If one is near your
+              size, it can be fitted in an afternoon.
+            </p>
+          </div>
+          <div class="pronte-list">
+            {
+              pronte.map((a, i) => (
+                <article class={`pr-item rise ${i % 2 ? "flip" : ""}`}>
+                  <figure>
+                    <img
+                      src={`/images/${a.img}.jpg`}
+                      width="1536"
+                      height="1024"
+                      loading="lazy"
+                      alt={`${a.n} — ${a.name}, a finished soft-shouldered jacket lit warmly against a dark ground.`}
+                    />
+                  </figure>
+                  <div class="pr-text">
+                    <p class="whisper">{a.n}</p>
+                    <h3 class="chapter-title">{a.name}</h3>
+                    <p>{a.desc}</p>
+                    <dl class="pr-spec">
+                      <div><dt>Cloth</dt><dd>{a.cloth}</dd></div>
+                      <div><dt>Build</dt><dd>{a.build}</dd></div>
+                      <div><dt>Size (cm)</dt><dd class="num">{a.size}</dd></div>
+                      <div><dt>Price</dt><dd class="num">{a.price}</dd></div>
+                    </dl>
+                    <a
+                      class="btn-quiet"
+                      href={`mailto:sartoria@barchetta.it?subject=${encodeURIComponent(`Chiedere — ${a.n}`)}&body=${encodeURIComponent(`I would like to ask about ${a.n} (${a.name}, ${a.price}).\n\nMy chest / sleeve / jacket length in cm:\n\nName:\nCity:\n`)}`}
+                    >
+                      Chiedere — ask about {a.n}
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ORDINARE — THE ORDER ============ -->
+      <section id="ordinare">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">06 — Ordinare</p>
+              <h2 class="chapter-title">Begin a coat</h2>
+              <p class="gloss">An order request, not a checkout</p>
+            </div>
+            <p class="lede">
+              No card is taken on this page. Ciro reads this, tells you whether
+              your date is possible, and proposes a first fitting — in Naples or
+              on a trunk visit. Nothing is cut until you have stood in front of
+              him once.
+            </p>
+          </div>
+
+          <div class="order-grid rise">
+            <form class="order-form" action="mailto:sartoria@barchetta.it" method="post" enctype="text/plain">
+              <fieldset>
+                <legend class="whisper">La giacca</legend>
+                <p class="field-note">Pre-filled from the coat you opened above. Change anything.</p>
+                <label class="fld">
+                  <span>Specification</span>
+                  <input type="text" name="Specification" id="order-spec" value={C.summary} readonly />
+                </label>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Cloth</span>
+                    <select name="Cloth">
+                      <option>280 g tropical wool — for heat</option>
+                      <option>310 g hopsack — the year-round choice</option>
+                      <option>340 g flannel — winter</option>
+                      <option>I will send my own length</option>
+                    </select>
+                  </label>
+                  <label class="fld">
+                    <span>Buttons</span>
+                    <select name="Buttons">
+                      <option>Horn</option>
+                      <option>Corozo</option>
+                      <option>Mother-of-pearl</option>
+                    </select>
+                  </label>
+                  <label class="fld">
+                    <span>Vents</span>
+                    <select name="Vents">
+                      <option>Two side vents</option>
+                      <option>None — the Neapolitan default</option>
+                      <option>One centre vent</option>
+                    </select>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Le misure</legend>
+                <p class="field-note">
+                  Approximate is fine — these only tell Ciro whether to expect
+                  you. Nothing is cut from them. The first prova is measured in
+                  person.
+                </p>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Height (cm)</span>
+                    <input type="number" name="Height (cm)" min="140" max="215" inputmode="numeric" placeholder="178" />
+                  </label>
+                  <label class="fld">
+                    <span>Weight (kg)</span>
+                    <input type="number" name="Weight (kg)" min="40" max="180" inputmode="numeric" placeholder="76" />
+                  </label>
+                  <label class="fld">
+                    <span>Chest (cm)</span>
+                    <input type="number" name="Chest (cm)" min="70" max="160" inputmode="numeric" placeholder="100" />
+                  </label>
+                </div>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Waist (cm)</span>
+                    <input type="number" name="Waist (cm)" min="60" max="160" inputmode="numeric" placeholder="88" />
+                  </label>
+                  <label class="fld">
+                    <span>Sleeve (cm)</span>
+                    <input type="number" name="Sleeve (cm)" min="40" max="90" inputmode="numeric" placeholder="63" />
+                  </label>
+                  <label class="fld">
+                    <span>Jacket you wear now</span>
+                    <input type="text" name="Jacket worn now" placeholder="50R, a bit long in the sleeve" />
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Quando — the first fitting</legend>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Where you would fit</span>
+                    <select name="Fitting city">
+                      <option>Naples — the sartoria</option>
+                      <option>London — trunk visit, March &amp; October</option>
+                      <option>New York — trunk visit, May</option>
+                      <option>Tokyo — trunk visit, November</option>
+                    </select>
+                  </label>
+                  <label class="fld">
+                    <span>Needed by</span>
+                    <input type="date" name="Needed by" />
+                  </label>
+                  <label class="fld">
+                    <span>Occasion</span>
+                    <input type="text" name="Occasion" placeholder="Nothing in particular" />
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Lei — you</legend>
+                <div class="fld-row">
+                  <label class="fld"><span>Name</span><input type="text" name="Name" required /></label>
+                  <label class="fld"><span>Email</span><input type="email" name="Email" required /></label>
+                  <label class="fld"><span>City</span><input type="text" name="City" placeholder="Milano" /></label>
+                </div>
+                <label class="fld">
+                  <span>Anything we should know</span>
+                  <textarea
+                    name="Notes"
+                    rows="3"
+                    placeholder="A coat you already own that fits well; one shoulder lower than the other; a cloth you have been carrying around for years."
+                  ></textarea>
+                </label>
+              </fieldset>
+
+              <div class="order-submit">
+                <button class="btn" type="submit">Send the order request</button>
+                <p class="field-note">
+                  Opens your mail programme with the order written out. No
+                  payment is taken on this page.
+                </p>
+              </div>
+            </form>
+
+            <aside class="order-aside">
+              <figure>
+                <img
+                  src="/images/ordinare.jpg"
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                  alt="A tailor's worktable from above: tape measure, chalk, long steel shears, a folded paper pattern and a blank order slip, lit by a warm lamp."
+                />
+              </figure>
+              <dl class="aside-facts">
+                <div>
+                  <dt>What it costs</dt>
+                  <dd>
+                    <span class="num">€2,930</span> for a fully lined coat with
+                    half canvas; <span class="num">€4,700</span> for the
+                    unlined one with a full floating canvas and 12 mm impuntura.
+                    The coat you open above prices itself.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Trousers</dt>
+                  <dd>
+                    <span class="num">€960</span> from Salvatore, cut to the
+                    same pattern. A two-piece is not cheaper than its parts and
+                    we do not pretend otherwise.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Deposit</dt>
+                  <dd>
+                    Half at the first prova, half on collection. Nothing before
+                    we have met, and nothing on this page.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Alterations</dt>
+                  <dd>
+                    For life, free, on anything we cut — including after you
+                    change shape, which you will.
+                  </dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot-grid">
+        <div>
+          <p class="mark-word foot-mark">BARCHETTA</p>
+          <p class="gloss">
+            Vico Santa Maria a Cappella Vecchia, off Piazza dei Martiri,
+            Napoli.
+          </p>
+        </div>
+        <dl class="foot-facts">
+          <div><dt>Board</dt><dd>Ciro Lanzetta, dal 1978</dd></div>
+          <div><dt>Made by</dt><dd>Rosaria, Anna, Carmela · Salvatore</dd></div>
+          <div><dt>Write</dt><dd><a href="mailto:sartoria@barchetta.it">sartoria@barchetta.it</a></dd></div>
+          <div><dt>Open</dt><dd>Monday to Friday, 8–13 and 16–19</dd></div>
+        </dl>
+      </div>
+      <div class="wrap foot-fine">
+        <p>
+          A fictional sartoria built for the Foundry collection. The craft, the
+          streets, and the terms are real.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import { buildCoat, DEFAULT_SPEC } from "../coat.mjs";
+
+      const svg = document.getElementById("coat-svg");
+      const form = document.getElementById("coat-form");
+      if (svg && form) {
+        const $ = (s: string) => document.getElementById(s);
+
+        const read = () => {
+          const fd = new FormData(form as HTMLFormElement);
+          return {
+            costruzione: String(fd.get("costruzione") ?? DEFAULT_SPEC.costruzione),
+            tela: String(fd.get("tela") ?? DEFAULT_SPEC.tela),
+            spalla: String(fd.get("spalla") ?? DEFAULT_SPEC.spalla),
+            impuntura: String(fd.get("impuntura") ?? DEFAULT_SPEC.impuntura),
+          };
+        };
+
+        const draw = () => {
+          const C = buildCoat(read());
+
+          // the canvas grows or stops at the chest
+          for (const id of ["canvas-region", "canvas-outline"]) {
+            const el = $(id);
+            if (el) el.setAttribute("height", String(C.canvas.h));
+          }
+          // the lining closes over it
+          const lining = $("lining");
+          if (lining) {
+            lining.setAttribute("y", String(C.lining ? C.lining.y : 62));
+            lining.setAttribute("height", String(C.lining ? C.lining.h : 0));
+          }
+          // bound seams only read on an unlined coat
+          const seams = $("bound-seams");
+          if (seams) seams.setAttribute("opacity", C.cos.lining ? "0.12" : "0.75");
+
+          // the pick stitch moves in from the edge
+          const setPath = (id: string, d: string | null) => {
+            const el = $(id);
+            if (el) {
+              el.setAttribute("d", d ?? "");
+              el.setAttribute("opacity", d ? "1" : "0");
+            }
+          };
+          setPath("pick-lapel", C.pick);
+          setPath("pick-front", C.pickFront);
+
+          // the shoulder: gathered ripples, or a roll instead
+          const rip = svg.querySelector(".ripple");
+          if (rip) rip.innerHTML = C.ripples.map((d: string) => `<path d="${d}"></path>`).join("");
+
+          const set = (id: string, v: string) => {
+            const el = $(id);
+            if (el) el.textContent = v;
+          };
+          set("r-grams", String(C.readout.grams));
+          set("r-hours", String(C.readout.hours));
+          set("r-fittings", String(C.readout.fittings));
+          set("r-weeks", String(C.readout.weeks));
+          set("r-price", C.readout.priceLabel);
+          set("cos-note", C.cos.note);
+          set("tela-note", C.tela.note);
+          set("spalla-note", C.spalla.note);
+
+          const desc = $("coat-desc");
+          if (desc) desc.textContent = C.summary;
+          const spec = $("order-spec") as HTMLInputElement | null;
+          if (spec) spec.value = C.summary;
+        };
+
+        form.addEventListener("input", draw);
+        form.addEventListener("change", draw);
+        draw();
+
+        $("begin")?.addEventListener("click", () => {
+          draw();
+          $("ordinare")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => {
+            (document.querySelector('.order-form input[name="Name"]') as HTMLInputElement | null)?.focus();
+          }, 700);
+        });
+      }
+
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!document.documentElement.classList.contains("nofx") && !reduced) {
+        const io = new IntersectionObserver(
+          (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+          { rootMargin: "0px 0px -12% 0px" },
+        );
+        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+      }
+    </script>
+  </body>
+</html>
