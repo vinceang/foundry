@@ -38,6 +38,9 @@ The two series share standards, not styling. Read
 | [Larès](https://lares-vincent-angs-projects.vercel.app) | Aubade | Mountain refuge, rooms by altitude and weather | Italy · Dolomites, Val Gardena | [`sites/lares`](sites/lares) · live |
 | [Veta](https://veta-vincent-angs-projects.vercel.app) | Aubade | Custom surfboard shaping bay | Mexico · Oaxacan coast | [`sites/veta`](sites/veta) · live |
 | [Ibushi (燻)](https://ibushi.vercel.app) | Aubade | Akiya restoration — minka in four typologies | Japan · Hida, Gifu | [`sites/ibushi`](sites/ibushi) · live |
+| [Nipis](https://nipis.vercel.app) | Aubade | Bespoke barong Tagalog — piña and jusi to commission | Philippines · Lumban, Laguna | [`sites/nipis`](sites/nipis) · live |
+| [Barchetta](https://barchetta.vercel.app) | Nocturne | Neapolitan sartoria — the coat opened from the inside | Italy · Naples, Chiaia | [`sites/barchetta`](sites/barchetta) · live |
+| [Rosée](https://rosee-omega.vercel.app) | Aubade | Single-perfumer house — the field behind the bottle | France · Plascassier, Grasse | [`sites/rosee`](sites/rosee) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 
@@ -69,6 +72,14 @@ Non-design engineering scaffolds, shared across all sites.
 - **`shot-clip.mjs`** — full-resolution horizontal band of a page (section-by-section review).
   ```
   node tools/shot-clip.mjs http://localhost:4321/?nofx shots/sec.png 1800 900 1440
+  ```
+- **`shot-el.mjs`** — screenshots one element *after driving the page*, for proving a signature interaction actually changes what it claims to.
+  ```
+  node tools/shot-el.mjs http://localhost:4321/ shots/a.png "#svg" '[{"click":"input[value=x]"}]' 1440
+  ```
+- **`shot-nojs.mjs`** — full-page capture with JavaScript disabled, for the "complete with JS off" floor.
+  ```
+  node tools/shot-nojs.mjs http://localhost:4321/ shots/nojs.png 1440
   ```
 
 ## Deploy

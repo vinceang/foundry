@@ -18,6 +18,11 @@ scarcity determines composition. Their shared taste profile lives in
 - Shokunin — samurai ateliers
 - Casa Vicente — Andalusian guitars
 - Schwarzwald — Black Forest clocks
+- **Barchetta — a Neapolitan sartoria.** Proof the register is chosen from the
+  subject, not from the category: Neapolitan tailoring is *about* lightness,
+  but the site's subject is the coat's **interior** — floating canvas,
+  haircloth, pick stitch — which exists only on a lit board in a dark room. The
+  backlog had proposed Vesper; nothing here is in transit.
 
 ## Aubades
 

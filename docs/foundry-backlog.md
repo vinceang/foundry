@@ -28,26 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Bespoke Barong Tagalog atelier
-- **Series:** Aubade
-- **Place idea:** Lumban, Laguna (the embroidery town) with the cloth coming from Kalibo, Aklan
-- **Why it earns a place:** piña cloth woven from pineapple-leaf fiber is among the world's rarest textiles; the hand-embroidery (calado, sombrado, deshilado) rivals any European needle art; the Foundry has no Philippine site and no garment site of any kind
-- **Signature interaction:** the *pechera* — the embroidered front panel redrawn live from the buyer's cloth, motif, and occasion, fused with the order form
-- **Notes:** claimed 2026-07-31 alongside the sartoria and the perfumer, all three built with a real order form.
-
-### Neapolitan bespoke tailor
-- **Series:** Nocturne (re-argued from the backlog's Vesper — nothing here is in transit; the subject is the coat's hidden interior under the cutting lamp)
-- **Place idea:** Naples — a sartoria off Via Chiaia, the counter-argument to Savile Row
-- **Why it earns a place:** chalk marks, basting thread, and floating canvas are visually rich and largely invisible to most buyers
-- **Signature interaction:** the coat opened from the inside out — the strata a buyer never sees, driven by their own commission
-- **Notes:** claimed 2026-07-31.
-
-### Niche fragrance atelier
-- **Series:** Aubade (re-argued from the backlog's Nocturne — jasmine and rose are picked before sunrise because that is when the oil is highest; the subject's native hour is the harvest dawn, not a dark perfume ad)
-- **Place idea:** Grasse, Provence — one perfumer, one collection, no licensing
-- **Why it earns a place:** the process is invisible to buyers; the audience is discriminating
-- **Signature interaction:** the formula — a scent built from real materials, with a true product catalogue and cart-style order flow
-- **Notes:** claimed 2026-07-31. Replaced the Murano furnace in this batch, which is already built as Fornace alla Luna.
+_(nothing in progress)_
 
 ## Proposed — awaiting approval
 
@@ -58,31 +39,11 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 - **Signature interaction:** the unit fitted to a real backyard — plan and section redraw to a lot's dimensions and setback, or the interior unfolding/compacting as you scroll
 - **Notes:** dwellings run well above $5,000 → commission model, but stock plans and finish packages could sit under it → an order form there (commitment 7). Must not read as the Nordic log houses (Tyri/Malmfuru) — a modern material system and voice, not heritage.
 
-### Private jet charter — ALREADY BUILT (Auriga + Velum); remove
-- **Series:** dusk register — civil twilight, not Nocturne chiaroscuro (likely opens a third series alongside the lighthouse entry)
-- **Place idea:** deliberately placeless — a tail number, a hangar, three cities
-- **Why it earns a place:** Vince-named; tarmac at last light, cabin glow at altitude, utmost discretion as the brand itself
-- **Signature interaction:** a route board — great-circle lines drawn between city pairs, times in local light
-- **Notes:** rehearsed twice in skill dry-runs 2026-07-24. Vince judged the twilight take ("Velum": blue-black + apricot horizon, Spectral + Plex Mono) better than the chiaroscuro take ("Sable" — too dark). Build toward Velum's register.
-
 ### Custom bicycle frame builder
 - **Series:** Nocturne
 - **Place idea:** steel and lugs — Italy (Veneto) or Japan keirin builder (note: Japan already carries three sites)
 - **Why it earns a place:** Vince-named; brazed lugs, mitred tubes, flame and flux close-ups
 - **Signature interaction:** the frame's geometry redraws live to a rider's fit numbers
-
-### Nordic log cabin maker — ALREADY BUILT (Tyri + Malmfuru); remove
-- **Series:** decided at build time — argued from doctrine (crafted artifact vs place to dwell)
-- **Place idea:** Norway (laft tradition) or Finnish Lakeland
-- **Why it earns a place:** Vince-named; axe-hewn corner joints, resin-lit heartwood, snow-light interiors
-- **Signature interaction:** a corner joint assembling itself as you scroll
-- **Notes:** rehearsed in a skill dry-run 2026-07-24 (working name "Korpi") — treat as sketch, not constraint
-
-### Murano glass furnace — ALREADY BUILT (Fornace alla Luna, sites/alla-luna); remove
-- **Series:** Nocturne
-- **Place idea:** Murano, Venice — a goblet atelier working one furnace
-- **Why it earns a place:** the furnace is the single lamp the Nocturne doctrine dreams of; molten gathers glowing against black
-- **Signature interaction:** heat as interface — the glow of a piece cools from orange to glass as it enters the archive
 
 ### Wooden boat yard
 - **Series:** Nocturne
@@ -159,3 +120,6 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 | Larès | Aubade | Dolomites refuge, rooms by altitude and weather | https://lares-vincent-angs-projects.vercel.app |
 | Ibushi | Aubade | Minka builder, Hida — four villager-house typologies | https://ibushi.vercel.app |
 | Veta | Aubade | Oaxacan surfboard shaping bay | https://veta-vincent-angs-projects.vercel.app |
+| Nipis | Aubade | Bespoke barong Tagalog, Lumban, Laguna | https://nipis.vercel.app |
+| Barchetta | Nocturne | Neapolitan sartoria, Chiaia, Naples | https://barchetta.vercel.app |
+| Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
