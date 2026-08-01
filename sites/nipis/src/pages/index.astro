@@ -1,0 +1,981 @@
+---
+import "../styles/global.css";
+import { buildPechera, TELA, MOTIF, OKASYON, DEFAULT_SPEC, MIRROR } from "../pechera.mjs";
+
+/* The default panel is BUILT AT BUILD TIME by the same model the client
+   script uses, so the page is complete and correct with JavaScript off. */
+const P = buildPechera(DEFAULT_SPEC);
+
+const aparador = [
+  {
+    n: "No. 214",
+    name: "Piña liniwan · Espiga",
+    img: "aparador",
+    desc: "Cut for a wedding in Taal and never collected. Espiga worked in a single ivory thread on the sheerest grade we have — at this weight the spike reads as much by its shadow as by its stitch.",
+    tela: "Piña liniwan",
+    sukat: "Chest 104 · sleeve 62 · nape-to-hem 76",
+    hours: "212 hours at the needle",
+    price: "₱96,000",
+  },
+  {
+    n: "No. 219",
+    name: "Piña-seda · Sampaguita",
+    img: "aparador-b",
+    desc: "The vine run full length, flowering nine times a side. Piña across a silk warp, which is why it falls straighter than pure piña and why it forgives a humid church.",
+    tela: "Piña-seda",
+    sukat: "Chest 98 · sleeve 60 · nape-to-hem 74",
+    hours: "148 hours at the needle",
+    price: "₱62,400",
+  },
+  {
+    n: "No. 221",
+    name: "Jusi · Calado puro",
+    img: "aparador-c",
+    desc: "No figurative motif at all — the whole panel is drawn-thread lattice, four threads out and four whipped, across a jusi ground. The plainest thing on the rack and the hardest to keep square.",
+    tela: "Jusi",
+    sukat: "Chest 100 · sleeve 61 · nape-to-hem 75",
+    hours: "96 hours at the needle",
+    price: "₱28,800",
+  },
+];
+
+const burda = [
+  {
+    t: "Calado",
+    g: "drawn-thread openwork",
+    d: "Threads are drawn out of the woven ground and the survivors whipped into a lattice. The ornament is the absence — which is why a calado panel cannot be corrected. A cut thread is gone.",
+  },
+  {
+    t: "Sombrado",
+    g: "shadow work",
+    d: "Worked on the reverse of the cloth. Because the ground is sheer, the thread reads through it as a soft grey shadow rather than a line — the only embroidery designed to be seen from the wrong side.",
+  },
+  {
+    t: "Deshilado",
+    g: "drawn threadwork",
+    d: "The bands that edge a panel: threads withdrawn in a strip, then bundled and knotted into a rail. It is what stops the calado field from unravelling into the rest of the shirt.",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Nipis — a bespoke barong Tagalog atelier in Lumban, Laguna. Piña and jusi worked to commission: cloth you can hold to a window, a pechera embroidered by one pair of hands. Draw your panel and order."
+    />
+    <title>Nipis — barong Tagalog, hand-embroidered · Lumban, Laguna</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,300..600;1,300..500&family=Karla:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/hero-window.jpg" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f2e7'/%3E%3Cg stroke='%234d6149' stroke-width='1.4' fill='none'%3E%3Cpath d='M16 4 L16 28'/%3E%3Crect x='8' y='9' width='3' height='3'/%3E%3Crect x='8' y='16' width='3' height='3'/%3E%3Crect x='8' y='23' width='3' height='3'/%3E%3Crect x='21' y='9' width='3' height='3'/%3E%3Crect x='21' y='16' width='3' height='3'/%3E%3Crect x='21' y='23' width='3' height='3'/%3E%3C/g%3E%3C/svg%3E"
+    />
+    <script is:inline>
+      /* `js` gates the entrance animation in CSS, so a JS-off visitor gets the
+         finished composition instead of content stranded at opacity 0.
+         `?nofx` disables the animation outright for the critique loop. */
+      document.documentElement.classList.add("js");
+      const q = new URLSearchParams(location.search);
+      if (q.has("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+  <body>
+    <header class="site-head">
+      <div class="wrap head-inner">
+        <a class="mark" href="#top" aria-label="Nipis — home">
+          <span class="mark-word">NIPIS</span>
+          <span class="mark-gloss">Lumban, Laguna</span>
+        </a>
+        <nav aria-label="Sections">
+          <a href="#hibla">Ang hibla</a>
+          <a href="#pechera">Ang pechera</a>
+          <a href="#burda">Ang burda</a>
+          <a href="#mananahi">Ang mananahi</a>
+          <a href="#aparador">Ang aparador</a>
+          <a class="nav-order" href="#magpatahi">Magpatahi</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <div class="wrap hero-grid">
+          <div class="hero-text">
+            <p class="whisper">Barong Tagalog · piña at jusi · sa kamay</p>
+            <h1 class="statement">
+              The only formal garment in the world made to be <em>seen
+              through</em>.
+            </h1>
+            <p class="lede">
+              Every other formal tradition hides its construction. A barong is
+              worn untucked, unlined, over a plain undershirt, in a cloth thin
+              enough to read a window through. There is nowhere to put a bad
+              seam. Two of us work here: one cuts, one embroiders.
+            </p>
+            <div class="hero-acts">
+              <a class="btn" href="#pechera">Draw your pechera</a>
+              <a class="btn-quiet" href="#hibla">Where the cloth begins</a>
+            </div>
+          </div>
+          <figure class="hero-fig">
+            <img
+              src="/images/hero-window.jpg"
+              width="1536"
+              height="1024"
+              alt="A finished barong on a wooden hanger held against a bright capiz-shell window; daylight passes through the cloth and the embroidered front panel reads as shadow."
+              fetchpriority="high"
+            />
+            <figcaption>
+              No. 214 held to the window on Calle Rizal. The panel is not
+              printed on the cloth — it is the light coming through it.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ============ ANG HIBLA ============ -->
+      <section id="hibla" class="band-jusi">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">01 — Ang hibla</p>
+              <h2 class="chapter-title">The fibre</h2>
+              <p class="gloss">Kalibo, Aklan · 620 km south of this bench</p>
+            </div>
+            <p class="lede">
+              Piña is scraped, not spun. A worker draws a shard of broken
+              porcelain down the length of a red Bisaya pineapple leaf until
+              the pulp is gone and only fibre is left — this is <em>kiskis</em>.
+              What survives is sorted into two grades, and the
+              difference between them is the difference between a shirt and an
+              heirloom.
+            </p>
+          </div>
+
+          <div class="grade-grid rise">
+            <figure class="grade-fig">
+              <img
+                src="/images/kiskis.jpg"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                alt="A craftsman's hands drawing a porcelain shard along a green pineapple leaf, separating pale hair-fine fibres."
+              />
+              <figcaption>Kiskis — one leaf yields about a gram of usable fibre.</figcaption>
+            </figure>
+            <dl class="grades">
+              <div>
+                <dt>Liniwan</dt>
+                <dd class="gloss">the fine grade, from the upper layer of the leaf</dd>
+                <dd>
+                  Hair-fine and nearly translucent. Knotted end to end by hand —
+                  never twisted — so the thread stays flat and takes light. A
+                  weaver gets through roughly <span class="num">40</span> metres
+                  a month, on a good month.
+                </dd>
+              </div>
+              <div>
+                <dt>Bastos</dt>
+                <dd class="gloss">the coarse grade, from beneath</dd>
+                <dd>
+                  Stronger, shorter, and a shade darker. It goes into the warp
+                  where it will be under tension, and into cloth that has to
+                  survive being worn twice a week.
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <hr class="calado-rule" style="margin-block: clamp(48px, 6vw, 88px)" />
+
+          <div class="habi-grid rise">
+            <figure>
+              <img
+                src="/images/hibla.jpg"
+                width="1024"
+                height="1536"
+                loading="lazy"
+                alt="Macro view of hair-fine pale pineapple fibres knotted end to end into a continuous thread on dark hardwood."
+              />
+              <figcaption>Every metre of thread is a few hundred hand-tied knots.</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="/images/habi.jpg"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                alt="A wooden handloom strung with a warp of pale pineapple fibre, seen against a bright window so the threads glow."
+              />
+              <figcaption>
+                The warp on the loom at Kalibo. Piña is woven slowly and damp —
+                dry fibre snaps, and a snapped warp thread is a visible scar in
+                a cloth this sheer.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ANG PECHERA — THE SIGNATURE ============ -->
+      <section id="pechera">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">02 — Ang pechera</p>
+              <h2 class="chapter-title">Draw your panel</h2>
+              <p class="gloss">The embroidered front · the whole commission in one decision</p>
+            </div>
+            <p class="lede">
+              The <em>pechera</em> is the embroidered front of a barong, and it
+              settles everything — the cloth, the months of waiting, the price.
+              Change any of the four below and the panel is redrawn. Watch the
+              cloth: the sheerer the grade, the more the shirt beneath it reads
+              through, and the more the reverse-side shadow work shows.
+            </p>
+          </div>
+
+          <div class="pechera-stage rise">
+            <!-- ---------- the drawing ---------- -->
+            <div class="pechera-draw">
+              <svg
+                id="pechera-svg"
+                viewBox="62 34 276 524"
+                role="img"
+                aria-labelledby="pechera-title pechera-desc"
+              >
+                <title id="pechera-title">The pechera as specified</title>
+                <desc id="pechera-desc" set:html={P.summary}></desc>
+                <defs>
+                  <clipPath id="shirt">
+                    <path
+                      d="M 96 82 Q 100 74 108 72 L 166 58 Q 200 74 234 58 L 292 72 Q 300 74 304 82 L 312 162 L 316 540 L 84 540 L 88 162 Z"
+                    />
+                  </clipPath>
+                  <filter id="soften" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3.1" />
+                  </filter>
+                  <mask id="cloth-mask">
+                    <rect x="0" y="0" width="400" height="560" fill="#fff" />
+                    <g id="cut-r" fill="#000">
+                      <g class="cut-lines" stroke="#000" stroke-width={P.caladoWidth} fill="none">
+                        {P.caladoLines.map((d) => <path d={d} />)}
+                      </g>
+                      <g class="cut-holes">
+                        {P.holes.map((h) => <rect x={h.x} y={h.y} width={h.w} height={h.h} />)}
+                      </g>
+                    </g>
+                    <g id="cut-l" fill="#000" transform={MIRROR}>
+                      <g class="cut-lines" stroke="#000" stroke-width={P.caladoWidth} fill="none">
+                        {P.caladoLines.map((d) => <path d={d} />)}
+                      </g>
+                      <g class="cut-holes">
+                        {P.holes.map((h) => <rect x={h.x} y={h.y} width={h.w} height={h.h} />)}
+                      </g>
+                    </g>
+                  </mask>
+                </defs>
+
+                <!-- 1. what is UNDER the barong: the camisa de chino and the
+                     body. This is what a sheer cloth lets you see. -->
+                <g clip-path="url(#shirt)">
+                  <rect x="0" y="0" width="400" height="560" fill="#c3a37e" />
+                  <!-- the camisa de chino worn beneath: a lighter field over
+                       the chest only, so a sheer cloth has something to reveal -->
+                  <path
+                    d="M 158 78 Q 200 94 242 78 L 250 140 L 246 452 L 154 452 L 150 140 Z"
+                    fill="#dcc9ab"
+                  />
+                  <!-- the body inside the shirt, softly modelled -->
+                  <ellipse cx="200" cy="290" rx="98" ry="188" fill="#a9885f" opacity="0.2" />
+                  <rect x="84" y="58" width="26" height="482" fill="#a9885f" opacity="0.24" />
+                  <rect x="290" y="58" width="26" height="482" fill="#a9885f" opacity="0.24" />
+                </g>
+
+                <!-- 2. sombrado — stitched on the REVERSE, so it sits under
+                     the cloth and is attenuated by it. -->
+                <g
+                  id="sombrado"
+                  clip-path="url(#shirt)"
+                  opacity={P.cloth.sombrado}
+                  filter="url(#soften)"
+                  transform="translate(2.5, 3)"
+                  fill="none"
+                  stroke="#5a4a33"
+                  stroke-width="5.2"
+                  stroke-linecap="round"
+                >
+                  <g class="som-r">{P.bandPaths.map((d) => <path d={d} />)}</g>
+                  <g class="som-l" transform={MIRROR}>{P.bandPaths.map((d) => <path d={d} />)}</g>
+                </g>
+
+                <!-- 3. the cloth itself, with the calado cut out of it -->
+                <g clip-path="url(#shirt)">
+                  <rect
+                    id="cloth"
+                    x="0"
+                    y="0"
+                    width="400"
+                    height="560"
+                    fill={P.cloth.fill}
+                    opacity={P.cloth.opacity}
+                    mask="url(#cloth-mask)"
+                  />
+                </g>
+
+                <!-- 4. the burda on the face of the cloth -->
+                <g
+                  id="burda"
+                  clip-path="url(#shirt)"
+                  fill="none"
+                  stroke="#4d6149"
+                  stroke-width="1.25"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <g class="bur-r">{P.bandPaths.map((d) => <path d={d} />)}</g>
+                  <g class="bur-l" transform={MIRROR}>{P.bandPaths.map((d) => <path d={d} />)}</g>
+                  <g class="rul-r" stroke-width="0.9" opacity="0.75">
+                    {P.rules.map((d) => <path d={d} />)}
+                  </g>
+                  <g class="rul-l" stroke-width="0.9" opacity="0.75" transform={MIRROR}>
+                    {P.rules.map((d) => <path d={d} />)}
+                  </g>
+                  <g class="cal-r" stroke="#6d5136" stroke-width="0.35" opacity="0.45">
+                    {P.caladoLines.map((d) => <path d={d} />)}
+                  </g>
+                  <g class="cal-l" stroke="#6d5136" stroke-width="0.35" opacity="0.45" transform={MIRROR}>
+                    {P.caladoLines.map((d) => <path d={d} />)}
+                  </g>
+                </g>
+
+                <!-- 5. the garment's own hardware: placket, buttons, collar -->
+                <g clip-path="url(#shirt)" fill="none" stroke="#1f1c17" opacity="0.42">
+                  <path d="M 185 70 L 185 540" stroke-width="0.9" />
+                  <path d="M 215 70 L 215 540" stroke-width="0.9" />
+                  <!-- the collar band, sitting inside the neckline -->
+                  <path d="M 166 58 Q 200 74 234 58" stroke-width="1.4" opacity="0.75" />
+                  <path d="M 170 70 Q 200 86 230 70" stroke-width="1.1" opacity="0.5" />
+                  <!-- the shoulder seams -->
+                  <path d="M 108 72 L 166 58" stroke-width="0.9" opacity="0.45" />
+                  <path d="M 292 72 L 234 58" stroke-width="0.9" opacity="0.45" />
+                </g>
+                <g fill="#6d5136" opacity="0.72">
+                  <circle cx="200" cy="120" r="3.4" />
+                  <circle cx="200" cy="196" r="3.4" />
+                  <circle cx="200" cy="272" r="3.4" />
+                  <circle cx="200" cy="348" r="3.4" />
+                  <circle cx="200" cy="424" r="3.4" />
+                </g>
+                <path
+                  d="M 96 82 Q 100 74 108 72 L 166 58 Q 200 74 234 58 L 292 72 Q 300 74 304 82 L 312 162 L 316 540 L 84 540 L 88 162 Z"
+                  fill="none"
+                  stroke="#1f1c17"
+                  stroke-width="1.1"
+                  opacity="0.5"
+                />
+              </svg>
+              <p class="draw-note">
+                The tone behind the cloth is the <em>camisa de chino</em> worn
+                under every barong. How much of it you can see is the cloth
+                grade doing its work.
+              </p>
+            </div>
+
+            <!-- ---------- the controls ---------- -->
+            <div class="pechera-controls">
+              <form id="pechera-form">
+                <fieldset class="ctl">
+                  <legend class="whisper">Tela — the cloth</legend>
+                  <div class="seg">
+                    {
+                      Object.entries(TELA).map(([k, v]) => (
+                        <label>
+                          <input
+                            type="radio"
+                            name="tela"
+                            value={k}
+                            checked={k === DEFAULT_SPEC.tela}
+                          />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                  <p class="ctl-note" id="tela-note">{P.tela.note}</p>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">Motif — the burda</legend>
+                  <div class="seg seg-4">
+                    {
+                      Object.entries(MOTIF).map(([k, v]) => (
+                        <label>
+                          <input
+                            type="radio"
+                            name="motif"
+                            value={k}
+                            checked={k === DEFAULT_SPEC.motif}
+                          />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">Okasyon — how far the panel runs</legend>
+                  <div class="seg">
+                    {
+                      Object.entries(OKASYON).map(([k, v]) => (
+                        <label>
+                          <input
+                            type="radio"
+                            name="okasyon"
+                            value={k}
+                            checked={k === DEFAULT_SPEC.okasyon}
+                          />
+                          <span>{v.label}</span>
+                        </label>
+                      ))
+                    }
+                  </div>
+                </fieldset>
+
+                <fieldset class="ctl">
+                  <legend class="whisper">
+                    Calado — how much ground is cut away
+                  </legend>
+                  <input
+                    type="range"
+                    name="calado"
+                    id="calado"
+                    min="0"
+                    max="5"
+                    step="1"
+                    value={DEFAULT_SPEC.calado}
+                  />
+                  <div class="range-ends">
+                    <span>Solid ground</span>
+                    <span id="calado-val" class="num">{P.readout.calado} / 5</span>
+                    <span>Open lattice</span>
+                  </div>
+                </fieldset>
+              </form>
+
+              <div class="readout">
+                <dl>
+                  <div>
+                    <dt>Cloth</dt>
+                    <dd id="r-tela">{P.readout.tela}</dd>
+                  </div>
+                  <div>
+                    <dt>Panel drop</dt>
+                    <dd class="num"><span id="r-drop">{P.readout.dropCm}</span> cm</dd>
+                  </div>
+                  <div>
+                    <dt>At the needle</dt>
+                    <dd class="num"><span id="r-hours">{P.readout.hours}</span> hours</dd>
+                  </div>
+                  <div>
+                    <dt>Ready in</dt>
+                    <dd class="num">about <span id="r-weeks">{P.readout.weeks}</span> weeks</dd>
+                  </div>
+                </dl>
+                <p class="price">
+                  <span id="r-price">{P.readout.priceLabel}</span>
+                  <span class="price-usd" id="r-usd">{P.readout.usdLabel}</span>
+                </p>
+                <button class="btn" id="begin" type="button">
+                  Simulan ang barong na ito
+                </button>
+                <p class="begin-gloss">
+                  “Begin this barong” — carries this specification into the
+                  order below.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ANG BURDA ============ -->
+      <section id="burda" class="band-jusi">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">03 — Ang burda</p>
+              <h2 class="chapter-title">Three hands, three names</h2>
+              <p class="gloss">What the needle actually does to a sheer cloth</p>
+            </div>
+            <p class="lede">
+              None of these are stitches applied on top of the cloth. Each one
+              alters the weave itself — which is why a barong panel cannot be
+              unpicked and started again.
+            </p>
+          </div>
+          <div class="burda-grid rise">
+            <figure class="burda-fig">
+              <img
+                src="/images/burda.jpg"
+                width="1536"
+                height="1024"
+                loading="lazy"
+                alt="An embroiderer's hands and needle working drawn-thread openwork on sheer cloth stretched in a round wooden frame near a bright window."
+              />
+              <figcaption>
+                Estrella works a frame at the window all morning and moves as
+                the light does.
+              </figcaption>
+            </figure>
+            <dl class="burda-list">
+              {
+                burda.map((b) => (
+                  <div>
+                    <dt>{b.t}</dt>
+                    <dd class="gloss">{b.g}</dd>
+                    <dd>{b.d}</dd>
+                  </div>
+                ))
+              }
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ANG MANANAHI ============ -->
+      <section id="mananahi">
+        <div class="wrap makers-grid rise">
+          <figure>
+            <img
+              src="/images/mananahi.jpg"
+              width="1024"
+              height="1536"
+              loading="lazy"
+              alt="A tailor at a wooden bench with steel shears, laying out a cut panel of sheer cloth beside chalk and a paper pattern, lit by a broad window."
+            />
+          </figure>
+          <div>
+            <p class="whisper">04 — Ang mananahi</p>
+            <h2 class="chapter-title">Rodel cuts. Estrella embroiders.</h2>
+            <p class="lede">
+              They have worked the same two benches on Calle Rizal since 1998.
+              Rodel was taught to cut by his father, who cut for the
+              municipality; Estrella learned calado at eleven, from her
+              grandmother, on scrap jusi.
+            </p>
+            <p>
+              The division is absolute and slightly comic: Rodel will not put a
+              needle to a panel, and Estrella will not touch the shears. A
+              barong passes between them three times — cut, embroidered,
+              assembled — and neither will sign off on the other's work until
+              it has been held to the window on the landing.
+            </p>
+            <p>
+              They finish between <span class="num">28</span> and
+              <span class="num">34</span> barong a year. Six of those are
+              full state-occasion panels, because six is what Estrella's
+              hands will do.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ANG APARADOR ============ -->
+      <section id="aparador" class="band-jusi">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">05 — Ang aparador</p>
+              <h2 class="chapter-title">On the rack now</h2>
+              <p class="gloss">Finished, unclaimed, alterable</p>
+            </div>
+            <p class="lede">
+              Three barong finished for commissions that changed. Each can be
+              altered to a nearby measurement — a sleeve and a hem are easy, a
+              chest is not. Written to us, they leave the same week.
+            </p>
+          </div>
+          <div class="aparador-list">
+            {
+              aparador.map((a, i) => (
+                <article class={`ap-item rise ${i % 2 ? "flip" : ""}`}>
+                  <figure>
+                    <img
+                      src={`/images/${a.img}.jpg`}
+                      width="1536"
+                      height="1024"
+                      loading="lazy"
+                      alt={`${a.n} — a finished barong in ${a.tela} hanging in daylight, its embroidered panel reading as fine shadow.`}
+                    />
+                  </figure>
+                  <div class="ap-text">
+                    <p class="whisper">{a.n}</p>
+                    <h3 class="chapter-title">{a.name}</h3>
+                    <p>{a.desc}</p>
+                    <dl class="ap-spec">
+                      <div><dt>Cloth</dt><dd>{a.tela}</dd></div>
+                      <div><dt>Sukat (cm)</dt><dd class="num">{a.sukat}</dd></div>
+                      <div><dt>Work</dt><dd class="num">{a.hours}</dd></div>
+                      <div><dt>Price</dt><dd class="num">{a.price}</dd></div>
+                    </dl>
+                    <a
+                      class="btn-quiet"
+                      href={`mailto:palihan@nipis.ph?subject=${encodeURIComponent(`Tanungin — ${a.n}`)}&body=${encodeURIComponent(`I would like to ask about ${a.n} (${a.name}, ${a.price}).\n\nMy chest / sleeve / nape-to-hem in cm:\n\nName:\nCity:\n`)}`}
+                    >
+                      Tanungin — ask about {a.n}
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MAGPATAHI — THE ORDER ============ -->
+      <section id="magpatahi">
+        <div class="wrap">
+          <div class="section-head rise">
+            <div>
+              <p class="whisper">06 — Magpatahi</p>
+              <h2 class="chapter-title">Have one made</h2>
+              <p class="gloss">Literally: to have something sewn</p>
+            </div>
+            <p class="lede">
+              This is an order request, not a checkout — no card, no payment
+              here. Rodel reads it, checks the calendar against your date, and
+              writes back within a week with a total and a deposit. Nothing is
+              cut until you have replied to that.
+            </p>
+          </div>
+
+          <div class="order-grid rise">
+            <form
+              class="order-form"
+              action="mailto:palihan@nipis.ph"
+              method="post"
+              enctype="text/plain"
+            >
+              <fieldset>
+                <legend class="whisper">Ang barong</legend>
+                <p class="field-note">
+                  Pre-filled from the panel you drew above. Change anything.
+                </p>
+                <label class="fld">
+                  <span>Specification</span>
+                  <input
+                    type="text"
+                    name="Specification"
+                    id="order-spec"
+                    value={P.summary}
+                    readonly
+                  />
+                </label>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Collar</span>
+                    <select name="Collar">
+                      <option>Regular (with a tie)</option>
+                      <option>Mandarin</option>
+                    </select>
+                  </label>
+                  <label class="fld">
+                    <span>Cuff</span>
+                    <select name="Cuff">
+                      <option>Barrel</option>
+                      <option>French (with links)</option>
+                    </select>
+                  </label>
+                  <label class="fld">
+                    <span>Hem</span>
+                    <select name="Hem">
+                      <option>Standard — mid-seat</option>
+                      <option>Short — hip bone</option>
+                      <option>Long — traditional</option>
+                    </select>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Ang sukat — the measurements</legend>
+                <p class="field-note">
+                  In centimetres, over a thin shirt, not pulled tight. If you
+                  would rather not: post us a shirt that fits you well and we
+                  will measure it and send it back. We prefer this.
+                </p>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Chest</span>
+                    <input type="number" name="Chest (cm)" min="70" max="160" inputmode="numeric" placeholder="100" />
+                  </label>
+                  <label class="fld">
+                    <span>Shoulder</span>
+                    <input type="number" name="Shoulder (cm)" min="30" max="70" inputmode="numeric" placeholder="46" />
+                  </label>
+                  <label class="fld">
+                    <span>Sleeve</span>
+                    <input type="number" name="Sleeve (cm)" min="40" max="90" inputmode="numeric" placeholder="61" />
+                  </label>
+                </div>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Nape to hem</span>
+                    <input type="number" name="Nape to hem (cm)" min="50" max="110" inputmode="numeric" placeholder="75" />
+                  </label>
+                  <label class="fld">
+                    <span>Neck</span>
+                    <input type="number" name="Neck (cm)" min="30" max="55" inputmode="numeric" placeholder="40" />
+                  </label>
+                  <label class="fld">
+                    <span>Or send a shirt</span>
+                    <select name="Sending a shirt to copy">
+                      <option>No — measurements above</option>
+                      <option>Yes — I will post a shirt that fits</option>
+                    </select>
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Kailan — when it is needed</legend>
+                <p class="field-note">
+                  The panel decides the wait. A state-occasion pechera is five
+                  months of needle and we will say so plainly if your date does
+                  not work.
+                </p>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Date needed</span>
+                    <input type="date" name="Date needed" />
+                  </label>
+                  <label class="fld">
+                    <span>Occasion</span>
+                    <input type="text" name="Occasion" placeholder="A wedding in Taal, October" />
+                  </label>
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend class="whisper">Kayo — you</legend>
+                <div class="fld-row">
+                  <label class="fld">
+                    <span>Name</span>
+                    <input type="text" name="Name" required />
+                  </label>
+                  <label class="fld">
+                    <span>Email</span>
+                    <input type="email" name="Email" required />
+                  </label>
+                  <label class="fld">
+                    <span>City</span>
+                    <input type="text" name="City" placeholder="Manila" />
+                  </label>
+                </div>
+                <label class="fld">
+                  <span>Anything we should know</span>
+                  <textarea
+                    name="Notes"
+                    rows="3"
+                    placeholder="A motif that means something to your family; a barong you are trying to match; a shoulder that sits lower than the other."
+                  ></textarea>
+                </label>
+              </fieldset>
+
+              <div class="order-submit">
+                <button class="btn" type="submit">Send the order request</button>
+                <p class="field-note">
+                  Opens your mail programme with the order written out. No
+                  payment is taken on this page.
+                </p>
+              </div>
+            </form>
+
+            <aside class="order-aside">
+              <figure>
+                <img
+                  src="/images/sukat.jpg"
+                  width="1536"
+                  height="1024"
+                  loading="lazy"
+                  alt="A tailor's worktable seen from above: cloth tape measure, chalk, a folded length of sheer cloth, and a blank spec sheet."
+                />
+              </figure>
+              <dl class="aside-facts">
+                <div>
+                  <dt>What it costs</dt>
+                  <dd>
+                    <span class="num">₱9,800</span> for a plain jusi barong
+                    with no panel at all; <span class="num">₱119,100</span> at
+                    the top, for a full state panel in piña liniwan — that one
+                    is <span class="num">215</span> hours at the needle and
+                    about <span class="num">17</span> weeks. The panel you draw
+                    above prices itself.
+                  </dd>
+                </div>
+                <div>
+                  <dt>What we need first</dt>
+                  <dd>
+                    A date, and either five measurements or a shirt in the post.
+                    Nothing else, and no deposit until we have both agreed the
+                    panel.
+                  </dd>
+                </div>
+                <div>
+                  <dt>Shipping</dt>
+                  <dd>
+                    Rolled, never folded — a pressed crease in piña is
+                    permanent. Manila overnight; anywhere else by courier at
+                    cost.
+                  </dd>
+                </div>
+                <div>
+                  <dt>If it does not fit</dt>
+                  <dd>
+                    Post it back. Sleeves, hem, and side seams we will alter for
+                    nothing, once. The chest we usually cannot — which is why we
+                    ask for the shirt.
+                  </dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot-grid">
+        <div>
+          <p class="mark-word foot-mark">NIPIS</p>
+          <p class="gloss">
+            Tela de nipis — the sheer cloths. Calle Rizal, Lumban, Laguna,
+            Philippines.
+          </p>
+        </div>
+        <dl class="foot-facts">
+          <div><dt>Bench</dt><dd>Rodel &amp; Estrella Bituin, since 1998</dd></div>
+          <div><dt>Cloth from</dt><dd>Kalibo, Aklan</dd></div>
+          <div><dt>Write</dt><dd><a href="mailto:palihan@nipis.ph">palihan@nipis.ph</a></dd></div>
+          <div><dt>Open</dt><dd>Tuesday to Saturday, 7am–4pm</dd></div>
+        </dl>
+      </div>
+      <hr class="calado-rule" />
+      <div class="wrap foot-fine">
+        <p>
+          A fictional atelier built for the Foundry collection. The craft, the
+          places, and the terms are real.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import { buildPechera, DEFAULT_SPEC, MIRROR } from "../pechera.mjs";
+
+      const svg = document.getElementById("pechera-svg");
+      const form = document.getElementById("pechera-form");
+      if (svg && form) {
+        const $ = (s: string) => document.getElementById(s);
+        const setPaths = (sel: string, ds: string[]) => {
+          const g = svg.querySelector(sel);
+          if (!g) return;
+          g.innerHTML = ds.map((d) => `<path d="${d}"></path>`).join("");
+        };
+
+        const read = () => {
+          const fd = new FormData(form as HTMLFormElement);
+          return {
+            tela: String(fd.get("tela") ?? DEFAULT_SPEC.tela),
+            motif: String(fd.get("motif") ?? DEFAULT_SPEC.motif),
+            okasyon: String(fd.get("okasyon") ?? DEFAULT_SPEC.okasyon),
+            calado: Number(fd.get("calado") ?? DEFAULT_SPEC.calado),
+          };
+        };
+
+        const draw = () => {
+          const P = buildPechera(read());
+
+          setPaths(".bur-r", P.bandPaths);
+          setPaths(".bur-l", P.bandPaths);
+          setPaths(".som-r", P.bandPaths);
+          setPaths(".som-l", P.bandPaths);
+          setPaths(".rul-r", P.rules);
+          setPaths(".rul-l", P.rules);
+          svg.querySelectorAll(".cut-lines").forEach((g) => {
+            g.setAttribute("stroke-width", String(P.caladoWidth));
+            g.innerHTML = P.caladoLines.map((d: string) => `<path d="${d}"></path>`).join("");
+          });
+          svg.querySelectorAll(".cut-holes").forEach((g) => {
+            g.innerHTML = P.holes
+              .map((r) => `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"></rect>`)
+              .join("");
+          });
+          setPaths(".cal-r", P.caladoLines);
+          setPaths(".cal-l", P.caladoLines);
+
+          const cloth = document.getElementById("cloth");
+          if (cloth) {
+            cloth.setAttribute("opacity", String(P.cloth.opacity));
+            cloth.setAttribute("fill", P.cloth.fill);
+          }
+          const som = document.getElementById("sombrado");
+          if (som) som.setAttribute("opacity", String(P.cloth.sombrado));
+
+          const set = (id: string, v: string) => {
+            const el = $(id);
+            if (el) el.textContent = v;
+          };
+          set("r-tela", P.readout.tela);
+          set("r-drop", String(P.readout.dropCm));
+          set("r-hours", String(P.readout.hours));
+          set("r-weeks", String(P.readout.weeks));
+          set("r-price", P.readout.priceLabel);
+          set("r-usd", P.readout.usdLabel);
+          set("calado-val", `${P.readout.calado} / 5`);
+          set("tela-note", P.tela.note);
+
+          const desc = document.getElementById("pechera-desc");
+          if (desc) desc.textContent = P.summary;
+          const spec = document.getElementById("order-spec") as HTMLInputElement | null;
+          if (spec) spec.value = P.summary;
+        };
+
+        form.addEventListener("input", draw);
+        form.addEventListener("change", draw);
+        draw();
+
+        $("begin")?.addEventListener("click", () => {
+          draw();
+          document.getElementById("magpatahi")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => {
+            (document.querySelector('.order-form input[name="Name"]') as HTMLInputElement | null)?.focus();
+          }, 700);
+        });
+      }
+
+      /* entrance reveals — skipped under ?nofx and reduced motion */
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!document.documentElement.classList.contains("nofx") && !reduced) {
+        const io = new IntersectionObserver(
+          (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
+          { rootMargin: "0px 0px -12% 0px" },
+        );
+        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+      }
+    </script>
+  </body>
+</html>
