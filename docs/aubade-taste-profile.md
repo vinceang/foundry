@@ -115,6 +115,11 @@ interaction.
 
 ## Structure
 
+- **The rule of 8.** Every spacing value is a multiple of 8; 4px is reserved
+  for tight internal adjustment. Working scale 4, 8, 16, 24, 32, 40, 48, 64,
+  extended by 8s for room-scale gaps. Larger gaps between groups than within
+  them, and more space above a heading than below it. Air is measured, not
+  approximate.
 - Generous space reads as air, not void. Let light-colored surfaces meet one
   another through proportion, texture, shadow, and joinery lines.
 - Keep asymmetric editorial spreads and decisive crops. Do not replace the

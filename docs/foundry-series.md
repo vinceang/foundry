@@ -129,6 +129,13 @@ Both series keep the same deeper commitments:
    chapter is a per-site decision, made once and held within that site,
    never a house template. Consistency belongs inside a site; across the
    collection it reads as one generator.
+9. **The rule of 8.** Spacing runs on an 8px system: every value a multiple
+   of 8, with 4px reserved for tight internal adjustment. The working scale
+   is 4, 8, 16, 24, 32, 40, 48, 64, extended by 8s for chapter-scale gaps
+   (128, 192). Larger gaps between groups than within them, and more space
+   above a heading than below it. This is structure, not style — a grid,
+   like the contrast ratios and the 11px floor. Nocturne's darkness and
+   Aubade's air sit on the same grid and look nothing alike.
 
 ## The inversion
 

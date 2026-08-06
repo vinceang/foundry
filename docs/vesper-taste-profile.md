@@ -79,6 +79,16 @@ Nocturne's spent move, borrowed as costume.
 Record the site's answer in its `DESIGN.md` beside the signature
 interaction.
 
+## Structure
+
+- **The rule of 8.** Every spacing value is a multiple of 8; 4px is reserved
+  for tight internal adjustment. Working scale 4, 8, 16, 24, 32, 40, 48, 64,
+  extended by 8s for chapter-scale gaps. Larger gaps between groups than
+  within them, and more space above a heading than below it. An operational
+  register earns nothing from an approximate grid.
+- Generous darkness above the horizon does the work emptiness does
+  elsewhere; the composition descends toward the ground, not away from it.
+
 ## Imagery
 
 One recipe: **a luminous sky over a darkened ground, instruments lit.** The

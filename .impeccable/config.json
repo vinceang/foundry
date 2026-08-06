@@ -1,0 +1,13 @@
+{
+  "detector": {
+    "ignoreRules": [
+      "cream-palette",
+      "dark-glow",
+      "radial-halo",
+      "radial-spotlight-glow",
+      "italic-serif-display",
+      "overused-font",
+      "aphoristic-cadence"
+    ]
+  }
+}

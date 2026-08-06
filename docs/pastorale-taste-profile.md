@@ -92,6 +92,16 @@ it has no lamp to justify it.
 Record the site's answer in its `DESIGN.md` beside the signature
 interaction.
 
+## Structure
+
+- **The rule of 8.** Every spacing value is a multiple of 8; 4px is reserved
+  for tight internal adjustment. Working scale 4, 8, 16, 24, 32, 40, 48, 64,
+  extended by 8s for chapter-scale gaps. Larger gaps between groups than
+  within them, and more space above a heading than below it. A trade that
+  measures its timber measures its margins.
+- Snow-light needs room to lie flat. One craft act at a time, asymmetric,
+  with the cold ground carrying the space between.
+
 ## Forms and states
 
 When the price puts a real order form on the site (see

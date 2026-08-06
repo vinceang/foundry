@@ -109,8 +109,12 @@ interaction.
 
 ## Structure
 
-- 8px rhythm; chapters separated by 128–192px of darkness. When in doubt,
-  add emptiness — it is the luxury signal.
+- **The rule of 8.** Every spacing value is a multiple of 8; 4px is
+  reserved for tight internal adjustment. Working scale 4, 8, 16, 24, 32,
+  40, 48, 64, extended by 8s to chapter scale — chapters separated by
+  128–192px of darkness. Larger gaps between groups than within them, and
+  more space above a heading than below it. When in doubt, add emptiness —
+  it is the luxury signal.
 - A fixed "frame" of hairline corner fittings in faint metal at the
   viewport edges — the one piece of game-UI energy; add no other chrome.
 - **Fixed chrome never touches content.** Headers go transparent over the
