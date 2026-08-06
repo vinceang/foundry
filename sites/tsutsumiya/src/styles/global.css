@@ -961,3 +961,117 @@ fieldset.field { border: 0; padding: 0; min-inline-size: 0; }
   .js .rise { opacity: 1; transform: none; transition: none; }
 }
 html.nofx .rise { opacity: 1 !important; transform: none !important; transition: none !important; }
+
+
+/* ── 控 the accession entry ─────────────────────────────────
+   A plate in the register opens into the record the row had no room for.
+   The register's own room, not a generic lightbox: sumi ground, ai hairlines,
+   the house's type. See commitment 10 in docs/foundry-series.md. */
+.plate-open {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  line-height: 0;
+}
+.reg-cant .plate-open { grid-row: 1 / 3; }
+.plate-open .specimen { transition: border-color 0.45s var(--ease); }
+.plate-open:hover .specimen,
+.plate-open:focus-visible .specimen { border-color: var(--shu); }
+.plate-cue {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 14px;
+  height: 14px;
+  color: var(--kinari-dim);
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+}
+.plate-cue svg { width: 100%; height: 100%; display: block; }
+.plate-open:hover .plate-cue,
+.plate-open:focus-visible .plate-cue { opacity: 1; }
+@media (hover: none) { .plate-cue { opacity: 0.75; } }
+
+.plate-dialog {
+  border: 1px solid var(--ai);
+  background: var(--sumi);
+  color: var(--kinari);
+  padding: 0;
+  width: min(1080px, calc(100vw - 32px));
+  max-width: none;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+}
+.plate-dialog::backdrop {
+  background: rgba(6, 8, 10, 0.86);
+  backdrop-filter: blur(6px);
+}
+.pd-close-form { margin: 0; position: sticky; top: 0; z-index: 2; float: right; }
+.pd-close {
+  background: var(--sumi);
+  border: 1px solid var(--ai);
+  border-top: 0;
+  border-right: 0;
+  color: var(--kinari-dim);
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: color 0.4s var(--ease), border-color 0.4s var(--ease);
+}
+.pd-close:hover, .pd-close:focus-visible { color: var(--shu); border-color: var(--shu); }
+.pd-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  padding: clamp(24px, 3vw, 40px);
+  align-items: start;
+}
+.pd-figure { margin: 0; background: var(--kachi); border: 1px solid var(--ai-dim); }
+.pd-figure img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; }
+.pd-cant {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  border-bottom: 1px solid var(--ai-dim);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+.pd-cant b { font-family: var(--display); font-weight: 400; font-size: 34px; color: var(--kinari); }
+.pd-cant span { font-size: 12.5px; letter-spacing: 0.1em; color: var(--nibi); }
+.plate-dialog h3 { font-size: clamp(21px, 2.2vw, 27px); margin-bottom: 12px; }
+.plate-dialog h3 i { font-style: normal; color: var(--nibi); font-size: 0.72em; margin-right: 10px; }
+.plate-dialog p { font-size: 15px; line-height: 1.7; color: var(--nibi); max-width: 46ch; }
+.pd-dl { margin: 24px 0 0; border-top: 1px solid var(--ai-dim); }
+.pd-dl > div {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ai-dim);
+}
+.pd-dl dt { font-family: var(--display); font-size: 15px; color: var(--nibi); }
+.pd-dl dd {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 17px;
+  color: var(--kinari);
+  font-variant-numeric: tabular-nums;
+}
+.pd-dl dd small {
+  display: block;
+  font-family: var(--work);
+  font-size: 12.5px;
+  color: var(--nibi);
+  letter-spacing: 0.04em;
+  margin-top: 2px;
+}
+.pd-foot { margin-top: 20px; font-size: 13.5px; color: var(--kinari-dim); }
+@media (max-width: 800px) {
+  .pd-body { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plate-open .specimen, .plate-cue { transition: none; }
+}

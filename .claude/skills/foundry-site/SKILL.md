@@ -348,6 +348,13 @@ anti-pattern list as a hard checklist each pass, and its relentless test in
    before anyone named them. Open a sibling's screenshot beside yours and
    answer honestly.
 
+**Small imagery must open.** If the build shows plates as thumbnails, accession
+plates, or a contact sheet, wire the enlargement (commitment 10 in
+`docs/foundry-series.md`) — a real link to the full image, upgraded by JS to a
+native `<dialog>` carrying the piece's full record in the site's own voice, not
+just a bigger picture. A thumbnail with nothing more to say than its own
+enlargement is a thumbnail that should not exist.
+
 Before calling the build done, verify the floors (they are in every taste
 profile): complete page with JS off, visible focus states, body contrast,
 no functional text below 11px (tracked micro-labels included), keyboard
@@ -443,6 +450,8 @@ budget. Everything through Phase 5 runs for real, with these substitutions:
 - [ ] Floors verified (JS-off, contrast, 11px floor, keyboard,
       reduced-motion, ≤500KB images, mobile pass)
 - [ ] If the site has a form: every state designed, error state screenshot
+- [ ] Any small/thumbnail imagery opens into a record-carrying `<dialog>`
+      (commitment 10), and the trigger still works with JS off
 - [ ] Zero taste-profile anti-patterns on final screenshots
 - [ ] Both directions of the relentless test answered — including "could
       this belong to another Foundry site?"

@@ -117,6 +117,23 @@ reasoning and the two layout traps are in `DESIGN.md`; the short version:
 - Crop centres live in `crop-wares.mjs` — the generator frames loosely, so a
   naive centre crop puts the lantern in the plate instead of the ware.
 
+## Accession dialog — first use of commitment 10
+
+Tsutsumiya is the first site to implement **commitment 10** (`foundry-series.md`):
+small imagery opens into a record, not just a bigger picture. Every register
+plate opens a native `<dialog>` carrying dimensions, weight, price in silver,
+the source house, and the test that piece passes — read from `SOURCES` so the
+chapter and the dialog cannot disagree.
+
+Reusable shape for the next site:
+
+- Trigger is a real `<a href>` to the full image → JS-off still reaches it.
+- Native `<dialog>` for focus trap + Escape; add backdrop-click close, body
+  scroll lock, and **return focus to the trigger** on close.
+- Insert the image by script; a src-less tag is a broken-image box.
+- Verify behaviourally (Enter opens, focus enters, Escape closes, focus
+  returns) rather than by reading the code.
+
 ## Content note
 
 The wares are Edo-period craft objects with real nomenclature, photographed and

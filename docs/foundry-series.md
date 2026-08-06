@@ -144,6 +144,24 @@ Both series keep the same deeper commitments:
    like the contrast ratios and the 11px floor. Nocturne's darkness and
    Aubade's air sit on the same grid and look nothing alike.
 
+10. **A plate is a specimen, and a specimen can be examined.** Wherever a site
+    shows imagery small — a catalogue thumbnail, an accession plate, a
+    contact-sheet figure — that small image opens into a larger one. The
+    enlargement is **not merely a bigger picture**: it carries the record the
+    small form had no room for, in the site's own voice — the piece's true
+    name, its measurements in the world's own units, its provenance, what it
+    was tested against. If there is nothing to say beyond "here it is larger,"
+    the thumbnail did not need to open, and probably should not have been a
+    thumbnail. This is commitment 8 applied to imagery: the device earns its
+    place by encoding something true.
+
+    Non-negotiable in the build: the trigger is a real link to the full image,
+    so a JS-off visitor still reaches it; the enlargement is a native
+    `<dialog>` (focus trap, Escape, and focus returned to the trigger come
+    free); the backdrop closes it; reduced motion gets no transition; and the
+    dialog is the register's own room — the site's ground, its hairlines, its
+    type — never a generic lightbox chrome.
+
 ## The inversion
 
 | Nocturne | Aubade |

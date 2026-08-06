@@ -212,14 +212,24 @@ const NAV = [
           {WARES.map((w) => (
             <div class="reg-row" role="row" data-carry={w.carry}>
               <div class="reg-cant" role="cell">
-                <img
-                  class="specimen"
-                  src={`/images/w-${w.img}-480.jpg`}
-                  srcset={`/images/w-${w.img}-240.jpg 240w, /images/w-${w.img}-480.jpg 480w`}
-                  sizes="112px"
-                  alt={`${w.name}, photographed on unbleached hemp cloth.`}
-                  width="480" height="480" loading="lazy" decoding="async"
-                />
+                <a
+                  class="plate-open"
+                  href={`/images/w-${w.img}-1200.jpg`}
+                  data-ware={w.key}
+                  aria-label={`${w.cant} ${w.cantRomaji} — ${w.name}: open the full entry`}
+                >
+                  <img
+                    class="specimen"
+                    src={`/images/w-${w.img}-480.jpg`}
+                    srcset={`/images/w-${w.img}-240.jpg 240w, /images/w-${w.img}-480.jpg 480w`}
+                    sizes="96px"
+                    alt={`${w.name}, photographed on unbleached hemp cloth.`}
+                    width="480" height="480" loading="lazy" decoding="async"
+                  />
+                  <span class="plate-cue" aria-hidden="true">
+                    <svg viewBox="0 0 12 12"><path d="M0 0 H8 L12 4 V12 H0 Z" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 0 V4 H12" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+                  </span>
+                </a>
                 <b>{w.cant}</b>
                 <span>{w.cantRomaji} — “{w.cantGloss}”</span>
               </div>
@@ -523,12 +533,7 @@ const NAV = [
                 {k === "echizen" && "Sickles, since 1337. The kusarigama's blade is an ordinary Takefu field sickle, hafted long — the house buys it from the same shed the farmers do."}
                 {k === "awa" && "Indigo. Kachi-iro, eighteen dips, and the sashiko thread to go with it. The contract on folio three has been renewed every generation since 1768."}
               </p>
-              <div class="keeps">
-                {k === "iga" && "Tested: the hook, at 18 kan."}
-                {k === "banshu" && "Tested: the edge, on the mat."}
-                {k === "echizen" && "Tested: the haft, in the vise."}
-                {k === "awa" && "Tested: the dye, wet and dried."}
-              </div>
+              <div class="keeps">Tested: {s.tested}.</div>
             </div>
           ))}
         </div>
@@ -756,6 +761,27 @@ const NAV = [
         </form>
       </section>
     </main>
+
+    <!-- 控 — the accession entry, opened from a plate in the register. -->
+    <dialog id="plate-dialog" class="plate-dialog" aria-labelledby="pd-name">
+      <form method="dialog" class="pd-close-form">
+        <button class="pd-close" aria-label="Close this entry" value="close">
+          閉 <span aria-hidden="true">✕</span>
+        </button>
+      </form>
+      <div class="pd-body">
+        <!-- the plate is inserted by script: an image tag with no src ships as
+             a broken-image box, and this dialog only ever opens with JS -->
+        <figure class="pd-figure" id="pd-figure"></figure>
+        <div class="pd-record">
+          <div class="pd-cant"><b id="pd-cant"></b><span id="pd-gloss"></span></div>
+          <h3 id="pd-name"></h3>
+          <p id="pd-line"></p>
+          <dl class="pd-dl" id="pd-dl"></dl>
+          <p class="pd-foot" id="pd-foot"></p>
+        </div>
+      </div>
+    </dialog>
 
     <footer class="foot">
       <div class="wrapper">

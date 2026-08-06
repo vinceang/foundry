@@ -266,10 +266,10 @@ export const WARES = [
 ];
 
 export const SOURCES = {
-  iga: { ja: "伊賀上野", romaji: "Iga-Ueno", region: "Iga, Mie" },
-  banshu: { ja: "播州三木", romaji: "Banshū Miki", region: "Harima, Hyōgo" },
-  echizen: { ja: "越前武生", romaji: "Echizen-Takefu", region: "Echizen, Fukui" },
-  awa: { ja: "阿波徳島", romaji: "Awa Tokushima", region: "Awa, Tokushima" },
+  iga: { ja: "伊賀上野", romaji: "Iga-Ueno", region: "Iga, Mie", tested: "the hook, at 18 kan" },
+  banshu: { ja: "播州三木", romaji: "Banshū Miki", region: "Harima, Hyōgo", tested: "the edge, on the mat" },
+  echizen: { ja: "越前武生", romaji: "Echizen-Takefu", region: "Echizen, Fukui", tested: "the haft, in the vise" },
+  awa: { ja: "阿波徳島", romaji: "Awa Tokushima", region: "Awa, Tokushima", tested: "the dye, wet and dried" },
 };
 
 export const wareByKey = (k) => WARES.find((w) => w.key === k);

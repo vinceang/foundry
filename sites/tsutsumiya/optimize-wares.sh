@@ -6,7 +6,7 @@ set -e
 cd "$(dirname "$0")"
 for f in assets-src/c-w-*.png; do
   n=$(basename "$f" .png); n=${n#c-}
-  for w in 480 240; do
+  for w in 1200 480 240; do
     sips -Z $w -s format jpeg -s formatOptions 72 "$f" --out "public/images/$n-$w.jpg" >/dev/null
   done
 done

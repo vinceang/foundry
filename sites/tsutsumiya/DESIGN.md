@@ -416,3 +416,35 @@ plate. Two things had to be fixed by measurement rather than eye:
 Specimens are ≤ 84KB each (13 wares × 2 widths). The katana's first take came
 back letterboxed with white bands and was re-shot. Mobile register rows now run
 single-column so the entry reads top to bottom.
+
+
+### 控 — the accession entry (commitment 10)
+
+Every plate in the 帳 register opens into **the record the row had no room
+for**: the plate at 1200px, the true name, the entry line, and then the five
+things the ledger row could not carry — 寸法 in *sun* and centimetres, 目方 in
+*monme* and grams, 銀 in monme of silver and yen, 出処 the source house, and 験
+the test that piece is put through. It closes with what the cloth does about
+it: goes in the cloth / carried in the hand / the house does not carry it.
+
+This is the point of the pattern and the reason it is now doctrine. An
+enlargement that is only *larger* has not earned the interaction; this one is
+where a buyer learns that the 夜縄 comes from Iga-Ueno and is hung at eighteen
+*kan* before it leaves. The 験 line is read from `SOURCES`, so the register
+chapter and the dialog can never disagree about what was tested.
+
+Built as a native `<dialog>`, which gives the focus trap, Escape, and modal
+semantics without hand-rolling them. Verified behaviourally rather than by
+inspection: opens on Enter from a keyboard-focused plate, focus moves into the
+dialog, Escape closes it, **focus returns to the exact trigger**, the backdrop
+closes it, and the body scroll lock is applied and released.
+
+Two details worth keeping:
+
+- **The trigger is a real `<a href>` to the full image**, so a JS-off visitor
+  still reaches the plate. The dialog only ever upgrades it.
+- **The plate is inserted by script rather than shipped as an empty tag.** The
+  anti-pattern detector was right to flag a src-less image as a broken-image
+  box; the fix is an empty `<figure>` that script fills. *(It then flagged the
+  literal string in the code comment explaining this — the one false positive
+  of the build, resolved by rewording the comment.)*

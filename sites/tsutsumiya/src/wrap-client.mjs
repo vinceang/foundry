@@ -1,4 +1,4 @@
-import { WARES, build, ledgerLine, cmToSun, gToMonme, yen } from "./wrap.mjs";
+import { WARES, SOURCES, build, ledgerLine, cmToSun, gToMonme, yen } from "./wrap.mjs";
 import { drawWrap, svgLabel, viewBox, boardNotes } from "./draw.mjs";
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -220,3 +220,65 @@ function lazyVideo(id, src) {
 }
 lazyVideo("hero-video", "/video/mise.mp4");
 lazyVideo("musubi-video", "/video/musubi.mp4");
+
+
+/* ── 控 the accession entry ──────────────────────────────── */
+// A plate in the register opens into the record the row had no room for.
+// The trigger is a real link to the full image, so with JS off it still
+// reaches the plate; this only upgrades it.
+const dialog = $("#plate-dialog");
+if (dialog && typeof dialog.showModal === "function") {
+  const figure = $("#pd-figure");
+  let opener = null;
+
+  const open = (w, href) => {
+    const src = SOURCES[w.from];
+    figure.innerHTML =
+      `<img src="${href}" width="1200" height="1200" alt="${w.name}, photographed on unbleached hemp cloth.">`;
+    $("#pd-cant").textContent = w.cant;
+    $("#pd-gloss").textContent = `${w.cantRomaji} — “${w.cantGloss}”`;
+    $("#pd-name").innerHTML = `<i>${w.ja}</i>${w.name}`;
+    $("#pd-line").textContent = w.line;
+
+    const rows = [
+      ["寸法", `${sun(w.l)} × ${sun(w.w)} × ${sun(w.h)} 寸`, `${w.l} × ${w.w} × ${w.h} cm`],
+      ["目方", `${Math.round(gToMonme(w.g))} 匁`, `${w.g} g, ${w.unit}`],
+      ["銀", `${Math.round(w.yen / 1400).toLocaleString("en-US")} 匁`, yen(w.yen)],
+      ["出処", src.ja, `${src.romaji} · ${src.region}`],
+      ["験", `Tested: ${src.tested}`, ""],
+    ];
+    $("#pd-dl").innerHTML = rows
+      .map(([k, v, sub]) => `<div><dt>${k}</dt><dd>${v}${sub ? `<small>${sub}</small>` : ""}</dd></div>`)
+      .join("");
+
+    $("#pd-foot").textContent =
+      w.carry === "wrap"
+        ? "Goes in the cloth."
+        : w.carry === "hand"
+          ? "Carried in the hand, in the open. It is not in the parcel."
+          : "The house sells it and the house does not carry it.";
+
+    dialog.showModal();
+    document.body.style.overflow = "hidden";
+  };
+
+  $$(".plate-open").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const w = WARES.find((x) => x.key === a.dataset.ware);
+      if (!w) return;
+      e.preventDefault();
+      opener = a;
+      open(w, a.getAttribute("href"));
+    });
+  });
+
+  // The backdrop closes it. <dialog> gives Escape and the focus trap free.
+  dialog.addEventListener("click", (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+  dialog.addEventListener("close", () => {
+    document.body.style.overflow = "";
+    figure.innerHTML = "";
+    if (opener) { opener.focus(); opener = null; }
+  });
+}
