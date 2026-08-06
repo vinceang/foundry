@@ -123,4 +123,4 @@ _(nothing in progress)_
 | Nipis | Aubade | Bespoke barong Tagalog, Lumban, Laguna | https://nipis.vercel.app |
 | Barchetta | Nocturne | Neapolitan sartoria, Chiaia, Naples | https://barchetta.vercel.app |
 | Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
-| Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | _pending deploy_ |
+| Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |

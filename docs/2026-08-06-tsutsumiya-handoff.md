@@ -1,7 +1,7 @@
 # Tsutsumiya (包屋) — handoff
 
 **Built:** 2026-08-06 · **Series:** Nocturne · **Project:** `sites/tsutsumiya`
-**Live:** _(recorded below on deploy)_
+**Live:** https://tsutsumiya.vercel.app
 
 An Edo-founded wrapping-goods house on the Itachibori canal in Osaka. It sells
 squares of cloth, flat cord, oiled paper and paulownia boxes — and a second
