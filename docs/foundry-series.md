@@ -18,6 +18,13 @@ scarcity determines composition. Their shared taste profile lives in
 - Shokunin — samurai ateliers
 - Casa Vicente — Andalusian guitars
 - Schwarzwald — Black Forest clocks
+- **Tsutsumiya — an Osaka wrapping house.** A merchant rather than a maker,
+  which is what makes it a different Nocturne from the three Japanese sites
+  already here. It sells cloth, cord and boxes on the ironmongers' lane in
+  Itachibori, and its craft is deciding what shape a thing must become before
+  it can cross a city. Its light comes *through paper* — one andon, so nothing
+  is ever quite fully revealed — rather than off metal, and it is typeset in
+  mincho and gothic, the first Japanese-native pairing in the collection.
 - **Barchetta — a Neapolitan sartoria.** Proof the register is chosen from the
   subject, not from the category: Neapolitan tailoring is *about* lightness,
   but the site's subject is the coat's **interior** — floating canvas,

@@ -1,0 +1,782 @@
+---
+import "../styles/global.css";
+import {
+  WARES, KNOTS, CLOTHS, SOURCES,
+  build, ledgerLine, cmToSun, gToMonme, yen,
+  DEFAULT_COUNTS, DEFAULT_KNOT,
+} from "../wrap.mjs";
+import { drawWrap, svgLabel, viewBox, boardNotes } from "../draw.mjs";
+
+const b = build(DEFAULT_COUNTS, DEFAULT_KNOT);
+const svg = drawWrap(b);
+const label = svgLabel(b);
+const slip = ledgerLine(DEFAULT_COUNTS, DEFAULT_KNOT);
+
+const sun = (cm) => cmToSun(cm).toFixed(1);
+const kan = (g) => (g / 3750).toFixed(2);
+
+const WARDS = ["立売堀 Itachibori", "船場 Semba", "道頓堀 Dōtonbori", "天満 Tenma", "堺筋 Sakaisuji", "elsewhere — said below"];
+const HOURS = [
+  { ja: "暮六つ", ro: "kure-mutsu", t: "≈ 18:00" },
+  { ja: "五つ", ro: "itsutsu", t: "≈ 20:00" },
+  { ja: "四つ", ro: "yotsu", t: "≈ 22:00" },
+  { ja: "九つ", ro: "kokonotsu", t: "≈ 24:00" },
+];
+
+const NAV = [
+  { id: "mise", ja: "店", en: "The shop" },
+  { id: "cho", ja: "帳", en: "The register" },
+  { id: "tsutsumi", ja: "包", en: "The wrap" },
+  { id: "dedokoro", ja: "出処", en: "Where it comes from" },
+  { id: "te", ja: "手", en: "The hands" },
+  { id: "watashi", ja: "渡し", en: "The handover" },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>包屋 Tsutsumiya — a wrapping house in Itachibori, Osaka</title>
+    <meta
+      name="description"
+      content="Tsutsumiya has dealt in wrapping cloth, cord and paulownia boxes on the Itachibori canal since 1682. Everything the house sells is a container. What the container holds is a separate ledger."
+    />
+    <meta name="theme-color" content="#0d1013" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="包屋 Tsutsumiya — the wrapping house" />
+    <meta property="og:description" content="Itachibori, Osaka, since 1682. The cloth decides what you may take." />
+    <meta property="og:image" content="/images/mise-1536.jpg" />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+
+  <body>
+    <div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <header class="head" id="head">
+      <a class="mark" href="#top">
+        <svg class="corner" viewBox="0 0 12 12" aria-hidden="true">
+          <path d="M0 0 H8 L12 4 V12 H0 Z" fill="none" stroke="var(--shu)" stroke-width="1.2" />
+          <path d="M8 0 V4 H12" fill="none" stroke="var(--shu)" stroke-width="1.2" />
+        </svg>
+        <span class="ja">包屋</span>
+        <span class="ro">TSUTSUMIYA</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        {NAV.map((s) => (
+          <a href={`#${s.id}`}><span>{s.ja}</span><span class="en">{s.en}</span></a>
+        ))}
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- ── Hero ─────────────────────────────────────────── -->
+      <section class="hero">
+        <div class="hero-media">
+          <img
+            src="/images/mise-1536.jpg"
+            srcset="/images/mise-800.jpg 800w, /images/mise-1536.jpg 1536w"
+            sizes="100vw"
+            alt="The front room of the shop at night: shelves of folded indigo and hemp cloth, coils of cord, paulownia boxes, and a single paper lantern on the counter."
+            width="1536"
+            height="857"
+            fetchpriority="high"
+          />
+          <video
+            id="hero-video"
+            muted
+            loop
+            playsinline
+            preload="none"
+            poster="/images/mise-1536.jpg"
+            aria-hidden="true"
+            tabindex="-1"
+          ></video>
+        </div>
+        <div class="hero-inner">
+          <h1>
+            <span class="jp">包み隠す</span>
+            Everything this house sells is a container.
+          </h1>
+          <p class="lede">
+            What the container holds is a separate ledger, and it is not on the
+            shelf. Cloth, cord, oiled paper and paulownia boxes. Itachibori,
+            Osaka, since 天和二年.
+          </p>
+          <div class="hero-foot">
+            <span><b>包屋</b> Tsutsumiya · wrapping goods</span>
+            <span>立売堀 <b>Itachibori</b>, Osaka — the ironmongers' quarter</span>
+            <span>Open from <b>暮六つ</b>. No address is printed.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 店 The shop ──────────────────────────────────── -->
+      <section id="mise" class="wrapper rise">
+        <div class="ledger">
+          <span class="folio">帳 一</span>
+          <span class="era">天和二年 霜月</span>
+          <span class="what">The founding entry — the shop opens on cloth</span>
+        </div>
+        <div class="split">
+          <div>
+            <h2>A wrapping house is the least remarkable shop on a street of iron.</h2>
+            <p class="lede" style="margin-top:24px">
+              Itachibori sells saws, chisels, nails and blade stock by the
+              wharf-load. A house on that lane taking delivery of forged iron is
+              a house doing its accounts.
+            </p>
+            <p>
+              What Tsutsumiya has actually sold since 1682 is squares of cotton
+              and hemp, flat woven cord, oiled paper, and paulownia boxes in
+              eleven sizes. That is the whole of the front room, and every word
+              of it is true. A merchant who wants a hundred cloths at{" "}
+              <span class="num">二幅</span> gets a hundred cloths at 二幅, and
+              the ledger says so.
+            </p>
+            <p>
+              The second ledger is the one this page is about. It lists what
+              goes inside. The house does not forge, weave, dye or braid any of
+              it. Four other houses do, and they are named further down. What
+              this house does is decide <em>what shape a thing must become
+              before it can cross a city</em>, and then make it that shape.
+            </p>
+            <p class="gloss">
+              包む <em>tsutsumu</em>, to wrap. 包み隠す <em>tsutsumi-kakusu</em>,
+              to wrap and hide: the ordinary word for covering something up.
+              The house was named before anyone thought it was funny.
+            </p>
+          </div>
+          <figure>
+            <div class="plate" style="aspect-ratio:2/3">
+              <img
+                src="/images/nuno-1536.jpg"
+                srcset="/images/nuno-800.jpg 800w, /images/nuno-1536.jpg 1536w"
+                sizes="(max-width: 860px) 100vw, 44vw"
+                alt="A square of deepest indigo cloth folded on a worn wooden board, one corner turned over, a hemp cord knot half drawn."
+                width="1536" height="1030" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>褐色 kachi-iro.</b> The darkest shade the indigo vat gives, and
+              the only one the house stocks for this work. Eighteen dips at
+              Tokushima. Its name puns on 勝つ, to win, which is why it was
+              worn and not why it is bought here.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── 帳 The register ──────────────────────────────── -->
+      <section id="cho" class="wrapper rise">
+        <div class="ledger">
+          <span class="folio">帳 二</span>
+          <span class="era">享保九年 水無月</span>
+          <span class="what">The register is first ruled into columns</span>
+        </div>
+        <h2>The second ledger, as it is ruled.</h2>
+        <p class="lede" style="margin-top:24px;max-width:56ch">
+          Each line carries the name the trade uses, the name the maker uses,
+          what it measures, what it weighs, and what it costs in silver. There
+          is no other description because there is nothing else to say.
+        </p>
+
+        <figure style="margin:56px 0 0">
+          <div class="plate" style="aspect-ratio:16/7">
+            <img
+              src="/images/cho-1536.jpg"
+              srcset="/images/cho-800.jpg 800w, /images/cho-1536.jpg 1536w"
+              sizes="100vw"
+              alt="A merchant's account book bound in indigo paper, closed on a wooden desk beside a bamboo brush, a small square seal stamp and a dish of vermilion seal paste."
+              width="1536" height="672" loading="lazy" decoding="async"
+            />
+          </div>
+          <figcaption style="max-width:58ch">
+            <b>朱 shu.</b> The seal paste. It is the only colour in the shop, and
+            it goes exactly where the house has put its name to something. That
+            is also the only place it appears on this page.
+          </figcaption>
+        </figure>
+
+        <div class="reg" role="table" aria-label="The register of wares">
+          {WARES.map((w) => (
+            <div class="reg-row" role="row" data-carry={w.carry}>
+              <div class="reg-cant" role="cell">
+                {w.cant}
+                <span>{w.cantRomaji} — “{w.cantGloss}”</span>
+              </div>
+              <div role="cell">
+                <div class="reg-name"><i>{w.ja}</i>{w.name}</div>
+                <p class="reg-line">{w.line}</p>
+              </div>
+              <div class="reg-spec" role="cell">
+                {sun(w.l)} × {sun(w.w)} × {sun(w.h)}
+                <em>sun</em>
+                {Math.round(gToMonme(w.g))} 匁
+                <em>the {w.unit}</em>
+              </div>
+              <div class="reg-price" role="cell">
+                <b>{Math.round(w.yen / 1400).toLocaleString("en-US")} 匁</b>
+                {yen(w.yen)}
+                <em>
+                  {w.carry === "wrap" ? "wrapped" : w.carry === "hand" ? "carried in hand" : "not carried"}
+                </em>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="trio">
+          <figure>
+            <div class="plate" style="aspect-ratio:2/3">
+              <img
+                src="/images/shozoku-1536.jpg"
+                srcset="/images/shozoku-800.jpg 800w, /images/shozoku-1536.jpg 1536w"
+                sizes="(max-width: 900px) 100vw, 30vw"
+                alt="An indigo-dyed cotton work jacket and trousers with sashiko stitching, folded into a neat rectangle on a plain wooden stand."
+                width="1024" height="1536" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption><b>黒仕.</b> Eighteen dips. Reversible; the other face is a labourer's brown.</figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:2/3">
+              <img
+                src="/images/tekagi-1536.jpg"
+                srcset="/images/tekagi-800.jpg 800w, /images/tekagi-1536.jpg 1536w"
+                sizes="(max-width: 900px) 100vw, 30vw"
+                alt="A pair of antique Japanese iron climbing hand-claws with forged hooks, iron bands and aged leather straps, on hemp cloth."
+                width="1024" height="1536" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption><b>爪.</b> Sized to the hand. Give the span across the knuckles.</figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:2/3">
+              <img
+                src="/images/tabi-1536.jpg"
+                srcset="/images/tabi-800.jpg 800w, /images/tabi-1536.jpg 1536w"
+                sizes="(max-width: 900px) 100vw, 30vw"
+                alt="A pair of indigo split-toe cloth boots with sewn soles and metal side clasps, standing on a worn wooden board."
+                width="1536" height="1030" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption><b>地下.</b> Twelve clasps, sewn sole, indigo over indigo.</figcaption>
+          </figure>
+        </div>
+
+        <div class="split" style="margin-top:64px">
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img
+                src="/images/kanagu-1536.jpg"
+                srcset="/images/kanagu-800.jpg 800w, /images/kanagu-1536.jpg 1536w"
+                sizes="(max-width: 860px) 100vw, 44vw"
+                alt="A ring-pommelled iron field tool laid on hemp cloth beside three four-pointed forged stars and two iron spikes."
+                width="1536" height="1024" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>小手・星・釘.</b> Photographed the way the house takes them in:
+              on the hemp, counted, before anything is decided about them.
+            </figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img
+                src="/images/nawa-1536.jpg"
+                srcset="/images/nawa-800.jpg 800w, /images/nawa-1536.jpg 1536w"
+                sizes="(max-width: 860px) 100vw, 44vw"
+                alt="A coil of pale hand-laid hemp rope with a four-pronged forged iron grapple spliced to its end."
+                width="1536" height="1024" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>夜縄.</b> Twelve <em>ken</em> — twenty-one and a half metres.
+              Hung with eighteen <em>kan</em> for a count of one hundred. Three
+              in every forty fail that and are sold as rope.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── 包 The wrap — THE SIGNATURE ──────────────────── -->
+      <section id="tsutsumi" class="wrapper rise">
+        <div class="ledger">
+          <span class="folio">帳 三</span>
+          <span class="era">明和五年 卯月</span>
+          <span class="what">The Awa indigo contract — kachi-iro from Tokushima</span>
+        </div>
+        <h2>The cloth decides what you may take.</h2>
+        <p class="lede" style="margin-top:24px;max-width:58ch">
+          Lay the goods on the board and the house will tell you three things:
+          which cloth it needs, whether it can be closed at all, and, the only
+          question anyone actually asks, <em>what a passer-by would take it
+          for.</em>
+        </p>
+
+        <form id="wrap-form" class="wrap-panel">
+          <div>
+            <div class="wares-head" id="wares-label">仕入 <span class="gloss">what goes on the cloth</span></div>
+            <p class="wares-note">
+              Trade names on the left. Counts are what the house will actually
+              hand over on the night; anything above these is two nights.
+            </p>
+            <div class="wares" role="group" aria-labelledby="wares-label">
+              {WARES.map((w) => (
+                <div class="ware" data-ware={w.key} data-carry={w.carry} data-on={(DEFAULT_COUNTS as any)[w.key] ? "1" : "0"}>
+                  <div class="ware-id">
+                    <b>
+                      {w.cant}
+                      <i>
+                        {w.ja} ·{" "}
+                        {w.carry === "hand" ? "手持 carried in hand" : w.carry === "separate" ? "別 not carried" : `${sun(w.l)} sun`}
+                      </i>
+                    </b>
+                    <span>{w.name} — {yen(w.yen)}</span>
+                  </div>
+                  <div class="ware-set">
+                    <button type="button" class="step" data-step="-1" data-for={w.key} aria-label={`One fewer ${w.cantRomaji}`}>−</button>
+                    <input
+                      type="number"
+                      name={`w_${w.key}`}
+                      id={`w_${w.key}`}
+                      min="0"
+                      max={w.max}
+                      step="1"
+                      value={(DEFAULT_COUNTS as any)[w.key] || 0}
+                      aria-label={`${w.cant} ${w.cantRomaji} — ${w.name}, how many`}
+                    />
+                    <button type="button" class="step" data-step="1" data-for={w.key} aria-label={`One more ${w.cantRomaji}`}>+</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div class="knots">
+              <fieldset>
+                <legend>結び <span class="gloss">the knot</span></legend>
+                <p>
+                  A knot is a decision about cloth, not a detail. Each one takes
+                  a different allowance out of the square, and that allowance is
+                  what decides whether the corners meet.
+                </p>
+                {KNOTS.map((k, i) => (
+                  <label class="knot-opt">
+                    <input type="radio" name="knot" value={k.key} checked={k.key === DEFAULT_KNOT} />
+                    <span class="tick" aria-hidden="true"></span>
+                    <span>
+                      <b>{k.ja}<i>{k.romaji} — {k.gloss} · {k.allowanceSun} 寸</i></b>
+                      <span>{k.note}</span>
+                    </span>
+                  </label>
+                ))}
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="board">
+            <svg
+              id="board-svg"
+              viewBox={viewBox(b)}
+              role="img"
+              aria-labelledby="board-title"
+            >
+              <title id="board-title">{label}</title>
+              <Fragment set:html={svg} />
+            </svg>
+            <ul class="board-notes" id="board-notes">{boardNotes(b).map((t) => <li>{t}</li>)}</ul>
+            <p class="gloss" style="margin-top:10px;font-size:12.5px">
+              Seen from directly above, mid-wrap: the far and near corners are
+              already over the goods, and the two that get tied are still open
+              on their creases.
+            </p>
+
+            <dl class="readout" id="readout">
+              <div>
+                <dt>包み<em>THE PARCEL</em></dt>
+                <dd id="r-size">{sun(b.L)} × {sun(b.W)} × {sun(b.H)}<small>sun · {Math.round(b.L)} × {Math.round(b.W)} × {Math.round(b.H)} cm</small></dd>
+              </div>
+              <div>
+                <dt>目方<em>WEIGHT</em></dt>
+                <dd id="r-weight">{Math.round(gToMonme(b.weightG))} 匁<small>{kan(b.weightG)} kan · {(b.weightG / 1000).toFixed(2)} kg</small></dd>
+              </div>
+              <div>
+                <dt>布<em>CLOTH NEEDED</em></dt>
+                <dd id="r-cloth">{b.cloth ? b.cloth.ja : "—"}<small>{b.cloth ? `${b.cloth.romaji} · ${b.cloth.cm} cm — needs ${Math.round(b.needed)}` : `needs ${Math.round(b.needed)} cm; the house stocks 130`}</small></dd>
+              </div>
+              <div>
+                <dt>銀<em>IN SILVER</em></dt>
+                <dd id="r-price">{Math.round(b.monme).toLocaleString("en-US")} 匁<small>{yen(b.totalYen)}</small></dd>
+              </div>
+            </dl>
+
+            <div class="verdict" id="verdict" data-pass={b.mie.pass ? "yes" : "no"} aria-live="polite">
+              <div class="mie" id="v-mie">{b.mie.ja}<em>見え {b.mie.romaji} — {b.mie.gloss}</em></div>
+              <p id="v-say">{b.mie.say}</p>
+            </div>
+
+            <div class="tally">
+              <div class="sum">
+                <span id="t-count">{b.count}</span> on the sheet
+                <em id="t-note">{!b.count ? "the cloth is empty" : !b.mie.pass ? "the house will not close this as one parcel" : `closed with the ${b.knot.romaji} in a ${b.cloth.romaji} cloth`}</em>
+              </div>
+              <a class="btn" href="#watashi" id="to-order">この包みを頼む <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </form>
+
+        <div class="rule-box">
+          <p class="jp">布は荷の対角に、高さの二倍、結び代に八寸。</p>
+          <p>
+            <em>The cloth is the parcel's diagonal, plus twice its height, plus
+            the knot's allowance.</em> Written on folio four in 1810 and not
+            revised since, because it has not needed to be. Every number above
+            comes out of that one line — which is why a single{" "}
+            <span class="num">爪</span> added to a full sheet can cost a whole
+            layer of height and push a parcel from a physician's chest to a
+            porter's load.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── 出処 Where it comes from ─────────────────────── -->
+      <section id="dedokoro" class="wrapper rise">
+        <div class="ledger">
+          <span class="folio">帳 四</span>
+          <span class="era">文化七年 神無月</span>
+          <span class="what">The four sources fixed; the testing rule written</span>
+        </div>
+        <div class="split rev">
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img
+                src="/images/tsuchi-1536.jpg"
+                srcset="/images/tsuchi-800.jpg 800w, /images/tsuchi-1536.jpg 1536w"
+                sizes="(max-width: 860px) 100vw, 44vw"
+                alt="Extreme close-up of the bare iron tang of a hand-forged tool held in a wooden vise, file marks and a small chiselled punch mark visible."
+                width="1536" height="1024" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>The punch.</b> Every piece the house takes in carries its
+              maker's mark on the tang, under the wrap, where the buyer will
+              never look. That is the point: it is not for the buyer.
+            </figcaption>
+          </figure>
+          <div>
+            <h2>Four houses make it. This house only proves it.</h2>
+            <p class="lede" style="margin-top:24px">
+              Tsutsumiya has never owned a forge. It owns a beam, a mat, and a
+              standing rule about what happens to work that fails.
+            </p>
+            <p>
+              Every edge is drawn once across a rolled straw mat and inspected
+              at the lantern. Every rope is hung with{" "}
+              <strong>eighteen kan</strong>, 67.5 kilos, for a count of one
+              hundred. Every suit is soaked
+              and dried once, because indigo that gives up its colour in rain
+              gives up the wearer with it.
+            </p>
+            <p>
+              Roughly <strong>one piece in twelve</strong> does not come through
+              that, and the house says which. Failed rope is sold as rope.
+              Failed edges go back to the smith with the mat still on them. The
+              register's prices are for the eleven.
+            </p>
+          </div>
+        </div>
+
+        <div class="sources">
+          {Object.entries(SOURCES).map(([k, s]) => (
+            <div class="source">
+              <h3>{s.ja}</h3>
+              <div class="ro">{s.romaji} · {s.region}</div>
+              <p>
+                {k === "iga" && "Field iron: hooks, claws, the grapples, the blowpipes. Small shops in the valley that have supplied this trade longer than this house has existed, and will not be named further."}
+                {k === "banshu" && "Edged tools since the castle at Miki came down and the carpenters stayed. Plate, spikes, the short blade. The best steel and the plainest mountings."}
+                {k === "echizen" && "Sickles, since 1337. The kusarigama's blade is an ordinary Takefu field sickle, hafted long — the house buys it from the same shed the farmers do."}
+                {k === "awa" && "Indigo. Kachi-iro, eighteen dips, and the sashiko thread to go with it. The contract on folio three has been renewed every generation since 1768."}
+              </p>
+              <div class="keeps">
+                {k === "iga" && "Tested: the hook, at 18 kan."}
+                {k === "banshu" && "Tested: the edge, on the mat."}
+                {k === "echizen" && "Tested: the haft, in the vise."}
+                {k === "awa" && "Tested: the dye, wet and dried."}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <figure style="margin-top:64px">
+          <div class="plate" style="aspect-ratio:3/2">
+            <img
+              src="/images/dedokoro-1536.jpg"
+              srcset="/images/dedokoro-800.jpg 800w, /images/dedokoro-1536.jpg 1536w"
+              sizes="100vw"
+              alt="Four material samples laid in a row on pale hemp cloth: folded indigo cotton, a coil of hemp rope, a bar of forged iron, and a sheet of unbleached washi."
+              width="1536" height="1024" loading="lazy" decoding="async"
+            />
+          </div>
+          <figcaption style="max-width:60ch">
+            <b>What the house actually buys.</b> Indigo, hemp, iron, paper. Every
+            line in the register upstairs resolves to one of those four, and the
+            house's whole opinion is about which of them a thing should
+            disappear into.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ── 手 The hands ─────────────────────────────────── -->
+      <section id="te" class="wrapper rise">
+        <div class="ledger">
+          <span class="folio">帳 五</span>
+          <span class="era">天保三年 長月</span>
+          <span class="what">The wrapper's six knots recorded</span>
+        </div>
+        <div class="split">
+          <div>
+            <h2>Six knots, and knowing which.</h2>
+            <p class="lede" style="margin-top:24px">
+              The whole of the wrapper's craft is choosing between them before
+              the cloth is off the shelf.
+            </p>
+            <p>
+              A <span class="num">真結び</span> lies flat and comes undone in
+              one pull, which is a virtue and also the reason it is not used on
+              anything that must survive being set down hard.
+              A <span class="num">二つ結び</span> costs four <em>sun</em> of
+              cloth and stops the contents moving.
+              A <span class="num">肩掛け</span> costs twenty and buys back both
+              of the carrier's hands, the most expensive thing on this page
+              measured in cloth.
+            </p>
+            <p>
+              He has been at the board since he was eleven. He does not ask what
+              is in the parcel and could not tell you afterwards, which is not
+              discretion so much as forty years of not being curious about
+              boxes.
+            </p>
+          </div>
+          <figure>
+            <div class="plate" style="aspect-ratio:4/5">
+              <img
+                src="/images/te-1536.jpg"
+                srcset="/images/te-800.jpg 800w, /images/te-1536.jpg 1536w"
+                sizes="(max-width: 860px) 100vw, 44vw"
+                alt="An older shopkeeper in an indigo work jacket standing at a worn counter, folding a large square of deep indigo cloth into quarters, face lit by the lantern."
+                width="1024" height="1536" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>The wrapper, at the counter.</b> The fold before the fold: a
+              cloth is squared on the board every time, even when the same cloth
+              was squared an hour ago.
+            </figcaption>
+          </figure>
+        </div>
+
+        <figure style="margin-top:96px">
+          <div class="plate" style="aspect-ratio:3/2;position:relative">
+            <img
+              src="/images/te-musubi-1536.jpg"
+              srcset="/images/te-musubi-800.jpg 800w, /images/te-musubi-1536.jpg 1536w"
+              sizes="100vw"
+              alt="Close view of two weathered hands drawing a knot tight over a compact parcel wrapped in deep indigo cloth on a wooden board."
+              width="1536" height="1030" loading="lazy" decoding="async"
+              id="musubi-img"
+            />
+            <video
+              id="musubi-video"
+              muted loop playsinline preload="none"
+              poster="/images/te-musubi-1536.jpg"
+              aria-hidden="true" tabindex="-1"
+              style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.4s var(--ease)"
+            ></video>
+          </div>
+          <figcaption style="max-width:56ch">
+            <b>真結び.</b> The knot is drawn once, and if it is drawn twice the
+            cloth is taken off and squared again. The house counts a re-tie as a
+            failure and records it, which is the only place in the ledger where
+            the house grades itself.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ── 渡し The handover + the order ────────────────── -->
+      <section id="watashi" class="wrapper rise">
+        <div class="ledger">
+          <span class="folio">帳 六</span>
+          <span class="era">令和七年 皐月</span>
+          <span class="what">The handover terms, as they stand</span>
+        </div>
+        <h2>How it reaches you.</h2>
+        <p class="lede" style="margin-top:24px;max-width:56ch">
+          Nothing is posted and nothing is delivered to a door. A parcel is set
+          down in a named ward at a named hour and is picked up by the person
+          who ordered it. That is the whole arrangement, and it has not changed
+          since the canal was open water.
+        </p>
+
+        <form
+          class="order"
+          id="order-form"
+          method="post"
+          action="mailto:cho@tsutsumiya.jp"
+          enctype="text/plain"
+          novalidate
+        >
+          <div>
+            <div class="field" id="f-kuchi">
+              <label for="kuchi">口利き <i>WHO SPOKE FOR YOU</i></label>
+              <p class="hint">
+                Required, and it is the only thing here that is. The house takes
+                no order from a name it has not heard from someone it already
+                knows. Give the name they use with us.
+              </p>
+              <input type="text" id="kuchi" name="Spoken for by" autocomplete="off" />
+              <p class="err" id="e-kuchi">
+                The house cannot take this without a word from someone. If you
+                have no one, say so here in plain words and we will write back
+                once, and only once.
+              </p>
+            </div>
+
+            <div class="field" id="f-na">
+              <label for="na">名 <i>THE NAME YOU ARE KNOWN BY</i></label>
+              <p class="hint">The house does not ask for the other one.</p>
+              <input type="text" id="na" name="Known as" autocomplete="off" />
+              <p class="err" id="e-na">Give the house something to write on the line.</p>
+            </div>
+
+            <div class="field" id="f-ward">
+              <label for="ward">渡し場 <i>THE WARD</i></label>
+              <p class="hint">Where the parcel is set down. Not an address, a ward.</p>
+              <select id="ward" name="Ward">
+                {WARDS.map((w) => <option value={w}>{w}</option>)}
+              </select>
+            </div>
+
+            <fieldset class="field" id="f-hour">
+              <legend>刻 <i>THE HOUR</i></legend>
+              <p class="hint">Old reckoning. The shop is dark before 暮六つ and the wrapper is gone after 九つ.</p>
+              <div class="hours">
+                {HOURS.map((h, i) => (
+                  <label class="hour">
+                    <input type="radio" name="Hour" value={`${h.ja} ${h.ro} ${h.t}`} checked={i === 1} />
+                    <b>{h.ja}</b>
+                    <span>{h.ro} · {h.t}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="field" id="f-tayori">
+              <label for="tayori">便り <i>WHERE THE REPLY GOES</i></label>
+              <p class="hint">One reply, with the night and the ward. Nothing after that.</p>
+              <input type="email" id="tayori" name="Reply to" autocomplete="email" />
+              <p class="err" id="e-tayori">That is not an address a reply will reach. Check it and send again.</p>
+            </div>
+
+            <div class="field">
+              <label for="soe">添え <i>ANYTHING ELSE</i></label>
+              <p class="hint">Sizes: the span across the knuckles, the length of the foot in sun. Or a night that will not work.</p>
+              <textarea id="soe" name="Note"></textarea>
+            </div>
+
+            <input type="hidden" name="Parcel" id="h-parcel" value={slip} />
+            <input type="hidden" name="Total" id="h-total" value={`${Math.round(b.monme)} monme silver — ${yen(b.totalYen)}`} />
+
+            <div class="form-foot">
+              <button class="btn" type="submit" id="submit-btn">帳に付ける <span aria-hidden="true">→</span></button>
+              <p class="note">
+                This opens your own mail and sends an order request. No card, no
+                payment, nothing taken here.
+              </p>
+            </div>
+            <div class="sent" id="sent" hidden>
+              <h3>受</h3>
+              <p>
+                <strong>Taken down.</strong> The line has gone into the register
+                as it stood: <span id="sent-line" class="num"></span>
+              </p>
+              <p>
+                One reply follows, to the address you gave, naming the night and
+                the corner of the ward. If it does not come within three days
+                the house did not receive it, and you should assume so rather
+                than wait.
+              </p>
+            </div>
+            <div aria-live="polite" class="visually-hidden" id="live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></div>
+          </div>
+
+          <aside class="parcel-slip" aria-label="The parcel as it stands">
+            <h3>この包み</h3>
+            <div class="ro">THE PARCEL AS IT STANDS</div>
+            <div class="slip-line" id="s-line">{slip}</div>
+            <div class="slip-row"><span>包み parcel</span><b id="s-size">{sun(b.L)} × {sun(b.W)} × {sun(b.H)} 寸</b></div>
+            <div class="slip-row"><span>目方 weight</span><b id="s-weight">{Math.round(gToMonme(b.weightG))} 匁</b></div>
+            <div class="slip-row"><span>布 cloth</span><b id="s-cloth">{b.cloth ? `${b.cloth.ja} · ${b.cloth.cm} cm` : "—"}</b></div>
+            <div class="slip-row"><span>見え reads as</span><b id="s-mie">{b.mie.ja}</b></div>
+            <div class="slip-total">
+              <span>銀 in silver</span>
+              <b id="s-total">{Math.round(b.monme).toLocaleString("en-US")} 匁</b>
+            </div>
+            <div class="slip-row" style="justify-content:flex-end"><b id="s-yen">{yen(b.totalYen)}</b></div>
+            <p class="gloss" style="margin:16px 0 0;font-size:12.5px;line-height:1.6">
+              Change the sheet above and this line changes with it. What is sent
+              is exactly what is drawn.
+            </p>
+          </aside>
+        </form>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrapper">
+        <div class="foot-grid">
+          <div>
+            <h4>包屋 Tsutsumiya</h4>
+            <p>
+              Wrapping cloth, flat cord, oiled paper, paulownia boxes.<br />
+              立売堀, Osaka. A lane behind the wharf.<br />
+              天和二年 — 令和七年.
+            </p>
+          </div>
+          <div>
+            <h4>The front room</h4>
+            <p>Open 暮六つ to 九つ. No address printed, and the house is in no directory. Those who need it have been told.</p>
+          </div>
+          <div>
+            <h4>The second ledger</h4>
+            <p>By 口利き only. The register is above; the sheet is above it. One reply to one order.</p>
+          </div>
+          <div>
+            <h4>Cloth stocked</h4>
+            <ul>
+              {CLOTHS.map((c) => <li>{c.ja} {c.romaji} — {c.cm} cm — {yen(c.yen)}</li>)}
+            </ul>
+          </div>
+        </div>
+        <div class="colophon">
+          <span>包み隠す — to wrap, and to hide.</span>
+          <span>A fictional house, built for the Foundry collection.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import "../wrap-client.mjs";
+    </script>
+  </body>
+</html>
