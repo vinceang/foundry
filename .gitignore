@@ -18,7 +18,15 @@ tools/.cache/
 # os / editor
 .DS_Store
 *.log
-.claude/
+
+# claude code: local state stays out, but the foundry-site skill travels
+# between machines — it carries build doctrine the docs/ profiles reference.
+# Excluded by size: worktrees (~6GB) and the eval workspace (~420MB of
+# generated site outputs), neither of which is source.
+.claude/*
+!.claude/skills/
+.claude/skills/*
+!.claude/skills/foundry-site/
 
 # design-review screenshots (critique-loop artifacts, kept local)
 shots/

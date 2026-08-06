@@ -1,0 +1,79 @@
+{
+  "skill_name": "foundry-site",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "backlog-queue-pick",
+      "prompt": "Work the Foundry backlog \u2014 open the next site. Dry run: no commits, no push, no deploy.",
+      "expected_output": "The skill reads docs/foundry-backlog.md, takes the TOP entry of the Approved queue (eval setup seeds one entry there, with a decoy entry second in the queue), builds that subject as a dry run, does not modify the backlog file (dry runs never touch it), and names the rehearsed entry in its report.",
+      "files": [],
+      "setup": "Before the run, replace the worktree's docs/foundry-backlog.md with the seeded variant (Murano glass furnace at the top of the Approved queue, English saddlery directly below as decoy).",
+      "assertions": [
+        "The built subject is the TOP approved backlog entry (Murano glass furnace), not the decoy below it, not a freely invented subject",
+        "docs/foundry-backlog.md is unmodified in the worktree after the run (dry runs never touch the backlog), and the report names which entry was rehearsed",
+        "A new self-contained Astro site exists in the outputs with its own package.json (astro dependency, no imports from sibling sites)",
+        "DESIGN.md exists and specifies all of: brand name, real place, materials-named palette with hex values, type pairing, domain vocabulary, and a signature interaction",
+        "The site code implements the ?nofx query param (disables entrance animations and/or forces eager image loading)",
+        "At least two screenshot critique passes are evidenced: screenshots present plus concrete named weaknesses and fixes documented in the report or transcript",
+        "Dry-run respected: no git commits, no push, no Vercel deploy performed or claimed; no live URL in the report",
+        "Image budget respected: at most 6 generated raster images ship from the site's public/ directory; remaining slots use palette-true placeholders, not gray boxes",
+        "At least one shipped image or explicit chapter carries human presence (maker, craftsman, or service moment), treated as maker/host rather than lifestyle model",
+        "Shipped plates are not murky/underexposed: every plate mean luma >= 15 (verify with a PIL histogram), and exposure fits the site's declared register \u2014 a Nocturne lamp-in-void batch should center in the 20-40 band, while a brighter register (twilight, snow-light) legitimately sits higher; the failure being guarded against is a dark, murky plate, not a bright one",
+        "Final screenshots show none of the taste profile's instant-fail anti-patterns (uniform card grid, pure #000/#fff ground, second accent color, luxury-adjective copy)"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "supplied-subject-private-jets",
+      "prompt": "new foundry site: private jet charter. something ultra-discreet, the kind of outfit that doesn't have a phone number you can find. dry run please \u2014 don't push or deploy anything",
+      "expected_output": "A private-jet-charter world written into sites/<name>/DESIGN.md with the light register derived from the subject's native hour (dusk/twilight, not forced Nocturne chiaroscuro), human presence in the shot list, hero + signature interaction built and critiqued first, dry-run constraints respected.",
+      "files": [],
+      "assertions": [
+        "A new self-contained Astro site exists in the outputs with its own package.json (astro dependency, no imports from sibling sites)",
+        "DESIGN.md exists and specifies all of: brand name, real place, materials-named palette with hex values, type pairing, domain vocabulary, and a signature interaction",
+        "The light register is derived from the subject's native hour and argued in DESIGN.md; the build does not default to pitch-black Nocturne chiaroscuro (Vince rejected that register for this subject; a twilight register is the expected direction)",
+        "At least one shipped image or explicit chapter carries human presence (maker, craftsman, or service moment), treated as maker/host rather than lifestyle model",
+        "Shipped plates are not murky/underexposed: every plate mean luma >= 15 (verify with a PIL histogram), and exposure fits the site's declared register \u2014 a Nocturne lamp-in-void batch should center in the 20-40 band, while a brighter register (twilight, snow-light) legitimately sits higher; the failure being guarded against is a dark, murky plate, not a bright one",
+        "The site code implements the ?nofx query param (disables entrance animations and/or forces eager image loading)",
+        "At least two screenshot critique passes are evidenced: screenshots present plus concrete named weaknesses and fixes documented in the report or transcript",
+        "Dry-run respected: no git commits, no push, no Vercel deploy performed or claimed; no live URL in the report",
+        "Image budget respected: at most 6 generated raster images ship from the site's public/ directory; remaining slots use palette-true placeholders, not gray boxes",
+        "Copy proves instead of claiming: no 'luxury', 'exclusive', 'premium', 'unforgettable' as adjectives; discretion expressed through specific nouns, numbers, and procedure",
+        "Final screenshots show none of the taste profile's instant-fail anti-patterns (uniform card grid, pure #000/#fff ground, second accent color, urgency copy)"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "ambiguous-series-log-cabins",
+      "prompt": "lets add a foundry site for a log cabin maker, somewhere nordic. dry run only for now",
+      "expected_output": "A reasoned, written series choice, a Nordic world with generously lit imagery (not murky chiaroscuro) and human presence (the builders), DESIGN.md first, critique passes run, dry-run constraints respected.",
+      "files": [],
+      "assertions": [
+        "A new self-contained Astro site exists in the outputs with its own package.json (astro dependency, no imports from sibling sites)",
+        "DESIGN.md exists and specifies all of: brand name, real place, materials-named palette with hex values, type pairing, domain vocabulary, and a signature interaction",
+        "The series/register choice is made explicitly and justified from Foundry doctrine in DESIGN.md (craft-artifact vs place-to-dwell weighed in writing, not silently assumed)",
+        "At least one shipped image or explicit chapter carries human presence (maker, craftsman, or service moment), treated as maker/host rather than lifestyle model",
+        "Shipped plates are not murky/underexposed: every plate mean luma >= 15 (verify with a PIL histogram), and exposure fits the site's declared register \u2014 a Nocturne lamp-in-void batch should center in the 20-40 band, while a brighter register (twilight, snow-light) legitimately sits higher; the failure being guarded against is a dark, murky plate, not a bright one",
+        "The site code implements the ?nofx query param (disables entrance animations and/or forces eager image loading)",
+        "At least two screenshot critique passes are evidenced: screenshots present plus concrete named weaknesses and fixes documented in the report or transcript",
+        "Dry-run respected: no git commits, no push, no Vercel deploy performed or claimed; no live URL in the report",
+        "Image budget respected: at most 6 generated raster images ship from the site's public/ directory; remaining slots use palette-true placeholders, not gray boxes",
+        "The Nordic world is specific (named region, correct cultural vocabulary) and does not recycle a sibling site's palette or type pairing"
+      ]
+    },
+    {
+      "id": 3,
+      "eval_name": "backlog-empty-queue",
+      "prompt": "Work the Foundry backlog \u2014 open the next site.",
+      "expected_output": "The Approved queue in docs/foundry-backlog.md is empty (its default state), so the skill must NOT build anything: it restocks Proposed with 2-3 new well-formed entries that meet the four subject criteria, then stops and reports that the queue is empty. Cheap, fast eval \u2014 no site build, no images.",
+      "files": [],
+      "setup": "Copy the current real docs/foundry-backlog.md into the worktree (its Approved queue is empty).",
+      "assertions": [
+        "No new site directory is created under sites/ and no images are generated",
+        "docs/foundry-backlog.md gains 2-3 new entries under 'Proposed \u2014 awaiting approval', each with series, place idea, why-it-earns-a-place, and a named signature interaction",
+        "New proposed entries do not duplicate existing backlog entries or the six built sites",
+        "The run ends with a report stating the Approved queue is empty and Vince must approve entries before an unattended build can proceed"
+      ]
+    }
+  ]
+}
