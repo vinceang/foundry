@@ -28,7 +28,13 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-_(nothing in progress)_
+### Custom bicycle frame builder
+- **Series:** **Pastorale** — overridden by Vince at build time (see DESIGN.md for the argument)
+- **Place:** Italy — Val Camonica, Lombardy (Vince chose Italy)
+- **Why it earns a place:** Vince-named; brazed lugs, mitred tubes, flame and flux close-ups
+- **Signature interaction:** the frame's geometry redraws live to a rider's fit numbers
+- **Claimed:** 2026-08-06 — building as **Traccia**, Val Camonica.
+
 
 ## Proposed — awaiting approval
 
@@ -38,12 +44,6 @@ _(nothing in progress)_
 - **Why it earns a place:** Vince-named; compact joinery, fold-down and built-in furniture, big windows framing a garden — warm interiors and clever section drawings both photograph well
 - **Signature interaction:** the unit fitted to a real backyard — plan and section redraw to a lot's dimensions and setback, or the interior unfolding/compacting as you scroll
 - **Notes:** dwellings run well above $5,000 → commission model, but stock plans and finish packages could sit under it → an order form there (commitment 7). Must not read as the Nordic log houses (Tyri/Malmfuru) — a modern material system and voice, not heritage.
-
-### Custom bicycle frame builder
-- **Series:** Nocturne
-- **Place idea:** steel and lugs — Italy (Veneto) or Japan keirin builder (note: Japan already carries three sites)
-- **Why it earns a place:** Vince-named; brazed lugs, mitred tubes, flame and flux close-ups
-- **Signature interaction:** the frame's geometry redraws live to a rider's fit numbers
 
 ### Wooden boat yard
 - **Series:** Nocturne
