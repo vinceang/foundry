@@ -28,13 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Custom bicycle frame builder
-- **Series:** **Pastorale** — overridden by Vince at build time (see DESIGN.md for the argument)
-- **Place:** Italy — Val Camonica, Lombardy (Vince chose Italy)
-- **Why it earns a place:** Vince-named; brazed lugs, mitred tubes, flame and flux close-ups
-- **Signature interaction:** the frame's geometry redraws live to a rider's fit numbers
-- **Claimed:** 2026-08-06 — building as **Traccia**, Val Camonica.
-
+_(nothing in progress)_
 
 ## Proposed — awaiting approval
 
@@ -123,4 +117,6 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 | Nipis | Aubade | Bespoke barong Tagalog, Lumban, Laguna | https://nipis.vercel.app |
 | Barchetta | Nocturne | Neapolitan sartoria, Chiaia, Naples | https://barchetta.vercel.app |
 | Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
+| Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
+| Traccia | Pastorale | Steel frame builder, Val Camonica | _pending deploy_ |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |

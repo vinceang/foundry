@@ -93,6 +93,14 @@ warm lamp) and distinct from Aubade (a working day, not warm hospitality). Its
 shared taste profile lives in
 [`pastorale-taste-profile.md`](pastorale-taste-profile.md).
 
+- **Traccia — cold flat light on bare steel.** A one-bench frame builder in
+  Edolo, high Val Camonica, under the Mortirolo. Proof the register is not only
+  for northern timber trades: the shop is indoors, but the light in it is cold
+  and flat because you cannot read a mitre gap or a 0,3 mm alignment error
+  under a warm point source — and the *specification* comes from outdoors, off
+  a gradient and a surface. Its sharper justification is distance: three
+  Italian Nocturnes already exist (Cremona, Naples, Murano) and all three are
+  warm, so a fourth warm Italian workshop would have been indistinguishable.
 - **Tyri — snow-light and open.** A Numedal log yard told in overcast daylight;
   the corner joint assembles as you scroll.
 

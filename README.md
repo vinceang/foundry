@@ -41,6 +41,7 @@ The two series share standards, not styling. Read
 | [Nipis](https://nipis.vercel.app) | Aubade | Bespoke barong Tagalog — piña and jusi to commission | Philippines · Lumban, Laguna | [`sites/nipis`](sites/nipis) · live |
 | [Barchetta](https://barchetta.vercel.app) | Nocturne | Neapolitan sartoria — the coat opened from the inside | Italy · Naples, Chiaia | [`sites/barchetta`](sites/barchetta) · live |
 | [Rosée](https://rosee-omega.vercel.app) | Aubade | Single-perfumer house — the field behind the bottle | France · Plascassier, Grasse | [`sites/rosee`](sites/rosee) · live |
+| Traccia | Pastorale | Steel frame builder — the road writes the specification | Italy · Edolo, Val Camonica | [`sites/traccia`](sites/traccia) |
 | [Tsutsumiya (包屋)](https://tsutsumiya.vercel.app) | Nocturne | Wrapping house — the cloth decides what you may take | Japan · Itachibori, Osaka | [`sites/tsutsumiya`](sites/tsutsumiya) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.

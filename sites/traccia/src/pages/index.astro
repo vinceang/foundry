@@ -1,0 +1,590 @@
+---
+import "../styles/global.css";
+import {
+  ROADS, REACHES, GAUGES, build, overlapVerdict, OVERLAP_ANSWERS,
+  specLine, eur, deg, DEFAULTS,
+} from "../frame.mjs";
+import { drawFrame, frameLabel, VB_W, VB_H } from "../draw.mjs";
+
+const f = build(DEFAULTS);
+const v = overlapVerdict(f);
+const svg = drawFrame(f, v);
+const spec = specLine(DEFAULTS);
+
+const NAV = [
+  { id: "valle", it: "La valle", en: "The valley" },
+  { id: "acciaio", it: "L'acciaio", en: "The steel" },
+  { id: "traccia", it: "La traccia", en: "The trace" },
+  { id: "dima", it: "La dima", en: "The jig" },
+  { id: "mani", it: "Le mani", en: "The hands" },
+  { id: "commissione", it: "La commissione", en: "The order" },
+];
+
+const FINISHES = [
+  "Minio soltanto — the primer, nothing over it (+ €0)",
+  "Tinta unita — one colour, down in Brescia (+ €450)",
+  "Il mio verniciatore — I have my own painter (+ €0)",
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Traccia — telai su misura, Val Camonica</title>
+    <meta
+      name="description"
+      content="A one-bench steel frame builder in Edolo, high Val Camonica, under the Mortirolo. A frame is a set of angles argued from one rider and one road."
+    />
+    <meta name="theme-color" content="#e9ecec" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Traccia — telai su misura" />
+    <meta property="og:description" content="Val Camonica. A frame is a set of angles argued from one rider and one road." />
+    <meta property="og:image" content="/images/passo-1536.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Titillium+Web:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+
+  <body>
+    <header class="head" id="head">
+      <a class="mark" href="#top">
+        <svg class="lug" viewBox="0 0 11 15" aria-hidden="true">
+          <path d="M5.5 0.8 L10 6 L5.5 14.2 L1 6 Z" fill="none" stroke="var(--minio)" stroke-width="1.4" stroke-linejoin="miter" />
+        </svg>
+        TRACCIA
+      </a>
+      <nav class="nav" aria-label="Sections">
+        {NAV.map((s) => (
+          <a href={`#${s.id}`}><span>{s.it}</span><span class="en">{s.en}</span></a>
+        ))}
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- ── Hero ─────────────────────────────────────────── -->
+      <section class="hero">
+        <div class="hero-media">
+          <img
+            src="/images/passo-1536.jpg"
+            srcset="/images/passo-800.jpg 800w, /images/passo-1536.jpg 1536w"
+            sizes="100vw"
+            alt="A plain steel road bicycle leaned against a stone snow-marker post at the top of an alpine pass, patches of old snow, the valley falling away into cloud behind."
+            width="1536" height="857" fetchpriority="high"
+          />
+        </div>
+        <div class="hero-inner">
+          <h1>A frame is a set of angles argued from one rider and one road.</h1>
+          <p class="lede">
+            One bench in Edolo, high Val Camonica, under the Mortirolo. The road
+            decides more of this frame than you do.
+          </p>
+          <div class="hero-foot">
+            <span><b>Traccia</b> · telai su misura dal 1978</span>
+            <span>Edolo, <b>Val Camonica</b> — 690 m</span>
+            <span>Attesa <b>14 settimane</b></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── La valle ─────────────────────────────────────── -->
+      <section id="valle" class="wrapper rise">
+        <div class="sheet">
+          <span class="q">Pendenza</span>
+          <span class="v">10,5 % media · 18 % max</span>
+          <span class="en">Mortirolo, Mazzo side — 12,4 km</span>
+        </div>
+        <div class="split top">
+          <div>
+            <h2>The road writes the specification. The bench only executes it.</h2>
+            <p class="lede" style="margin-top:24px">
+              Twelve kilometres at ten and a half per cent, with a kilometre at
+              eighteen. That is not a detail about the scenery. It is the
+              document the frame is built from.
+            </p>
+            <p>
+              A gradient that steep decides the gearing, and the gearing decides
+              the chainstay. A descent that long decides how much trail the fork
+              needs before the front end will hold a line at seventy. Two hours
+              of braking on a wet hairpin decides which steel goes in the down
+              tube. None of that is taste.
+            </p>
+            <p>
+              He rides every frame he builds up this valley before it is
+              painted, in the weather it will live in. Frames that come back
+              from that ride and get changed are frames that were drawn wrong,
+              and it happens about twice a year.
+            </p>
+          </div>
+          <figure>
+            <div class="plate" style="aspect-ratio:16/9">
+              <img
+                src="/images/valle-1536.jpg"
+                srcset="/images/valle-800.jpg 800w, /images/valle-1536.jpg 1536w"
+                sizes="(max-width: 880px) 100vw, 46vw"
+                alt="A steel bicycle standing on a wet gravel track in a wide alpine valley, bare rock walls rising into low cloud on both sides."
+                width="1536" height="857" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>Valle delle Messi.</b> Where the <em>bianca</em> frames are
+              proved. The surface is the reason those get 38 mm of tyre and
+              twenty millimetres more chainstay than the road frames.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="roads">
+          {ROADS.map((r) => (
+            <div>
+              <h3>{r.it}</h3>
+              <div class="g">{r.gloss} · {r.tyre} mm</div>
+              <p>{r.line}</p>
+              <div class="where">{r.road}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ── L'acciaio ────────────────────────────────────── -->
+      <section id="acciaio" class="wrapper rise">
+        <div class="sheet">
+          <span class="q">Spessore</span>
+          <span class="v">0,7 – 0,4 – 0,7 mm</span>
+          <span class="en">Butted wall thickness, the lightest set in the shop</span>
+        </div>
+        <div class="split rev top">
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img
+                src="/images/tubi-1536.jpg"
+                srcset="/images/tubi-800.jpg 800w, /images/tubi-1536.jpg 1536w"
+                sizes="(max-width: 880px) 100vw, 46vw"
+                alt="A bundle of bare steel bicycle frame tubes standing in the corner of a workshop beside a tall window, one cut to show its butted wall."
+                width="1536" height="1024" loading="lazy" decoding="async"
+              />
+            </div>
+            <figcaption>
+              <b>Butted.</b> Thick at the ends where the heat and the load are,
+              thin in the middle where neither is. Four tenths of a millimetre
+              through the centre of a down tube.
+            </figcaption>
+          </figure>
+          <div>
+            <h2>Steel, because it can be drawn thin in the middle.</h2>
+            <p class="lede" style="margin-top:24px">
+              A butted tube is thick where it is brazed and thin where nothing
+              happens to it. That is the whole argument, and it is a
+              manufacturing argument rather than a romantic one.
+            </p>
+            <p>
+              Wall thickness comes off the rider's weight, not off a catalogue
+              of models. A rider at 58 kg gets 0,7–0,4–0,7 and a frame that
+              weighs under 1 600 g. A rider at 96 kg gets 0,9–0,6–0,9 and is
+              told plainly that the frame is 250 g heavier, because the
+              alternative is a frame that goes soft under him in three years.
+            </p>
+            <p>
+              He does not build in titanium and he does not build in carbon. Not
+              as a position — he has simply never learned to, and says so rather
+              than inventing a reason.
+            </p>
+          </div>
+        </div>
+
+        <div class="trio" style="margin-top:72px">
+          <figure>
+            <div class="plate" style="aspect-ratio:1/1">
+              <img src="/images/congiunzione-1536.jpg" srcset="/images/congiunzione-800.jpg 800w, /images/congiunzione-1536.jpg 1536w" sizes="(max-width:900px) 100vw, 31vw"
+                alt="Extreme close-up of a hand-cut steel lug, filed into a tapering spearpoint where two tubes meet." width="1536" height="1536" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>La congiunzione.</b> The point is filed by hand. It is the only ornament on the frame and the only signature on it.</figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:1/1">
+              <img src="/images/ghiaia-1536.jpg" srcset="/images/ghiaia-800.jpg 800w, /images/ghiaia-1536.jpg 1536w" sizes="(max-width:900px) 100vw, 31vw"
+                alt="Close overhead view of a coarse pale limestone gravel road surface, wet from melting snow, with old snow at the verge." width="1536" height="1024" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>La ghiaia.</b> Limestone, wet, and loose on top of hard. This is the surface the 38 mm number comes from.</figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:1/1">
+              <img src="/images/minio-1536.jpg" srcset="/images/minio-800.jpg 800w, /images/minio-1536.jpg 1536w" sizes="(max-width:900px) 100vw, 31vw"
+                alt="Three bare steel bicycle frames in matte orange-red lead-oxide primer hanging by their head tubes from a rail in a bright workshop." width="1024" height="1536" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>Il minio.</b> Red-lead primer, the only colour in the shop. Paint happens down the valley in Brescia; he does not do it and does not pretend to.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── La traccia — THE SIGNATURE ───────────────────── -->
+      <section id="traccia" class="wrapper rise">
+        <div class="sheet">
+          <span class="q">Angolo sterzo</span>
+          <span class="v">71°30′ – 73°30′</span>
+          <span class="en">The range this drawing moves through</span>
+        </div>
+        <h2>Your numbers, your road, drawn to scale.</h2>
+        <p class="lede" style="margin-top:24px;max-width:56ch">
+          Five things decide a frame, and two of them are about you. Change any
+          of them and the drawing below is redrawn: angles, trail, wheelbase,
+          weight and price together, because on a bicycle they are not separate
+          decisions.
+        </p>
+
+        <form id="rig" class="rig">
+          <div>
+            <div class="fields">
+              <div class="fld">
+                <label for="altezza">Altezza <i>height</i></label>
+                <p class="hint">Sets the top tube. It is the number everyone gives and the less useful of the two.</p>
+                <div class="slide">
+                  <input type="range" id="altezza" name="Altezza (cm)" min="150" max="200" step="1" value={DEFAULTS.altezza} />
+                  <output for="altezza" id="o-altezza">{DEFAULTS.altezza}<small>cm</small></output>
+                </div>
+              </div>
+
+              <div class="fld">
+                <label for="cavallo">Cavallo <i>inseam</i></label>
+                <p class="hint">Sets the seat tube. Two riders at 178 cm can be 8 cm apart here, and they do not get the same frame.</p>
+                <div class="slide">
+                  <input type="range" id="cavallo" name="Cavallo (cm)" min="66" max="98" step="1" value={DEFAULTS.cavallo} />
+                  <output for="cavallo" id="o-cavallo">{DEFAULTS.cavallo}<small>cm</small></output>
+                </div>
+              </div>
+
+              <div class="fld">
+                <label for="peso">Peso <i>rider weight</i></label>
+                <p class="hint">Chooses the wall thicknesses. Nothing else on this page depends on it and nothing else should.</p>
+                <div class="slide">
+                  <input type="range" id="peso" name="Peso (kg)" min="45" max="115" step="1" value={DEFAULTS.peso} />
+                  <output for="peso" id="o-peso">{DEFAULTS.peso}<small>kg</small></output>
+                </div>
+              </div>
+
+              <fieldset class="fld">
+                <legend>La strada <i>the road</i></legend>
+                <p class="hint">An input, not a preference. It sets the tyre, the stays, the drop and, most of all, the fork.</p>
+                <div class="opts">
+                  {ROADS.map((r) => (
+                    <label class="opt">
+                      <input type="radio" name="Strada" value={r.key} checked={r.key === DEFAULTS.strada} />
+                      <span class="tick" aria-hidden="true"></span>
+                      <span>
+                        <b>{r.it}<i>{r.gloss} · {r.tyre} mm · {eur(r.price)}</i></b>
+                        <span>{r.line}</span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset class="fld">
+                <legend>Allungo <i>reach</i></legend>
+                <p class="hint">Twelve millimetres either side of the length he draws unless told otherwise.</p>
+                <div class="opts">
+                  {REACHES.map((r) => (
+                    <label class="opt">
+                      <input type="radio" name="Allungo" value={r.key} checked={r.key === DEFAULTS.allungo} />
+                      <span class="tick" aria-hidden="true"></span>
+                      <span>
+                        <b>{r.it}<i>{r.gloss}</i></b>
+                        <span>{r.line}</span>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+          </div>
+
+          <div class="board">
+            <svg id="board-svg" viewBox={`0 0 ${VB_W} ${VB_H}`} role="img" aria-labelledby="board-t">
+              <title id="board-t">{frameLabel(f, v)}</title>
+              <Fragment set:html={svg} />
+            </svg>
+            <p class="gloss" style="margin-top:10px;font-size:12.5px;max-width:66ch">
+              Drawn to one scale throughout, so a small frame is drawn small. The
+              dashed line through the head tube is the steering axis, and the
+              gap between where it meets the road and where the tyre does is the
+              <em> avancorsa</em>, the one number on a bicycle nobody can point at.
+            </p>
+
+            <dl class="readout" id="readout">
+              <div><dt>Sterzo / piantone</dt><dd id="r-ang">{deg(f.ha)} / {deg(f.sa)}<small>head and seat angle</small></dd></div>
+              <div><dt>Avancorsa</dt><dd id="r-trail">{Math.round(f.trail)} mm<small>trail</small></dd></div>
+              <div><dt>Passo</dt><dd id="r-wb">{Math.round(f.wheelbase)} mm<small>wheelbase</small></dd></div>
+              <div><dt>Piantone / orizzontale</dt><dd id="r-tubes">{f.st} / {f.tt}<small>seat and top tube, mm</small></dd></div>
+              <div><dt>Stack / reach</dt><dd id="r-sr">{Math.round(f.stack)} / {Math.round(f.reachMm)}<small>from the bottom bracket, mm</small></dd></div>
+              <div><dt>Tubi</dt><dd id="r-gauge" style="font-size:19px">{f.gauge.label}<small>{f.weight} g</small></dd></div>
+            </dl>
+
+            <div class="verdict" id="verdict" data-state={v.state} aria-live="polite">
+              <div class="st" id="v-st">{v.it}<em>sovrapposizione · {v.gloss}</em></div>
+              <p id="v-say">{v.say}</p>
+            </div>
+
+            <div class="answers" id="answers">
+              {OVERLAP_ANSWERS.map((a) => (
+                <div>
+                  <b>{a.it}<i>{a.gloss}</i></b>
+                  <p>{a.cost}</p>
+                </div>
+              ))}
+            </div>
+
+            <div class="tally">
+              <div class="sum">
+                <span id="t-price">{eur(f.price)}</span>
+                <em id="t-note">frameset — frame, fork, headset faced and fitted</em>
+              </div>
+              <a class="btn" href="#commissione">Comincia questo telaio <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- ── La dima ──────────────────────────────────────── -->
+      <section id="dima" class="wrapper rise">
+        <div class="sheet">
+          <span class="q">Allineamento</span>
+          <span class="v">± 0,3 mm sul piano</span>
+          <span class="en">The tolerance the shop actually holds, measured on every frame</span>
+        </div>
+        <div class="split top">
+          <div>
+            <h2>Mitred, brazed, and then argued with on a cast-iron table.</h2>
+            <p class="lede" style="margin-top:24px">
+              Brazing pulls steel. Every frame comes off the jig out of true,
+              and the work is knowing by how much before you measure it.
+            </p>
+            <p>
+              Tubes are mitred to the drawing, tacked in the <em>dima</em>, then
+              brazed with brass at around 870 °C: hot enough to flow, not hot
+              enough to burn the tubing's heat treatment. Then it goes on the
+              <em> piano di riscontro</em>, and it is cold-set by hand until the
+              dial reads inside three tenths of a millimetre.
+            </p>
+            <p>
+              <strong>Thirty-four hours in a frame, and eleven of them are
+              filing.</strong> Not because filing is romantic. Because a lug
+              that is not thinned at its edge leaves a hard line in the steel,
+              and hard lines are where frames crack.
+            </p>
+          </div>
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img src="/images/dima-1536.jpg" srcset="/images/dima-800.jpg 800w, /images/dima-1536.jpg 1536w" sizes="(max-width:880px) 100vw, 46vw"
+                alt="A tacked steel bicycle frame held in a heavy adjustable steel frame-building jig on a workbench, snowy peaks visible through tall workshop windows." width="1536" height="1024" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>La dima.</b> The jig holds the drawing while the heat tries to take it away.</figcaption>
+          </figure>
+        </div>
+
+        <div class="split top" style="margin-top:72px">
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img src="/images/brasatura-1536.jpg" srcset="/images/brasatura-800.jpg 800w, /images/brasatura-1536.jpg 1536w" sizes="(max-width:880px) 100vw, 46vw"
+                alt="Gloved hands guiding a small brazing torch around a steel bicycle lug, brass filler flowing into the joint." width="1536" height="1024" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>La brasatura.</b> Brass, not silver, on everything except the stays. The flame is the only warm thing in the building.</figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img src="/images/riscontro-1536.jpg" srcset="/images/riscontro-800.jpg 800w, /images/riscontro-1536.jpg 1536w" sizes="(max-width:880px) 100vw, 46vw"
+                alt="A bare steel bicycle frame lying on a cast-iron surface plate with a dial indicator gauge set against the rear dropout." width="1536" height="1024" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>Il piano di riscontro.</b> The frame is wrong until the dial says otherwise, and the dial is right about twice out of three.</figcaption>
+          </figure>
+        </div>
+
+        <div class="tol">
+          <p class="big">± 0,3 mm</p>
+          <p>
+            Every frame leaves with its measured alignment written on the
+            underside of the bottom bracket shell in pencil, where the paint
+            will not reach it. If yours reads 0,25 that is what it read on the
+            table, and if it reads 0,4 he will have told you before you saw it.
+          </p>
+        </div>
+      </section>
+
+      <!-- ── Le mani ──────────────────────────────────────── -->
+      <section id="mani" class="wrapper rise">
+        <div class="sheet">
+          <span class="q">Ore</span>
+          <span class="v">34 al telaio</span>
+          <span class="en">Hours in one frame; eleven of them filing</span>
+        </div>
+        <div class="split top">
+          <div>
+            <h2>One bench, and about twenty-six frames a year.</h2>
+            <p class="lede" style="margin-top:24px">
+              He took the shop from his father in 1994 and has not taken on a
+              second builder, which is a decision about how many frames exist
+              and not a decision about quality.
+            </p>
+            <p>
+              He cuts, mitres, brazes, files and aligns every one himself. He
+              does not paint them. Painting is a trade, it is not his, and the
+              man in Brescia who does it has been doing it for thirty years. He
+              will tell you that in the first conversation, usually before you
+              have asked.
+            </p>
+            <p>
+              The waiting list runs to fourteen weeks and he does not take
+              deposits to hold a place on it, because a deposit makes it harder
+              to tell someone their frame is going to be late.
+            </p>
+          </div>
+          <figure>
+            <div class="plate" style="aspect-ratio:4/5">
+              <img src="/images/mani-1536.jpg" srcset="/images/mani-800.jpg 800w, /images/mani-1536.jpg 1536w" sizes="(max-width:880px) 100vw, 46vw"
+                alt="An older craftsman in a grey work coat holding a bare steel bicycle frame upright and sighting along its length, snowy mountains through the workshop windows behind him." width="1024" height="1280" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>Sighting the frame.</b> Before the dial gauge and after it. He has been wrong about what he sees roughly as often as the table has.</figcaption>
+          </figure>
+        </div>
+
+        <figure style="margin-top:72px">
+          <div class="plate" style="aspect-ratio:3/2">
+            <img src="/images/tavolo-1536.jpg" srcset="/images/tavolo-800.jpg 800w, /images/tavolo-1536.jpg 1536w" sizes="100vw"
+              alt="A full-size bicycle frame geometry layout scribed in fine lines on a large sheet of paper pinned to a drawing board, with a steel rule, protractor and dividers across it." width="1536" height="1024" loading="lazy" decoding="async" />
+          </div>
+          <figcaption style="max-width:58ch">
+            <b>La traccia.</b> Every frame is drawn full size on paper before a
+            tube is cut, at 1:1, so that the angles are argued at the size they
+            will be ridden at. The drawing above on this page is the same
+            drawing, done faster.
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ── La commissione ───────────────────────────────── -->
+      <section id="commissione" class="wrapper rise">
+        <div class="sheet">
+          <span class="q">Attesa</span>
+          <span class="v">14 settimane</span>
+          <span class="en">Stated before you ask for it</span>
+        </div>
+        <h2>Starting one.</h2>
+        <p class="lede" style="margin-top:24px;max-width:56ch">
+          The specification below is the one you drew. Send it and he will write
+          back once with what he would change about it and why — that reply is
+          the actual beginning of the frame.
+        </p>
+
+        <form class="order" id="order" method="post" action="mailto:telai@traccia.it" enctype="text/plain" novalidate>
+          <div>
+            <div class="field" id="f-nome">
+              <label for="nome">Nome <i>your name</i></label>
+              <input type="text" id="nome" name="Nome" autocomplete="name" />
+              <p class="err" id="e-nome">He needs something to write at the top of the sheet.</p>
+            </div>
+
+            <div class="field" id="f-mail">
+              <label for="mail">Posta <i>where the reply goes</i></label>
+              <p class="hint">One reply, with what he would change. Nothing else, ever.</p>
+              <input type="email" id="mail" name="Posta" autocomplete="email" />
+              <p class="err" id="e-mail">That address will not take a reply. Check it and send again.</p>
+            </div>
+
+            <div class="field" id="f-dove">
+              <label for="dove">Dove pedala <i>where you ride</i></label>
+              <p class="hint">The town, and what the roads there are actually like. This changes the frame more than anything below it.</p>
+              <input type="text" id="dove" name="Dove pedala" />
+              <p class="err" id="e-dove">Say where. It is the input he trusts most.</p>
+            </div>
+
+            <div class="field">
+              <label for="finitura">Finitura <i>finish</i></label>
+              <select id="finitura" name="Finitura">
+                {FINISHES.map((x) => <option value={x}>{x}</option>)}
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="note">Altro <i>anything else</i></label>
+              <p class="hint">Injuries, a frame you already like, a saddle height you know works, a date you need it by.</p>
+              <textarea id="note" name="Altro"></textarea>
+            </div>
+
+            <input type="hidden" name="Specifica" id="h-spec" value={spec} />
+            <input type="hidden" name="Prezzo" id="h-price" value={eur(f.price)} />
+
+            <div class="form-foot">
+              <button class="btn" type="submit" id="submit">Mandare la specifica <span aria-hidden="true">→</span></button>
+              <p class="note">Opens your own mail and sends an order request. No card, no payment, no deposit.</p>
+            </div>
+
+            <div class="sent" id="sent" hidden>
+              <h3>Ricevuto</h3>
+              <p><strong>On the sheet.</strong> The specification went across as it stood: <span id="sent-spec" class="num"></span></p>
+              <p>One reply follows, within a week, saying what he would change and why. If it does not come, he did not get it — assume that rather than waiting.</p>
+            </div>
+            <div aria-live="polite" id="live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></div>
+          </div>
+
+          <aside class="docket" aria-label="The specification as it stands">
+            <h3>La specifica</h3>
+            <div class="g">as it stands</div>
+            <div class="spec" id="d-spec">{spec}</div>
+            <div class="drow"><span>Piantone / orizzontale</span><b id="d-st">{f.st} / {f.tt}</b></div>
+            <div class="drow"><span>Sterzo / piantone</span><b id="d-ang">{deg(f.ha)} / {deg(f.sa)}</b></div>
+            <div class="drow"><span>Avancorsa</span><b id="d-trail">{Math.round(f.trail)} mm</b></div>
+            <div class="drow"><span>Passo</span><b id="d-wb">{Math.round(f.wheelbase)} mm</b></div>
+            <div class="drow"><span>Tubi</span><b id="d-gauge">{f.gauge.label}</b></div>
+            <div class="drow"><span>Peso telaio</span><b id="d-weight">{f.weight} g</b></div>
+            <div class="dtot"><span>Frameset</span><b id="d-price">{eur(f.price)}</b></div>
+            <p class="gloss" style="margin:14px 0 0;font-size:12.5px;line-height:1.55">
+              Change the drawing above and this changes with it. What is sent is
+              exactly what is drawn.
+            </p>
+          </aside>
+        </form>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="wrapper">
+        <div class="foot-grid">
+          <div>
+            <h4>Traccia</h4>
+            <p>Telai su misura in acciaio.<br />Via Nazionale, Edolo (BS).<br />Val Camonica, 690 m.</p>
+          </div>
+          <div>
+            <h4>Il banco</h4>
+            <p>One builder. About twenty-six frames a year. Fourteen weeks, and no deposit to hold a place.</p>
+          </div>
+          <div>
+            <h4>Non fa</h4>
+            <p>Paint, wheels, titanium, carbon, and complete bicycles. Those are quoted separately and built by people who do them properly.</p>
+          </div>
+          <div>
+            <h4>Le strade</h4>
+            <ul>
+              <li>Mortirolo — 12,4 km, 10,5 %</li>
+              <li>Gavia — 17,3 km, 7,9 %</li>
+              <li>Valle delle Messi — ghiaia</li>
+            </ul>
+          </div>
+        </div>
+        <div class="colophon">
+          <span>Traccia: a traced line, and a route.</span>
+          <span>A fictional house, built for the Foundry collection.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import "../client.mjs";
+    </script>
+  </body>
+</html>
