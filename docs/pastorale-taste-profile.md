@@ -68,26 +68,77 @@ a cold bright working day outdoors. Different warmth, different purpose.
 | Display face | Besley (slab Clarendon) | Any sturdy slab/Clarendon with worked weight |
 | Working face | Schibsted Grotesk | Any quiet grotesque, ideally regional |
 | Signature geometry | The corner joint (nov) | One real structural detail of the craft |
+| Chapter opening | Ring count / winters as a measure | See "The opening move"; pick one and hold it site-wide |
+
+## The opening move
+
+How a chapter announces itself is a **per-site choice, made once and held
+throughout that site** — not a house template. Consistency belongs inside a
+site; across the collection it reads as one generator.
+
+A structural device — a label, a measure, a rule, a mark — earns its place
+only by encoding something true. If it could be deleted without losing
+information, delete it.
+
+Pastorale's copy doctrine already supplies the best answer: **the trade's
+own measure**. Winters seasoned, ring counts, hours under the axe, a
+diameter at the butt. It is real information in the craft's real words, and
+it opens a chapter without a decorative label. Otherwise: absorb the words
+into the display statement, run the mark in the margin, open cold, or close
+with a colophon. What this register must not do is set a tracked caps label
+above every heading — that is Nocturne's spent move, and in flat snow-light
+it has no lamp to justify it.
+
+Record the site's answer in its `DESIGN.md` beside the signature
+interaction.
+
+## Forms and states
+
+When the price puts a real order form on the site (see
+`foundry-series.md`, commitment 7), it takes the register's type, palette,
+and voice — and it is designed in **all** its states. Pastorale's natural
+model is the yard's own paperwork: an order docket, a cutting list.
+
+| State | Pastorale's answer |
+|---|---|
+| Rest | Ruled field on the snow-light ground; label always visible, never placeholder-only |
+| Focus | The wood-note marks the active line — the same focus treatment as the rest of the site |
+| Filled | Working face, full contrast against the cool ground |
+| Error | Named beside the field in the trade's plain words: what is wrong, what to do. Never red-only, never "Invalid input" |
+| Submitting | The action states it is working |
+| Sent | Confirmation as a docket — what was ordered, what happens next, when |
+
+Errors name the problem and the recovery. The form never loses what was
+typed. Validation is real (`aria-invalid`, a live region for the result).
 
 ## Floors
 
 Contrast verified on snow-light (dark ink on the cool ground, never pale
-wood-on-white); complete page with JS off; visible focus; keyboard paths;
-reduced-motion support; responsive images; mobile keeps the same cold light
-and cadence. Exposure runs *bright* — the Nocturne 20–40 luma band does not
-apply; a snow register legitimately sits far higher, and the failure to
-guard against is a murky plate, never a bright one.
+wood-on-white); complete page with JS off; visible focus; no functional
+text below 11px — tracked micro-labels included; keyboard paths; form
+errors announced, not just colored; reduced-motion support; responsive
+images; mobile keeps the same cold light and cadence. Exposure runs
+*bright* — the Nocturne 20–40 luma band does not apply; a snow register
+legitimately sits far higher, and the failure to guard against is a murky
+plate, never a bright one.
 
 ## Anti-patterns — instant fails
 
 Pure white ground · warm-morning Aubade cream · a second warm accent ·
 studio-void product shots (that is Nocturne) · uniform card grids · rounded
 floating cards · fake snow sparkle · costume use of regional craft terms ·
-urgency copy · luxury adjectives · motion without a physical cause.
+urgency copy · luxury adjectives · motion without a physical cause · a
+tracked label above every heading as the automatic opener · functional text
+below 11px · a form with no designed error state.
 
 ## Process rider
 
 Render → screenshot → name five concrete weaknesses → fix → repeat, at least
-three passes. Review in bright and dim conditions, desktop and phone. If a
-screen could belong to a cabin-rental site or any tasteful maker template,
-the work has not yet found its world.
+three passes. Review in bright and dim conditions, desktop and phone. Then
+the test, in both directions:
+
+1. **If a screen could belong to a cabin-rental site or any tasteful maker
+   template, the work has not yet found its world.**
+2. **If a screen could belong to another *Foundry* site, it is also
+   wrong.** The sharper of the two, and the one the collection keeps
+   failing — a device on every site distinguishes none of them.

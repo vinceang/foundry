@@ -119,6 +119,16 @@ Both series keep the same deeper commitments:
    proper, on-brand order/enquiry form instead. A workshop may do both:
    bespoke by letter, the bench's accessories by a form. The form takes an
    order request; it never captures a card or processes a real payment.
+   Whichever it is, it is designed in all its states — rest, focus, error,
+   submitting, sent — in the register's own voice. See the taste profiles.
+8. **A device earns its place by encoding something true.** Labels,
+   numbers, rules, eyebrows, dividers, and marks are structure, and
+   structure is information. If a device could be deleted without losing
+   information, delete it. This applies hardest to whatever the collection
+   has started reaching for automatically: the arrangement that opens a
+   chapter is a per-site decision, made once and held within that site,
+   never a house template. Consistency belongs inside a site; across the
+   collection it reads as one generator.
 
 ## The inversion
 

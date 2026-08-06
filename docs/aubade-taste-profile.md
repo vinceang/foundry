@@ -91,6 +91,28 @@ hard to read. Use lampblack or a tested dark brown for paragraphs and controls.
 Avoid the default luxury stack: extreme-contrast Didone, uppercase-everything,
 and tiny low-contrast body text.
 
+## The opening move
+
+How a chapter announces itself is a **per-site choice, made once and held
+throughout that site** — not a house template. Consistency belongs inside a
+site; across the collection it reads as one generator.
+
+A structural device — a label, a time, a rule, a mark — earns its place only
+by encoding something true. If it could be deleted without losing
+information, delete it.
+
+Aubade's own third commitment supplies the best answer: **name what is
+prepared**. "Breakfast, 8 to 11, in the courtyard." "Two rooms face the
+olive terrace." The fact of hosting is real information and it opens a
+chapter warmly without a decorative label. Otherwise: absorb the words into
+the display statement, set the note as a serif italic aside, open cold, or
+close with a colophon. What this register must not do is set a tracked caps
+label above every heading — that is Nocturne's spent move, and in daylight
+it reads as borrowed ceremony.
+
+Record the site's answer in its `DESIGN.md` beside the signature
+interaction.
+
 ## Structure
 
 - Generous space reads as air, not void. Let light-colored surfaces meet one
@@ -161,12 +183,34 @@ and interrogate the subject itself — proof there is rich territory elsewhere:
 Interpret through the subject, never paste the same animation onto every
 site — and now, never default to the sun.
 
+## Forms and states
+
+When the price puts a real order or enquiry form on the site (see
+`foundry-series.md`, commitment 7), the form is hospitality in another
+medium — the desk where the guest is received. It takes the register's
+type, palette, and voice, and it is designed in **all** its states:
+
+| State | Aubade's answer |
+|---|---|
+| Rest | Ruled or lightly recessed field on the warm ground; label always visible, never placeholder-only |
+| Focus | Oak or brass marks the active line — the same focus treatment as the rest of the site |
+| Filled | Lampblack at full contrast; never tan-on-cream |
+| Error | Named beside the field in the host's voice: what is missing, what to do. Never red-only, never "Invalid input" |
+| Submitting | The action states it is working |
+| Sent | A received-you confirmation — what was asked for, who will reply, when. This is the hosting moment, not a receipt |
+
+Errors name the problem and the recovery. The form never loses what was
+typed. Validation is real (`aria-invalid`, a live region for the result).
+A guest who writes and hears nothing has been failed at the door.
+
 ## Floors
 
-Complete with JavaScript off; visible focus states; readable contrast; full
-keyboard paths; reduced-motion support; responsive images; meaningful alt
-text; mobile retains air and hierarchy rather than collapsing into a beige
-feed. Performance remains part of hospitality: the door should open quickly.
+Complete with JavaScript off; visible focus states; readable contrast; no
+functional text below 11px — tracked micro-labels included; full keyboard
+paths; form errors announced, not just colored; reduced-motion support;
+responsive images; meaningful alt text; mobile retains air and hierarchy
+rather than collapsing into a beige feed. Performance remains part of
+hospitality: the door should open quickly.
 
 ## Anti-patterns — instant fails
 
@@ -174,11 +218,18 @@ Generic “quiet luxury” beige · cream + Didone + terracotta CTA by reflex ·
 sage green on every surface · script fonts · rounded floating card grids ·
 stock spa imagery · empty “escape” copy · fake paper texture everywhere ·
 boho collage · decorative sunbursts · low-contrast tan text · motion without
-a physical cause.
+a physical cause · a tracked label above every heading as the automatic
+opener · functional text below 11px · a form with no designed error state.
 
 ## Process rider
 
 Render → screenshot → identify five concrete weaknesses → revise → repeat for
 at least three passes. Review morning-bright and dim-screen conditions, desktop
-and phone. If a screen could belong to any tasteful hotel template, the work
-has not yet found its world.
+and phone. Then the test, in both directions:
+
+1. **If a screen could belong to any tasteful hotel template, the work has
+   not yet found its world.**
+2. **If a screen could belong to another *Foundry* site, it is also
+   wrong.** The sharper of the two, and the one the collection keeps
+   failing: light-over-time, commission-by-letter, and the whisper label
+   each passed test 1 and failed test 2 for years before anyone named them.

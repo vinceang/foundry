@@ -55,6 +55,29 @@ subject.
 | Working face | Fragment Mono + Instrument Sans | A mono for the ops voice is natural here |
 | Signature geometry | The great-circle arc | One line-form; it is the only ornament |
 | World vocabulary | Tails / The Board / Protocol | The trade's own operational nouns |
+| Chapter opening | Timestamp in the working voice | See "The opening move"; pick one and hold it site-wide |
+
+## The opening move
+
+How a chapter announces itself is a **per-site choice, made once and held
+throughout that site** — not a house template. Consistency belongs inside a
+site; across the collection it reads as one generator.
+
+A structural device — a label, a timestamp, a rule, a mark — earns its
+place only by encoding something true. If it could be deleted without
+losing information, delete it.
+
+Vesper has the strongest native alternative in the collection: **the
+operational readout**. An hour, a condition, a distance, a field length
+("20:45 — civil twilight", "893 m, grass") carries real information in the
+working voice and opens a chapter without a decorative label. Reach for it
+first. Otherwise: absorb the words into the display statement, run the mark
+in the margin rail, open cold, or close with a colophon. What this register
+must not do is set a tracked caps label above every heading — that is
+Nocturne's spent move, borrowed as costume.
+
+Record the site's answer in its `DESIGN.md` beside the signature
+interaction.
 
 ## Imagery
 
@@ -74,12 +97,33 @@ Constant-phrase template: *"…civil twilight, deep blue sky still luminous
 overhead, low apricot afterglow at the horizon, subject fully modelled by
 the remaining daylight and its own warm instrument lights, no text."*
 
+## Forms and states
+
+When the price puts a real order or enquiry form on the site (see
+`foundry-series.md`, commitment 7), it takes the register's type, palette,
+and voice — and it is designed in **all** its states. Vesper's natural
+model is the operational form: a flight plan, a manifest, a filed request.
+
+| State | Vesper's answer |
+|---|---|
+| Rest | Ruled field on the below-horizon dark; label always visible, never placeholder-only |
+| Focus | The afterglow hue marks the active line — the same focus treatment as the rest of the site |
+| Filled | Working voice, full contrast; the entry reads as a filed value |
+| Error | Named beside the field in plain operational language: what is wrong, what to do. Never red-only, never "Invalid input" |
+| Submitting | The action states it is working; discretion is not silence |
+| Sent | Confirmation as a receipt — what was filed, what happens next, when |
+
+Errors name the problem and the recovery. The form never loses what was
+typed. Validation is real (`aria-invalid`, a live region for the result).
+
 ## Floors (non-negotiable)
 
 Complete page with JS off; visible focus states in the afterglow hue; body
-contrast ≥7:1; real buttons with ARIA; keyboard paths; images ≤500KB;
-reduced-motion gets the finished composition; mobile keeps the same sky —
-a nearer horizon, not a lesser one.
+contrast ≥7:1; no functional text below 11px — tracked micro-labels
+included; real buttons with ARIA; keyboard paths; form errors announced,
+not just colored; images ≤500KB; reduced-motion gets the finished
+composition; mobile keeps the same sky — a nearer horizon, not a lesser
+one.
 
 ## Anti-patterns (instant fails)
 
@@ -87,11 +131,18 @@ Pure black grounds · Nocturne chiaroscuro borrowed as costume · full-frame
 orange sunsets · lens flares · a second warm accent · silhouettes instead
 of people · "exclusive/elite/bespoke" said instead of shown · uniform card
 grids · rounded corners without a physical reason · busy or springy motion
-· mystique copy ("if you know, you know").
+· mystique copy ("if you know, you know") · a tracked label above every
+heading as the automatic opener · functional text below 11px · a form with
+no designed error state.
 
 ## Process rider
 
 Same loop as the siblings: render → screenshot → five concrete weaknesses →
 fix → repeat, ≥3 passes, geometry verified by measurement. Plus the Vesper
 question every pass: **is anything on this page darker than its hour?** And
-the Foundry test: if a screen could belong to any other site, it is wrong.
+the Foundry test, in both directions:
+
+1. **If a screen could belong to any other site, it is wrong.**
+2. **If a screen could belong to another *Foundry* site, it is also
+   wrong.** The sharper of the two, and the one the collection keeps
+   failing — a device on every site distinguishes none of them.

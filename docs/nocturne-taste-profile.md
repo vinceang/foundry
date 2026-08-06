@@ -64,22 +64,48 @@ These are choices the profile deliberately does not make for you:
 | Signature geometry | 45°-rotated square (diamond) | Pick ONE shape; it is the only ornament |
 | Cultural motif | Vertical kanji rails | Optional; must be real and correct, never costume |
 | World vocabulary | Register / Works / Petition | Name your domain's nouns and use them everywhere |
+| Chapter opening | Whisper label in the metal | See "The opening move"; pick one and hold it site-wide |
 
 ## Type cadence
 
 Three voices, strict casting: a display face (regular weight only, tracked
 slightly wide, sizes via clamp up to hero scale), a light body face, and
-tracked-caps whisper labels (~10.5px, 600, `.3–.42em` tracking, set in the
-metal). Every chapter opens with the same cadence — it *is* the rhythm:
+tracked-caps whisper labels (11px floor, 600, `.3–.42em` tracking, set in
+the metal).
 
-```
-WHISPER LABEL IN METAL TRACKED CAPS
-Large display statement, one or two lines.
-Dim body copy that explains, 55–60ch max.
-```
+The three voices are the constant. The *arrangement* they open a chapter in
+is a per-site decision — see "The opening move" below. Body copy runs
+55–60ch. Numbers that matter (prices, counts, indices) render in the
+display face, one size up, written out in full — never abbreviated.
 
-Numbers that matter (prices, counts, indices) render in the display face,
-one size up, written out in full — never abbreviated.
+## The opening move
+
+How a chapter announces itself is a **per-site choice, made once and held
+throughout that site** — not a house template. Consistency belongs inside a
+site; across the collection it reads as one generator.
+
+A structural device — a label, a number, a rule, a mark — earns its place
+only by encoding something true about the content. If it could be deleted
+without losing information, delete it.
+
+The whisper label above a display statement is *one* answer (Shokunin's).
+It is no longer the default, and it is now well spent across the
+collection. Alternatives, all built from devices this register already
+owns:
+
+- **The label moves to the margin rail.** Same metal, same vocabulary, set
+  vertically in the gutter under the spine convention — the announcing
+  block disappears while the information stays.
+- **Absorbed into the display statement**, so the heading carries its own
+  weight.
+- **A measure that carries real information** — a count, an hour, a number
+  of winters, an index. Legitimate precisely because the reader needs it;
+  never a decorative `01 / 02 / 03`.
+- **Cold open.** The display statement, nothing above it.
+- **A colophon.** The mark closes the chapter instead of announcing it.
+
+Record the site's answer in its `DESIGN.md` beside the signature
+interaction.
 
 ## Structure
 
@@ -124,12 +150,35 @@ layers over so the loop can dip back to the image seamlessly. One video
 per page; desktop-only, lazy, compressed (dark footage compresses
 brilliantly — target ≤4MB).
 
+## Forms and states
+
+When the price puts a real order form on the site (see
+`foundry-series.md`, commitment 7), the form is part of the world, not an
+exception to it. It takes the register's type, palette, and voice — and it
+is designed in **all** its states, not just at rest:
+
+| State | Nocturne's answer |
+|---|---|
+| Rest | Hairline field in the metal on the dark ground; label always visible, never placeholder-only |
+| Focus | The metal brightens — the same focus treatment as the rest of the site |
+| Filled | Body face, full contrast; the entry reads as a written line |
+| Error | Named in the metal beside the field, in the world's voice: what is wrong and what to do. Never red-only, never a generic "Invalid input" |
+| Submitting | The action states it is working; nothing spins decoratively |
+| Sent | A ceremonial confirmation — what was received, what happens next, when. The empty-state rule applies: formal, not apologetic |
+
+Errors name the problem and the recovery. The form never loses what was
+typed. Validation is real (`aria-invalid`, a live region for the result),
+because a commission lost to a silent failure is the one unforgivable
+interaction in this register.
+
 ## Floors (non-negotiable)
 
 Complete page with JS off; visible focus states in the metal; body
-contrast ≥7:1; real buttons with ARIA for interactive marks; keyboard
-paths incl. Escape; images ≤500KB; mobile keeps the same darkness and
-cadence — a smaller lamp, not a lesser brand.
+contrast ≥7:1; no functional text below 11px — tracked micro-labels
+included; real buttons with ARIA for interactive marks; keyboard paths
+incl. Escape; form errors announced, not just colored; images ≤500KB;
+mobile keeps the same darkness and cadence — a smaller lamp, not a lesser
+brand.
 
 ## Anti-patterns (instant fails)
 
@@ -137,7 +186,8 @@ Pure black/white · a second accent color · uniform card grids · rounded
 corners · bouncy/springy motion · urgency copy, badges, timers · "luxury"
 said instead of shown · decorative gradients · stock-photo lifestyle
 imagery · costume use of a culture's motifs · more than one ambient effect
-per viewport.
+per viewport · a tracked label above every heading as the automatic
+opener · functional text below 11px · a form with no designed error state.
 
 ## Process rider (how this look actually gets made)
 
@@ -145,5 +195,11 @@ The document is half; the loop is the other half. Work in critique passes:
 render → screenshot → find five concrete weaknesses → fix → repeat (≥3
 passes). Verify geometry (overlaps, clearances) with measurements, not
 eyeballs. Regenerate any asset that violates the palette rather than
-shipping it. And apply the test relentlessly: **if a screen could belong
-to any other site, it is wrong.**
+shipping it. And apply the test relentlessly, in both directions:
+
+1. **If a screen could belong to any other site, it is wrong.**
+2. **If a screen could belong to another *Foundry* site, it is also
+   wrong.** This is the sharper of the two and the one the collection
+   keeps failing: light-over-time, commission-by-letter, and the whisper
+   label each passed test 1 and failed test 2 for years before anyone
+   named them. A device on every site distinguishes none of them.
