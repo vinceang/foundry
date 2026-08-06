@@ -381,3 +381,38 @@ the newline either way. Explicit `{" "}` did, and the built HTML was grepped to
 confirm rather than eyeballed.
 
 `npm run build` passes clean.
+
+### Amendment — the register gets its plates (same day)
+
+The ledger originally ran as pure text, on the backlog's line that *"the
+catalog format is itself the drama — a printed tradesman's register, not a
+storefront."* That is right about **form** and wrong as an excuse to withhold
+evidence: seven of thirteen wares had a plate somewhere on the page and six had
+none, which was an accident of what got generated rather than a decision. And
+the signature's control column was thirteen rows of pure text — you were being
+asked to choose what goes in a parcel with no idea what any of it looked like.
+
+The house's own character settles it. A shop that hangs every rope with
+eighteen *kan* and publishes its failure rate keeps a specimen plate against
+each line. **The parcel conceals; the book does not.**
+
+So every ware now carries a square **accession plate** — 96px in the 帳 rows,
+56px in the 包 control rows. This is deliberately *not* the thing the Nocturne
+profile bans: a uniform card grid reads as inventory, but a plate at the left
+of a ruled row is museum accession language, and the ledger stays a list.
+
+Nine plates were shot square for the purpose (`w-*`); four reuse a chapter
+plate. Two things had to be fixed by measurement rather than eye:
+
+- **The generator frames "tightly framed" loosely** — at 96px the ware was
+  ~25px inside a field of hemp. Sources are centre-cropped before optimizing,
+  with an explicit per-ware centre in `crop-wares.mjs`, because a naive centre
+  crop of a tall chapter portrait lands on the lantern rather than the ware.
+- **The first layout put the cant *below* its plate**, which grew the row to
+  ~240px and made the kanji read as belonging to the row beneath it. The
+  accession cell is now a two-column grid — plate, then cant and gloss beside
+  it — so the row stays short and the reading order is name, then specimen.
+
+Specimens are ≤ 84KB each (13 wares × 2 widths). The katana's first take came
+back letterboxed with white bands and was re-shot. Mobile register rows now run
+single-column so the entry reads top to bottom.

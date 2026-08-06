@@ -102,6 +102,21 @@ required and says why. mailto handoff; no card, ever.
    wrap *mid-action* — two corners over, two creased and open — is both truer
    and far more legible.
 
+## Amendment — accession plates in the register
+
+Shipped same day, after the ledger's text-only form was questioned. Every ware
+now carries a square specimen plate (96px in 帳, 56px in the 包 controls). The
+reasoning and the two layout traps are in `DESIGN.md`; the short version:
+
+- **Withholding the goods from the house's own book was out of character.** The
+  parcel conceals; the ledger doesn't. Commitment 3 is "photography is
+  evidence," and six of thirteen wares had no plate anywhere.
+- **A plate at the left of a ruled row is not a card grid.** The Nocturne
+  anti-pattern is uniform cards, which read as inventory. A list with accession
+  plates reads as a museum record, which is what this ledger is.
+- Crop centres live in `crop-wares.mjs` — the generator frames loosely, so a
+  naive centre crop puts the lantern in the plate instead of the ware.
+
 ## Content note
 
 The wares are Edo-period craft objects with real nomenclature, photographed and

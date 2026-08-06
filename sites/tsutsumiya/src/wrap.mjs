@@ -57,6 +57,7 @@ export const KNOTS = [
 export const WARES = [
   {
     key: "hoshi",
+    img: "hoshi",
     cant: "星",
     cantRomaji: "hoshi",
     cantGloss: "stars",
@@ -72,6 +73,7 @@ export const WARES = [
   },
   {
     key: "kugi",
+    img: "kugi",
     cant: "釘",
     cantRomaji: "kugi",
     cantGloss: "nails",
@@ -87,6 +89,7 @@ export const WARES = [
   },
   {
     key: "kote",
+    img: "kote",
     cant: "小手",
     cantRomaji: "kote",
     cantGloss: "the small hand",
@@ -102,6 +105,7 @@ export const WARES = [
   },
   {
     key: "tsume",
+    img: "tekagi",
     cant: "爪",
     cantRomaji: "tsume",
     cantGloss: "claws",
@@ -117,6 +121,7 @@ export const WARES = [
   },
   {
     key: "yonawa",
+    img: "nawa",
     cant: "夜縄",
     cantRomaji: "yonawa",
     cantGloss: "night rope",
@@ -132,6 +137,7 @@ export const WARES = [
   },
   {
     key: "kuroshi",
+    img: "shozoku",
     cant: "黒仕",
     cantRomaji: "kuroshi",
     cantGloss: "the black work",
@@ -147,6 +153,7 @@ export const WARES = [
   },
   {
     key: "jika",
+    img: "tabi",
     cant: "地下",
     cantRomaji: "jika",
     cantGloss: "underfoot",
@@ -162,6 +169,7 @@ export const WARES = [
   },
   {
     key: "kiri",
+    img: "kiri",
     cant: "霧",
     cantRomaji: "kiri",
     cantGloss: "fog",
@@ -177,6 +185,7 @@ export const WARES = [
   },
   {
     key: "iki",
+    img: "iki",
     cant: "息",
     cantRomaji: "iki",
     cantGloss: "breath",
@@ -192,6 +201,7 @@ export const WARES = [
   },
   {
     key: "kama",
+    img: "kama",
     cant: "鎌",
     cantRomaji: "kama",
     cantGloss: "the sickle",
@@ -207,6 +217,7 @@ export const WARES = [
   },
   {
     key: "tsue",
+    img: "tsue",
     cant: "杖",
     cantRomaji: "tsue",
     cantGloss: "the staff",
@@ -222,6 +233,7 @@ export const WARES = [
   },
   {
     key: "tan",
+    img: "tan",
     cant: "短",
     cantRomaji: "tan",
     cantGloss: "the short one",
@@ -237,6 +249,7 @@ export const WARES = [
   },
   {
     key: "cho",
+    img: "katana",
     cant: "長",
     cantRomaji: "chō",
     cantGloss: "the long one",

@@ -212,7 +212,15 @@ const NAV = [
           {WARES.map((w) => (
             <div class="reg-row" role="row" data-carry={w.carry}>
               <div class="reg-cant" role="cell">
-                {w.cant}
+                <img
+                  class="specimen"
+                  src={`/images/w-${w.img}-480.jpg`}
+                  srcset={`/images/w-${w.img}-240.jpg 240w, /images/w-${w.img}-480.jpg 480w`}
+                  sizes="112px"
+                  alt={`${w.name}, photographed on unbleached hemp cloth.`}
+                  width="480" height="480" loading="lazy" decoding="async"
+                />
+                <b>{w.cant}</b>
                 <span>{w.cantRomaji} — “{w.cantGloss}”</span>
               </div>
               <div role="cell">
@@ -335,6 +343,13 @@ const NAV = [
             <div class="wares" role="group" aria-labelledby="wares-label">
               {WARES.map((w) => (
                 <div class="ware" data-ware={w.key} data-carry={w.carry} data-on={(DEFAULT_COUNTS as any)[w.key] ? "1" : "0"}>
+                  <img
+                    class="specimen sm"
+                    src={`/images/w-${w.img}-240.jpg`}
+                    alt=""
+                    width="240" height="240" loading="lazy" decoding="async"
+                    aria-hidden="true"
+                  />
                   <div class="ware-id">
                     <b>
                       {w.cant}

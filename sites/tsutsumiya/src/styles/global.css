@@ -372,25 +372,44 @@ figcaption b { font-family: var(--display); font-weight: 400; color: var(--kinar
 }
 .reg-row {
   display: grid;
-  grid-template-columns: 152px minmax(0, 1fr) 128px 120px;
+  grid-template-columns: 212px minmax(0, 1fr) 124px 116px;
   gap: 24px;
   align-items: start;
   padding: 28px 0;
   border-bottom: 1px solid var(--ai-dim);
 }
+.specimen {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  background: var(--kachi);
+  border: 1px solid var(--ai-dim);
+  margin-bottom: 14px;
+}
+.specimen.sm { width: 56px; height: 56px; flex: none; margin: 0; }
+
 .reg-cant {
   font-family: var(--display);
   font-size: 27px;
   line-height: 1.2;
   color: var(--kinari);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  align-items: start;
 }
+.reg-cant .specimen { grid-row: 1 / 3; margin-bottom: 0; }
+.reg-cant b { font-weight: 400; display: block; align-self: end; }
 .reg-cant span {
   display: block;
   font-family: var(--work);
   font-size: 12.5px;
-  letter-spacing: 0.1em;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
   color: var(--nibi);
-  margin-top: 6px;
+  margin-top: 4px;
+  align-self: start;
 }
 .reg-name {
   font-family: var(--display);
@@ -420,8 +439,12 @@ figcaption b { font-family: var(--display); font-weight: 400; color: var(--kinar
 .reg-row[data-carry="separate"] .reg-cant,
 .reg-row[data-carry="hand"] .reg-cant { color: var(--shu); }
 @media (max-width: 900px) {
-  .reg-row { grid-template-columns: 1fr 1fr; gap: 8px 24px; }
-  .reg-cant { grid-column: 1 / -1; }
+  .reg-row { grid-template-columns: 1fr; gap: 12px; }
+  .reg-spec { display: flex; flex-wrap: wrap; gap: 4px 20px; align-items: baseline; }
+  .reg-spec em { display: inline; }
+  .reg-cant { grid-column: 1 / -1; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .reg-cant .specimen { margin-bottom: 0; width: 88px; height: 88px; }
+  .reg-cant span { width: 100%; margin-top: 0; }
   .reg-name, .reg-line { grid-column: 1 / -1; }
   .reg-price { text-align: left; }
 }
@@ -439,8 +462,8 @@ figcaption b { font-family: var(--display); font-weight: 400; color: var(--kinar
 .wares { border-top: 1px solid var(--ai); }
 .ware {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 8px 16px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 8px 14px;
   align-items: center;
   padding: 14px 0;
   border-bottom: 1px solid var(--ai-dim);
