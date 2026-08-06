@@ -28,7 +28,17 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-_(nothing in progress)_
+### Underground shinobi provisioner
+
+- **Series:** Nocturne
+- **Place idea:** Edo-period Japan — a clandestine procurement house accessible only by referral, operating beneath the merchant quarter of Osaka or in a hidden district behind a lacquer-goods front
+- **Why it earns a place:** The tension between extreme craft precision and absolute secrecy gives every product shot a unique register — blades, tools, and garments photographed like sacred objects rather than weapons, with provenance and nomenclature treated as gravely as a sword school's lineage. The catalog format is itself the drama: a printed tradesman's register, not a storefront.
+- **Catalog wares:** hand-forged katana and wakizashi (the short blade as backup), shuriken in star and bo-shuriken (spike) forms, kunai — the all-purpose field tool, kusarigama (sickle and chain), nunchaku, shinobi-zue (the staff that isn't), blowgun with lacquered case and darts, grappling hook and kaginawa rope, shinobi shozoku (the full black work suit), tabi split-toe boots, tekagi climbing claws, smoke bombs and metsubushi (blinding powder packets), and the ever-present black furoshiki wrapping cloth that carries everything
+- **Signature interaction:** The commission form — a structured order sheet written in the coded language of the trade, where "night rope" means kaginawa and "star count" means shuriken quantity. The form's fields reveal themselves line by line as a previous field is completed, the way a scroll unrolls. Each submitted commission disappears — no confirmation, no receipt.
+- **Other page ideas:** A provenance table tracing each blade's steel origin; a technique glossary masked as an index; a condition-of-sale scroll the buyer must acknowledge before the form activates
+- **Notes:** Tone must stay reverent-craft, not cosplay — the same gravity as Shokunin's swords but applied to a full arsenal. No gore, no threat — these are instruments of precision that happen to be weapons. The "underground" is implied by the UX (referral gate, no address listed, the shop name in no directory) rather than stated.
+- **Claimed:** 2026-08-06 — building as **Tsutsumiya (包屋)**, Senba, Osaka.
+
 
 ## Proposed — awaiting approval
 
