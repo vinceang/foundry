@@ -28,7 +28,14 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-_(nothing in progress)_
+### Lighthouse keeper's house
+- **Series:** could open a third series — dusk (a "Vesper" between Nocturne and Aubade)
+- **Place idea:** Scottish west coast, a keeper's cottage sleeping four
+- **Why it earns a place:** the lamp's sweep, weather glass, white tower against slate sea
+- **Signature interaction:** the light itself — its true character (occulting, flashing) marking time on the page
+- **Notes:** deciding whether one site justifies a new series is exactly the doctrine-level question the skill escalates in its report
+- **Claimed:** 2026-08-07 — building as **Fàire**, Rubha na Fàire, Wester Ross. Vesper now exists and is the WRONG answer (it is for worlds built on not being seen; a lighthouse exists to be seen). Proposing a fifth register instead — see DESIGN.md.
+
 
 ## Proposed — awaiting approval
 
@@ -91,13 +98,6 @@ _(nothing in progress)_
 - **Signature interaction:** the fit of a hood — pattern pieces closing around a form
 - **Notes:** live-bird imagery must avoid trophy tone; the craft, not the animal, is the subject
 
-
-### Lighthouse keeper's house
-- **Series:** could open a third series — dusk (a "Vesper" between Nocturne and Aubade)
-- **Place idea:** Scottish west coast, a keeper's cottage sleeping four
-- **Why it earns a place:** the lamp's sweep, weather glass, white tower against slate sea
-- **Signature interaction:** the light itself — its true character (occulting, flashing) marking time on the page
-- **Notes:** deciding whether one site justifies a new series is exactly the doctrine-level question the skill escalates in its report
 
 ## Built
 
