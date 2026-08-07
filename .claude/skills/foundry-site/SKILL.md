@@ -374,14 +374,22 @@ one interaction that loses a commission outright.
    form).
 3. Commit in the house style — `Sitename: what changed` in sentence case,
    small coherent commits — and push to `origin main`.
-4. Deploy CLI-manual, the established pattern (`.vercel/` stays gitignored):
+4. Deploy CLI-manual, the established pattern (`.vercel/` stays gitignored).
+   **Check the name is free first — `<name>.vercel.app` is a GLOBAL namespace,
+   not yours.** A taken name leaves you with only the team-scoped URL, which is
+   SSO-protected and 302s, so it can never be the live URL:
    ```
-   cd sites/<name> && vercel link --yes   # first time: creates the project
+   curl -s -o /dev/null -w "%{http_code}\n" https://<name>.vercel.app  # 404 = free
+   cd sites/<name> && vercel link --yes [--project <free-name>]
    vercel deploy --prod --yes
    ```
+   If the clean name is taken, re-link under a free one (Traccia shipped as
+   `traccia-telai`) rather than recording a protected URL.
 5. Verify production: screenshot the live URL with `tools/shot-full.mjs`
    and check it actually renders (fonts, images, interaction) — a 200
-   response is not verification.
+   response is not verification. This is not theoretical: `traccia.vercel.app`
+   returned a clean 200 for a *stranger's* app, and only the screenshot caught
+   it. Confirm the page you get back is the page you built.
 6. Record the live URL in the README table and handoff doc; commit and push.
 
 **If the deploy fails** — a "genuine attempt" means: read the actual error,
