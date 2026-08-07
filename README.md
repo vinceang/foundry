@@ -43,7 +43,7 @@ The two series share standards, not styling. Read
 | [Barchetta](https://barchetta.vercel.app) | Nocturne | Neapolitan sartoria — the coat opened from the inside | Italy · Naples, Chiaia | [`sites/barchetta`](sites/barchetta) · live |
 | [Rosée](https://rosee-omega.vercel.app) | Aubade | Single-perfumer house — the field behind the bottle | France · Plascassier, Grasse | [`sites/rosee`](sites/rosee) · live |
 | [Traccia](https://traccia-telai.vercel.app) | Pastorale | Steel frame builder — the road writes the specification | Italy · Edolo, Val Camonica | [`sites/traccia`](sites/traccia) · live |
-| Fàire | Vigil | Lighthouse keeper's house — a light that counts | Scotland · Rubha na Fàire, Wester Ross | [`sites/faire`](sites/faire) |
+| [Fàire](https://rubha-na-faire.vercel.app) | Vigil | Lighthouse keeper's house — a light that counts | Scotland · Rubha na Fàire, Wester Ross | [`sites/faire`](sites/faire) · live |
 | [Tsutsumiya (包屋)](https://tsutsumiya.vercel.app) | Nocturne | Wrapping house — the cloth decides what you may take | Japan · Itachibori, Osaka | [`sites/tsutsumiya`](sites/tsutsumiya) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.

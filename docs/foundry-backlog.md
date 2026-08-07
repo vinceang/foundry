@@ -112,5 +112,5 @@ _(nothing in progress)_
 | Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
 | Traccia | Pastorale | Steel frame builder, Val Camonica | https://traccia-telai.vercel.app |
-| Fàire | **Vigil** (new register) | Lighthouse keeper's house, Wester Ross | _pending deploy_ |
+| Fàire | **Vigil** (new register) | Lighthouse keeper's house, Wester Ross | https://rubha-na-faire.vercel.app |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
