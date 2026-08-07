@@ -1,7 +1,7 @@
 # Traccia — handoff
 
 **Built:** 2026-08-06 · **Series:** Pastorale · **Project:** `sites/traccia`
-**Live:** _(recorded below on deploy)_
+**Live:** https://traccia-telai.vercel.app
 
 A one-bench steel frame builder in Edolo, high Val Camonica, under the
 Mortirolo. Vince named the subject, the country and the register.
@@ -66,6 +66,25 @@ it. Worth remembering that a geometry model is testable against reality.
 - **Every bicycle prompt must say unbranded, no decals, no lettering.**
   Generators put invented brand names on frames at the slightest opening.
 - Pastorale's luma band is **110–170**, not Nocturne's 20–40. Shipped 88–168.
+
+## The deploy trap, which is new and will recur
+
+**`<name>.vercel.app` is a global namespace, and `traccia` was already taken by
+a stranger's project.** The first deploy returned HTTP 200 from
+`traccia.vercel.app` — an unrelated Italian app — which is exactly why the
+skill says a 200 is not verification. The screenshot caught it immediately.
+
+The mechanics, worth knowing for the next site:
+
+- The public production alias is the clean `<name>.vercel.app`. The
+  team-scoped `<name>-vincent-angs-projects.vercel.app` is **SSO-protected**
+  and 302s, so it is never a usable live URL.
+- If the clean name is taken, the fix is to **re-link under a free project
+  name** (`vercel link --yes --project <free-name>`) rather than to record a
+  protected URL. This site ships as `traccia-telai`.
+- Check availability *before* deploying: `curl -o /dev/null -w "%{http_code}"
+  https://<name>.vercel.app` — a 404 means free.
+- `vercel link` writes a `.env.local`; confirmed gitignored.
 
 ## Traps hit (all recur)
 

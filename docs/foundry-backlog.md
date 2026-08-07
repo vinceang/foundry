@@ -118,5 +118,5 @@ _(nothing in progress)_
 | Barchetta | Nocturne | Neapolitan sartoria, Chiaia, Naples | https://barchetta.vercel.app |
 | Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
-| Traccia | Pastorale | Steel frame builder, Val Camonica | _pending deploy_ |
+| Traccia | Pastorale | Steel frame builder, Val Camonica | https://traccia-telai.vercel.app |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
