@@ -1,0 +1,520 @@
+---
+import "../styles/global.css";
+import {
+  STATION, LIGHTS, EYES, reach, reachVerdict, SEASONS, gbp, lightByKey, eyeByKey,
+} from "../light.mjs";
+import { TOWER, ROOMS } from "../tower.mjs";
+import {
+  drawPeriod, drawRange, drawTower, pinPct, TW_VIEWBOX, TL_W, TL_H, RG_W, RG_H,
+  periodLabel, rangeLabel,
+} from "../draw.mjs";
+
+const light = lightByKey("faire");
+const eye = eyeByKey("cockpit");
+const r = reach(eye);
+const v = reachVerdict(r);
+const season = SEASONS[0];
+
+/** The List of Lights entry — the opening move. One field is lit per chapter. */
+const FIELDS = ["no", "name", "pos", "char", "elev", "range"] as const;
+const FIELD_TEXT: Record<string, string> = {
+  no: STATION.no,
+  name: STATION.name,
+  pos: `${STATION.lat} ${STATION.lon}`,
+  char: STATION.character,
+  elev: `${STATION.elevation} m`,
+  range: `${STATION.nominal} M`,
+};
+
+const NAV = [
+  { id: "solas", ga: "An Solas", en: "The light" },
+  { id: "tur", ga: "An Tùr", en: "The tower" },
+  { id: "taigh", ga: "An Taigh", en: "The house" },
+  { id: "daoine", ga: "Na Daoine", en: "The people" },
+  { id: "fuireach", ga: "Fuireach", en: "Staying" },
+];
+
+const FACES = [
+  {
+    img: "iain", name: "Iain MacAulay", role: "The last principal keeper",
+    alt: "An older man with white hair and beard in a navy wool jumper, standing in the doorway of a lighthouse lantern room at night.",
+    bio: "Came to the station in 1971 and kept the watch until the fourth of October 1988. Lives eleven miles away and has never once asked to come back up the tower.",
+    said: "“It wasn’t the dark you noticed. It was that something had to be done every half hour, all night, for a hundred and thirty-one years, and then on a Tuesday afternoon it didn’t.”",
+  },
+  {
+    img: "morag", name: "Mòrag NicLeòid", role: "Attendant",
+    alt: "A woman in dark work overalls standing beside the brass lens assembly inside a lighthouse lantern room, a tool roll open on the floor.",
+    bio: "Services the light four times a year: lamp changer, charge controller, seals, and the outside of the panes. Twenty-one stations on her round, from Ardnamurchan to the Summer Isles.",
+    said: "“People think it’s romantic. It’s a bulb, a battery and a lot of salt. But if I get it wrong somebody finds out about it at two in the morning in a Force 8.”",
+  },
+  {
+    img: "domhnall", name: "Dòmhnall Grant", role: "Boat",
+    alt: "A man in oilskins and a wool hat standing on a stone jetty at night beside a moored open workboat, a hurricane lamp on the stones.",
+    bio: "Brings guests, coal, gas and everything else in from the village when the track is out, which is about nine weeks a year. Forty minutes each way, and he will not go in a southwesterly over 6.",
+    said: "“If I say no, it’s no. I’ve had folk offer me two hundred pound to try it and the answer is still no.”",
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Fàire — the keeper's house at Rubha na Fàire</title>
+    <meta name="description" content="The principal keeper's house at Rubha na Fàire, Wester Ross. Manned 1857–1988, automated since. Let by the week, under a light that still flashes twice every twenty seconds." />
+    <meta name="theme-color" content="#0a1014" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Fàire — the keeper's house at Rubha na Fàire" />
+    <meta property="og:description" content="A week inside a working instrument. Wester Ross." />
+    <meta property="og:image" content="/images/tur-1536.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet" />
+    <script is:inline>
+      document.documentElement.classList.add("js");
+      if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+
+  <body>
+    <header class="head" id="head">
+      <a class="mark" href="#top">
+        <svg class="sector" viewBox="0 0 13 13" aria-hidden="true">
+          <circle cx="2.6" cy="6.5" r="1.8" fill="var(--solas)" />
+          <path d="M4.4 5.1 L12.2 1.6 L12.2 11.4 L4.4 7.9 Z" fill="var(--solas)" opacity="0.5" />
+        </svg>
+        FÀIRE
+      </a>
+      <nav class="nav" aria-label="Sections">
+        {NAV.map((s) => (
+          <a href={`#${s.id}`}><span>{s.ga}</span><span class="en">{s.en}</span></a>
+        ))}
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- ── Hero ─────────────────────────────────────────── -->
+      <section class="hero">
+        <div class="hero-media">
+          <img
+            src="/images/tur-1536.jpg"
+            srcset="/images/tur-800.jpg 800w, /images/tur-1536.jpg 1536w"
+            sizes="100vw"
+            alt="A lime-white lighthouse tower on a low headland at night, its warm beam cutting out over dark water into low cloud."
+            width="1536" height="857" fetchpriority="high"
+          />
+          <video id="v-hero" muted loop playsinline preload="none" poster="/images/tur-1536.jpg" aria-hidden="true" tabindex="-1"></video>
+        </div>
+        <div class="hero-inner">
+          <h1>You sleep in the house of a light that no longer needs anyone.</h1>
+          <p class="lede">
+            It still flashes twice every twenty seconds, and in the west bedroom
+            it still crosses the ceiling. Rubha na Fàire, Wester Ross: manned for a
+            hundred and thirty-one years, and let by the week since.
+          </p>
+          <div class="hero-foot">
+            <span><b>Fl(2) W 20s</b> · 39 m · 24 M</span>
+            <span>Established <b>1857</b> · automated <b>1988</b></span>
+            <span>Sleeps <b>four</b> · eleven miles of single track</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── An Solas — THE SIGNATURE ─────────────────────── -->
+      <section id="solas" class="wrapper rise">
+        <div class="entry">
+          {FIELDS.map((f) => <span class={f === "char" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
+          <span class="gloss">Admiralty List of Lights — the character</span>
+        </div>
+        <h2>A ship does not recognise this light. It counts it.</h2>
+        <p class="lede" style="margin-top:24px;max-width:58ch">
+          Every light in the world is given a rhythm nobody else nearby is
+          allowed to have. Ours is two flashes every twenty seconds. That
+          sequence, not the colour or the brightness or the position, is
+          how anyone at sea knows which light they are looking at.
+        </p>
+
+        <form id="rig" class="solas">
+          <div class="lampbox">
+            <div class="lamp" id="lamp" data-lit="1" role="img" aria-label="The light, flashing its character">
+              <span class="glass"></span><span class="ring"></span><span class="core"></span>
+            </div>
+            <div>
+              <div class="charline" id="c-char">{light.character}<em id="c-name">{light.name}</em></div>
+              <div class="count" id="c-count">
+                Period <b class="num">{light.period}</b> s · <b class="num">{light.flashes}</b>{" "}
+                flash{light.flashes > 1 ? "es" : ""} · longest eclipse{" "}
+                <b class="num">{Math.max(...light.seq.filter((_, i) => i % 2 === 1))}</b> s
+              </div>
+              <div class="tl">
+                <svg id="tl-svg" viewBox={`0 0 ${TL_W} ${TL_H}`} role="img" aria-labelledby="tl-t">
+                  <title id="tl-t">{periodLabel(light)}</title>
+                  <Fragment set:html={drawPeriod(light)} />
+                </svg>
+                <p class="gloss" style="margin-top:8px;max-width:none">
+                  One full period, to true scale in seconds. The lit blocks are the
+                  flashes; all the rest of it is eclipse.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <fieldset style="border:0;padding:0;margin:32px 0 0;min-inline-size:0">
+            <legend style="font-family:var(--display);font-size:20px;padding:0">Four lights you can see from this headland</legend>
+            <p class="gloss" style="margin:6px 0 14px;max-width:58ch">
+              Three of them run on the same twenty seconds as ours. Watch any one
+              of them and you will see why counting is the only method there is.
+            </p>
+            <div class="lights">
+              {LIGHTS.map((l) => (
+                <label class="lightopt">
+                  <input type="radio" name="light" value={l.key} checked={l.key === "faire"} />
+                  <b>{l.name}</b>
+                  <span class="ch">{l.character}</span>
+                  <span class="bd">{l.ours ? "this station" : `${l.bearing} · ${l.dist}`}</span>
+                </label>
+              ))}
+            </div>
+            <p class="lightnote" id="c-note">{light.note}</p>
+          </fieldset>
+
+          <div class="range">
+            <h3 style="margin-bottom:6px">And then: how far does it actually reach?</h3>
+            <p class="gloss" style="margin:0 0 20px;max-width:60ch">
+              Not as far as the published figure, for almost anyone. Brightness is
+              only half of it. The earth curves away underneath, and below a
+              certain eye height that is what decides the answer.
+            </p>
+            <svg id="rg-svg" viewBox={`0 0 ${RG_W} ${RG_H}`} role="img" aria-labelledby="rg-t">
+              <title id="rg-t">{rangeLabel(r)}</title>
+              <Fragment set:html={drawRange(r)} />
+            </svg>
+
+            <div class="eyes">
+              {EYES.map((e) => (
+                <label class="eyeopt">
+                  <input type="radio" name="eye" value={e.key} checked={e.key === eye.key} />
+                  <b>{e.en}</b>
+                  <span>{e.h} m</span>
+                </label>
+              ))}
+            </div>
+
+            <div class="verdict" id="verdict" data-state={v.state} aria-live="polite">
+              <div class="st" id="v-st">{r.geo.toFixed(1)} M<em id="v-en">{v.en}</em></div>
+              <p id="v-say">{v.say}</p>
+            </div>
+            <p class="gloss" style="margin-top:16px;max-width:64ch">
+              <strong>2.08 × (√H + √h)</strong>, H the height of the light and h
+              the height of your eye, both in metres, giving nautical miles. It
+              is the whole of the calculation and it has not changed since it was
+              first printed.
+            </p>
+          </div>
+        </form>
+      </section>
+
+      <!-- ── An Tùr — nine points ─────────────────────────── -->
+      <section id="tur" class="wrapper rise">
+        <div class="entry">
+          {FIELDS.map((f) => <span class={f === "elev" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
+          <span class="gloss">Thirty-nine metres, and ninety-six steps to them</span>
+        </div>
+        <h2>The machine that makes the rhythm.</h2>
+        <p class="lede" style="margin-top:24px;max-width:58ch">
+          The lamp does not blink. It burns steadily and the glass goes round it,
+          and everything else in the tower exists to keep that turning, keep
+          it clean, and keep it alight. Nine points into it.
+        </p>
+
+        <div class="tower">
+          <div class="tower-fig">
+            <svg viewBox={TW_VIEWBOX} role="img" aria-label="A sectional drawing of the lighthouse tower, shortened in the middle, with the lantern drawn large at the top.">
+              <Fragment set:html={drawTower()} />
+            </svg>
+            <div class="pins">
+              {TOWER.map((t) => (
+                <button
+                  type="button"
+                  class="pin"
+                  data-part={t.key}
+                  aria-expanded="false"
+                  aria-label={`${t.no}. ${t.trade} — open the record`}
+                  style={`left:${pinPct(t.key).left}%; top:${pinPct(t.key).top}%`}
+                >{t.no}</button>
+              ))}
+            </div>
+          </div>
+
+          <div class="parts">
+            {TOWER.map((t) => (
+              <button type="button" class="part" data-part={t.key}>
+                <span class="no">{String(t.no).padStart(2, "0")}</span>
+                <span>
+                  <span class="ga">{t.ga}</span>
+                  <span class="tr">{t.trade} — {t.en}</span>
+                </span>
+                <span class="go">Open</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="split top" style="margin-top:88px">
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img src="/images/lionsa-1536.jpg" srcset="/images/lionsa-800.jpg 800w, /images/lionsa-1536.jpg 1536w" sizes="(max-width:900px) 100vw, 46vw"
+                alt="A large Victorian Fresnel lighthouse lens: concentric rings of ground glass prisms in a brass frame, lit warmly from within." width="1536" height="1024" loading="lazy" decoding="async" />
+              <video id="v-lionsa" muted loop playsinline preload="none" poster="/images/lionsa-1536.jpg" aria-hidden="true" tabindex="-1"></video>
+            </div>
+            <figcaption><b>An lionsa.</b> Two panels of glass, and that is the whole of why the character is two flashes. The lamp inside never stops.</figcaption>
+          </figure>
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img src="/images/staidhre-1536.jpg" srcset="/images/staidhre-800.jpg 800w, /images/staidhre-1536.jpg 1536w" sizes="(max-width:900px) 100vw, 46vw"
+                alt="A spiral granite staircase inside a lighthouse tower, seen looking upward, with an iron handrail and a light at the top." width="1024" height="1536" loading="lazy" decoding="async" />
+            </div>
+            <figcaption><b>An staidhre.</b> Ninety-six steps, worn on the outer third — a man carrying oil in one hand keeps his weight to the wall.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── An Taigh ─────────────────────────────────────── -->
+      <section id="taigh" class="wrapper rise">
+        <div class="entry">
+          {FIELDS.map((f) => <span class={f === "no" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
+          <span class="gloss">The house is part of the station, and always was</span>
+        </div>
+        <div class="split top">
+          <div>
+            <h2>There are no curtains in the west bedroom.</h2>
+            <p class="lede" style="margin-top:24px">
+              We will not be fitting any. Every twenty seconds a band of light
+              crosses the ceiling from the window to the door, and it is the
+              reason to come.
+            </p>
+            <p>
+              The principal keeper's house: two bedrooms, a sitting room facing
+              the tower, a kitchen with the original solid-fuel range, and a
+              store that still smells of paraffin a hundred years after the last
+              drum left it. Walls six hundred millimetres thick. Sleeps four.
+            </p>
+            <p>
+              Most people take two nights to stop noticing the light and then
+              miss it when they go home. That is the most consistent thing
+              anyone says in the book by the door.
+            </p>
+          </div>
+          <figure>
+            <div class="plate" style="aspect-ratio:3/2">
+              <img src="/images/mullach-1536.jpg" srcset="/images/mullach-800.jpg 800w, /images/mullach-1536.jpg 1536w" sizes="(max-width:900px) 100vw, 46vw"
+                alt="A whitewashed bedroom at night with an iron bedstead and a deep-set window, a band of warm light thrown across the ceiling by the lighthouse beam." width="1536" height="1024" loading="lazy" decoding="async" />
+              <video id="v-mullach" muted loop playsinline preload="none" poster="/images/mullach-1536.jpg" aria-hidden="true" tabindex="-1"></video>
+            </div>
+            <figcaption><b>An seòmar-cadail.</b> The beam passes over the roof, not through the room — what crosses the ceiling is the light going out to sea.</figcaption>
+          </figure>
+        </div>
+
+        <div class="parts" style="margin-top:72px;max-width:840px">
+          {ROOMS.map((rm) => (
+            <button type="button" class="part" data-room={rm.key}>
+              <span class="no">{String(rm.no).padStart(2, "0")}</span>
+              <span>
+                <span class="ga">{rm.ga}</span>
+                <span class="tr">{rm.trade} — {rm.en}</span>
+              </span>
+              <span class="go">Open</span>
+            </button>
+          ))}
+        </div>
+
+        <figure style="margin-top:72px">
+          <div class="plate" style="aspect-ratio:16/9">
+            <img src="/images/taigh-1536.jpg" srcset="/images/taigh-800.jpg 800w, /images/taigh-1536.jpg 1536w" sizes="100vw"
+              alt="Low white cottages with slate roofs beside a pale lighthouse tower on open grassland at blue hour, one window lit, a drystone wall in front and the sea beyond." width="1536" height="857" loading="lazy" decoding="async" />
+          </div>
+          <figcaption style="max-width:60ch"><b>The station.</b> Two houses, the tower, a walled garden that has never grown anything, and a jetty in the only landing on this side of the point.</figcaption>
+        </figure>
+      </section>
+
+      <!-- ── Na Daoine ────────────────────────────────────── -->
+      <section id="daoine" class="wrapper rise">
+        <div class="entry">
+          {FIELDS.map((f) => <span class={f === "name" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
+          <span class="gloss">Manned 1857 – 1988 · one hundred and thirty-one years</span>
+        </div>
+        <h2>Somebody was awake here every night for a hundred and thirty-one years.</h2>
+        <p class="lede" style="margin-top:24px;max-width:58ch">
+          Then on the fourth of October 1988, at ten past three in the afternoon,
+          nobody had to be. The light did not change. That is the whole of what
+          changed.
+        </p>
+
+        <div class="faces">
+          {FACES.map((p) => (
+            <div class="face">
+              <div class="plate">
+                <img src={`/images/${p.img}-1536.jpg`} srcset={`/images/${p.img}-800.jpg 800w, /images/${p.img}-1536.jpg 1536w`} sizes="(max-width:900px) 100vw, 31vw"
+                  alt={p.alt} width="1024" height="1536" loading="lazy" decoding="async" />
+              </div>
+              <h3>{p.name}</h3>
+              <div class="role">{p.role}</div>
+              <p>{p.bio}</p>
+              <p class="said">{p.said}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- ── Fuireach ─────────────────────────────────────── -->
+      <section id="fuireach" class="wrapper rise">
+        <div class="entry">
+          {FIELDS.map((f) => <span class={f === "pos" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
+          <span class="gloss">The position you will be driving to</span>
+        </div>
+        <h2>Taking the week.</h2>
+        <p class="lede" style="margin-top:24px;max-width:58ch">
+          Saturday to Saturday. We will write back with what the track is doing
+          and whether you need Dòmhnall, and that reply is worth waiting for
+          before you book anything else.
+        </p>
+
+        <form class="book" id="book" method="post" action="mailto:fuireach@faire.scot" enctype="text/plain" novalidate>
+          <div>
+            <fieldset class="field">
+              <legend>An seusan <i>the season</i></legend>
+              <p class="hint">The price is the week. What actually differs is how much dark you get.</p>
+              <div class="seasons">
+                {SEASONS.map((s) => (
+                  <label class="season">
+                    <input type="radio" name="Seusan" value={`${s.en} — ${s.months}`} checked={s.key === season.key} />
+                    <span class="tick" aria-hidden="true"></span>
+                    <span>
+                      <b>{s.ga} <i style="font-style:normal;font-size:13px;letter-spacing:.1em;color:var(--ceo-lo)">{s.en}</i></b>
+                      <span>{s.months} · {s.dark}</span>
+                    </span>
+                    <span class="pr">{gbp(s.price)}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="field" id="f-week">
+              <label for="week">An t-seachdain <i>week beginning</i></label>
+              <p class="hint">A Saturday. If it is not a Saturday we will move it to the nearest one and tell you.</p>
+              <input type="date" id="week" name="Week beginning" />
+              <p class="err" id="e-week">Give us a date to look at, even an approximate one.</p>
+            </div>
+
+            <div class="field" id="f-ainm">
+              <label for="ainm">Ainm <i>your name</i></label>
+              <input type="text" id="ainm" name="Ainm" autocomplete="name" />
+              <p class="err" id="e-ainm">We need a name for the book by the door.</p>
+            </div>
+
+            <div class="field" id="f-post">
+              <label for="post">Post-d <i>where the reply goes</i></label>
+              <input type="email" id="post" name="Post-d" autocomplete="email" />
+              <p class="err" id="e-post">That address will not take a reply. Check it and send again.</p>
+            </div>
+
+            <div class="field">
+              <label for="cars">An rathad <i>the track</i></label>
+              <p class="hint">The last four miles are single track, unsurfaced and ungritted. It matters more than anything else on this form.</p>
+              <select id="cars" name="The track">
+                <option>We have a high-clearance vehicle and are happy to drive it</option>
+                <option>An ordinary car — tell us honestly whether that works</option>
+                <option>We would rather come in by boat with Dòmhnall</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="note">Rud sam bith eile <i>anything else</i></label>
+              <p class="hint">Dogs, children, someone who cannot manage stairs, a birthday, a boat you want to bring.</p>
+              <textarea id="note" name="Anything else"></textarea>
+            </div>
+
+            <input type="hidden" name="Station" value={`${STATION.no} ${STATION.name} · ${STATION.lat} ${STATION.lon}`} />
+            <input type="hidden" name="Price" id="h-price" value={gbp(season.price)} />
+
+            <div class="form-foot">
+              <button class="btn" type="submit" id="submit">Cuir a-null <span aria-hidden="true">→</span></button>
+              <p class="note">Opens your own mail and sends an enquiry. No card, no deposit, nothing held.</p>
+            </div>
+
+            <div class="sent" id="sent" hidden>
+              <h3>Air a chlàradh</h3>
+              <p><strong>Written down.</strong> <span id="sent-line" class="num"></span></p>
+              <p>One reply follows within two days with the track, the tides and whether that week is free. If it does not come, we did not get it — assume that rather than waiting.</p>
+            </div>
+            <div aria-live="polite" id="live" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></div>
+          </div>
+
+          <aside class="docket" aria-label="The week as it stands">
+            <h3>An t-seachdain</h3>
+            <div class="g">as it stands</div>
+            <div class="drow"><span>Seusan</span><b id="d-season">{season.en}</b></div>
+            <div class="drow"><span>Mìosan</span><b id="d-months">{season.months}</b></div>
+            <div class="drow"><span>Dorchadas</span><b id="d-dark">{season.dark}</b></div>
+            <div class="drow"><span>Cadal</span><b>Four</b></div>
+            <div class="drow"><span>Solas</span><b>{STATION.character}</b></div>
+            <div class="dtot"><span>An t-seachdain</span><b id="d-price">{gbp(season.price)}</b></div>
+            <p class="gloss" style="margin:16px 0 0;line-height:1.6">
+              Saturday to Saturday, the whole house. Linen, coal and peat
+              included; food is not, and the nearest shop is eleven miles.
+            </p>
+          </aside>
+        </form>
+      </section>
+    </main>
+
+    <!-- the record behind a point — commitment 10 -->
+    <dialog id="dlg" class="dlg" aria-labelledby="dlg-h">
+      <form method="dialog" class="dlg-close-form">
+        <button class="dlg-close" aria-label="Close this record" value="close">Dùin ✕</button>
+      </form>
+      <div class="dlg-body">
+        <div class="dlg-no" id="dlg-no"></div>
+        <h3 id="dlg-h"></h3>
+        <div class="tr" id="dlg-tr"></div>
+        <p class="say" id="dlg-say"></p>
+        <dl class="dlg-dl" id="dlg-dl"></dl>
+      </div>
+    </dialog>
+
+    <footer class="foot">
+      <div class="wrapper">
+        <div class="foot-grid">
+          <div>
+            <h4>Fàire</h4>
+            <p>The principal keeper's house,<br />Rubha na Fàire, Wester Ross.<br />{STATION.lat} {STATION.lon}</p>
+          </div>
+          <div>
+            <h4>An solas</h4>
+            <p>{STATION.character} · {STATION.elevation} m · {STATION.nominal} M.<br />Established {STATION.established}, automated {STATION.automated}. Still lit every night.</p>
+          </div>
+          <div>
+            <h4>Chan eil</h4>
+            <p>No wifi, no mobile signal, no television, no shop, and no lock on the tower door — because it is not ours to open.</p>
+          </div>
+          <div>
+            <h4>Faisg air làimh</h4>
+            <ul>
+              <li>Rubha Reidh — Fl(4) W 15s · 9 M</li>
+              <li>Eilean Glas — Fl(3) W 20s · 33 M</li>
+              <li>Ardnamurchan — Fl W 20s · 41 M</li>
+            </ul>
+          </div>
+        </div>
+        <div class="colophon">
+          <span>Fàire: the watch, the horizon, and the coming of the light.</span>
+          <span>A fictional house, built for the Foundry collection.</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      import "../client.mjs";
+    </script>
+  </body>
+</html>

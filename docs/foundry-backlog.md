@@ -28,14 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Lighthouse keeper's house
-- **Series:** could open a third series — dusk (a "Vesper" between Nocturne and Aubade)
-- **Place idea:** Scottish west coast, a keeper's cottage sleeping four
-- **Why it earns a place:** the lamp's sweep, weather glass, white tower against slate sea
-- **Signature interaction:** the light itself — its true character (occulting, flashing) marking time on the page
-- **Notes:** deciding whether one site justifies a new series is exactly the doctrine-level question the skill escalates in its report
-- **Claimed:** 2026-08-07 — building as **Fàire**, Rubha na Fàire, Wester Ross. Vesper now exists and is the WRONG answer (it is for worlds built on not being seen; a lighthouse exists to be seen). Proposing a fifth register instead — see DESIGN.md.
-
+_(nothing in progress)_
 
 ## Proposed — awaiting approval
 
@@ -119,4 +112,5 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 | Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
 | Traccia | Pastorale | Steel frame builder, Val Camonica | https://traccia-telai.vercel.app |
+| Fàire | **Vigil** (new register) | Lighthouse keeper's house, Wester Ross | _pending deploy_ |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |

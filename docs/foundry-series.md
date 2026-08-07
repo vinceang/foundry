@@ -5,7 +5,7 @@ Every project must have a believable world, a material system, a precise
 vocabulary, art-directed imagery, and one interaction that could belong only
 to that subject.
 
-The collection has two complementary series.
+The collection has five qualities of light.
 
 ## Nocturnes
 
@@ -111,6 +111,32 @@ subject:
 - **Malmfuru — midwinter and lit from within.** The same craft on a moonless
   January night: iron-blue dark, one warm window, a tree-ring archive as
   signature.
+
+## Vigils
+
+The fifth register is the deep night office — a maritime dark with one
+deliberate light in it. Cold sea-black ground, weather as the material, and a
+warm light that is **distant, exterior and timed**. Its shared taste profile
+lives in [`vigil-taste-profile.md`](vigil-taste-profile.md).
+
+Vespers and Vigils are the two night offices, evening and the deep of night,
+and the pairing is exact — because the distinction between the registers is:
+
+> **Vesper's subjects are built on not being seen. A Vigil subject exists in
+> order to be seen.** Same darkness, opposite purpose.
+
+It is equally not Nocturne. Nocturne is a lamp *in a room* — one artifact held
+in reverence against a void. Vigil is a lamp *in a world*: the light is
+outside, often miles off, it falls on weather rather than on an object, the
+composition is vast where Nocturne's is scarce, and the feeling is vigilance
+rather than reverence.
+
+- **Fàire — the keeper's house at Rubha na Fàire.** A Wester Ross shore
+  station, manned 1857–1988 and let by the week since. It is the one register
+  permitted a temporal signature, because here rhythm is *identification*: a
+  light's character is how a ship knows which light it is looking at. The
+  permission is narrow and the site spends it on counting and geometry, never
+  on atmosphere.
 
 ## What remains recognizably Foundry
 

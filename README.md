@@ -4,7 +4,7 @@ A collection of bespoke digital worlds built with reverence, restraint, and
 material honesty. Foundry is not a template portfolio. Each site invents a
 complete place, vocabulary, photographic language, and reason to exist.
 
-The collection now works in **four qualities of light**:
+The collection now works in **five qualities of light**:
 
 | Series | Atmosphere | Subjects |
 |---|---|---|
@@ -12,6 +12,7 @@ The collection now works in **four qualities of light**:
 | **Aubades** | Daylight, hospitality, inhabited rooms, restorative warmth | Hotels, residences, and other places to dwell |
 | **Vespers** | Civil twilight, passage, discretion, light from the horizon | Things in transit; worlds built on not being seen |
 | **Pastorales** | Cold bright overcast, a craft worked outdoors in snow-light | Northern outdoor trades and makers |
+| **Vigils** | Maritime night, weather as material, one distant timed light | Things that exist in order to be seen |
 
 The two series share standards, not styling. Read
 [`docs/foundry-series.md`](docs/foundry-series.md),
@@ -42,6 +43,7 @@ The two series share standards, not styling. Read
 | [Barchetta](https://barchetta.vercel.app) | Nocturne | Neapolitan sartoria — the coat opened from the inside | Italy · Naples, Chiaia | [`sites/barchetta`](sites/barchetta) · live |
 | [Rosée](https://rosee-omega.vercel.app) | Aubade | Single-perfumer house — the field behind the bottle | France · Plascassier, Grasse | [`sites/rosee`](sites/rosee) · live |
 | [Traccia](https://traccia-telai.vercel.app) | Pastorale | Steel frame builder — the road writes the specification | Italy · Edolo, Val Camonica | [`sites/traccia`](sites/traccia) · live |
+| Fàire | Vigil | Lighthouse keeper's house — a light that counts | Scotland · Rubha na Fàire, Wester Ross | [`sites/faire`](sites/faire) |
 | [Tsutsumiya (包屋)](https://tsutsumiya.vercel.app) | Nocturne | Wrapping house — the cloth decides what you may take | Japan · Itachibori, Osaka | [`sites/tsutsumiya`](sites/tsutsumiya) · live |
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
