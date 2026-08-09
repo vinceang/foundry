@@ -193,7 +193,7 @@ const payload = nodes.map((n) => ({
     </div>
 
     <p class="lm__hint meta" data-hint>
-      Drag to pan · <kbd>⌘</kbd>/<kbd>ctrl</kbd> + scroll to zoom · two fingers on touch
+      Drag to pan · <kbd>⌘</kbd>/<kbd>ctrl</kbd> + scroll to zoom · pinch <em>and</em> drag with two fingers
     </p>
 
 
@@ -447,7 +447,11 @@ const payload = nodes.map((n) => ({
       const t = `translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k.toFixed(4)})`;
       views.forEach((g) => g.setAttribute('transform', t));
       root!.style.setProperty('--inv', (1 / Math.sqrt(view.k)).toFixed(4));
-      root!.classList.toggle('is-zoomed', view.k > 1.001);
+      const zoomed = view.k > 1.02;
+      root!.classList.toggle('is-zoomed', zoomed);
+      // At rest the page must always win the scroll; zoomed in, the map takes
+      // the gesture so one finger can pan it.
+      stage.style.touchAction = zoomed ? 'none' : 'pan-y';
       hideCard();
     }
 
@@ -461,7 +465,13 @@ const payload = nodes.map((n) => ({
     function zoomAt(factor: number, vx: number, vy: number) {
       const k0 = view.k;
       const k1 = Math.min(MAX_K, Math.max(MIN_K, k0 * factor));
-      if (k1 === k0) return;
+      if (k1 === k0) {
+        // The caller may have just panned before asking for a scale that turns
+        // out to be unchanged — a two-finger drag with steady spacing does
+        // exactly that. Returning without applying would throw the pan away.
+        applyView();
+        return;
+      }
       const worldX = (vx - view.tx) / k0;
       const worldY = (vy - view.ty) / k0;
       view.k = k1;
@@ -544,6 +554,8 @@ const payload = nodes.map((n) => ({
     const pointers = new Map<number, { x: number; y: number }>();
     let dragged = false;
     let pinchDist = 0;
+    /** Midpoint of a two-finger gesture, so the pair can pan as well as pinch. */
+    let pinchMid: { x: number; y: number } | null = null;
 
     stage.addEventListener('pointerdown', (e) => {
       // The zoom cluster sits inside the stage. Capturing the pointer here
@@ -563,6 +575,7 @@ const payload = nodes.map((n) => ({
         coop.classList.remove('is-on');
         const [a, b] = [...pointers.values()];
         pinchDist = Math.hypot(a.x - b.x, a.y - b.y);
+        pinchMid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
       }
       if (e.pointerType !== 'touch') {
         dragged = false;
@@ -588,15 +601,37 @@ const payload = nodes.map((n) => ({
           e.preventDefault();
           const [a, b] = [...pointers.values()];
           const d = Math.hypot(a.x - b.x, a.y - b.y);
-          if (pinchDist > 0) {
-            const mid = toViewBox((a.x + b.x) / 2, (a.y + b.y) / 2);
-            zoomAt(d / pinchDist, mid.x, mid.y);
+          const mc = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+
+          // Two fingers must move the map, not only scale it. Pinching alone
+          // meant anything off-centre became unreachable the moment you zoomed
+          // in — the only way back was to zoom out again.
+          if (pinchMid) {
+            view.tx += (mc.x - pinchMid.x) * sx;
+            view.ty += (mc.y - pinchMid.y) * sy;
           }
+
+          const mid = toViewBox(mc.x, mc.y);
+          if (pinchDist > 0) zoomAt(d / pinchDist, mid.x, mid.y);
+          else applyView();
+
           pinchDist = d;
+          pinchMid = mc;
           return;
         }
 
-        if (e.pointerType === 'touch') return; // one finger scrolls the page
+        // One finger scrolls the page while the map sits at rest; once it has
+        // been zoomed the visitor has clearly engaged with it, so a single
+        // finger pans instead of scrolling past.
+        if (e.pointerType === 'touch') {
+          if (view.k <= 1.02) return;
+          e.preventDefault();
+          if (Math.abs(dx) + Math.abs(dy) > 2) dragged = true;
+          view.tx += dx * sx;
+          view.ty += dy * sy;
+          applyView();
+          return;
+        }
         if (!(e.buttons & 1)) return;
         if (Math.abs(dx) + Math.abs(dy) > 2) dragged = true;
         view.tx += dx * sx;
@@ -608,7 +643,10 @@ const payload = nodes.map((n) => ({
 
     const endPointer = (e: PointerEvent) => {
       pointers.delete(e.pointerId);
-      if (pointers.size < 2) pinchDist = 0;
+      if (pointers.size < 2) {
+        pinchDist = 0;
+        pinchMid = null;
+      }
       stage.classList.remove('is-grabbing');
     };
     stage.addEventListener('pointerup', endPointer);
