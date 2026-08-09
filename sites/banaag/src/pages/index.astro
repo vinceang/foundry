@@ -758,7 +758,18 @@ const LEDGER = [
             >
               <span class="yr">{r.yr}</span>
               <span class="op">{r.op}<i>{r.town}</i></span>
-              <span class="rt">{r.rt}</span>
+              <span class="rt">
+                {r.rt}
+                <i>
+                  {[
+                    CHASSIS[r.ch].label,
+                    ROOF[r.bub].label.toLowerCase(),
+                    KABAYO[r.kab].label.toLowerCase() + " kabayo",
+                    ILAW[r.il].label.toLowerCase(),
+                    PINTA[r.pt].label.toLowerCase(),
+                  ].join(" · ")}
+                </i>
+              </span>
               <span class="cap">{r.cap} upuan</span>
             </button>
           ))}
