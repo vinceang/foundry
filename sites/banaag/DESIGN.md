@@ -328,7 +328,9 @@ VIII. **Colophon** — the plate, signed.
 Two real price bands, so the site does both things commitment 7 allows —
 and, per the anti-luxury clause, **every number is on the page**:
 
-- **A whole body:** ₱780,000 – ₱1,450,000 (roughly $13,500 – $25,000). Above
+- **A whole body:** ₱698,800 – ₱1,551,400 (roughly $12,000 – $27,000), which
+  are the true floor and ceiling of the priced model in `hulma.mjs`, not a
+  rounded claim. Above
   the $5,000 line, but it still gets a **structured build sheet**, not a
   precious "write to us" letter — because a body shop takes a spec, and the
   spec is the document. The configurator *is* that form, and it itemises: the

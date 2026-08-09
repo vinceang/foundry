@@ -330,9 +330,27 @@ p > .gloss { display: block; margin-block-start: var(--s-2); padding-inline-star
   margin-block-start: var(--s-7);
 }
 
+/* Without this the drawing's min-inline-size propagates out through the grid
+   column (grid items default to min-width:auto) and drags every control in the
+   left column off a phone screen, where body overflow-x:hidden then clips them
+   unreachable. The scroll belongs to the frame alone. */
+.hulma__grid > * { min-inline-size: 0; }
+
 @media (min-width: 68rem) {
   .hulma__grid { grid-template-columns: 1fr 23rem; gap: var(--s-8); align-items: start; }
   .hulma__sheet { position: sticky; inset-block-start: 5.5rem; }
+}
+
+/* the drawing is 6,8 m of vehicle; on a phone it has to be swiped, so say so */
+.hulma__hint { display: none; }
+@media (max-width: 68rem) {
+  .hulma__hint {
+    display: block;
+    margin-block-start: var(--s-2);
+    color: var(--liwayway);
+    font-size: var(--t--1);
+    letter-spacing: 0.06em;
+  }
 }
 
 .hulma__frame {
@@ -671,7 +689,7 @@ dialog::backdrop { background: rgba(4, 9, 11, 0.82); }
   gap: var(--s-7);
   grid-template-columns: 1fr;
   margin-block-start: var(--s-7);
-  align-items: center;
+  align-items: start;
 }
 @media (min-width: 60rem) { .split { grid-template-columns: 1fr 1fr; gap: var(--s-8); } }
 .split--wide { align-items: start; }
@@ -726,8 +744,14 @@ dialog::backdrop { background: rgba(4, 9, 11, 0.82); }
 .rotor-cell {
   flex: 1;
   block-size: 2.5rem;
-  background: rgba(94, 211, 184, 0.12);
-  border: 1px solid rgba(94, 211, 184, 0.28);
+  background: rgba(94, 211, 184, 0.1);
+  border: 1px solid rgba(94, 211, 184, 0.26);
+}
+/* the cut pattern itself, so the strip still carries information when nothing
+   is moving — with JS off, reduced motion, or ?nofx */
+.rotor-cell[data-on] {
+  background: rgba(94, 211, 184, 0.42);
+  border-color: var(--tubo);
 }
 html.fx .rotor-cell { animation: seq 2.4s steps(1, end) infinite; }
 @keyframes seq {

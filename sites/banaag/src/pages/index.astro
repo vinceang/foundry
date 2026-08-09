@@ -291,8 +291,8 @@ const LEDGER = [
             <p style="margin-block-start: var(--s-4)">
               Every price on this site is the real price, and the sheet below
               adds itself up while you change your mind. A whole body runs
-              <span class="num">₱700,000</span> to
-              <span class="num">₱1,560,000</span> depending mostly on how many
+              <span class="num">₱698,800</span> to
+              <span class="num">₱1,551,400</span> depending mostly on how many
               people you seat.
             </p>
             <p>
@@ -332,6 +332,7 @@ const LEDGER = [
               <svg data-svg viewBox={P.vb} role="img" aria-labelledby="drawing-title" set:html={svg}>
               </svg>
             </div>
+            <p class="hulma__hint">Swipe the drawing &rarr;</p>
             <p class="gloss" style="margin-block-start: var(--s-3)" id="drawing-title" data-caption>
               {P.spec.cap} upuan on an {P.spec.chassis.label} · {P.spec.length.toLocaleString("en-US")} mm over bumpers · {P.spec.bays} bays
             </p>
@@ -667,7 +668,7 @@ const LEDGER = [
                   San Fernando has run the giant lantern festival since 1908.
                   The lanterns are five metres across and carry thousands of
                   bulbs, and what makes the light run around them is not a
-                  circuit board — it is a <strong>rotor</strong>: a wooden drum
+                  circuit board. It is a <strong>rotor</strong>: a wooden drum
                   wrapped in cut foil contacts that a wireman files by hand,
                   one strip at a time, until the pattern in the lantern matches
                   the pattern he has in his head.
@@ -685,17 +686,21 @@ const LEDGER = [
                   days.
                 </p>
                 <div class="rotor-strip" aria-hidden="true">
-                  <div class="rotor-cell" style="animation-delay: 0s"></div>
+                  <div class="rotor-cell" data-on style="animation-delay: 0.0s"></div>
                   <div class="rotor-cell" style="animation-delay: 0.2s"></div>
                   <div class="rotor-cell" style="animation-delay: 0.4s"></div>
-                  <div class="rotor-cell" style="animation-delay: 0.6s"></div>
-                  <div class="rotor-cell" style="animation-delay: 0.8s"></div>
-                  <div class="rotor-cell" style="animation-delay: 1s"></div>
+                  <div class="rotor-cell" data-on style="animation-delay: 0.6s"></div>
+                  <div class="rotor-cell" data-on style="animation-delay: 0.8s"></div>
+                  <div class="rotor-cell" style="animation-delay: 1.0s"></div>
                   <div class="rotor-cell" style="animation-delay: 1.2s"></div>
-                  <div class="rotor-cell" style="animation-delay: 1.4s"></div>
+                  <div class="rotor-cell" data-on style="animation-delay: 1.4s"></div>
                   <div class="rotor-cell" style="animation-delay: 1.6s"></div>
                   <div class="rotor-cell" style="animation-delay: 1.8s"></div>
                 </div>
+                <p class="gloss" style="margin-block-start: var(--s-2)">
+                  Ten contacts off a four-hundred-contact drum. The lit ones
+                  have been cut; the rest are still blank foil.
+                </p>
               </div>
               <figure class="fig settle" style="margin-block-start:0">
                 <img
