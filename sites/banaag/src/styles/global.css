@@ -1,0 +1,779 @@
+/*
+  BANAAG — San Fernando, Pampanga
+  ------------------------------------------------------------------
+  Vesper, at 04:41 in the wet tropics. The sky is the ground and it is still
+  dark, but it is going. Two lights: Liwayway is the band on the horizon and
+  does structure; Tubo is the vehicle's own electricity and appears ONLY where
+  the jeepney is powered. Every contrast value here was measured — see
+  DESIGN.md.
+
+  The page is austere because the vehicle is loud. All saturated colour lives
+  inside the photographs and inside the buyer's own drawing.
+
+  Animations are opt-IN behind html.fx, added by an inline script only when the
+  visitor has asked for neither ?nofx nor reduced motion. With JS off the page
+  is already finished.
+*/
+
+:root {
+  /* materials of a Pampanga pre-dawn */
+  --araw: #0a161a;      /* the zenith at 04:41 — teal-black, humid */
+  --aspalto: #111f25;   /* the apron after the night's rain */
+  --bakal: #a3b1b6;     /* brushed stainless — secondary text */
+  --esmalte: #e9eae6;   /* enamel white — body and display */
+  --liwayway: #e6b043;  /* the gold band over the rice — structure only */
+  --tubo: #5ed3b8;      /* the valance fluorescent — the vehicle's own light */
+
+  --rule: rgba(163, 177, 182, 0.24);
+  --rule-firm: rgba(163, 177, 182, 0.42);
+  --gold-soft: rgba(230, 176, 67, 0.22);
+
+  --display: "Big Shoulders Display", "Arial Narrow", sans-serif;
+  --work: "Public Sans", system-ui, sans-serif;
+
+  /* fluid type, 360 → 1600. The floor is 11px and nothing goes under it. */
+  --t--1: clamp(0.75rem, 0.73rem + 0.09vi, 0.8rem);
+  --t-0: clamp(0.98rem, 0.94rem + 0.2vi, 1.08rem);
+  --t-1: clamp(1.14rem, 1.06rem + 0.36vi, 1.34rem);
+  --t-2: clamp(1.4rem, 1.2rem + 0.9vi, 1.9rem);
+  --t-3: clamp(2rem, 1.5rem + 2.2vi, 3.2rem);
+  --t-4: clamp(2.8rem, 1.8rem + 4.6vi, 5.4rem);
+  --t-5: clamp(3.6rem, 1.9rem + 7.8vi, 8rem);
+
+  /* the rule of 8 */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: clamp(3rem, 2rem + 5vi, 5rem);
+  --s-9: clamp(4rem, 2.4rem + 8vi, 8rem);
+
+  --gutter: clamp(1.25rem, 0.7rem + 2.6vi, 3.25rem);
+  --measure: 34rem;
+  --page: 80rem;
+
+  --glide: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html {
+  -webkit-text-size-adjust: none;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-block-size: 100svb;
+  background: var(--araw);
+  color: var(--esmalte);
+  font-family: var(--work);
+  font-size: var(--t-0);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg, video { display: block; max-inline-size: 100%; block-size: auto; }
+input, button, select, textarea { font: inherit; color: inherit; }
+
+p, h1, h2, h3, li { overflow-wrap: break-word; text-wrap: pretty; }
+h1, h2, h3 { text-wrap: balance; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--liwayway);
+  outline-offset: 3px;
+}
+
+::selection { background: var(--liwayway); color: var(--araw); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* ---------------------------------------------------------------- layout */
+
+.wrap {
+  inline-size: min(100% - (var(--gutter) * 2), var(--page));
+  margin-inline: auto;
+}
+
+.narrow { max-inline-size: var(--measure); }
+
+section { padding-block: var(--s-9); position: relative; }
+
+/* the header is sticky, so anything scrolled to by an anchor has to clear it —
+   without this, every nav link parks its chapter under the bar */
+section[id], .opt, .field, .kabit-row, .row { scroll-margin-block-start: 6rem; }
+
+.skip-link {
+  position: absolute;
+  inset-block-start: -100%;
+  inset-inline-start: var(--s-4);
+  z-index: 100;
+  background: var(--liwayway);
+  color: var(--araw);
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--t--1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.skip-link:focus { inset-block-start: var(--s-4); }
+
+/* --------------------------------------------------- the opening move
+
+   The chalk dimension in the margin. A chapter opens cold — no label above
+   the heading — with one measured fact beside it, drawn as a dimension
+   callout: a line with a tick turned down at each end, exactly as a body
+   layout is annotated on the shop floor. */
+
+.chap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+
+@media (min-width: 62rem) {
+  .chap {
+    grid-template-columns: 10rem 1fr;
+    gap: var(--s-8);
+  }
+}
+
+.dim {
+  font-size: var(--t--1);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  font-variant-numeric: tabular-nums;
+  text-transform: uppercase;
+  color: var(--liwayway);
+  padding-block-start: 0.85rem;
+  position: relative;
+  max-inline-size: 9rem;
+}
+
+.dim::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  block-size: 8px;
+  border-block-start: 1px solid currentColor;
+  border-inline: 1px solid currentColor;
+}
+
+.dim b { display: block; font-weight: 600; }
+.dim i {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--bakal);
+  margin-block-start: var(--s-1);
+}
+
+/* the dimension line, reused as the section rule */
+.ruleline {
+  border: 0;
+  block-size: 8px;
+  border-block-start: 1px solid var(--rule-firm);
+  border-inline: 1px solid var(--rule-firm);
+  margin-block: var(--s-8) 0;
+}
+
+/* ------------------------------------------------------------------ head */
+
+.head {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 40;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-4) var(--gutter);
+  background: color-mix(in srgb, var(--araw) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-block-end: 1px solid var(--rule);
+}
+
+.mark {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: var(--t-2);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: 1;
+}
+.mark span { color: var(--liwayway); }
+
+.nav {
+  display: flex;
+  gap: clamp(var(--s-3), 2vi, var(--s-6));
+  font-size: var(--t--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.nav a { text-decoration: none; color: var(--bakal); padding-block: var(--s-1); }
+.nav a:hover { color: var(--esmalte); }
+@media (max-width: 46rem) {
+  .nav a[data-opt] { display: none; }
+}
+
+/* ------------------------------------------------------------------ hero */
+
+.hero { padding-block: 0; }
+
+.hero__plate {
+  inline-size: 100%;
+  block-size: clamp(26rem, 78svb, 46rem);
+  object-fit: cover;
+  object-position: 60% 60%;
+}
+
+@media (max-width: 46rem) {
+  /* a narrow box crops this frame to the front wheel and loses the man with
+     the rag, who is the entire argument. Shorter box, wider crop, and the
+     position walks back toward him. */
+  .hero__plate {
+    block-size: clamp(17rem, 44svb, 23rem);
+    object-position: 40% 56%;
+  }
+}
+
+.hero__body {
+  position: relative;
+  margin-block-start: calc(var(--s-8) * -1);
+  padding-block-end: var(--s-9);
+}
+
+.hero__scrim {
+  position: absolute;
+  inset-block-start: calc(var(--s-9) * -3.5);
+  inset-inline: 0;
+  block-size: calc((var(--s-9) * 3.5) + var(--s-8));
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 22, 26, 0) 0%,
+    rgba(10, 22, 26, 0.45) 38%,
+    rgba(10, 22, 26, 0.86) 70%,
+    var(--araw) 100%
+  );
+  pointer-events: none;
+}
+
+.hero__line {
+  font-size: var(--t-5);
+  max-inline-size: 18ch;
+  margin-block-start: var(--s-4);
+}
+.hero__line em { font-style: normal; color: var(--liwayway); }
+
+.hero__sub {
+  margin-block-start: var(--s-5);
+  color: var(--bakal);
+  font-size: var(--t-1);
+}
+
+/* ------------------------------------------------------------- typography */
+
+h2.big { font-size: var(--t-4); }
+h3.mid { font-size: var(--t-2); }
+
+.lede {
+  font-size: var(--t-1);
+  margin-block-start: var(--s-5);
+}
+.body p + p { margin-block-start: var(--s-4); }
+.body { color: var(--bakal); }
+.body strong { color: var(--esmalte); font-weight: 600; }
+
+/* a Tagalog term glossed once, in the working voice — its own line, so it
+   reads as a footnote rather than colliding with the sentence it follows */
+.gloss { color: var(--bakal); font-size: var(--t--1); letter-spacing: 0.04em; }
+p > .gloss { display: block; margin-block-start: var(--s-2); padding-inline-start: var(--s-3); border-inline-start: 1px solid var(--rule); }
+
+.num {
+  font-variant-numeric: tabular-nums;
+  color: var(--esmalte);
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------------- the drawing */
+
+.hulma__grid {
+  display: grid;
+  gap: var(--s-6);
+  grid-template-columns: 1fr;
+  margin-block-start: var(--s-7);
+}
+
+@media (min-width: 68rem) {
+  .hulma__grid { grid-template-columns: 1fr 23rem; gap: var(--s-8); align-items: start; }
+  .hulma__sheet { position: sticky; inset-block-start: 5.5rem; }
+}
+
+.hulma__frame {
+  background: var(--aspalto);
+  border: 1px solid var(--rule);
+  padding: var(--s-4);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.hulma__frame svg { min-inline-size: 56rem; inline-size: 100%; block-size: auto; }
+
+.chalk-ground { stroke: var(--rule-firm); stroke-width: 3; }
+.chalk-body { fill: none; stroke: var(--esmalte); stroke-width: 7; stroke-linejoin: round; }
+.chalk-thin { fill: none; stroke: var(--bakal); stroke-width: 4; }
+.chalk-hair { fill: none; stroke: var(--bakal); stroke-width: 2.5; opacity: 0.7; }
+.chalk-fill { fill: rgba(163, 177, 182, 0.1); stroke: var(--bakal); stroke-width: 3; }
+.chalk-glass { fill: rgba(10, 22, 26, 0.72); stroke: var(--bakal); stroke-width: 3.5; }
+.chalk-chrome { fill: var(--bakal); stroke: none; }
+.chalk-gold { fill: none; stroke: var(--liwayway); stroke-width: 3; }
+
+.dimline { stroke: var(--liwayway); stroke-width: 2.5; fill: none; }
+.dimtext {
+  fill: var(--liwayway);
+  font-family: var(--work);
+  font-weight: 600;
+  font-size: 120px;
+  letter-spacing: 6px;
+}
+
+.karatula-text {
+  font-family: var(--display);
+  font-weight: 700;
+  fill: var(--araw);
+  text-anchor: middle;
+  letter-spacing: 2px;
+}
+.ded-text {
+  font-family: var(--display);
+  font-weight: 400;
+  fill: var(--esmalte);
+  text-anchor: middle;
+  letter-spacing: 6px;
+}
+
+/* ------------------------------------------------------------- the sheet */
+
+.sheet {
+  background: var(--aspalto);
+  border: 1px solid var(--rule);
+  padding: var(--s-5);
+}
+
+.sheet__hd {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  padding-block-end: var(--s-3);
+  border-block-end: 1px solid var(--rule);
+}
+.sheet__hd h3 { font-size: var(--t-2); }
+
+fieldset { border: 0; padding: 0; margin-block-start: var(--s-5); }
+
+legend {
+  font-size: var(--t--1);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--liwayway);
+  padding: 0;
+  margin-block-end: var(--s-3);
+}
+legend i { font-style: normal; color: var(--bakal); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+
+.opts { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+
+.opt { position: relative; }
+/* z-index because the chip's swatch carries opacity < 1, which paints it in
+   the positioned layer and puts it over the control it belongs to */
+.opt input { position: absolute; z-index: 2; opacity: 0; inset: 0; inline-size: 100%; block-size: 100%; cursor: pointer; }
+.opt span {
+  display: block;
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--rule-firm);
+  font-size: var(--t--1);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--bakal);
+  cursor: pointer;
+  transition: color 0.2s var(--glide), border-color 0.2s var(--glide), background 0.2s var(--glide);
+}
+.opt input:checked + span {
+  color: var(--araw);
+  background: var(--liwayway);
+  border-color: var(--liwayway);
+  font-weight: 600;
+}
+.opt input:focus-visible + span { outline: 2px solid var(--liwayway); outline-offset: 3px; }
+.opt:hover span { color: var(--esmalte); border-color: var(--bakal); }
+.opt input:checked + span:hover { color: var(--araw); }
+
+/* the colour chips are the vehicle's own light, so they carry real colour */
+.chip span {
+  inline-size: 2.6rem;
+  block-size: 2.1rem;
+  padding: 0;
+  border: 1px solid var(--rule-firm);
+  background: var(--c);
+  opacity: 0.55;
+}
+.chip input:checked + span { opacity: 1; border-color: var(--esmalte); border-width: 2px; background: var(--c); }
+
+.field { margin-block-start: var(--s-4); }
+.field label {
+  display: block;
+  font-size: var(--t--1);
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--liwayway);
+  margin-block-end: var(--s-2);
+}
+.field label i { font-style: normal; color: var(--bakal); font-weight: 400; letter-spacing: 0.04em; text-transform: none; }
+
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field textarea {
+  inline-size: 100%;
+  background: rgba(10, 22, 26, 0.6);
+  border: 0;
+  border-block-end: 1px solid var(--rule-firm);
+  padding: var(--s-2) var(--s-2);
+  font-size: var(--t-0);
+  transition: border-color 0.2s var(--glide);
+}
+.field input:focus,
+.field textarea:focus {
+  outline: 0;
+  border-block-end-color: var(--liwayway);
+  border-block-end-width: 2px;
+  padding-block-end: calc(var(--s-2) - 1px);
+}
+.field input::placeholder, .field textarea::placeholder { color: rgba(163, 177, 182, 0.55); }
+
+/* an error is named beside the field in plain shop language */
+.is-checked input:invalid,
+.is-checked textarea:invalid { border-block-end-color: #f08a72; border-block-end-width: 2px; }
+
+.err {
+  display: none;
+  font-size: var(--t--1);
+  color: #f5a48f;
+  margin-block-start: var(--s-2);
+  letter-spacing: 0.02em;
+}
+.is-checked input:invalid ~ .err,
+.is-checked textarea:invalid ~ .err { display: block; }
+
+.money { margin-block-start: var(--s-6); border-block-start: 1px solid var(--rule); padding-block-start: var(--s-4); }
+.money dl { display: grid; grid-template-columns: 1fr auto; gap: var(--s-2) var(--s-4); font-size: var(--t--1); }
+.money dt { color: var(--bakal); }
+.money dd { font-variant-numeric: tabular-nums; text-align: end; color: var(--esmalte); }
+
+.total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-block-start: var(--s-4);
+  padding-block-start: var(--s-3);
+  border-block-start: 1px solid var(--rule-firm);
+}
+.total span { font-size: var(--t--1); letter-spacing: 0.09em; text-transform: uppercase; color: var(--liwayway); font-weight: 600; }
+.total b {
+  font-family: var(--display);
+  font-size: var(--t-3);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.terms { margin-block-start: var(--s-4); font-size: var(--t--1); color: var(--bakal); }
+.terms ul { list-style: none; padding: 0; display: grid; gap: var(--s-1); margin-block-start: var(--s-2); }
+.terms b { color: var(--esmalte); font-variant-numeric: tabular-nums; }
+
+.btn {
+  display: inline-block;
+  inline-size: 100%;
+  margin-block-start: var(--s-5);
+  background: var(--liwayway);
+  color: var(--araw);
+  border: 0;
+  padding: var(--s-3) var(--s-5);
+  font-family: var(--display);
+  font-size: var(--t-2);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: filter 0.2s var(--glide);
+}
+.btn:hover { filter: brightness(1.1); }
+.btn[aria-disabled="true"] { filter: saturate(0.4); cursor: progress; }
+
+.note {
+  margin-block-start: var(--s-4);
+  font-size: var(--t--1);
+  color: var(--bakal);
+  border-inline-start: 2px solid var(--rule-firm);
+  padding-inline-start: var(--s-3);
+}
+.note.is-bad { color: #f5a48f; border-inline-start-color: #f08a72; }
+.note.is-sent { color: var(--tubo); border-inline-start-color: var(--tubo); }
+.note b { display: block; color: var(--esmalte); font-weight: 600; margin-block-end: var(--s-1); }
+
+/* mode switch: whole body, or fittings onto a unit you already run */
+.mode { display: flex; gap: 0; margin-block-start: var(--s-5); border: 1px solid var(--rule-firm); }
+.mode .opt { flex: 1; }
+.mode .opt span { border: 0; text-align: center; }
+.mode .opt + .opt span { border-inline-start: 1px solid var(--rule-firm); }
+
+.kabit-list { display: grid; gap: 0; margin-block-start: var(--s-4); }
+.kabit-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--s-3);
+  align-items: center;
+  padding-block: var(--s-3);
+  border-block-end: 1px solid var(--rule);
+  font-size: var(--t--1);
+}
+.kabit-row:last-child { border-block-end: 0; }
+.kabit-row input { inline-size: 1.1rem; block-size: 1.1rem; accent-color: var(--liwayway); }
+.kabit-row label { cursor: pointer; }
+.kabit-row b { display: block; font-family: var(--display); font-size: var(--t-1); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; }
+.kabit-row i { font-style: normal; color: var(--bakal); }
+.kabit-row .p { font-variant-numeric: tabular-nums; color: var(--esmalte); }
+
+[hidden] { display: none !important; }
+
+/* -------------------------------------------------------- ang detalye */
+
+.plates {
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-block-start: var(--s-7);
+}
+
+@media (min-width: 58rem) {
+  .plates { grid-template-columns: repeat(3, 1fr); }
+}
+
+.plate {
+  display: block;
+  text-decoration: none;
+  background: var(--aspalto);
+  border: 1px solid var(--rule);
+  transition: border-color 0.25s var(--glide);
+}
+.plate:hover { border-color: var(--bakal); }
+.plate img { inline-size: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.plate__cap { padding: var(--s-3) var(--s-4) var(--s-4); }
+.plate__cap b {
+  display: block;
+  font-family: var(--display);
+  font-size: var(--t-2);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.plate__cap i { font-style: normal; display: block; color: var(--bakal); font-size: var(--t--1); margin-block-start: var(--s-1); }
+.plate__cap .p {
+  display: block;
+  margin-block-start: var(--s-2);
+  color: var(--liwayway);
+  font-size: var(--t--1);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+}
+
+/* the enlargement is the shop's own room, not a lightbox */
+dialog {
+  border: 1px solid var(--rule-firm);
+  background: var(--araw);
+  color: var(--esmalte);
+  padding: 0;
+  max-inline-size: min(64rem, 92vw);
+  max-block-size: 90svb;
+  inline-size: 100%;
+}
+dialog::backdrop { background: rgba(4, 9, 11, 0.82); }
+
+.rec { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 48rem) { .rec { grid-template-columns: 1.1fr 1fr; } }
+.rec img { inline-size: 100%; block-size: 100%; max-block-size: 60svb; object-fit: cover; }
+.rec__body { padding: var(--s-6); overflow-y: auto; }
+.rec__body h3 { font-size: var(--t-3); }
+.rec__body > p { color: var(--bakal); margin-block-start: var(--s-4); }
+.rec__spec { margin-block-start: var(--s-5); display: grid; grid-template-columns: auto 1fr; gap: var(--s-2) var(--s-5); font-size: var(--t--1); }
+.rec__spec dt { color: var(--liwayway); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.rec__spec dd { color: var(--esmalte); font-variant-numeric: tabular-nums; }
+.rec__close {
+  position: absolute;
+  inset-block-start: var(--s-3);
+  inset-inline-end: var(--s-3);
+  background: var(--araw);
+  border: 1px solid var(--rule-firm);
+  color: var(--esmalte);
+  inline-size: 2.5rem;
+  block-size: 2.5rem;
+  font-size: var(--t-1);
+  cursor: pointer;
+  line-height: 1;
+}
+.rec__close:hover { background: var(--liwayway); color: var(--araw); }
+
+/* ---------------------------------------------------------------- figures */
+
+.fig { margin-block-start: var(--s-7); }
+.fig img { inline-size: 100%; }
+.fig figcaption {
+  margin-block-start: var(--s-3);
+  font-size: var(--t--1);
+  color: var(--bakal);
+  letter-spacing: 0.02em;
+  max-inline-size: 46rem;
+}
+
+.split {
+  display: grid;
+  gap: var(--s-7);
+  grid-template-columns: 1fr;
+  margin-block-start: var(--s-7);
+  align-items: center;
+}
+@media (min-width: 60rem) { .split { grid-template-columns: 1fr 1fr; gap: var(--s-8); } }
+.split--wide { align-items: start; }
+
+/* ------------------------------------------------------------- inilabas */
+
+.ledger { margin-block-start: var(--s-7); border-block-start: 1px solid var(--rule-firm); }
+
+.row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  gap: var(--s-3) var(--s-4);
+  align-items: baseline;
+  padding-block: var(--s-4);
+  border-block-end: 1px solid var(--rule);
+  inline-size: 100%;
+  text-align: start;
+  background: none;
+  border-inline: 0;
+  border-block-start: 0;
+  cursor: pointer;
+  font-size: var(--t-0);
+  transition: background 0.2s var(--glide);
+}
+.row:hover { background: rgba(163, 177, 182, 0.05); }
+.row:hover .op, .row:focus-visible .op { color: var(--liwayway); }
+.row .cap::after {
+  content: " ›";
+  color: var(--liwayway);
+  font-weight: 600;
+}
+@media (min-width: 54rem) {
+  .row { grid-template-columns: 5rem minmax(14rem, 20rem) 1fr auto; }
+}
+.row .yr { color: var(--liwayway); font-variant-numeric: tabular-nums; font-weight: 600; font-size: var(--t--1); letter-spacing: 0.06em; }
+.row .op { font-family: var(--display); font-size: var(--t-2); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; line-height: 1.05; }
+.row .op i { display: block; font-style: normal; font-family: var(--work); font-size: var(--t--1); font-weight: 400; letter-spacing: 0.04em; text-transform: none; color: var(--bakal); margin-block-start: var(--s-1); }
+.row .rt { color: var(--bakal); font-size: var(--t--1); letter-spacing: 0.05em; }
+.row .cap { color: var(--esmalte); font-variant-numeric: tabular-nums; font-size: var(--t--1); white-space: nowrap; }
+@media (max-width: 53.99rem) { .row .rt { grid-column: 2 / -1; } }
+
+/* ------------------------------------------------------------- the rotor */
+
+.rotor-strip {
+  display: flex;
+  gap: 4px;
+  margin-block-start: var(--s-5);
+  padding: var(--s-3);
+  background: var(--aspalto);
+  border: 1px solid var(--rule);
+}
+.rotor-cell {
+  flex: 1;
+  block-size: 2.5rem;
+  background: rgba(94, 211, 184, 0.12);
+  border: 1px solid rgba(94, 211, 184, 0.28);
+}
+html.fx .rotor-cell { animation: seq 2.4s steps(1, end) infinite; }
+@keyframes seq {
+  0%, 100% { background: rgba(94, 211, 184, 0.12); box-shadow: none; }
+  8% { background: var(--tubo); box-shadow: 0 0 18px rgba(94, 211, 184, 0.65); }
+}
+@media (prefers-reduced-motion: reduce) { html.fx .rotor-cell { animation: none; } }
+
+/* ------------------------------------------------------------- colophon */
+
+.foot {
+  padding-block: var(--s-8) var(--s-9);
+  border-block-start: 1px solid var(--rule);
+  color: var(--bakal);
+  font-size: var(--t--1);
+}
+.foot .plate-sig {
+  border: 1px solid var(--rule-firm);
+  padding: var(--s-5);
+  max-inline-size: 30rem;
+  margin-block-end: var(--s-6);
+}
+.foot .plate-sig b {
+  display: block;
+  font-family: var(--display);
+  font-size: var(--t-2);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--esmalte);
+}
+.foot dl { display: grid; grid-template-columns: auto 1fr; gap: var(--s-2) var(--s-4); margin-block-start: var(--s-4); }
+.foot dt { color: var(--liwayway); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.foot dd { font-variant-numeric: tabular-nums; }
+
+/* ------------------------------------------------------------ entrances */
+
+html.fx .settle {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 0.9s var(--glide), transform 0.9s var(--glide);
+}
+html.fx .settle.landed { opacity: 1; transform: none; }
+html.fx .settle:nth-child(2) { transition-delay: 0.08s; }
+html.fx .settle:nth-child(3) { transition-delay: 0.16s; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.fx .settle { opacity: 1; transform: none; transition: none; }
+}

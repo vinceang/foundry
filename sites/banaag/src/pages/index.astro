@@ -1,0 +1,963 @@
+---
+import "@fontsource/big-shoulders-display/400";
+import "@fontsource/big-shoulders-display/600";
+import "@fontsource/big-shoulders-display/700";
+import "@fontsource/public-sans/400";
+import "@fontsource/public-sans/500";
+import "@fontsource/public-sans/600";
+import "../styles/global.css";
+
+import { hulma, peso, CHASSIS, CAPACITY, ROOF, KABAYO, ILAW, PINTA, TUBO, KABIT } from "../lib/hulma.mjs";
+import { draw } from "../lib/draw.mjs";
+
+// Server-render the shop's default sheet, so the signature is a finished
+// drawing before a single byte of script runs.
+const DEFAULT = {
+  chassis: "4be1",
+  upuan: 18,
+  bubong: "hubog",
+  kabayo: "isa",
+  ilaw: "isahan",
+  pinta: "guhit",
+  tubo: "aqua",
+  route: "San Fernando — Sto. Tomas",
+  dedication: "Katas ng Riyadh",
+};
+const P = hulma(DEFAULT);
+const svg = draw(P);
+
+const DETALYE = [
+  {
+    id: "kabayo",
+    img: "kabayo",
+    w: 980,
+    h: 1461,
+    name: "Kabayo",
+    en: "the chrome stallion",
+    price: 9500,
+    blurb:
+      "Sand-cast in Angeles, filed by hand, then triple-plated. It is bolted through the hood with a backing plate, not screwed into sheet, because a horse that works loose drums against the panel at every pothole and the driver hears it for a thousand kilometres.",
+    spec: [
+      ["Taas", "310 mm"],
+      ["Bigat", "2,4 kg"],
+      ["Yari sa", "brass, chrome over nickel"],
+      ["Kabit", "M8 through-bolt, 3 mm backing plate"],
+      ["Gawa ni", "Fundidor Sy, Angeles"],
+    ],
+  },
+  {
+    id: "karatula",
+    img: "karatula",
+    w: 980,
+    h: 1217,
+    name: "Karatula",
+    en: "the route board",
+    price: 14000,
+    blurb:
+      "The only part of a jeepney a stranger reads. A stainless channel with cast finials, and a flat panel inside it that Nolan letters by hand, because a vinyl sticker on a route board fades to grey in fourteen months of Luzon sun and hand enamel does not.",
+    spec: [
+      ["Sukat", "1 640 × 300 mm"],
+      ["Plantsa", "1,2 mm stainless, 304"],
+      ["Letra", "hand-lettered enamel, two coats"],
+      ["Kasama", "front board and two side boards"],
+      ["Ilaw", "wired for a tube behind, if ordered"],
+    ],
+  },
+  {
+    id: "estribo",
+    img: "estribo",
+    w: 980,
+    h: 1217,
+    name: "Estribo",
+    en: "the running board",
+    price: 18500,
+    blurb:
+      "Everybody who ever rides steps on it, twice. Ours is a folded box section rather than an angle, so it does not oil-can under a man carrying a sack of rice, and the tread is bolted rubber that can be replaced in the yard for ₱600 instead of the whole board.",
+    spec: [
+      ["Haba", "2 400 mm bawat panig"],
+      ["Seksyon", "folded box, 2,0 mm"],
+      ["Tapak", "ribbed rubber, bolted"],
+      ["Bracket", "6 bawat panig, welded"],
+      ["Presyo", "pair, chromed, fitted"],
+    ],
+  },
+  {
+    id: "salamin",
+    img: "salamin",
+    w: 980,
+    h: 1217,
+    name: "Salamin",
+    en: "the mirrored ceiling",
+    price: 21000,
+    blurb:
+      "Pressed anodised panel in a diamond, screwed at every joint with a chrome cup washer. It is not there to be looked at directly. It is there to take one fluorescent tube and give back forty, which is how a jeepney interior gets bright without more electricity.",
+    spec: [
+      ["Panel", "0,6 mm anodised aluminium"],
+      ["Pattern", "diamond, 90 mm pitch"],
+      ["Sakop", "buong kisame at haligi"],
+      ["Kabit", "chrome cup washer, 8 mm"],
+      ["Oras", "dalawang araw sa dalawang tao"],
+    ],
+  },
+  {
+    id: "sabit",
+    img: "sabit",
+    w: 980,
+    h: 1217,
+    name: "Sabit",
+    en: "the hangings",
+    price: 2400,
+    blurb:
+      "Tassels, beads, and whatever the operator's family decides belongs there. The cheapest thing on this page and the first thing anybody notices. We fit the rail; what hangs off it is not our business, and it should not be.",
+    spec: [
+      ["Rail", "chromed, 12 mm, full width"],
+      ["Kasama", "12 tassels, 2 medallions"],
+      ["Kulay", "sabihin mo lang"],
+      ["Presyo", "set, fitted"],
+      ["Bilin", "walang hahadlang sa salamin"],
+    ],
+  },
+  {
+    id: "tubo",
+    img: "loob",
+    w: 1600,
+    h: 1073,
+    name: "Tubo",
+    en: "the light valance",
+    price: 26000,
+    blurb:
+      "A single row of coloured fluorescent under each roof edge, in a chromed reflector channel, on its own fused circuit off the second battery. This is the fitting that decides what your jeepney looks like at 04:41, which is the hour that matters.",
+    spec: [
+      ["Bawat panig", "4 × 600 mm tubes"],
+      ["Kulay", "aqua, rosas, berde, asul, ginto"],
+      ["Sirkito", "fused, second battery"],
+      ["Channel", "chromed reflector, riveted"],
+      ["Dagdag", "rotor sequencer, ₱42,000"],
+    ],
+  },
+];
+
+const LEDGER = [
+  { yr: 2026, op: "Rodolfo Manalastas", town: "Mexico, Pampanga", rt: "San Fernando — Mexico", cap: 18, ch: "4be1", bub: "hubog", kab: "isa", il: "rotor", pt: "eskrol", tb: "rosas", ded: "Ka Rudy" },
+  { yr: 2025, op: "Herminia Sicat", town: "Bacolor", rt: "Bacolor — Guagua", cap: 16, ch: "4be1", bub: "patag", kab: "pares", il: "isahan", pt: "guhit", tb: "aqua", ded: "Sicat Lines" },
+  { yr: 2025, op: "Alvin Punzalan", town: "Sto. Tomas", rt: "Sto. Tomas — Minalin", cap: 22, ch: "4hf1", bub: "kargahan", kab: "buo", il: "doble", pt: "mural", tb: "ginto", ded: "Katas ng Riyadh" },
+  { yr: 2024, op: "Benito Lacsamana", town: "Sindalan", rt: "Sindalan — Dolores", cap: 20, ch: "4d34", bub: "hubog", kab: "isa", il: "doble", pt: "eskrol", tb: "berde", ded: "Sta. Rita, ipanalangin" },
+  { yr: 2024, op: "Marilou Dizon", town: "San Simon", rt: "San Simon — Apalit", cap: 14, ch: "surplus", bub: "patag", kab: "wala", il: "isahan", pt: "guhit", tb: "asul", ded: "Para kay Inay" },
+  { yr: 2023, op: "Jhun Canlas", town: "Angeles", rt: "Angeles — Magalang", cap: 18, ch: "4d34", bub: "kargahan", kab: "pares", il: "rotor", pt: "mural", tb: "rosas", ded: "Canlas Bros." },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Banaag — jeepney bodies, San Fernando, Pampanga</title>
+    <meta
+      name="description"
+      content="A twenty-two man body shop on the MacArthur Highway in Sindalan, San Fernando. We fabricate jeepney bodies from a bare chassis to your route, your capacity and your colour of light. Prices published, terms in full."
+    />
+    <meta name="theme-color" content="#0a161a" />
+    <script is:inline>
+      // Motion is opt-in. Without this class the composition is already
+      // finished, so JS-off and reduced-motion both get the whole page.
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+      if (q.has("nofx")) {
+        document.documentElement.classList.add("nofx");
+        addEventListener("DOMContentLoaded", () =>
+          document.querySelectorAll("img").forEach((i) => {
+            i.loading = "eager";
+            i.decoding = "sync";
+          })
+        );
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#hulma">Skip to the build sheet</a>
+
+    <header class="head" id="top">
+      <a class="mark" href="#top">Banaag</a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#hulmahan" data-opt>Ang hulmahan</a>
+        <a href="#hulma">Ang hulma</a>
+        <a href="#detalye" data-opt>Ang detalye</a>
+        <a href="#letrista" data-opt>Ang letrista</a>
+        <a href="#ipagawa">Ipagawa</a>
+      </nav>
+    </header>
+
+    <!-- ------------------------------------------------- I. 04:41 -->
+    <section class="hero" id="hero">
+      <img
+        class="hero__plate"
+        src="/images/hero.webp"
+        width="2000"
+        height="1116"
+        alt="An operator in a white polo stands back on a wet concrete apron beside a rice field at dawn, a mug of coffee in one hand and a folded rag in the other, looking at his stainless-bodied jeepney with its light valance still burning."
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="hero__body">
+        <div class="hero__scrim" aria-hidden="true"></div>
+        <div class="wrap">
+          <div class="chap">
+            <p class="dim"><b>04:41</b><i>sikat ng araw 05:22</i></p>
+            <div>
+              <h1 class="hero__line settle">
+                We build the body. The man with the rag <em>finishes it.</em>
+              </h1>
+              <p class="hero__sub narrow settle">
+                The cock goes off, he carries his coffee out to the unit he is
+                still paying for, finds one spot of dust on a panel he polished
+                last night, wipes it, and stands there a minute and a half
+                before the day starts taking from him.
+              </p>
+              <p class="hero__sub narrow settle">
+                That minute is what we are actually selling. Twenty-two of us,
+                on the highway at Sindalan, since 1978.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------- II. Ang hulmahan -->
+    <section id="hulmahan">
+      <div class="wrap">
+        <div class="chap">
+          <p class="dim"><b>22 tao</b><i>9–14 katawan a year</i></p>
+          <div>
+            <h2 class="big settle">
+              A body is a hundred and forty panels, and not one of them arrives
+              the shape it needs to be.
+            </h2>
+            <div class="body narrow lede settle">
+              <p>
+                A chassis comes in with an engine, a cab floor and nothing
+                else. Everything above the frame rail we make: ribs bent over
+                the <strong>hulma</strong>, the wooden buck standing on the
+                floor since Boyet Dizon cut it in 1981, then stainless beaten
+                over the ribs a panel at a time with a hammer and a sandbag.
+                <span class="gloss">Hulma — a form, a mould.</span>
+              </p>
+              <p>
+                Before any of it, the whole side is chalked full size on the
+                concrete. You can stand on your own jeepney five months before
+                it exists. Most people do.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <figure class="fig settle">
+          <img
+            src="/images/hulmahan.webp"
+            width="1600"
+            height="893"
+            alt="Inside the shop before dawn: a bare chassis with its cab and engine on the left, a wooden forming buck on the right, chalk layout lines on the concrete floor, and the open roller door showing a teal sky with a gold band."
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>
+            The buck on the right has made every Banaag body since 1981. The
+            chalk on the floor is unit 0417, an eighteen for Mexico, Pampanga.
+          </figcaption>
+        </figure>
+
+        <div class="split split--wide">
+          <div class="body settle">
+            <h3 class="mid">Who we take</h3>
+            <p style="margin-block-start: var(--s-4)">
+              We turn work away, but never on what you earn. Nine to fourteen
+              bodies a year is what twenty-two men can do properly, so the
+              question we ask is whether you actually want something.
+            </p>
+            <p>
+              <strong
+                >Come with a picture in your head and we will build that.</strong
+              >
+              If you want the same body as everybody else on your route, there
+              are three shops in Guagua who will do it faster and cheaper than
+              us, and we will tell you which ones.
+            </p>
+          </div>
+          <div class="body settle">
+            <h3 class="mid">What it costs, plainly</h3>
+            <p style="margin-block-start: var(--s-4)">
+              Every price on this site is the real price, and the sheet below
+              adds itself up while you change your mind. A whole body runs
+              <span class="num">₱700,000</span> to
+              <span class="num">₱1,560,000</span> depending mostly on how many
+              people you seat.
+            </p>
+            <p>
+              Thirty per cent to enter the queue, the rest in
+              <strong>hulog</strong> over 24, 36 or 48 months. We take your old
+              body against the price. Nobody here will ask what you do for a
+              living before quoting you.
+              <span class="gloss">Hulog — instalments.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="ruleline wrap" />
+
+    <!-- ---------------------------------- III. Ang hulma — the signature -->
+    <section id="hulma">
+      <div class="wrap">
+        <div class="chap">
+          <p class="dim"><b>1,2 mm</b><i>stainless, 304</i></p>
+          <div>
+            <h2 class="big settle">Chalk it out.</h2>
+            <p class="body narrow lede settle">
+              This is the first document we make, and you are standing at it.
+              Change anything and the side view redraws — the bays multiply,
+              the wheelbase stretches, the chrome goes on, your own words go up
+              on the board. When it looks like your jeepney, send it. It is the
+              same sheet either way.
+            </p>
+          </div>
+        </div>
+
+        <form class="hulma__grid" id="sheet" action="mailto:hulmahan@banaag.ph" method="post" enctype="text/plain" novalidate>
+          <div>
+            <div class="hulma__frame">
+              <svg data-svg viewBox={P.vb} role="img" aria-labelledby="drawing-title" set:html={svg}>
+              </svg>
+            </div>
+            <p class="gloss" style="margin-block-start: var(--s-3)" id="drawing-title" data-caption>
+              {P.spec.cap} upuan on an {P.spec.chassis.label} · {P.spec.length.toLocaleString("en-US")} mm over bumpers · {P.spec.bays} bays
+            </p>
+
+            <fieldset>
+              <legend>Katawan <i>— the chassis under it</i></legend>
+              <div class="opts">
+                {Object.entries(CHASSIS).map(([k, v]) => (
+                  <label class="opt">
+                    <input type="radio" name="chassis" value={k} checked={k === DEFAULT.chassis} />
+                    <span>{v.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Kapasidad <i>— how many people sit down</i></legend>
+              <div class="opts">
+                {CAPACITY.map((c) => (
+                  <label class="opt">
+                    <input type="radio" name="upuan" value={c} checked={c === DEFAULT.upuan} />
+                    <span>{c} upuan</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
+            <div class="split" style="margin-block-start: 0; gap: var(--s-5)">
+              <fieldset>
+                <legend>Bubong <i>— the roof</i></legend>
+                <div class="opts">
+                  {Object.entries(ROOF).map(([k, v]) => (
+                    <label class="opt">
+                      <input type="radio" name="bubong" value={k} checked={k === DEFAULT.bubong} />
+                      <span>{v.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Kabayo <i>— the chrome</i></legend>
+                <div class="opts">
+                  {Object.entries(KABAYO).map(([k, v]) => (
+                    <label class="opt">
+                      <input type="radio" name="kabayo" value={k} checked={k === DEFAULT.kabayo} />
+                      <span>{v.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="split" style="margin-block-start: 0; gap: var(--s-5)">
+              <fieldset>
+                <legend>Ilaw <i>— the valance</i></legend>
+                <div class="opts">
+                  {Object.entries(ILAW).map(([k, v]) => (
+                    <label class="opt">
+                      <input type="radio" name="ilaw" value={k} checked={k === DEFAULT.ilaw} />
+                      <span>{v.label}</span>
+                    </label>
+                  ))}
+                </div>
+                <div class="opts" style="margin-block-start: var(--s-3)">
+                  {Object.entries(TUBO).map(([k, v]) => (
+                    <label class="opt chip" style={`--c: ${v.hex}`}>
+                      <input
+                        type="radio"
+                        name="tubo"
+                        value={k}
+                        checked={k === DEFAULT.tubo}
+                        aria-label={`Kulay ng tubo — ${v.label}`}
+                      />
+                      <span title={v.label} aria-hidden="true"></span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <legend>Pinta <i>— the letrista's hand</i></legend>
+                <div class="opts">
+                  {Object.entries(PINTA).map(([k, v]) => (
+                    <label class="opt">
+                      <input type="radio" name="pinta" value={k} checked={k === DEFAULT.pinta} />
+                      <span>{v.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="split" style="margin-block-start: var(--s-5); gap: var(--s-5)">
+              <div class="field" style="margin-block-start:0">
+                <label for="route">Karatula <i>— your route, on the board</i></label>
+                <input type="text" id="route" name="route" maxlength="34" value={DEFAULT.route} placeholder="San Fernando — Sto. Tomas" />
+              </div>
+              <div class="field" style="margin-block-start:0">
+                <label for="ded">Dedikasyon <i>— your line, on the side</i></label>
+                <input type="text" id="ded" name="dedication" maxlength="26" value={DEFAULT.dedication} placeholder="Katas ng Riyadh" />
+              </div>
+            </div>
+          </div>
+
+          <!-- ------------------------------------------- the build sheet -->
+          <aside class="hulma__sheet" id="ipagawa">
+            <div class="sheet">
+              <div class="sheet__hd">
+                <h3>Ang sheet</h3>
+                <span class="gloss">unit 0418</span>
+              </div>
+
+              <div class="mode" role="group" aria-label="What you are ordering">
+                <label class="opt">
+                  <input type="radio" name="mode" value="buo" checked />
+                  <span>Buong katawan</span>
+                </label>
+                <label class="opt">
+                  <input type="radio" name="mode" value="kabit" />
+                  <span>Kabit lang</span>
+                </label>
+              </div>
+
+              <div data-mode-buo>
+                <div class="money">
+                  <dl data-lines>
+                    {P.money.lines.map((l) => (
+                      <>
+                        <dt>{l.k}</dt>
+                        <dd>{peso(l.v)}</dd>
+                      </>
+                    ))}
+                  </dl>
+                </div>
+              </div>
+
+              <div data-mode-kabit hidden>
+                <p class="gloss" style="margin-block-start: var(--s-4)">
+                  Already running a unit. Tick what you want fitted; bring it in
+                  on a Tuesday and most of it is done by Friday.
+                </p>
+                <div class="kabit-list">
+                  {KABIT.map((k) => (
+                    <div class="kabit-row">
+                      <input type="checkbox" id={`k-${k.id}`} name="kabit" value={k.id} data-price={k.price} />
+                      <label for={`k-${k.id}`}>
+                        <b>{k.label}</b>
+                        <i>{k.en}</i>
+                      </label>
+                      <span class="p">{peso(k.price)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div class="total">
+                <span>Kabuuan</span>
+                <b data-total>{peso(P.money.total)}</b>
+              </div>
+
+              <div class="terms" data-terms>
+                <ul>
+                  <li>Paunang bayad, 30% — <b data-dep>{peso(P.money.deposit)}</b></li>
+                  {P.money.terms.map((t) => (
+                    <li>{t.m} buwan — <b>{peso(t.monthly)}</b> kada buwan</li>
+                  ))}
+                  <li data-slot>Simula sa queue: <b>{P.money.slotWeeks} linggo</b> mula sa deposito</li>
+                </ul>
+              </div>
+
+              <div class="field">
+                <label for="pangalan">Pangalan <i>— who we call</i></label>
+                <input type="text" id="pangalan" name="pangalan" required placeholder="Rodolfo Manalastas" />
+                <span class="err">We need a name to put on the sheet.</span>
+              </div>
+              <div class="field">
+                <label for="telepono">Telepono</label>
+                <input type="tel" id="telepono" name="telepono" required pattern="[0-9+\s().-]{7,}" placeholder="0917 000 0000" />
+                <span class="err">A number we can actually reach, mobile is fine.</span>
+              </div>
+              <div class="field">
+                <label for="sabihin">May sasabihin ka? <i>— optional</i></label>
+                <textarea id="sabihin" name="sabihin" rows="3" placeholder="Kung ano ang nasa isip mo."></textarea>
+              </div>
+
+              <button class="btn" type="submit" data-submit>Ipadala ang sheet</button>
+              <p class="note" data-note role="status" aria-live="polite">
+                Nothing is charged here and no card is asked for. The sheet goes
+                to the shop and Merced calls you — you do not have to chase us.
+              </p>
+            </div>
+          </aside>
+        </form>
+      </div>
+    </section>
+
+    <hr class="ruleline wrap" />
+
+    <!-- --------------------------------------------- IV. Ang detalye -->
+    <section id="detalye">
+      <div class="wrap">
+        <div class="chap">
+          <p class="dim"><b>₱2 400</b><i>to ₱52,000, fitted</i></p>
+          <div>
+            <h2 class="big settle">
+              The parts people stop and look at.
+            </h2>
+            <p class="body narrow lede settle">
+              None of this is decoration in the sense of being optional. A
+              jeepney that nobody picks out of a line of six at a corner in the
+              dark does not earn. Every fitting here is doing that job, and
+              every one of them can be bought on its own for a unit you already
+              run.
+            </p>
+          </div>
+        </div>
+
+        <div class="plates">
+          {DETALYE.map((d) => (
+            <a class="plate settle" href={`/images/${d.img}.webp`} data-plate={d.id}>
+              <img
+                src={`/images/${d.img}.webp`}
+                width={d.w}
+                height={d.h}
+                alt={`${d.name} — ${d.en}`}
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="plate__cap">
+                <b>{d.name}</b>
+                <i>{d.en}</i>
+                <span class="p">{peso(d.price)}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {DETALYE.map((d) => (
+      <dialog id={`rec-${d.id}`} aria-labelledby={`rec-${d.id}-t`}>
+        <form method="dialog">
+          <button class="rec__close" aria-label="Isara">&times;</button>
+        </form>
+        <div class="rec">
+          <img src={`/images/${d.img}.webp`} width={d.w} height={d.h} alt={`${d.name} — ${d.en}`} />
+          <div class="rec__body">
+            <h3 id={`rec-${d.id}-t`}>{d.name}</h3>
+            <p>{d.blurb}</p>
+            <dl class="rec__spec">
+              {d.spec.map(([k, v]) => (
+                <>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
+                </>
+              ))}
+              <dt>Presyo</dt>
+              <dd>{peso(d.price)}, kabit na</dd>
+            </dl>
+          </div>
+        </div>
+      </dialog>
+    ))}
+
+    <hr class="ruleline wrap" />
+
+    <!-- -------------------------------------------- V. Ang letrista -->
+    <section id="letrista">
+      <div class="wrap">
+        <div class="chap">
+          <p class="dim"><b>29 taon</b><i>sa brotsa</i></p>
+          <div>
+            <h2 class="big settle">Nolan cuts the words to fit the board.</h2>
+            <div class="split">
+              <figure class="fig settle" style="margin-block-start:0">
+                <img
+                  src="/images/letrista.webp"
+                  width="1200"
+                  height="1490"
+                  alt="A sign painter sits on a low stool beside a jeepney flank, steadying his brush hand on a mahl stick, laying a silver scroll flourish onto the stainless panel under a fluorescent tube."
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  Nolan Simbulan, on the mahl stick. The scroll goes on before
+                  the lettering, because the letters have to sit inside it.
+                </figcaption>
+              </figure>
+              <div class="body settle">
+                <p>
+                  There is no vinyl in this shop. Everything written on a
+                  Banaag body is enamel, laid by one man with a sable brush and
+                  a stick to steady his wrist, and it is the last thing that
+                  happens before a body is brought out.
+                </p>
+                <p>
+                  He works in four hands, and he will tell you which one your
+                  route wants:
+                  <strong>bilog</strong> for a long name that must stay
+                  readable at forty metres, <strong>tabas</strong> when the
+                  board is short and the name is not,
+                  <strong>korido</strong> for a dedication that is meant to be
+                  read slowly, and <strong>bulaklak</strong> when somebody
+                  wants their mother's name on the side of a vehicle and wants
+                  it to look like it means something.
+                </p>
+                <p>
+                  A route board is <span class="num">₱14,000</span> including
+                  both sides. A dedication is included. He has never charged
+                  for a saint.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="ruleline wrap" />
+
+    <!-- ------------------------------------------------ VI. Ang rotor -->
+    <section id="rotor">
+      <div class="wrap">
+        <div class="chap">
+          <p class="dim"><b>1908</b><i>unang Ligligan Parul</i></p>
+          <div>
+            <h2 class="big settle">The lanterns taught us the lights.</h2>
+            <div class="split">
+              <div class="body settle">
+                <p>
+                  San Fernando has run the giant lantern festival since 1908.
+                  The lanterns are five metres across and carry thousands of
+                  bulbs, and what makes the light run around them is not a
+                  circuit board — it is a <strong>rotor</strong>: a wooden drum
+                  wrapped in cut foil contacts that a wireman files by hand,
+                  one strip at a time, until the pattern in the lantern matches
+                  the pattern he has in his head.
+                </p>
+                <p>
+                  That is the same trade as a light valance, done by the same
+                  families, in the other half of the year. Boyet Dizon wired
+                  parol before he ever welded a rib. It is why the electrician
+                  is the most senior man on this floor after the panel beater,
+                  and why we will cut you a rotor for your jeepney if you want
+                  your tubes to do more than sit there.
+                </p>
+                <p>
+                  <span class="num">₱42,000</span>, and it takes him eleven
+                  days.
+                </p>
+                <div class="rotor-strip" aria-hidden="true">
+                  <div class="rotor-cell" style="animation-delay: 0s"></div>
+                  <div class="rotor-cell" style="animation-delay: 0.2s"></div>
+                  <div class="rotor-cell" style="animation-delay: 0.4s"></div>
+                  <div class="rotor-cell" style="animation-delay: 0.6s"></div>
+                  <div class="rotor-cell" style="animation-delay: 0.8s"></div>
+                  <div class="rotor-cell" style="animation-delay: 1s"></div>
+                  <div class="rotor-cell" style="animation-delay: 1.2s"></div>
+                  <div class="rotor-cell" style="animation-delay: 1.4s"></div>
+                  <div class="rotor-cell" style="animation-delay: 1.6s"></div>
+                  <div class="rotor-cell" style="animation-delay: 1.8s"></div>
+                </div>
+              </div>
+              <figure class="fig settle" style="margin-block-start:0">
+                <img
+                  src="/images/rotor.webp"
+                  width="980"
+                  height="1461"
+                  alt="A hand-built lantern rotor: a wooden drum wrapped in cut foil contact strips, fine copper brush wires resting on it, and bundles of coloured wire fanning away across a worn bench."
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption>
+                  A rotor part-cut. Each foil strip is one bulb, on for as long
+                  as the strip is wide.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="ruleline wrap" />
+
+    <!-- ------------------------------------------------ VII. Inilabas -->
+    <section id="inilabas">
+      <div class="wrap">
+        <div class="chap">
+          <p class="dim"><b>162</b><i>katawan since 1978</i></p>
+          <div>
+            <h2 class="big settle">Brought out.</h2>
+            <p class="body narrow lede settle">
+              What has left the gate, and who it went to. Tap a line and the
+              sheet above goes back to that specification. It is the fastest
+              way to start from something that already works on a route like
+              yours.
+            </p>
+          </div>
+        </div>
+
+        <div class="ledger">
+          {LEDGER.map((r) => (
+            <button
+              type="button"
+              class="row"
+              data-load
+              data-ch={r.ch}
+              data-cap={r.cap}
+              data-bub={r.bub}
+              data-kab={r.kab}
+              data-il={r.il}
+              data-pt={r.pt}
+              data-tb={r.tb}
+              data-rt={r.rt}
+              data-ded={r.ded}
+            >
+              <span class="yr">{r.yr}</span>
+              <span class="op">{r.op}<i>{r.town}</i></span>
+              <span class="rt">{r.rt}</span>
+              <span class="cap">{r.cap} upuan</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------- VIII. Colophon -->
+    <footer class="foot">
+      <div class="wrap">
+        <div class="plate-sig">
+          <b>Banaag</b>
+          <dl>
+            <dt>Hulmahan</dt>
+            <dd>MacArthur Highway, Sindalan</dd>
+            <dt>Lungsod</dt>
+            <dd>San Fernando, Pampanga</dd>
+            <dt>Simula</dt>
+            <dd>1978 — Ambrosio Dizon</dd>
+            <dt>Ngayon</dt>
+            <dd>Merced Dizon-Lansang</dd>
+            <dt>Bukas</dt>
+            <dd>Lunes–Sabado, 06:00–17:00</dd>
+          </dl>
+        </div>
+        <p class="narrow">
+          Every body carries a plate riveted inside the cab with the builder,
+          the number and the year. This one is ours. The gate is open, there is
+          coffee, and you do not need an appointment to stand at the chalk.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      import { hulma, peso, KABIT } from "../lib/hulma.mjs";
+      import { draw } from "../lib/draw.mjs";
+
+      const form = document.getElementById("sheet") as HTMLFormElement | null;
+      const svg = document.querySelector<SVGSVGElement>("[data-svg]");
+
+      if (form && svg) {
+        const $ = <T extends Element>(s: string) => form.querySelector<T>(s)!;
+        const val = (n: string) =>
+          (form.querySelector<HTMLInputElement>(`input[name="${n}"]:checked`) ??
+            form.querySelector<HTMLInputElement>(`input[name="${n}"]`))!.value;
+
+        const note = document.querySelector<HTMLElement>("[data-note]")!;
+        const restNote = note.innerHTML;
+
+        function spec() {
+          return {
+            chassis: val("chassis"),
+            upuan: Number(val("upuan")),
+            bubong: val("bubong"),
+            kabayo: val("kabayo"),
+            ilaw: val("ilaw"),
+            pinta: val("pinta"),
+            tubo: val("tubo"),
+            route: form!.querySelector<HTMLInputElement>("#route")!.value,
+            dedication: form!.querySelector<HTMLInputElement>("#ded")!.value,
+          };
+        }
+
+        function render() {
+          // The same module the server drew with, so the live drawing can
+          // never disagree with the one the page shipped.
+          const P = hulma(spec());
+          svg!.setAttribute("viewBox", P.vb);
+          svg!.innerHTML = draw(P);
+
+          document.querySelector("[data-caption]")!.textContent =
+            `${P.spec.cap} upuan on an ${P.spec.chassis.label} · ` +
+            `${P.spec.length.toLocaleString("en-US")} mm over bumpers · ${P.spec.bays} bays`;
+
+          const kabitMode = val("mode") === "kabit";
+          document.querySelector("[data-mode-buo]")!.toggleAttribute("hidden", kabitMode);
+          document.querySelector("[data-mode-kabit]")!.toggleAttribute("hidden", !kabitMode);
+
+          let total: number;
+          if (kabitMode) {
+            total = [...form!.querySelectorAll<HTMLInputElement>('input[name="kabit"]:checked')].reduce(
+              (a, b) => a + Number(b.dataset.price),
+              0
+            );
+          } else {
+            total = P.money.total;
+            const dl = document.querySelector("[data-lines]")!;
+            dl.innerHTML = P.money.lines
+              .map((l) => `<dt>${l.k}</dt><dd>${peso(l.v)}</dd>`)
+              .join("");
+          }
+
+          document.querySelector("[data-total]")!.textContent = peso(total);
+
+          // Fittings are paid on collection, so the instalment table is only
+          // shown for the thing that is actually financed.
+          const terms = document.querySelector<HTMLElement>("[data-terms]")!;
+          if (kabitMode) {
+            terms.innerHTML =
+              `<ul><li>Bayad sa pagkuha — <b>${peso(total)}</b></li>` +
+              `<li>Dalhin sa Martes, karaniwang tapos sa Biyernes.</li></ul>`;
+          } else {
+            const dep = Math.round(total * 0.3);
+            const fin = total - dep;
+            terms.innerHTML =
+              `<ul><li>Paunang bayad, 30% — <b>${peso(dep)}</b></li>` +
+              [24, 36, 48]
+                .map((m) => `<li>${m} buwan — <b>${peso(Math.round(fin / m / 100) * 100)}</b> kada buwan</li>`)
+                .join("") +
+              `<li>Simula sa queue: <b>${P.money.slotWeeks} linggo</b> mula sa deposito</li></ul>`;
+          }
+        }
+
+        form.addEventListener("input", render);
+        form.addEventListener("change", render);
+        render();
+
+        // "Tap a line and the sheet goes back to that specification" — the copy
+        // is literal, so the ledger row loads the build rather than being a
+        // hover colour that does nothing.
+        document.querySelectorAll<HTMLButtonElement>("[data-load]").forEach((b) => {
+          b.addEventListener("click", () => {
+            const d = b.dataset;
+            const set = (n: string, v: string) => {
+              const el = form.querySelector<HTMLInputElement>(`input[name="${n}"][value="${v}"]`);
+              if (el) el.checked = true;
+            };
+            set("chassis", d.ch!);
+            set("upuan", d.cap!);
+            set("bubong", d.bub!);
+            set("kabayo", d.kab!);
+            set("ilaw", d.il!);
+            set("pinta", d.pt!);
+            set("tubo", d.tb!);
+            set("mode", "buo");
+            form.querySelector<HTMLInputElement>("#route")!.value = d.rt!;
+            form.querySelector<HTMLInputElement>("#ded")!.value = d.ded!;
+            render();
+            document.getElementById("hulma")!.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const btn = $<HTMLButtonElement>("[data-submit]");
+
+          // An undesigned failure path is the one interaction that loses a
+          // commission, so the shop says what is missing in its own words
+          // rather than leaving it to a browser bubble.
+          if (!form.checkValidity()) {
+            form.classList.add("is-checked");
+            note.classList.remove("is-sent");
+            note.classList.add("is-bad");
+            const bad = form.querySelector<HTMLInputElement>("input:invalid");
+            note.innerHTML =
+              "<b>Hindi pa kumpleto.</b>We only need a name and a number. Nothing else on this sheet is required, and we do not ask for anything to do with money here.";
+            bad?.focus();
+            return;
+          }
+
+          note.classList.remove("is-bad");
+          btn.setAttribute("aria-disabled", "true");
+          btn.textContent = "Pinapadala…";
+          note.innerHTML = "<b>Sending.</b>Do not close this yet.";
+
+          setTimeout(() => {
+            const kabitMode = val("mode") === "kabit";
+            const total = document.querySelector("[data-total]")!.textContent;
+            btn.removeAttribute("aria-disabled");
+            btn.textContent = "Ipadala ang sheet";
+            note.classList.add("is-sent");
+            note.innerHTML = kabitMode
+              ? `<b>Nakapasok. Resibo:</b>Fittings totalling ${total}. Bring the unit in any Tuesday from 06:00 — no need to call first. Nothing has been charged.`
+              : `<b>Nakapasok. Resibo:</b>One body at ${total}, filed as unit 0418. You are third in the queue. Merced calls you within two days on the number you gave, and nothing is owed until you have seen the chalk on the floor.`;
+          }, 900);
+        });
+      }
+
+      /* ---- a plate is a specimen, and a specimen can be examined ----
+         The trigger is a real link to the full image, so a visitor with no JS
+         still reaches it. With JS it opens the shop's own record instead. */
+      document.querySelectorAll<HTMLAnchorElement>("[data-plate]").forEach((a) => {
+        const dlg = document.getElementById(`rec-${a.dataset.plate}`) as HTMLDialogElement | null;
+        if (!dlg) return;
+        a.addEventListener("click", (e) => {
+          e.preventDefault();
+          dlg.showModal();
+        });
+        dlg.addEventListener("click", (e) => {
+          if (e.target === dlg) dlg.close();
+        });
+      });
+
+      // Entrances only when motion was opted into.
+      if (document.documentElement.classList.contains("fx")) {
+        const io = new IntersectionObserver(
+          (es) =>
+            es.forEach(
+              (x) => x.isIntersecting && (x.target.classList.add("landed"), io.unobserve(x.target))
+            ),
+          { rootMargin: "0px 0px -8% 0px" }
+        );
+        document.querySelectorAll(".settle").forEach((nd) => io.observe(nd));
+      }
+    </script>
+  </body>
+</html>

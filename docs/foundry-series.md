@@ -88,6 +88,31 @@ private-charter houses that must read as different worlds despite one register:
   The transit is a bird that is flown free every day and may not come back;
   the warmth is a lantern at arm's length, not a horizon. Rose-to-ember
   instead of a third apricot.
+- **Banaag — the vehicle is the lamp.** A jeepney body shop in San Fernando,
+  Pampanga, at the 04:41 dispatch hour. It takes the first half of the
+  register's subject rule and openly inverts the second, which is why it is
+  written down here rather than smuggled: a jeepney is the purest
+  ground-level *thing in transit* the collection will ever have, and the
+  least discreet object in it. It is decorated for exactly one purpose — so
+  that a commuter standing at a corner in the dark picks **this** unit and
+  not the one behind it.
+
+  The register still holds because **the register is a decision about light**,
+  and the Philippine dispatch hour is civil twilight exactly. What changes is
+  the *source*: Auriga and Velum take their light from the horizon and Hurr
+  from a lantern at arm's length, but here **the subject is itself the light
+  source** — the valance tubes are lit, the stainless is throwing the sky
+  back, and the chrome is doing at 04:41 what it was bolted on to do. The
+  afterglow is behind the vehicle.
+
+  It also carries the collection's first **anti-luxury** thesis, and that is
+  the sharper distinction. Twenty-two of the other sites sell scarcity to
+  people who have money; this one sells to a working operator financing the
+  largest purchase of his life after his house, over three to five years. So
+  it publishes every price with its instalment terms, filters its customers
+  on *passion rather than wealth*, and is austere out of deference to a loud
+  object rather than because emptiness signals expense. Bespoke without
+  luxury is a register the collection had never tried.
 
 ## Pastorales
 
