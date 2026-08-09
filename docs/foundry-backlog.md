@@ -28,19 +28,17 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-*(empty)*
-
-## Proposed — awaiting approval
-
 ### Custom jeepney builder
 
-- **Series:** Nocturne
+- **Series:** Vesper
 - **Place idea:** San Pablo City, Laguna, Philippines — a custom body shop that fabricates bespoke jeepneys from stripped chassis up, serving operators across Luzon who want a commission that stands out on a route
 - **Why it earns a place:** Jeepneys are already flamboyant objects — chrome horses, hand-lettered saints, mirrored panels, colored tube-light valances — but a bespoke builder frames all that as serious craft: welding, panel-beating, hand-painting, and upholstery treated with the same gravity as a coachbuilder's portfolio. No other site in the collection covers this. The Filipino audience for this is real and prideful.
 - **Catalog wares / commission options:** chassis conversion and cab extension, full body fabrication in aluminum or steel, chrome stallion hood ornaments and bumper sculpture, hand-painted side murals and lettering (patron saints, landscapes, portraits on request), mirrored and anodized interior panel kits, colored fluorescent and LED valance lighting, custom upholstered bench seating, route-name and operator signage packages
 - **Signature interaction:** the build configurator — choose your base chassis, body length, chrome package, mural subject, and lighting color; the jeepney redraws panel by panel as each choice is committed, the way a body shop's chalk layout fills in
 - **Other page ideas:** a fleet gallery of past commissions with the operator's name and route; a hand-lettered type specimen showing the painter's available script styles; a provenance note on where San Pablo sits in the coachbuilding lineage (post-WWII surplus vehicles → Filipino icon)
 - **Notes:** Nipis (barong Tagalog, Lumban) is already in the collection and Filipino — ensure the voice and world feel distinct: industrial craft vs. textile craft, Laguna vs. Lumban, loud vs. quiet. The jeepney's visual register is maximalist; the site's design should be the counter-pressure — spare, confident, letting the vehicle carry the color.
+
+## Proposed — awaiting approval
 
 ### Palekh lacquer miniature atelier
 
