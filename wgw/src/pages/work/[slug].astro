@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import meta from '../../data/foundry-meta.json';
+import { inkOn } from '../../lib/contrast.mjs';
 
 export async function getStaticPaths() {
   const entries = await getCollection('sites');
@@ -144,7 +145,7 @@ const facts = [
         <aside class="cs__aside">
           <div class="cs__palette" aria-hidden="true">
             {(['ground', 'light', 'accent'] as const).map((k) => (
-              <span class="cs__sw" style={`background: ${site.palette[k]}`}>
+              <span class="cs__sw" style={`background: ${site.palette[k]}; --ink: ${inkOn(site.palette[k])}`}>
                 <span class="meta">{site.palette[k]}</span>
               </span>
             ))}
@@ -344,10 +345,12 @@ const facts = [
   }
 
   .cs__sw .meta {
-    font-size: 0.5625rem;
+    /* measured against the swatch itself; `difference` blending left the hex
+       unreadable on any mid-tone accent, and 9px was under the floor */
+    font-size: 0.6875rem;
     letter-spacing: 0.06em;
-    color: rgb(255 255 255 / 0.62);
-    mix-blend-mode: difference;
+    color: var(--ink);
+    opacity: 0.72;
   }
 
   .cs__facts {

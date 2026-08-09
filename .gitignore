@@ -41,3 +41,4 @@ sites/*/assets-src/
 # Rejected generation variants and superseded components, kept locally only.
 wgw/assets-src/glass-b.png
 wgw/src/components/Plate.astro
+foundry.json.bak

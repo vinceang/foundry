@@ -556,6 +556,29 @@
       },
       "signature": "包 — the wrap",
       "shipped": "2026-08-06"
+    },
+    {
+      "slug": "hurr",
+      "name": "Hurr",
+      "nativeName": "حر",
+      "series": "vesper",
+      "what": "Falconry furniture — a hood cut to one bird",
+      "tagline": "Everything here is made for a bird that could leave.",
+      "place": {
+        "label": "Al Jimi, Al Ain",
+        "country": "United Arab Emirates",
+        "lat": 24.2075,
+        "lon": 55.7447
+      },
+      "url": "https://hurr-alain.vercel.app",
+      "hero": "images/hero.webp",
+      "palette": {
+        "ground": "#0f1220",
+        "light": "#e9e4dc",
+        "accent": "#cb5f52"
+      },
+      "signature": "The burqu', cut to one bird",
+      "shipped": "2026-08-09"
     }
   ]
 }
