@@ -27,6 +27,9 @@ tools/.cache/
 !.claude/skills/
 .claude/skills/*
 !.claude/skills/foundry-site/
+!.claude/skills/foundry-scout/
+!.claude/skills/glasshouse-register/
+!.claude/skills/glasshouse-nightly/
 
 # design-review screenshots (critique-loop artifacts, kept local)
 shots/
