@@ -111,7 +111,7 @@ a { color: inherit; }
 
 .narrow { max-inline-size: var(--measure); }
 
-section { padding-block: var(--s-9); position: relative; }
+section { padding-block: var(--s-8); position: relative; }
 
 .skip-link {
   position: absolute;
@@ -158,6 +158,10 @@ section { padding-block: var(--s-9); position: relative; }
   Not an arc (Auriga), not a rail (Velum).
 */
 
+/* impeccable-disable codex-grid-background -- this is not a decorative grid
+   field: it is the site's signature geometry, the two-strand hand saddle
+   stitch that closes a hood, 3px tall and used only as a seam between
+   chapters. See DESIGN.md, "Signature geometry". */
 .stitch {
   border: 0;
   block-size: 3px;
@@ -287,12 +291,28 @@ html.fx .settle.landed {
   .pattern { position: sticky; inset-block-start: 5.5rem; }
 }
 
+.pattern__frame { position: relative; }
+
 .pattern__svg {
+  display: block;
   inline-size: 100%;
   block-size: auto;
   background: var(--sabkha);
   border: 1px solid var(--rule);
 }
+
+.pdim {
+  position: absolute;
+  font-size: var(--t--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--haggard);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.pdim--w { transform: translate(-50%, 0); }
+.pdim--h { transform: translate(0, -50%); }
 
 /* the pieces read as cut leather on the bench, closed by hand stitch */
 .pc {
@@ -318,14 +338,6 @@ html.fx .settle.landed {
 .pc__brace { stroke: var(--ember); stroke-width: 2; stroke-linecap: round; }
 
 .pattern__dims line { stroke: var(--haggard); stroke-width: 0.8; opacity: 0.6; }
-
-.pattern__dims text {
-  fill: var(--haggard);
-  font-family: var(--work);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
 
 .pattern__cap {
   margin-block-start: var(--s-3);
@@ -393,10 +405,259 @@ html.fx .settle.landed {
 }
 
 .fit__field textarea { min-block-size: 4.5rem; resize: vertical; line-height: 1.5; }
-.fit__field input:focus, .fit__field textarea:focus { border-color: var(--ember); outline: none; }
+.fit__field input:focus, .fit__field textarea:focus { border-color: var(--ember); }
+/* keep the global ring: the ember border alone is also the invalid state, so
+   on a field that is both focused and invalid there would be no focus cue */
 .fit__field input:user-invalid { border-color: var(--ember); }
 
+.fit__err {
+  display: none;
+  font-size: var(--t--1);
+  color: var(--ember);
+  line-height: 1.4;
+}
+
+.fit__field:has(input:user-invalid) .fit__err,
+.fit.is-checked .fit__field:has(input:invalid) .fit__err { display: block; }
+.fit.is-checked .fit__field input:invalid { border-color: var(--ember); }
+
 .fit__note { font-size: var(--t--1); color: var(--haggard); line-height: 1.5; }
-.fit__note.is-sent { color: var(--ember); }
+.fit__note.is-sent,
+.fit__note.is-bad { color: var(--ember); }
 
 .btn { justify-self: start; }
+
+/* ------------------------------------------------------------ hero plate */
+
+.hero {
+  position: relative;
+  display: grid;
+  min-block-size: min(90svb, 50rem);
+  padding-block: 0;
+  isolation: isolate;
+}
+
+.hero__plate {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  /* the bird sits right of centre; hold it there as the frame crops */
+  object-position: 70% 50%;
+  z-index: -2;
+}
+
+/* The desert floor is light and the headline was sitting on it. A scrim
+   weighted to the foot gives the type real ground instead of leaning on a
+   text-shadow, and keeps the sky untouched where the register lives. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 18, 32, 0.32) 0%,
+    rgba(15, 18, 32, 0.12) 26%,
+    rgba(15, 18, 32, 0.72) 72%,
+    var(--zenith) 100%
+  );
+}
+
+.hero .wrap {
+  position: relative;
+  align-self: end;
+  padding-block: var(--s-8) var(--s-9);
+}
+
+/* keep the line clear of the bird */
+.hero__line { max-inline-size: 25ch; }
+.hero__sub { max-inline-size: 32rem; }
+
+@media (max-width: 48rem) {
+  /* Narrow crops bring the bird into the middle of the frame, where the
+     headline lands on it. Lift the crop so the type sits on gravel. */
+  .hero__plate { object-position: 74% 26%; }
+  .hero::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 18, 32, 0.28) 0%,
+      rgba(15, 18, 32, 0.18) 20%,
+      rgba(15, 18, 32, 0.82) 58%,
+      var(--zenith) 100%
+    );
+  }
+}
+
+/* ---------------------------------------------------------------- plates */
+
+.plate__grid { display: grid; gap: var(--s-7); }
+
+@media (min-width: 58rem) {
+  .plate__grid { grid-template-columns: 0.85fr 1fr; align-items: center; gap: var(--s-8); }
+  .plate--flip .plate__fig { order: 2; }
+}
+
+.plate__fig { margin: 0; }
+.plate__fig img {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+}
+
+.plate__body h2 { font-size: var(--t-3); margin-block-end: var(--s-4); }
+
+.lede { color: var(--haggard); max-inline-size: var(--measure); }
+.lede + .lede { margin-block-start: var(--s-4); }
+
+.spec {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4) var(--s-5);
+  margin-block-start: var(--s-6);
+  padding-block-start: var(--s-5);
+  border-block-start: 1px solid var(--rule);
+}
+
+.spec dt { font-size: var(--t--1); letter-spacing: 0.1em; text-transform: uppercase; color: var(--haggard); }
+.spec dd { margin: 0; font-family: var(--display); font-size: var(--t-1); }
+
+/* ------------------------------------------------------------- the book */
+
+.kept h2 { font-size: var(--t-3); margin-block-end: var(--s-4); }
+
+.book {
+  inline-size: 100%;
+  margin-block-start: var(--s-7);
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mobile first: six columns will not fit 390px, so a row reads as an entry —
+   the bird, then its measurements as one line, then the link. The table
+   markup is unchanged; only the display is. */
+.book thead { display: none; }
+.book, .book tbody { display: block; }
+
+.book tbody tr {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--s-3);
+  padding-block: var(--s-4);
+  border-block-end: 1px solid var(--rule);
+}
+
+.book tbody td { display: inline; padding: 0; border: 0; }
+.book tbody td:first-child { flex-basis: 100%; font-size: var(--t-2); }
+
+.book tbody td:not(:first-child):not(:last-child) {
+  font-family: var(--work);
+  font-size: var(--t--1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--haggard);
+}
+
+.book tbody td[data-l]::before { content: attr(data-l) " "; }
+.book tbody td:last-child { flex-basis: 100%; margin-block-start: var(--s-3); }
+
+@media (min-width: 48rem) {
+  .book, .book tbody { display: table; }
+  .book tbody { display: table-row-group; }
+  .book thead { display: table-header-group; }
+  .book tbody tr { display: table-row; padding-block: 0; border: 0; }
+  .book tbody td {
+    display: table-cell;
+    padding: var(--s-3) var(--s-3) var(--s-3) 0;
+    border-block-end: 1px solid var(--rule);
+  }
+  .book tbody td:first-child { font-size: var(--t-1); }
+  .book tbody td:not(:first-child):not(:last-child) {
+    font-family: var(--display);
+    font-size: var(--t-1);
+    letter-spacing: normal;
+    text-transform: none;
+    color: inherit;
+  }
+  .book tbody td[data-l]::before { content: none; }
+  .book tbody td:last-child { margin-block-start: 0; }
+}
+
+.book th,
+.book td {
+  text-align: start;
+  padding: var(--s-3) var(--s-3) var(--s-3) 0;
+  border-block-end: 1px solid var(--rule);
+}
+
+.book th {
+  font-family: var(--work);
+  font-weight: 500;
+  font-size: var(--t--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--haggard);
+}
+
+.book td { font-family: var(--display); font-size: var(--t-1); }
+.book tbody tr:hover td { color: var(--bone); }
+
+.book__cut {
+  font-family: var(--work);
+  font-size: var(--t--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ember);
+  text-decoration: none;
+  border-block-end: 1px solid color-mix(in oklab, var(--ember) 40%, transparent);
+  padding-block-end: 2px;
+  white-space: nowrap;
+  transition: color 0.3s var(--glide), border-color 0.3s var(--glide);
+}
+
+.book tbody tr:hover .book__cut,
+.book__cut:focus-visible { border-block-end-color: var(--ember); }
+
+/* ---------------------------------------------------------------- bench */
+
+.bench h2 { font-size: var(--t-3); margin-block-end: var(--s-6); }
+
+.wares { list-style: none; padding: 0; margin: 0 0 var(--s-6); }
+
+.wares li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--s-1) var(--s-4);
+  padding-block: var(--s-4);
+  border-block-end: 1px solid var(--rule);
+}
+
+@media (min-width: 44rem) {
+  .wares li { grid-template-columns: 12rem 1fr auto; align-items: baseline; }
+}
+
+.wares__n { font-family: var(--display); font-size: var(--t-1); }
+.wares__d { color: var(--haggard); font-size: var(--t--1); }
+.wares__p { font-variant-numeric: tabular-nums; color: var(--bone); white-space: nowrap; }
+
+.link { color: var(--ember); text-decoration-thickness: 1px; text-underline-offset: 0.25em; }
+
+/* ---------------------------------------------------------------- footer */
+
+.foot { padding-block: var(--s-8) var(--s-7); border-block-start: 1px solid var(--rule); }
+.foot__in { display: grid; gap: var(--s-2); }
+.foot__in p:first-child { font-family: var(--display); font-size: var(--t-1); }
+.foot__meta { font-size: var(--t--1); letter-spacing: 0.1em; text-transform: uppercase; color: var(--haggard); }
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

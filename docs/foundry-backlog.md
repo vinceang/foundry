@@ -28,15 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Falconry furniture
-- **Series:** Nocturne
-- **Place idea:** hoods, gloves, and mews gear — England or the Gulf
-- **Why it earns a place:** hawks are jaw-dropping subjects; tooled leather hoods are miniature sculpture
-- **Signature interaction:** the fit of a hood — pattern pieces closing around a form
-- **Notes:** live-bird imagery must avoid trophy tone; the craft, not the animal, is the subject
-- **Claimed:** 2026-08-09 — building as a **Vesper**, not Nocturne: falconry
-  flies at first and last light, and a hawk is the collection's purest case of
-  a thing in transit. Gulf rather than England, to open the Middle East.
+*(empty)*
 
 ## Proposed — awaiting approval
 
@@ -158,6 +150,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 | Nipis | Aubade | Bespoke barong Tagalog, Lumban, Laguna | https://nipis.vercel.app |
 | Barchetta | Nocturne | Neapolitan sartoria, Chiaia, Naples | https://barchetta.vercel.app |
 | Rosée | Aubade | Single-perfumer house, Plascassier, Grasse | https://rosee-omega.vercel.app |
+| Hurr | Vesper | Falconry furniture, Al Ain, UAE | https://hurr-alain.vercel.app |
 | Tsutsumiya | Nocturne | Wrapping house, Itachibori, Osaka | https://tsutsumiya.vercel.app |
 | Traccia | Pastorale | Steel frame builder, Val Camonica | https://traccia-telai.vercel.app |
 | Fàire | **Vigil** (new register) | Lighthouse keeper's house, Wester Ross | https://rubha-na-faire.vercel.app |

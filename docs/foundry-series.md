@@ -83,6 +83,11 @@ private-charter houses that must read as different worlds despite one register:
 - **Velum — cold and capable.** The blue minute *before* first light rather
   than after sunset; the operation that reaches the strips others cannot —
   gravel, grass, 893 metres; a flight-plan rail flying a mountain profile.
+- **Hurr — twilight on the ground.** Falconry furniture in Al Ain: the same
+  hour, but in a desert and made of leather and feather rather than aluminium.
+  The transit is a bird that is flown free every day and may not come back;
+  the warmth is a lantern at arm's length, not a horizon. Rose-to-ember
+  instead of a third apricot.
 
 ## Pastorales
 
