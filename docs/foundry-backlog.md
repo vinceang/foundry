@@ -28,9 +28,63 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-_(nothing in progress)_
+### Falconry furniture
+- **Series:** Nocturne
+- **Place idea:** hoods, gloves, and mews gear — England or the Gulf
+- **Why it earns a place:** hawks are jaw-dropping subjects; tooled leather hoods are miniature sculpture
+- **Signature interaction:** the fit of a hood — pattern pieces closing around a form
+- **Notes:** live-bird imagery must avoid trophy tone; the craft, not the animal, is the subject
+- **Claimed:** 2026-08-09 — building as a **Vesper**, not Nocturne: falconry
+  flies at first and last light, and a hawk is the collection's purest case of
+  a thing in transit. Gulf rather than England, to open the Middle East.
 
 ## Proposed — awaiting approval
+
+### Custom jeepney builder
+
+- **Series:** Nocturne
+- **Place idea:** San Pablo City, Laguna, Philippines — a custom body shop that fabricates bespoke jeepneys from stripped chassis up, serving operators across Luzon who want a commission that stands out on a route
+- **Why it earns a place:** Jeepneys are already flamboyant objects — chrome horses, hand-lettered saints, mirrored panels, colored tube-light valances — but a bespoke builder frames all that as serious craft: welding, panel-beating, hand-painting, and upholstery treated with the same gravity as a coachbuilder's portfolio. No other site in the collection covers this. The Filipino audience for this is real and prideful.
+- **Catalog wares / commission options:** chassis conversion and cab extension, full body fabrication in aluminum or steel, chrome stallion hood ornaments and bumper sculpture, hand-painted side murals and lettering (patron saints, landscapes, portraits on request), mirrored and anodized interior panel kits, colored fluorescent and LED valance lighting, custom upholstered bench seating, route-name and operator signage packages
+- **Signature interaction:** the build configurator — choose your base chassis, body length, chrome package, mural subject, and lighting color; the jeepney redraws panel by panel as each choice is committed, the way a body shop's chalk layout fills in
+- **Other page ideas:** a fleet gallery of past commissions with the operator's name and route; a hand-lettered type specimen showing the painter's available script styles; a provenance note on where San Pablo sits in the coachbuilding lineage (post-WWII surplus vehicles → Filipino icon)
+- **Notes:** Nipis (barong Tagalog, Lumban) is already in the collection and Filipino — ensure the voice and world feel distinct: industrial craft vs. textile craft, Laguna vs. Lumban, loud vs. quiet. The jeepney's visual register is maximalist; the site's design should be the counter-pressure — spare, confident, letting the vehicle carry the color.
+
+### Palekh lacquer miniature atelier
+
+- **Series:** Nocturne
+- **Place idea:** Palekh, Ivanovo Oblast, Russia — a village of maybe 5,000 people that collectively produces the world's most intricate lacquer miniature painting: fairytale and epic scenes in gold leaf on jet-black papier-mâché boxes, trays, and brooches
+- **Why it earns a place:** The imagery is extraordinary and barely known outside Russia — microscopic figures against absolute black, gold halos and troikas and firebirds rendered with brushes made from a single squirrel hair. It earns the globe pin as the only Russian craft in the collection. The audience is collectors and museums.
+- **Signature interaction:** the brush — a single composition's figures are revealed one by one as the cursor moves across the box lid, the way the painter builds up a scene from outline to gold, working figure by figure
+- **Other page ideas:** a provenance scroll tracing Palekh's lineage from icon painting through the Soviet Folk Art revival; a detail gallery at extreme magnification showing individual brush strokes; a commission form where the patron nominates a folk tale or epic subject and receives a unique piece
+- **Notes:** Tone is hushed and sacred — these objects were icons before they were decorative. The black-and-gold palette will drive the site's design naturally.
+
+### Sarchí oxcart workshop
+
+- **Series:** Nocturne
+- **Place idea:** Sarchí, Alajuela, Costa Rica — the town where Costa Rica's hand-painted oxcart (carreta) is made and has been made for over a century; the craft is UNESCO Intangible Cultural Heritage
+- **Why it earns a place:** The painted wheel is one of the most recognizable folk-geometry objects in Latin America — concentric mandalas in saturated primary pigments, every town and family with its own pattern. The carreta earns the Costa Rica pin. A bespoke commission framing (family crest pattern, ceremonial cart) lifts it above souvenir into craft territory.
+- **Signature interaction:** the wheel configurator — the patron's pattern (ring count, petal geometry, color sequence) assembles concentrically as each choice is committed, the finished wheel spinning slowly once complete
+- **Other page ideas:** a pattern archive of the historic regional designs by canton; the making sequence from raw wood to painted spoke; a commission lead form for ceremonial carts and decorative wheel panels
+- **Notes:** The visual language is maximalist and joyful — closer to jeepney territory than Shokunin. Same counter-pressure rule applies: spare, confident site design lets the wheel carry the color. Sits alongside but distinct from Veta (Mexico) as Latin American craft.
+
+### Varanasi silk weaving house
+
+- **Series:** Nocturne
+- **Place idea:** Varanasi, Uttar Pradesh, India — a family-run karkhana (loom room) producing Banarasi silk with zari gold-thread inlay, serving the bridal and collector market across the subcontinent
+- **Why it earns a place:** Banarasi silk is among the most technically dense textiles in the world — warp and weft in pure silk, supplementary gold and silver zari brocade patterns drawn from Mughal floral manuscripts. Loom-room imagery (a weaver's hands, the heddle lifting, zari bobbins stacked like spools) is extraordinary. Earns the India pin.
+- **Signature interaction:** the motif builder — the patron chooses a field pattern (jangla, butidar, shikargah), a border style, and a zari weight; a partial weave preview updates as each choice is committed, threads appearing as if rising from the loom
+- **Other page ideas:** a paper-cartoon archive showing the graph-paper designs that program the jacquard; a provenance note on Varanasi's weaving families and the master-apprentice lineage; a commission form distinguishing between stock lengths and bespoke sari commissions
+- **Notes:** Tone is reverent and feminine without being wedding-catalogue. The gold-on-silk imagery drives the palette. Must not read as a sari boutique — it is a loom house that sells lengths of cloth, and the distinction matters.
+
+### Benjarong porcelain atelier
+
+- **Series:** Nocturne
+- **Place idea:** Bangkok or Samut Prakan, Thailand — a studio producing Benjarong (five-color) royal porcelain in the centuries-old Thai court tradition: miniature scenes of mythological figures, lotus borders, and enamel geometry on white porcelain fired multiple times
+- **Why it earns a place:** Benjarong is visually extraordinary and almost entirely unknown outside Thailand — dense enamel painting at a scale that demands a loupe, royal patronage going back to the Ayutthaya period, and a collector audience that understands it as equivalent to Chinese imperial ware. Earns the Thailand pin.
+- **Signature interaction:** the glaze-layer reveal — a single teacup or covered bowl is shown in cross-section, and scrolling through the firing sequence adds each color layer one at a time: the underpainting, then each of the five enamels in order, then the gold outline last
+- **Other page ideas:** a bestiary of the figures that appear in Benjarong iconography (Garuda, Naga, Kinnaree, Thep) with the meaning of each; a commission form for presentation sets (sets of five cups being the traditional gift); a firing-temperature chart explaining why each color fires at a different stage
+- **Notes:** The palette — Thai red, cobalt, saffron, forest green, white — is the site's palette. Tone is court-serious, not tourist-craft.
 
 ### Tiny home / ADU maker
 - **Series:** decided at build time — a maker of dwellings; argue Nocturne craft vs Aubade dwelling vs Pastorale outdoor build (the log-cabin precedent)
@@ -84,12 +138,6 @@ _(nothing in progress)_
 - **Why it earns a place:** mirror blanks under test light, star fields as the product's proof; night is the subject itself
 - **Signature interaction:** the mirror's figure — interference fringes resolving as the mirror approaches perfection
 
-### Falconry furniture
-- **Series:** Nocturne
-- **Place idea:** hoods, gloves, and mews gear — England or the Gulf
-- **Why it earns a place:** hawks are jaw-dropping subjects; tooled leather hoods are miniature sculpture
-- **Signature interaction:** the fit of a hood — pattern pieces closing around a form
-- **Notes:** live-bird imagery must avoid trophy tone; the craft, not the animal, is the subject
 
 
 ## Built
