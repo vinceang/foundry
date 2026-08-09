@@ -1,0 +1,53 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import LightMap from '../components/LightMap.astro';
+import Collection from '../components/Collection.astro';
+import Series from '../components/Series.astro';
+import Inquire from '../components/Inquire.astro';
+import meta from '../data/foundry-meta.json';
+
+const entries = await getCollection('sites');
+const sites = entries.map((e) => e.data);
+
+const countries = new Set(sites.map((s) => s.place.country)).size;
+const counts: Record<string, number> = {};
+for (const s of sites) counts[s.series] = (counts[s.series] ?? 0) + 1;
+
+const title = 'The Glass House — bespoke web design by Winter Garden Web';
+const description =
+  'A boutique web design studio in Winter Garden, Florida. A collection of complete, art-directed websites for makers, ateliers, hotels and specialist brands — each one a built climate around a single craft, with its own world, photography and signature interaction.';
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'The Glass House',
+    description,
+    url: String(Astro.site),
+    hasPart: sites.map((s) => ({
+      '@type': 'CreativeWork',
+      name: s.name,
+      about: s.what,
+      url: `${Astro.site}work/${s.slug}`,
+      dateCreated: s.shipped,
+      locationCreated: { '@type': 'Place', name: `${s.place.label}, ${s.place.country}` },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'The Glass House — Winter Garden Web',
+    url: String(Astro.site),
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema} image="/og-default.jpg">
+  <Hero countries={countries} seriesCount={meta.series.length} />
+  <LightMap sites={sites} />
+  <Collection sites={sites} />
+  <Series counts={counts} />
+  <Inquire />
+</Base>

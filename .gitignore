@@ -34,3 +34,7 @@ shots/
 # raw generated imagery (optimized files ship from public/)
 sites/*/assets-src/
 .vercel
+
+# Rejected generation variants and superseded components, kept locally only.
+wgw/assets-src/glass-b.png
+wgw/src/components/Plate.astro

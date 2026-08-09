@@ -1,0 +1,176 @@
+---
+import meta from '../data/foundry-meta.json';
+
+interface Props {
+  counts: Record<string, number>;
+}
+const { counts } = Astro.props;
+const { series } = meta;
+
+// The sky each register is named for, as an actual gradient of that hour.
+const skies: Record<string, string> = {
+  nocturne: 'linear-gradient(180deg, #05070a 0%, #0d1218 55%, #2a1a12 100%)',
+  aubade: 'linear-gradient(180deg, #24354a 0%, #8b7b6a 45%, #f0dcc0 100%)',
+  vesper: 'linear-gradient(180deg, #0e1626 0%, #33405c 45%, #c98a58 100%)',
+  pastorale: 'linear-gradient(180deg, #aab6bd 0%, #ccd6da 50%, #e9eff1 100%)',
+  vigil: 'linear-gradient(180deg, #04080c 0%, #0a1620 50%, #f2c46a 100%)',
+};
+---
+
+<section class="ser" aria-labelledby="ser-h">
+  <div class="page-wide">
+    <div class="marker">
+      <span class="marker__n">03</span>
+      <span class="marker__t">Five qualities of light</span>
+    </div>
+
+    <div class="ser__head">
+      <h2 id="ser-h" class="ser__title">
+        The collection is not sorted by industry.
+      </h2>
+      <p class="ser__lede prose">
+        It is sorted by the hour its subject actually lives in. A lighthouse and
+        a jet charter share a darkness but not a purpose — one exists in order
+        to be seen, the other in order not to be. That distinction decides the
+        photography, the palette, the typography and the tone before a single
+        section is drawn.
+      </p>
+    </div>
+
+    <ol class="ser__list">
+      {series.map((s, i) => (
+        <li class="ser__row reveal" style={`--accent: ${s.accent}`}>
+          <span class="ser__sky" style={`background: ${skies[s.id]}`} aria-hidden="true"></span>
+          <div class="ser__main">
+            <p class="ser__n meta">{String(i + 1).padStart(2, '0')}</p>
+            <h3 class="ser__name">{s.name}</h3>
+            <p class="ser__atmos">{s.atmosphere}</p>
+          </div>
+          <p class="ser__subj">{s.subjects}</p>
+          <p class="ser__count meta">
+            <span>{counts[s.id] ?? 0}</span> {counts[s.id] === 1 ? 'site' : 'sites'}
+          </p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .ser {
+    padding-block: var(--sp-9);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .ser__head {
+    display: grid;
+    gap: var(--sp-4);
+    margin-block-end: var(--sp-7);
+  }
+
+  .ser__title {
+    font-size: var(--step-4);
+    letter-spacing: -0.035em;
+  }
+
+  .ser__lede {
+    color: var(--ink-2);
+  }
+
+  .ser__list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+
+  .ser__row {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: var(--sp-4);
+    align-items: start;
+    padding-block: var(--sp-5);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .ser__row:last-child {
+    border-block-end: 1px solid var(--rule-soft);
+  }
+
+  .ser__sky {
+    grid-row: 1 / span 3;
+    inline-size: 3.5rem;
+    block-size: 5rem;
+    border-radius: 2px;
+    border: 1px solid var(--rule-soft);
+  }
+
+  .ser__main {
+    display: grid;
+    gap: var(--sp-1);
+  }
+
+  .ser__n {
+    color: var(--accent);
+  }
+
+  .ser__name {
+    font-size: var(--step-2);
+    letter-spacing: -0.025em;
+  }
+
+  .ser__atmos {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+
+  .ser__subj {
+    grid-column: 2;
+    color: var(--ink-3);
+    font-size: var(--step--1);
+    line-height: 1.5;
+  }
+
+  .ser__count {
+    grid-column: 2;
+    color: var(--ink-3);
+  }
+
+  .ser__count span {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 56rem) {
+    .ser__head {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-7);
+      align-items: end;
+    }
+
+    .ser__title {
+      font-size: var(--step-5);
+    }
+
+    .ser__row {
+      grid-template-columns: 3.5rem 18rem 1fr 6rem;
+      gap: var(--sp-6);
+      align-items: center;
+      padding-block: var(--sp-6);
+    }
+
+    .ser__sky {
+      grid-row: auto;
+      block-size: 4rem;
+    }
+
+    .ser__subj,
+    .ser__count {
+      grid-column: auto;
+    }
+
+    .ser__count {
+      text-align: end;
+    }
+  }
+</style>

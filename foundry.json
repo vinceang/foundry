@@ -1,0 +1,561 @@
+{
+  "$comment": "Machine-readable registry of the Foundry collection. Source of truth for the README table and for the showcase site at /wgw. The foundry-site skill appends an entry here on ship. Coordinates are real; `place.label` is the invented world's address within that real place.",
+  "studio": {
+    "name": "Winter Garden Web",
+    "collection": "The Foundry",
+    "person": "Vincent Ang",
+    "email": "info@wintergardenweb.com",
+    "domain": "wintergardenweb.com",
+    "place": {
+      "label": "Winter Garden, Florida",
+      "region": "Orlando metro",
+      "country": "US",
+      "lat": 28.5653,
+      "lon": -81.5862
+    }
+  },
+  "series": [
+    {
+      "id": "nocturne",
+      "name": "Nocturne",
+      "atmosphere": "Darkness, ceremony, artifacts, craft under one lamp",
+      "subjects": "Heritage ateliers and houses",
+      "accent": "#c0362a"
+    },
+    {
+      "id": "aubade",
+      "name": "Aubade",
+      "atmosphere": "Daylight, hospitality, inhabited rooms, restorative warmth",
+      "subjects": "Hotels, residences, and other places to dwell",
+      "accent": "#b9781f"
+    },
+    {
+      "id": "vesper",
+      "name": "Vesper",
+      "atmosphere": "Civil twilight, passage, discretion, light from the horizon",
+      "subjects": "Things in transit; worlds built on not being seen",
+      "accent": "#e8a26b"
+    },
+    {
+      "id": "pastorale",
+      "name": "Pastorale",
+      "atmosphere": "Cold bright overcast, a craft worked outdoors in snow-light",
+      "subjects": "Northern outdoor trades and makers",
+      "accent": "#5a6b75"
+    },
+    {
+      "id": "vigil",
+      "name": "Vigil",
+      "atmosphere": "Maritime night, weather as material, one distant timed light",
+      "subjects": "Things that exist in order to be seen",
+      "accent": "#f2c46a"
+    }
+  ],
+  "sites": [
+    {
+      "slug": "kaji",
+      "name": "Suntoku",
+      "nativeName": "寸徳",
+      "series": "nocturne",
+      "what": "Hand-forged kitchen knife atelier",
+      "tagline": "A museum vitrine, not a webshop.",
+      "place": {
+        "label": "Sakai, Osaka",
+        "country": "Japan",
+        "lat": 34.5733,
+        "lon": 135.483
+      },
+      "url": "https://suntoku.vercel.app",
+      "hero": "hero-01.png",
+      "video": "hero-loop.mp4",
+      "palette": {
+        "ground": "#0b0b0c",
+        "light": "#a49e92",
+        "accent": "#c0362a"
+      },
+      "signature": "Inspection — the blade annotated",
+      "shipped": "2026-07-12"
+    },
+    {
+      "slug": "shokunin",
+      "name": "Shokunin",
+      "nativeName": "職人",
+      "series": "nocturne",
+      "what": "Bespoke samurai ateliers",
+      "tagline": "Four ateliers, one succession — the artifact held in reverence.",
+      "place": {
+        "label": "Kaga, Ishikawa",
+        "country": "Japan",
+        "lat": 36.302,
+        "lon": 136.315
+      },
+      "satellites": [
+        {
+          "label": "Seki, Gifu",
+          "lat": 35.4969,
+          "lon": 136.9176
+        },
+        {
+          "label": "Wajima, Ishikawa",
+          "lat": 37.3906,
+          "lon": 136.8992
+        }
+      ],
+      "url": "https://shokunin-topaz.vercel.app",
+      "hero": "works/atelier.jpg",
+      "video": "works/hero-loop.mp4",
+      "palette": {
+        "ground": "#0a0705",
+        "light": "#e6cd93",
+        "accent": "#c2a061"
+      },
+      "signature": "Inspection — the artifact annotated",
+      "shipped": "2026-07-12"
+    },
+    {
+      "slug": "vicente",
+      "name": "Casa Vicente",
+      "series": "nocturne",
+      "what": "Family-owned boutique guitar atelier",
+      "tagline": "A family workshop, not a boutique — a room that smells of shavings and shellac.",
+      "place": {
+        "label": "Cuesta de Gomérez, Granada",
+        "country": "Spain",
+        "lat": 37.1765,
+        "lon": -3.5979
+      },
+      "url": "https://casavicente.vercel.app",
+      "hero": "hero-guitar.png",
+      "video": "guitar-loop.mp4",
+      "palette": {
+        "ground": "#1c110a",
+        "light": "#f1e9d6",
+        "accent": "#ff5600"
+      },
+      "signature": "La anatomía — the guitar annotated",
+      "shipped": "2026-07-12"
+    },
+    {
+      "slug": "schwarzwald",
+      "name": "Schwarzwald",
+      "series": "nocturne",
+      "what": "Cuckoo clock house, est. 1854",
+      "tagline": "A clock is a household that keeps its own hours.",
+      "place": {
+        "label": "Triberg, Black Forest",
+        "country": "Germany",
+        "lat": 48.13,
+        "lon": 8.23
+      },
+      "url": "https://schwarzwald-chi.vercel.app",
+      "hero": "plates/hero.jpg",
+      "video": "plates/hero.mp4",
+      "palette": {
+        "ground": "#080b08",
+        "light": "#eae4d3",
+        "accent": "#c68e4e"
+      },
+      "signature": "Inspection — the movement annotated",
+      "shipped": "2026-07-12"
+    },
+    {
+      "slug": "lagar-do-sol",
+      "name": "Lagar do Sol",
+      "series": "aubade",
+      "what": "Residential, collected olive-estate hotel",
+      "tagline": "A day at a house among the olives.",
+      "place": {
+        "label": "Between Estremoz and Vila Viçosa, Alentejo",
+        "country": "Portugal",
+        "lat": 38.79,
+        "lon": -7.51
+      },
+      "url": "https://lagar-do-sol.vercel.app",
+      "hero": "images/hero-estate.jpg",
+      "palette": {
+        "ground": "#f1eadc",
+        "light": "#27271f",
+        "accent": "#845226"
+      },
+      "signature": "The day line",
+      "shipped": "2026-07-17"
+    },
+    {
+      "slug": "aresta",
+      "name": "Aresta",
+      "series": "aubade",
+      "what": "Contemporary, architecture-led hotel",
+      "tagline": "A hotel shaped by light, proportion, and silence.",
+      "place": {
+        "label": "Carrapateira, Costa Vicentina",
+        "country": "Portugal",
+        "lat": 37.19,
+        "lon": -8.9
+      },
+      "url": "https://aresta-azure.vercel.app",
+      "hero": "images/hero-west.jpg",
+      "palette": {
+        "ground": "#ece5d8",
+        "light": "#26221c",
+        "accent": "#6b5c3b"
+      },
+      "signature": "Rooms by light",
+      "shipped": "2026-07-17"
+    },
+    {
+      "slug": "alla-luna",
+      "name": "Fornace alla Luna",
+      "series": "nocturne",
+      "what": "Murano glass furnace, one goblet atelier",
+      "tagline": "Heat is the interface — the page anneals as it is read.",
+      "place": {
+        "label": "Murano, Venice",
+        "country": "Italy",
+        "lat": 45.458,
+        "lon": 12.353
+      },
+      "url": "https://alla-luna.vercel.app",
+      "hero": "plates/hero-bocca.jpg",
+      "palette": {
+        "ground": "#06080b",
+        "light": "#ede7db",
+        "accent": "#f5be74"
+      },
+      "signature": "The goblet cools — furnace orange to cold clear glass",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "auriga",
+      "name": "Auriga",
+      "series": "vesper",
+      "what": "Discreet private-jet charter",
+      "tagline": "A charter you are told about, never shown.",
+      "place": {
+        "label": "Farnborough, Hampshire",
+        "country": "United Kingdom",
+        "lat": 51.2758,
+        "lon": -0.7763
+      },
+      "url": "https://auriga-lovat.vercel.app",
+      "hero": "images/hero-apron.jpg",
+      "palette": {
+        "ground": "#0f141d",
+        "light": "#ece6da",
+        "accent": "#e8a26b"
+      },
+      "signature": "The Board — four standing city pairs",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "velum",
+      "name": "Velum",
+      "series": "vesper",
+      "what": "Short-field private-jet charter, alpine access",
+      "tagline": "A charter operation whose product is not being seen.",
+      "place": {
+        "label": "Genève",
+        "country": "Switzerland",
+        "lat": 46.2381,
+        "lon": 6.1089
+      },
+      "url": "https://velum-nine.vercel.app",
+      "hero": "images/hero-apron.jpg",
+      "palette": {
+        "ground": "#0d1017",
+        "light": "#dfe3ea",
+        "accent": "#c9915d"
+      },
+      "signature": "The flight-plan rail — the page is a flight",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "tyri",
+      "name": "Tyri",
+      "series": "pastorale",
+      "what": "Hand-hewn log yard in snow-light",
+      "tagline": "Houses cut in winter.",
+      "place": {
+        "label": "Rollag, Numedal",
+        "country": "Norway",
+        "lat": 60.03,
+        "lon": 9.32
+      },
+      "url": "https://tyri.vercel.app",
+      "hero": "images/hero-tunet.jpg",
+      "palette": {
+        "ground": "#eef1f0",
+        "light": "#221a10",
+        "accent": "#a8701f"
+      },
+      "signature": "Novet — the corner assembles as you scroll",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "malmfuru",
+      "name": "Malmfuru",
+      "series": "nocturne",
+      "what": "Hand-hewn log houses on a midwinter night",
+      "tagline": "Arrive in the dark, walk toward the light, be let in.",
+      "place": {
+        "label": "Nore, Numedal",
+        "country": "Norway",
+        "lat": 60.4,
+        "lon": 9.01
+      },
+      "url": "https://malmfuru.vercel.app",
+      "hero": "plates/hero.jpg",
+      "palette": {
+        "ground": "#06080b",
+        "light": "#e9e5db",
+        "accent": "#edaa79"
+      },
+      "signature": "Årringene — the ring archive",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "santagata",
+      "name": "Bottega Sant'Agata",
+      "series": "nocturne",
+      "what": "Single-maker violin bottega, est. 1911",
+      "tagline": "A plate's arching thickness, revealed as a live contour field.",
+      "place": {
+        "label": "Cremona, Lombardy",
+        "country": "Italy",
+        "lat": 45.133,
+        "lon": 10.025
+      },
+      "url": "https://santagata.vercel.app",
+      "hero": "plates/hero.jpg",
+      "palette": {
+        "ground": "#080605",
+        "light": "#ece3d2",
+        "accent": "#c8964a"
+      },
+      "signature": "La graduazione — the arching map",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "dar-el-warda",
+      "name": "Dar el Warda",
+      "series": "aubade",
+      "what": "Nine-room riad, courtyard as a sundial",
+      "tagline": "A house built around a square of sky, told by the sun crossing its court.",
+      "place": {
+        "label": "Marrakech medina",
+        "country": "Morocco",
+        "lat": 31.629,
+        "lon": -7.985
+      },
+      "url": "https://dar-el-warda.vercel.app",
+      "hero": "images/court-1000.jpg",
+      "palette": {
+        "ground": "#f3ead9",
+        "light": "#221a12",
+        "accent": "#b9781f"
+      },
+      "signature": "The court in a day",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "lares",
+      "name": "Larès",
+      "series": "aubade",
+      "what": "Mountain refuge, rooms by altitude and weather",
+      "tagline": "A refuge above the tree line, where the weather decides the day.",
+      "place": {
+        "label": "Val Gardena, Dolomites",
+        "country": "Italy",
+        "lat": 46.556,
+        "lon": 11.677
+      },
+      "url": "https://lares-xi.vercel.app",
+      "hero": "hero.jpg",
+      "palette": {
+        "ground": "#eef1f2",
+        "light": "#232a2c",
+        "accent": "#b4562b"
+      },
+      "signature": "The day the weather writes",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "veta",
+      "name": "Veta",
+      "series": "aubade",
+      "what": "Custom surfboard shaping bay",
+      "tagline": "One line down the blank decides the whole board.",
+      "place": {
+        "label": "Oaxacan coast",
+        "country": "Mexico",
+        "lat": 15.86,
+        "lon": -97.07
+      },
+      "url": "https://veta-lemon.vercel.app",
+      "hero": "images/hero-bench.jpg",
+      "palette": {
+        "ground": "#f2ece0",
+        "light": "#211b14",
+        "accent": "#5f8177"
+      },
+      "signature": "The line — the board redraws live",
+      "shipped": "2026-07-24"
+    },
+    {
+      "slug": "ibushi",
+      "name": "Ibushi",
+      "nativeName": "燻",
+      "series": "aubade",
+      "what": "Akiya restoration — minka in four typologies",
+      "tagline": "A minka is cured by the smoke of being lived in.",
+      "place": {
+        "label": "Hida, Gifu",
+        "country": "Japan",
+        "lat": 36.142,
+        "lon": 137.252
+      },
+      "url": "https://ibushi.vercel.app",
+      "hero": "images/engawa.jpg",
+      "palette": {
+        "ground": "#f4efe3",
+        "light": "#1d1916",
+        "accent": "#a8481a"
+      },
+      "signature": "Sumitsuke 墨付け — the marking",
+      "shipped": "2026-07-26"
+    },
+    {
+      "slug": "nipis",
+      "name": "Nipis",
+      "series": "aubade",
+      "what": "Bespoke barong Tagalog — piña and jusi to commission",
+      "tagline": "The only formal garment in the world made to be seen through.",
+      "place": {
+        "label": "Lumban, Laguna",
+        "country": "Philippines",
+        "lat": 14.3,
+        "lon": 121.46
+      },
+      "url": "https://nipis.vercel.app",
+      "hero": "images/hero-window.jpg",
+      "palette": {
+        "ground": "#f7f2e7",
+        "light": "#1f1c17",
+        "accent": "#6d5136"
+      },
+      "signature": "Ang pechera — the panel drawn on sheer cloth",
+      "shipped": "2026-07-31"
+    },
+    {
+      "slug": "barchetta",
+      "name": "Barchetta",
+      "series": "nocturne",
+      "what": "Neapolitan sartoria — the coat opened from the inside",
+      "tagline": "A Neapolitan coat is an argument about what to leave out.",
+      "place": {
+        "label": "Chiaia, Naples",
+        "country": "Italy",
+        "lat": 40.833,
+        "lon": 14.233
+      },
+      "url": "https://barchetta.vercel.app",
+      "hero": "images/barchetta.jpg",
+      "palette": {
+        "ground": "#14120e",
+        "light": "#eae4d6",
+        "accent": "#c05a41"
+      },
+      "signature": "L'interno — the coat opened",
+      "shipped": "2026-07-31"
+    },
+    {
+      "slug": "rosee",
+      "name": "Rosée",
+      "series": "aubade",
+      "what": "Single-perfumer house — the field behind the bottle",
+      "tagline": "A 50 ml bottle is a field. We will tell you exactly how much of one.",
+      "place": {
+        "label": "Plascassier, Grasse",
+        "country": "France",
+        "lat": 43.625,
+        "lon": 6.955
+      },
+      "url": "https://rosee-omega.vercel.app",
+      "hero": "images/hero-cueillette.jpg",
+      "palette": {
+        "ground": "#f7f5ef",
+        "light": "#20231f",
+        "accent": "#9c5560"
+      },
+      "signature": "Ce qu'il y a dedans — what is actually in it",
+      "shipped": "2026-08-01"
+    },
+    {
+      "slug": "traccia",
+      "name": "Traccia",
+      "series": "pastorale",
+      "what": "Steel frame builder — the road writes the specification",
+      "tagline": "A frame is a set of angles argued from one rider and one road.",
+      "place": {
+        "label": "Edolo, Val Camonica",
+        "country": "Italy",
+        "lat": 46.178,
+        "lon": 10.331
+      },
+      "url": "https://traccia-telai.vercel.app",
+      "hero": "images/valle-1536.jpg",
+      "palette": {
+        "ground": "#e9ecec",
+        "light": "#13181a",
+        "accent": "#a8452a"
+      },
+      "signature": "La traccia — the road writes the frame",
+      "shipped": "2026-08-06"
+    },
+    {
+      "slug": "faire",
+      "name": "Fàire",
+      "series": "vigil",
+      "what": "Lighthouse keeper's house — a light that counts",
+      "tagline": "You sleep in the house of a light that no longer needs anyone — and it still crosses the ceiling every twenty seconds.",
+      "place": {
+        "label": "Rubha na Fàire, Wester Ross",
+        "country": "Scotland",
+        "lat": 57.86,
+        "lon": -5.65
+      },
+      "url": "https://rubha-na-faire.vercel.app",
+      "hero": "images/tur-1536.jpg",
+      "video": "video/lionsa.mp4",
+      "palette": {
+        "ground": "#0a1014",
+        "light": "#e8e6df",
+        "accent": "#f2c46a"
+      },
+      "signature": "An Solas — the light that counts",
+      "shipped": "2026-08-07"
+    },
+    {
+      "slug": "tsutsumiya",
+      "name": "Tsutsumiya",
+      "nativeName": "包屋",
+      "series": "nocturne",
+      "what": "Wrapping house — the cloth decides what you may take",
+      "tagline": "This house does not make the thing. It makes the thing unseen.",
+      "place": {
+        "label": "Itachibori, Osaka",
+        "country": "Japan",
+        "lat": 34.678,
+        "lon": 135.494
+      },
+      "url": "https://tsutsumiya.vercel.app",
+      "hero": "images/mise-1536.jpg",
+      "palette": {
+        "ground": "#0d1013",
+        "light": "#e8e2d4",
+        "accent": "#d1594a"
+      },
+      "signature": "包 — the wrap",
+      "shipped": "2026-08-06"
+    }
+  ]
+}

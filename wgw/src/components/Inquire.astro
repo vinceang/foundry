@@ -1,0 +1,347 @@
+---
+import meta from '../data/foundry-meta.json';
+const { studio } = meta;
+
+const steps = [
+  {
+    n: '01',
+    t: 'The world',
+    d: 'Before a page exists: what the thing is, who makes it, what it is made of, and the one true sentence the whole site has to earn. Written down and agreed.',
+  },
+  {
+    n: '02',
+    t: 'The light',
+    d: 'Palette, typography and photographic language, derived from the subject rather than a trend board — the hour it lives in, the material it is made from.',
+  },
+  {
+    n: '03',
+    t: 'The signature',
+    d: 'One interaction that could belong to nothing else you sell. The board that redraws to your rider. The court that moves with the sun. Built first, because it is the argument.',
+  },
+  {
+    n: '04',
+    t: 'The build',
+    d: 'Hand-built, fast, accessible, and yours. No page-builder, no theme, no template underneath pretending otherwise.',
+  },
+];
+---
+
+<section class="inq" id="inquire" aria-labelledby="inq-h">
+  <div class="page-wide">
+    <div class="marker">
+      <span class="marker__n">04</span>
+      <span class="marker__t">Commission a world</span>
+    </div>
+
+    <div class="inq__grid">
+      <div class="inq__left">
+        <h2 id="inq-h" class="inq__title">
+          If you make something worth this much trouble, write.
+        </h2>
+        <p class="inq__lede">
+          The studio takes a small number of projects a year — makers,
+          ateliers, hotels, and specialist brands whose product deserves better
+          than a template. Working from Winter Garden, Florida; the map explains
+          where the work has been.
+        </p>
+
+        <ol class="inq__steps">
+          {steps.map((s) => (
+            <li class="inq__step">
+              <p class="inq__stepn meta">{s.n}</p>
+              <div>
+                <h3 class="inq__stept">{s.t}</h3>
+                <p class="inq__stepd">{s.d}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="inq__right">
+        <form class="inq__form" data-form action={`mailto:${studio.email}`} method="post" enctype="text/plain">
+          <p class="inq__formhead meta">Tell me what you make</p>
+
+          <label class="field">
+            <span class="field__l">Your name</span>
+            <input class="field__i" type="text" name="name" required autocomplete="name" />
+          </label>
+
+          <label class="field">
+            <span class="field__l">Email</span>
+            <input class="field__i" type="email" name="email" required autocomplete="email" />
+          </label>
+
+          <label class="field">
+            <span class="field__l">What you make, and where</span>
+            <input class="field__i" type="text" name="what" placeholder="e.g. a cider press in Somerset" required />
+          </label>
+
+          <label class="field">
+            <span class="field__l">Do you have photography?</span>
+            <select class="field__i" name="photography">
+              <option>Yes — art-directed, ready to use</option>
+              <option>Some — needs work</option>
+              <option>No — I'd need it made</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__l">Budget</span>
+            <select class="field__i" name="budget">
+              <option>Not sure yet</option>
+              <option>Under $5,000</option>
+              <option>$5,000 – $15,000</option>
+              <option>$15,000 – $40,000</option>
+              <option>Above $40,000</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span class="field__l">Anything else</span>
+            <textarea class="field__i" name="message" rows="4"></textarea>
+          </label>
+
+          <!-- Quiet honeypot; real people never fill this in. -->
+          <div class="inq__pot" aria-hidden="true">
+            <label>Company <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <button class="btn inq__submit" type="submit">Send</button>
+
+          <p class="inq__note" data-note role="status">
+            Or write directly — <a class="link" href={`mailto:${studio.email}`}>{studio.email}</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  const note = document.querySelector<HTMLElement>('[data-note]');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      const pot = form.querySelector<HTMLInputElement>('[name="company"]');
+      if (pot?.value) {
+        e.preventDefault();
+        return;
+      }
+
+      e.preventDefault();
+      const btn = form.querySelector<HTMLButtonElement>('[type="submit"]')!;
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      const body = Object.fromEntries(new FormData(form).entries());
+
+      try {
+        const res = await fetch('/api/inquire', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(body),
+        });
+
+        if (!res.ok) throw new Error(String(res.status));
+
+        form.innerHTML =
+          '<p class="inq__thanks">Thank you — that arrived.</p>' +
+          '<p class="inq__thankssub">I read everything myself, and reply to anything I can genuinely help with.</p>';
+      } catch {
+        // The endpoint isn't wired to a mailbox yet, or the network failed.
+        // Never silently swallow an inquiry: hand it back to the user's own
+        // mail client with the content preserved.
+        btn.disabled = false;
+        btn.textContent = original;
+        if (note) {
+          // Hand the message back in a form the visitor can actually send,
+          // with everything they typed already in it. A failed inquiry that
+          // looks like a styling quirk is worse than no form at all.
+          const subject = encodeURIComponent(`Commission enquiry — ${String(body.name || '')}`);
+          const lines = [
+            `Name: ${body.name || ''}`,
+            `Email: ${body.email || ''}`,
+            `Makes: ${body.what || ''}`,
+            `Photography: ${body.photography || ''}`,
+            `Budget: ${body.budget || ''}`,
+            '',
+            String(body.message || ''),
+          ].join('\n');
+          const href = `mailto:info@wintergardenweb.com?subject=${subject}&body=${encodeURIComponent(lines)}`;
+          note.innerHTML =
+            '<strong>That didn\u2019t send.</strong> The form is offline right now \u2014 ' +
+            `<a class="link" href="${href}">open it as an email instead</a>, ` +
+            'with everything you typed already filled in.';
+          note.classList.add('is-warn');
+        }
+      }
+    });
+  }
+</script>
+
+<style>
+  .inq {
+    padding-block: var(--sp-9);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .inq__grid {
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  .inq__title {
+    font-size: var(--step-4);
+    letter-spacing: -0.035em;
+    margin-block-end: var(--sp-4);
+  }
+
+  .inq__lede {
+    color: var(--ink-2);
+    max-inline-size: var(--measure);
+  }
+
+  .inq__steps {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-5);
+    margin-block-start: var(--sp-7);
+  }
+
+  .inq__step {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: var(--sp-3);
+    padding-block-start: var(--sp-4);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .inq__stepn {
+    color: var(--accent);
+  }
+
+  .inq__stept {
+    font-size: var(--step-1);
+    letter-spacing: -0.02em;
+    margin-block-end: var(--sp-1);
+  }
+
+  .inq__stepd {
+    color: var(--ink-3);
+    font-size: var(--step--1);
+    line-height: 1.55;
+    max-inline-size: 32rem;
+  }
+
+  /* ------------------------------------------------------------- form */
+
+  .inq__form {
+    display: grid;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ground-2);
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+  }
+
+  .inq__formhead {
+    color: var(--ink-2);
+    padding-block-end: var(--sp-3);
+    border-block-end: 1px solid var(--rule-soft);
+  }
+
+  .field {
+    display: grid;
+    gap: var(--sp-2);
+  }
+
+  .field__l {
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .field__i {
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    padding: var(--sp-2) var(--sp-3);
+    background: var(--ground);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink);
+    font-size: var(--step-0);
+    transition: border-color 0.25s var(--ease);
+  }
+
+  textarea.field__i {
+    min-block-size: 6rem;
+    resize: vertical;
+    line-height: 1.5;
+  }
+
+  .field__i:focus {
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  .field__i::placeholder {
+    color: var(--ink-3);
+  }
+
+  .inq__pot {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .inq__submit {
+    justify-self: start;
+    margin-block-start: var(--sp-2);
+  }
+
+  .inq__note {
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.03em;
+  }
+
+  .inq__note.is-warn {
+    color: var(--ink-2);
+  }
+
+  .inq__thanks {
+    font-size: var(--step-2);
+    letter-spacing: -0.025em;
+  }
+
+  .inq__thankssub {
+    color: var(--ink-3);
+    font-size: var(--step--1);
+  }
+
+  @media (min-width: 62rem) {
+    .inq__grid {
+      grid-template-columns: 1fr 25rem;
+      gap: var(--sp-8);
+      align-items: start;
+    }
+
+    .inq__title {
+      font-size: var(--step-5);
+    }
+
+    .inq__form {
+      padding: var(--sp-6);
+      position: sticky;
+      inset-block-start: 6rem;
+    }
+  }
+</style>

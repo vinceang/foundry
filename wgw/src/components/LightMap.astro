@@ -1,0 +1,1125 @@
+---
+/**
+ * The light map — the signature interaction.
+ *
+ * Twenty-two invented places and one real one, on an equal-area projection,
+ * under the sun's actual position right now. The collection is organised into
+ * five qualities of light; this is that taxonomy rendered literally. Scrub the
+ * day and the lamps come on around the world in the order they really would.
+ *
+ * Everything positional is projected here, at build time, and rendered as real
+ * elements: the nodes are in the HTML, styled by the stylesheet, reachable by
+ * keyboard, and present with JavaScript switched off. Script only paints the
+ * daylight and moves the glow.
+ */
+import map from '../data/map.json';
+import meta from '../data/foundry-meta.json';
+import { makeProjector } from '../lib/geo.mjs';
+import { words } from '../lib/words.mjs';
+
+interface Site {
+  slug: string;
+  name: string;
+  nativeName?: string;
+  series: string;
+  what: string;
+  place: { label: string; country: string; lat: number; lon: number };
+  satellites?: { label: string; lat: number; lon: number }[];
+  palette: { ground: string; light: string; accent: string };
+}
+
+interface Props {
+  sites: Site[];
+}
+
+const { sites } = Astro.props;
+const { studio } = meta;
+
+const project = makeProjector(map.width, map.height, 0);
+const r2 = (n: number) => Math.round(n * 10) / 10;
+
+const nodes = sites.map((s) => {
+  const [x, y] = project(s.place.lon, s.place.lat);
+  return {
+    slug: s.slug,
+    name: s.name,
+    native: s.nativeName ?? '',
+    what: s.what,
+    place: s.place.label,
+    country: s.place.country,
+    lat: s.place.lat,
+    lon: s.place.lon,
+    accent: s.palette.accent,
+    x: r2(x),
+    y: r2(y),
+    sats: (s.satellites ?? []).map((t) => {
+      const [sx, sy] = project(t.lon, t.lat);
+      return { x: r2(sx), y: r2(sy) };
+    }),
+  };
+});
+
+const [studioX, studioY] = project(studio.place.lon, studio.place.lat);
+const sx = r2(studioX);
+const sy = r2(studioY);
+
+const payload = nodes.map((n) => ({
+  slug: n.slug, name: n.name, native: n.native, what: n.what, place: n.place,
+  country: n.country, lat: n.lat, lon: n.lon, accent: n.accent, x: n.x, y: n.y,
+}));
+---
+
+<section class="lm" id="map" aria-labelledby="map-h" data-payload={JSON.stringify(payload)}>
+  <div class="page-wide">
+    <div class="marker">
+      <span class="marker__n">01</span>
+      <span class="marker__t">The light map</span>
+    </div>
+
+    <div class="lm__head">
+      <h2 id="map-h" class="lm__title">
+        Every place,<br />under the sun where it actually is.
+      </h2>
+      <p class="lm__lede prose">
+        The collection is sorted by the quality of light its subject lives in.
+        So the map is lit by the real terminator — the line dividing day from
+        night on Earth at this moment. Drag the hour and watch the ateliers wake
+        in order.
+      </p>
+    </div>
+
+    <p class="lm__readout meta" aria-live="polite">
+      <span data-utc>—</span>
+      <span class="lm__sep" aria-hidden="true">·</span>
+      <span data-tally>{sites.length} places</span>
+    </p>
+
+    <div class="lm__scrollwrap">
+      <div class="lm__stage">
+        <!-- Ground: ocean, land, graticule. -->
+        <svg
+          class="lm__svg lm__svg--base"
+          viewBox={`0 0 ${map.width} ${map.height}`}
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        >
+          <g data-view>
+            <path class="lm__ocean" d={map.sphere} />
+            <path class="lm__land" d={map.land} />
+            <path class="lm__grat" d={map.graticule} />
+          </g>
+        </svg>
+
+        <!-- Figure: daylight, terminator, nodes, studio. -->
+        <svg
+          class="lm__svg lm__svg--fig"
+          viewBox={`0 0 ${map.width} ${map.height}`}
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-labelledby="map-h map-desc"
+        >
+          <desc id="map-desc">
+            An equal-area world map showing where each site in the collection is
+            set, shaded by the current position of the sun. Every place is also
+            listed as text in the collection below.
+          </desc>
+
+          <defs>
+            <clipPath id="lm-sphere"><path d={map.sphere} /></clipPath>
+            <!-- Twilight is a ~100km-wide gradient, not an edge. Blurring the
+                 daylight polygon renders that band honestly, and avoids the
+                 topology trap: only the alt=0 curve is guaranteed to span every
+                 longitude, so it is the only one safe to walk as a polygon. -->
+            <filter id="lm-soft" x="-12%" y="-12%" width="124%" height="124%">
+              <feGaussianBlur stdDeviation="6" />
+            </filter>
+            {nodes.map((n) => (
+              <radialGradient id={`halo-${n.slug}`}>
+                <stop offset="0%" stop-color={n.accent} stop-opacity="0.5" />
+                <stop offset="45%" stop-color={n.accent} stop-opacity="0.14" />
+                <stop offset="100%" stop-color={n.accent} stop-opacity="0" />
+              </radialGradient>
+            ))}
+          </defs>
+
+          <g data-view>
+            <g clip-path="url(#lm-sphere)">
+              <path class="lm__day" data-day d="" />
+              <path class="lm__night" data-night d="" fill-rule="evenodd" />
+            </g>
+
+            <path class="lm__term" data-term d="" />
+            <path class="lm__edge" d={map.sphere} />
+
+            {nodes.map((n) => n.sats.map((t) => (
+              <g class="lm__satg" transform={`translate(${t.x} ${t.y})`}>
+                <circle class="lm__sat" r="1.7" fill={n.accent} />
+              </g>
+            )))}
+
+            {nodes.map((n) => (
+              <g class="lm__node" data-slug={n.slug} transform={`translate(${n.x} ${n.y})`} style={`--accent: ${n.accent}`}>
+                <a href={`/work/${n.slug}`} aria-label={`${n.name} — ${n.what}, ${n.place}`}>
+                  <g class="lm__mark">
+                    <circle class="lm__glow" r="18" fill={`url(#halo-${n.slug})`} />
+                    <circle class="lm__dot" r="4" fill={n.accent} />
+                    <circle class="lm__hit" r="22" />
+                  </g>
+                </a>
+              </g>
+            ))}
+
+            <g class="lm__studio" transform={`translate(${sx} ${sy})`}>
+              <g class="lm__mark">
+                <circle r="6.5" />
+                <line x1="-12" y1="0" x2="12" y2="0" />
+                <line x1="0" y1="-12" x2="0" y2="12" />
+                <text class="lm__studiolabel" y="27" text-anchor="middle">WINTER GARDEN</text>
+              </g>
+            </g>
+          </g>
+        </svg>
+
+        <div class="lm__coop" data-coop aria-hidden="true"><span></span></div>
+
+        <div class="lm__zoom" data-zoom>
+          <button type="button" data-zin aria-label="Zoom in">+</button>
+          <button type="button" data-zout aria-label="Zoom out">−</button>
+          <button type="button" data-zreset aria-label="Reset the view" title="Reset">⤢</button>
+        </div>
+
+        <div class="lm__card" data-card hidden></div>
+      </div>
+    </div>
+
+    <p class="lm__hint meta" data-hint>
+      Drag to pan · <kbd>⌘</kbd>/<kbd>ctrl</kbd> + scroll to zoom · two fingers on touch
+    </p>
+
+
+    <div class="lm__controls">
+      <label class="lm__slider">
+        <span class="visually-hidden">Hour of day, UTC</span>
+        <input type="range" min="0" max="1439" step="5" value="720" data-scrub aria-describedby="map-scrub-note" />
+      </label>
+      <button type="button" class="lm__now" data-now hidden>Now</button>
+    </div>
+    <p id="map-scrub-note" class="meta lm__note">
+      Scrub a full day, or leave it live — it follows the real sun and updates
+      each minute.
+    </p>
+  </div>
+</section>
+
+<script>
+  import { makeProjector, subsolarPoint, solarAltitude, terminatorLatitude } from '../lib/geo.mjs';
+  import mapData from '../data/map.json';
+
+  type N = {
+    slug: string; name: string; native: string; what: string; place: string;
+    country: string; lat: number; lon: number; accent: string; x: number; y: number;
+  };
+
+  const root = document.querySelector<HTMLElement>('.lm');
+
+  if (root) {
+    const nodes: N[] = JSON.parse(root.dataset.payload || '[]');
+    const W = mapData.width;
+    const H = mapData.height;
+    const project = makeProjector(W, H, 0);
+
+    const dayP = root.querySelector<SVGPathElement>('[data-day]')!;
+    const nightP = root.querySelector<SVGPathElement>('[data-night]')!;
+    const termP = root.querySelector<SVGPathElement>('[data-term]')!;
+    const card = root.querySelector<HTMLElement>('[data-card]')!;
+    const utcEl = root.querySelector<HTMLElement>('[data-utc]')!;
+    const tallyEl = root.querySelector<HTMLElement>('[data-tally]')!;
+    const scrub = root.querySelector<HTMLInputElement>('[data-scrub]')!;
+    const nowBtn = root.querySelector<HTMLButtonElement>('[data-now]')!;
+
+    /** null = follow the real clock; otherwise minutes past UTC midnight. */
+    let scrubbed: number | null = null;
+
+    const els = new Map<string, SVGGElement>();
+    root.querySelectorAll<SVGGElement>('.lm__node').forEach((g) => els.set(g.dataset.slug!, g));
+
+    /* --------------------------------------------------------- daylight */
+
+    /**
+     * The daylit hemisphere, as one closed polygon.
+     *
+     * Walk the alt=0 terminator across every longitude, then close over
+     * whichever pole is currently lit. With a positive declination the whole
+     * region north of the curve is in sunlight (check it at the subsolar
+     * meridian, where the boundary sits far south, and at the antisolar
+     * meridian, where only a polar cap survives) — and the reverse in the
+     * southern summer.
+     */
+    function dayPath(raw: { lat: number; lon: number }) {
+      // Exactly on an equinox the terminator becomes a pair of meridians and
+      // "north of the curve" stops meaning anything. Half a degree of
+      // declination keeps the polygon well-formed and moves the drawn boundary
+      // by less than a pixel, so the two days a year this matters cost nothing.
+      const sun =
+        Math.abs(raw.lat) < 0.5 ? { lat: raw.lat >= 0 ? 0.5 : -0.5, lon: raw.lon } : raw;
+      const litNorth = sun.lat > 0;
+      const poleLat = litNorth ? 90 : -90;
+      const pts: [number, number][] = [];
+
+      for (let lon = -180; lon <= 180; lon += 1.5) {
+        const lat = terminatorLatitude(lon, sun, 0);
+        // alt=0 always has a solution, but stay defensive rather than emit a
+        // malformed path if that ever stops being true.
+        pts.push([lon, lat === null ? 0 : lat]);
+      }
+
+      // Close along the antimeridian to the lit pole, across the pole line,
+      // and back. Equal Earth has pole lines rather than pole points, so this
+      // follows the real map edge instead of cutting a chord across it.
+      const last = pts[pts.length - 1][1];
+      const first = pts[0][1];
+      const steps = 14;
+      for (let i = 1; i <= steps; i++) pts.push([180, last + ((poleLat - last) * i) / steps]);
+      for (let i = 0; i <= steps; i++) pts.push([180 - (360 * i) / steps, poleLat]);
+      for (let i = 1; i <= steps; i++) pts.push([-180, poleLat + ((first - poleLat) * i) / steps]);
+
+      let d = '';
+      for (let i = 0; i < pts.length; i++) {
+        const [x, y] = project(pts[i][0], pts[i][1]);
+        d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+      }
+      return d + 'Z';
+    }
+
+    function terminatorPath(sun: { lat: number; lon: number }) {
+      let d = '';
+      let pen = false;
+      for (let lon = -180; lon <= 180; lon += 1.5) {
+        const lat = terminatorLatitude(lon, sun, 0);
+        if (lat === null) {
+          pen = false;
+          continue;
+        }
+        const [x, y] = project(lon, lat);
+        d += (pen ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+        pen = true;
+      }
+      return d;
+    }
+
+    /* ------------------------------------------------------------- card */
+
+    function localTime(lon: number, at: Date) {
+      // Mean solar time: the hour the sky is actually keeping there, which is
+      // the honest thing to print beside a sun altitude.
+      const d = new Date(at.getTime() + (lon / 15) * 3600000);
+      return `${String(d.getUTCHours()).padStart(2, '0')}:${String(d.getUTCMinutes()).padStart(2, '0')}`;
+    }
+
+    function describe(alt: number) {
+      if (alt > 12) return 'full day';
+      if (alt > 0) return 'low sun';
+      if (alt > -6) return 'civil twilight';
+      if (alt > -12) return 'nautical twilight';
+      if (alt > -18) return 'astronomical twilight';
+      return 'night';
+    }
+
+    const dd = (v: number, pos: string, neg: string) =>
+      `${Math.abs(v).toFixed(2)}°${v >= 0 ? pos : neg}`;
+
+    function showCard(n: N) {
+      const at = currentDate();
+      const alt = solarAltitude(n.lat, n.lon, subsolarPoint(at));
+
+      // Screen position of a node depends on the current pan/zoom, not just
+      // its projected coordinate.
+      const px = n.x * view.k + view.tx;
+      const py = n.y * view.k + view.ty;
+      card.style.setProperty('--accent', n.accent);
+      card.style.left = `${(px / W) * 100}%`;
+      card.style.top = `${(py / H) * 100}%`;
+      card.classList.toggle('is-right', px > W * 0.6);
+      card.classList.toggle('is-low', py > H * 0.55);
+      card.innerHTML = `
+        <p class="lm__cardname">${n.name}${n.native ? ` <span>${n.native}</span>` : ''}</p>
+        <p class="lm__cardwhat">${n.what}</p>
+        <dl class="lm__cardmeta">
+          <div><dt>Place</dt><dd>${n.place}, ${n.country}</dd></div>
+          <div><dt>Coord</dt><dd>${dd(n.lat, 'N', 'S')} ${dd(n.lon, 'E', 'W')}</dd></div>
+          <div><dt>Local</dt><dd>${localTime(n.lon, at)} · sun ${alt.toFixed(1)}°</dd></div>
+          <div><dt>Light</dt><dd>${describe(alt)}</dd></div>
+        </dl>`;
+      card.hidden = false;
+    }
+
+    const hideCard = () => {
+      card.hidden = true;
+    };
+
+    for (const n of nodes) {
+      const g = els.get(n.slug);
+      if (!g) continue;
+      g.addEventListener('pointerenter', () => showCard(n));
+      g.addEventListener('focusin', () => showCard(n));
+      g.addEventListener('pointerleave', hideCard);
+      g.addEventListener('focusout', hideCard);
+    }
+
+    /* ------------------------------------------------------------ paint */
+
+    function currentDate() {
+      const now = new Date();
+      if (scrubbed === null) return now;
+      const d = new Date(now);
+      d.setUTCHours(Math.floor(scrubbed / 60), scrubbed % 60, 0, 0);
+      return d;
+    }
+
+    function paint() {
+      const at = currentDate();
+      const sun = subsolarPoint(at);
+
+      const litPath = dayPath(sun);
+      dayP.setAttribute('d', litPath);
+      // Sphere + lit region with evenodd leaves exactly the unlit hemisphere,
+      // which is what a light register needs to darken instead of lift.
+      nightP.setAttribute('d', mapData.sphere + litPath);
+      termP.setAttribute('d', terminatorPath(sun));
+
+      let night = 0;
+      let twilight = 0;
+      let day = 0;
+
+      for (const n of nodes) {
+        const alt = solarAltitude(n.lat, n.lon, sun);
+        if (alt <= -18) night++;
+        else if (alt <= 0) twilight++;
+        else day++;
+
+        // The lamps come on as a place falls into darkness.
+        const glow = alt >= 6 ? 0 : alt <= -12 ? 1 : (6 - alt) / 18;
+        els.get(n.slug)?.style.setProperty('--glow', glow.toFixed(3));
+      }
+
+      const hh = String(at.getUTCHours()).padStart(2, '0');
+      const mm = String(at.getUTCMinutes()).padStart(2, '0');
+      utcEl.textContent = `${hh}:${mm} UTC${scrubbed === null ? ' · live' : ''}`;
+      tallyEl.textContent = `${night} in night · ${twilight} in twilight · ${day} in daylight`;
+
+      if (scrubbed === null) scrub.value = String(at.getUTCHours() * 60 + at.getUTCMinutes());
+
+      // Without this a screen reader announces the raw minute count — "720"
+      // instead of the hour the map is actually showing.
+      const sv = Number(scrub.value);
+      scrub.setAttribute(
+        'aria-valuetext',
+        `${String(Math.floor(sv / 60)).padStart(2, '0')}:${String(sv % 60).padStart(2, '0')} UTC`
+      );
+    }
+
+
+    /* ------------------------------------------------------------- view */
+
+    // Pan and zoom over the plate. The dots are ~4px at rest and the Italian
+    // sites sit within a few pixels of each other, so the map needs to open
+    // up. Marks counter-scale by 1/sqrt(k): they grow with the zoom, but
+    // sub-linearly, so a node at 6x is legible rather than a blob.
+    const MIN_K = 1;
+    const MAX_K = 12;
+    const view = { k: 1, tx: 0, ty: 0 };
+
+    const views = root.querySelectorAll<SVGGElement>('[data-view]');
+    const stage = root.querySelector<HTMLElement>('.lm__stage')!;
+    const figSvg = root.querySelector<SVGSVGElement>('.lm__svg--fig')!;
+
+    function clampView() {
+      view.k = Math.min(MAX_K, Math.max(MIN_K, view.k));
+      // Never let the plate pull away from the frame.
+      const minTx = W - W * view.k;
+      const minTy = H - H * view.k;
+      view.tx = Math.min(0, Math.max(minTx, view.tx));
+      view.ty = Math.min(0, Math.max(minTy, view.ty));
+    }
+
+    function applyView() {
+      clampView();
+      const t = `translate(${view.tx.toFixed(2)} ${view.ty.toFixed(2)}) scale(${view.k.toFixed(4)})`;
+      views.forEach((g) => g.setAttribute('transform', t));
+      root!.style.setProperty('--inv', (1 / Math.sqrt(view.k)).toFixed(4));
+      root!.classList.toggle('is-zoomed', view.k > 1.001);
+      hideCard();
+    }
+
+    /** Client point -> untransformed viewBox coordinates. */
+    function toViewBox(clientX: number, clientY: number) {
+      const r = figSvg.getBoundingClientRect();
+      return { x: ((clientX - r.left) / r.width) * W, y: ((clientY - r.top) / r.height) * H };
+    }
+
+    /** Zoom to a factor, holding the world point under (vx, vy) still. */
+    function zoomAt(factor: number, vx: number, vy: number) {
+      const k0 = view.k;
+      const k1 = Math.min(MAX_K, Math.max(MIN_K, k0 * factor));
+      if (k1 === k0) return;
+      const worldX = (vx - view.tx) / k0;
+      const worldY = (vy - view.ty) / k0;
+      view.k = k1;
+      view.tx = vx - worldX * k1;
+      view.ty = vy - worldY * k1;
+      applyView();
+    }
+
+    // Where the collection actually is. The plate's geometric centre is the
+    // Gulf of Guinea, so a plain centre-zoom walks you into open ocean; the
+    // first press should move toward the work instead.
+    const focus = nodes.reduce(
+      (a, n) => ({ x: a.x + n.x / nodes.length, y: a.y + n.y / nodes.length }),
+      { x: 0, y: 0 }
+    );
+
+    /** Zoom by a factor, keeping a chosen world point at the centre of view. */
+    function zoomStep(factor: number) {
+      const atRest = view.k < 1.05;
+      const wx = atRest ? focus.x : (W / 2 - view.tx) / view.k;
+      const wy = atRest ? focus.y : (H / 2 - view.ty) / view.k;
+      const k1 = Math.min(MAX_K, Math.max(MIN_K, view.k * factor));
+      view.k = k1;
+      view.tx = W / 2 - wx * k1;
+      view.ty = H / 2 - wy * k1;
+      applyView();
+    }
+
+    root.querySelector('[data-zin]')!.addEventListener('click', () => zoomStep(1.7));
+    root.querySelector('[data-zout]')!.addEventListener('click', () => zoomStep(1 / 1.7));
+    root.querySelector('[data-zreset]')!.addEventListener('click', () => {
+      view.k = 1;
+      view.tx = 0;
+      view.ty = 0;
+      applyView();
+    });
+
+    /* ------------------------------------------------ cooperative gestures */
+
+    // The convention for a map embedded in a scrolling page: a plain scroll
+    // belongs to the page, and the map says so rather than silently ignoring
+    // it. Only a modifier — or two fingers — drives the map. This is what
+    // stops the map becoming a scroll trap partway down a long document.
+    const coop = root.querySelector<HTMLElement>('[data-coop]')!;
+    const coopText = coop.querySelector('span')!;
+    let coopTimer = 0;
+
+    const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+
+    function nudge(message: string) {
+      coopText.textContent = message;
+      coop.classList.add('is-on');
+      clearTimeout(coopTimer);
+      coopTimer = window.setTimeout(() => coop.classList.remove('is-on'), 1400);
+    }
+
+    stage.addEventListener(
+      'wheel',
+      (e) => {
+        if (e.ctrlKey || e.metaKey) {
+          // Trackpad pinch also arrives as ctrlKey, which is what we want.
+          e.preventDefault();
+          coop.classList.remove('is-on');
+          const p = toViewBox(e.clientX, e.clientY);
+          zoomAt(Math.exp(-e.deltaY * 0.002), p.x, p.y);
+          return;
+        }
+        // Let the page scroll, but teach the gesture at the moment it is tried.
+        nudge(`Use ${isMac ? '⌘' : 'ctrl'} + scroll to zoom the map`);
+      },
+      { passive: false }
+    );
+
+    // No double-click-to-zoom: every node is a real link, so the first click
+    // of the pair navigates. The buttons, modifier-wheel, drag and pinch are
+    // unambiguous; a gesture that sometimes opens a case study is not.
+
+    /* ------------------------------------------------------- drag / pinch */
+
+    const pointers = new Map<number, { x: number; y: number }>();
+    let dragged = false;
+    let pinchDist = 0;
+
+    stage.addEventListener('pointerdown', (e) => {
+      // The zoom cluster sits inside the stage. Capturing the pointer here
+      // would steal it from those buttons and their click would never
+      // complete — which is exactly what happened the first time.
+      if ((e.target as Element).closest?.('.lm__zoom, .lm__card')) return;
+
+      // One finger must still scroll the page on touch; only pen and mouse
+      // drag directly, and touch needs a second finger.
+      if (e.pointerType === 'touch' && pointers.size === 0) {
+        pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        nudge('Use two fingers to move the map');
+        return;
+      }
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      if (pointers.size === 2) {
+        coop.classList.remove('is-on');
+        const [a, b] = [...pointers.values()];
+        pinchDist = Math.hypot(a.x - b.x, a.y - b.y);
+      }
+      if (e.pointerType !== 'touch') {
+        dragged = false;
+        stage.setPointerCapture(e.pointerId);
+        stage.classList.add('is-grabbing');
+      }
+    });
+
+    stage.addEventListener(
+      'pointermove',
+      (e) => {
+        const prev = pointers.get(e.pointerId);
+        if (!prev) return;
+        const dx = e.clientX - prev.x;
+        const dy = e.clientY - prev.y;
+        pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+        const r = figSvg.getBoundingClientRect();
+        const sx = W / r.width;
+        const sy = H / r.height;
+
+        if (pointers.size === 2) {
+          e.preventDefault();
+          const [a, b] = [...pointers.values()];
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+          if (pinchDist > 0) {
+            const mid = toViewBox((a.x + b.x) / 2, (a.y + b.y) / 2);
+            zoomAt(d / pinchDist, mid.x, mid.y);
+          }
+          pinchDist = d;
+          return;
+        }
+
+        if (e.pointerType === 'touch') return; // one finger scrolls the page
+        if (!(e.buttons & 1)) return;
+        if (Math.abs(dx) + Math.abs(dy) > 2) dragged = true;
+        view.tx += dx * sx;
+        view.ty += dy * sy;
+        applyView();
+      },
+      { passive: false }
+    );
+
+    const endPointer = (e: PointerEvent) => {
+      pointers.delete(e.pointerId);
+      if (pointers.size < 2) pinchDist = 0;
+      stage.classList.remove('is-grabbing');
+    };
+    stage.addEventListener('pointerup', endPointer);
+    stage.addEventListener('pointercancel', endPointer);
+
+    // A drag that ends over a node should not also open that node.
+    stage.addEventListener(
+      'click',
+      (e) => {
+        if ((e.target as Element).closest?.('.lm__zoom')) return;
+        if (dragged) {
+          e.preventDefault();
+          e.stopPropagation();
+          dragged = false;
+        }
+      },
+      true
+    );
+
+    applyView();
+
+    /* ----------------------------------------------------------- wire up */
+
+    paint();
+    let timer = window.setInterval(paint, 60000);
+
+    scrub.addEventListener('input', () => {
+      scrubbed = Number(scrub.value);
+      nowBtn.hidden = false;
+      paint();
+    });
+
+    nowBtn.addEventListener('click', () => {
+      scrubbed = null;
+      nowBtn.hidden = true;
+      paint();
+    });
+
+    document.documentElement.addEventListener('registerchange', () => paint());
+
+    document.addEventListener('visibilitychange', () => {
+      clearInterval(timer);
+      if (!document.hidden) {
+        paint();
+        timer = window.setInterval(paint, 60000);
+      }
+    });
+
+    // Most of the collection is in Europe; don't open on the empty Pacific.
+    const wrap = root.querySelector<HTMLElement>('.lm__scrollwrap')!;
+    const hint = root.querySelector<HTMLElement>('[data-hint]')!;
+    requestAnimationFrame(() => {
+      const over = wrap.scrollWidth - wrap.clientWidth;
+      if (over > 2) wrap.scrollLeft = over * 0.58;
+      else hint.hidden = true;
+    });
+  }
+</script>
+
+<style>
+  .lm {
+    padding-block: var(--sp-9) var(--sp-8);
+  }
+
+  .lm__head {
+    display: grid;
+    gap: var(--sp-5);
+    margin-block-end: var(--sp-6);
+  }
+
+  .lm__title {
+    font-size: var(--step-4);
+    letter-spacing: -0.035em;
+  }
+
+  .lm__lede {
+    color: var(--ink-2);
+  }
+
+  .lm__readout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-3);
+    align-items: baseline;
+    padding-block: var(--sp-3);
+    border-block-start: 1px solid var(--rule-soft);
+    color: var(--ink-2);
+  }
+
+  .lm__sep {
+    color: var(--ink-3);
+  }
+
+  /* Mobile-first: the plate keeps a generous intrinsic width and scrolls in
+     its own container. Twenty-two nodes squeezed into 360px would stack
+     Cremona, Val Gardena and Edolo on top of one another. */
+  .lm__scrollwrap {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule) transparent;
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+  }
+
+  .lm__stage {
+    position: relative;
+    inline-size: 100%;
+    min-inline-size: 48rem;
+    cursor: grab;
+    /* Let the page scroll vertically over the map; two fingers pan and zoom. */
+    touch-action: pan-y;
+  }
+
+  .lm__stage.is-grabbing {
+    cursor: grabbing;
+  }
+
+  .lm__svg {
+    inline-size: 100%;
+    block-size: auto;
+    display: block;
+  }
+
+  /* The base plate sets the height; daylight and figure stack on top of it. */
+  .lm__svg--fig {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .lm__ocean {
+    fill: var(--map-ocean, #0b1016);
+  }
+
+  .lm__land {
+    fill: var(--map-land, #1b242e);
+  }
+
+  .lm__grat {
+    fill: none;
+    stroke: var(--ink);
+    stroke-opacity: 0.075;
+    stroke-width: 0.5;
+  }
+
+  .lm__day {
+    fill: #dfeaff;
+    fill-opacity: var(--map-lit-op, 0.1);
+    filter: url(#lm-soft);
+    pointer-events: none;
+  }
+
+  .lm__night {
+    fill: #071018;
+    fill-opacity: var(--map-night-op, 0);
+    filter: url(#lm-soft);
+    pointer-events: none;
+  }
+
+  /* The actual edge of night — the one crisp line on the whole plate. */
+  .lm__term {
+    fill: none;
+    stroke: var(--map-term, #ffd9a0);
+    stroke-opacity: 0.55;
+    stroke-width: 0.9;
+  }
+
+  .lm__edge {
+    fill: none;
+    stroke: var(--rule);
+    stroke-width: 1;
+  }
+
+  .lm__sat {
+    opacity: 0.45;
+  }
+
+  /* Marks counter-scale against the zoom. Circles sit at 0,0 inside a
+     translated group, and SVG transform-origin is 0 0, so this scales each
+     mark about its own centre. */
+  .lm__mark {
+    transform: scale(var(--inv, 1));
+    transition: transform 0.25s var(--ease);
+  }
+
+  .lm__node {
+    cursor: pointer;
+  }
+
+  .lm__node a {
+    outline: none;
+  }
+
+  .lm__glow {
+    opacity: var(--glow, 0);
+    transition: opacity 1.4s var(--ease);
+    pointer-events: none;
+  }
+
+  .lm__dot {
+    transition: r 0.3s var(--ease);
+  }
+
+  .lm__hit {
+    fill: transparent;
+  }
+
+  .lm__node:hover .lm__dot,
+  .lm__node:focus-within .lm__dot {
+    r: 5.5;
+  }
+
+  .lm__node:focus-within .lm__hit {
+    stroke: var(--accent);
+    stroke-width: 1.2;
+    stroke-opacity: 0.95;
+  }
+
+  .lm__studio circle {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.2;
+    stroke-opacity: 0.85;
+  }
+
+  .lm__studio line {
+    stroke: var(--ink);
+    stroke-width: 1.2;
+    stroke-opacity: 0.5;
+  }
+
+  .lm__studiolabel {
+    fill: var(--ink);
+    fill-opacity: 0.8;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    paint-order: stroke;
+    stroke: var(--ground);
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+
+  /* -------------------------------------------------------------- card */
+
+  .lm__card {
+    position: absolute;
+    z-index: 5;
+    inline-size: 17rem;
+    padding: var(--sp-4);
+    background: color-mix(in oklab, var(--ground-2) 95%, transparent);
+    border: 1px solid var(--rule);
+    border-block-start: 2px solid var(--accent);
+    border-radius: 2px;
+    box-shadow: 0 0.75rem 1.5rem -0.75rem rgb(0 0 0 / 0.55);
+    backdrop-filter: blur(8px);
+    transform: translate(1rem, -50%);
+    pointer-events: none;
+  }
+
+  .lm__card.is-right {
+    transform: translate(calc(-100% - 1rem), -50%);
+  }
+
+  .lm__card.is-low {
+    transform: translate(1rem, -88%);
+  }
+
+  .lm__card.is-right.is-low {
+    transform: translate(calc(-100% - 1rem), -88%);
+  }
+
+  .lm__cardname {
+    font-size: var(--step-1);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .lm__cardname span {
+    color: var(--ink-3);
+    font-size: 0.8em;
+    margin-inline-start: 0.35em;
+  }
+
+  .lm__cardwhat {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    margin-block: var(--sp-1) var(--sp-3);
+    line-height: 1.45;
+  }
+
+  .lm__cardmeta {
+    display: grid;
+    gap: var(--sp-1);
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    line-height: 1.5;
+  }
+
+  .lm__cardmeta > div {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: var(--sp-3);
+  }
+
+  .lm__cardmeta dt {
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lm__cardmeta dd {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  /* ---------------------------------------------------------- controls */
+
+  .lm__hint {
+    margin-block-start: var(--sp-3);
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .lm__hint kbd {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+
+  /* ------------------------------------------------ cooperative overlay */
+
+  .lm__coop {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: grid;
+    place-items: center;
+    background: color-mix(in oklab, var(--ground) 62%, transparent);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    /* Never transition visibility — it is a discrete property and browsers
+       disagree about when it flips. The overlay is pointer-events:none, so
+       opacity alone is enough and always honest. */
+    pointer-events: none;
+    transition: opacity 0.22s var(--ease);
+  }
+
+  .lm__coop.is-on {
+    opacity: 1;
+  }
+
+  .lm__coop span {
+    font-family: var(--mono);
+    font-size: var(--step-0);
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    padding: var(--sp-3) var(--sp-5);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: color-mix(in oklab, var(--ground-2) 92%, transparent);
+  }
+
+  /* -------------------------------------------------------------- zoom */
+
+  .lm__zoom {
+    position: absolute;
+    inset-block-start: var(--sp-3);
+    inset-inline-end: var(--sp-3);
+    z-index: 4;
+    display: grid;
+    gap: 1px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .lm__zoom button {
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    display: grid;
+    place-items: center;
+    background: color-mix(in oklab, var(--ground) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border: 0;
+    color: var(--ink-2);
+    font-family: var(--mono);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .lm__zoom button:hover {
+    background: var(--ground-3);
+    color: var(--accent);
+  }
+
+  .lm__zoom [data-zreset] {
+    font-size: 0.8rem;
+  }
+
+  .lm__controls {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    margin-block-start: var(--sp-5);
+  }
+
+  .lm__slider {
+    flex: 1;
+    display: block;
+  }
+
+  .lm__slider input {
+    inline-size: 100%;
+    block-size: 2.75rem;
+    appearance: none;
+    background: transparent;
+    cursor: grab;
+  }
+
+  .lm__slider input:active {
+    cursor: grabbing;
+  }
+
+  .lm__slider input::-webkit-slider-runnable-track {
+    block-size: 2px;
+    background: linear-gradient(90deg, var(--rule), var(--ink-3), var(--rule));
+  }
+
+  .lm__slider input::-moz-range-track {
+    block-size: 2px;
+    background: linear-gradient(90deg, var(--rule), var(--ink-3), var(--rule));
+  }
+
+  .lm__slider input::-webkit-slider-thumb {
+    appearance: none;
+    inline-size: 1.05rem;
+    block-size: 1.05rem;
+    margin-block-start: -0.5rem;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--ground);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .lm__slider input::-moz-range-thumb {
+    inline-size: 1.05rem;
+    block-size: 1.05rem;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--ground);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+
+  .lm__now {
+    min-block-size: 2.75rem;
+    padding-inline: var(--sp-4);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    color: var(--ink-2);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .lm__now:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .lm__note {
+    margin-block-start: var(--sp-3);
+    color: var(--ink-3);
+    max-inline-size: var(--measure);
+  }
+
+  @media (min-width: 48rem) {
+    .lm__head {
+      grid-template-columns: 1.15fr 1fr;
+      gap: var(--sp-7);
+      align-items: end;
+    }
+
+    .lm__title {
+      font-size: var(--step-5);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .lm__stage {
+      min-inline-size: 0;
+    }
+
+    .lm__scrollwrap {
+      overflow: visible;
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+
+  }
+</style>

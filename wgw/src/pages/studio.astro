@@ -1,0 +1,345 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import meta from '../data/foundry-meta.json';
+
+const sites = (await getCollection('sites')).map((e) => e.data);
+const countries = new Set(sites.map((s) => s.place.country)).size;
+const { studio } = meta;
+
+const title = 'Studio — Winter Garden Web | High-end web design near Orlando, Florida';
+const description =
+  'Winter Garden Web is a one-person web design studio near Orlando, Florida, building bespoke, art-directed websites for makers, ateliers, hotels and specialist brands. Run by Vincent Ang.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  name: title,
+  description,
+  url: `${Astro.site}studio`,
+  mainEntity: {
+    '@type': 'Person',
+    name: studio.person,
+    jobTitle: 'Web designer and developer',
+    worksFor: { '@type': 'Organization', name: studio.name },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Winter Garden',
+      addressRegion: 'FL',
+      addressCountry: 'US',
+    },
+    email: `mailto:${studio.email}`,
+  },
+};
+
+const beliefs = [
+  {
+    t: 'The subject decides everything',
+    d: 'Palette, type, photography and tone are argued from what the thing actually is — the hour it lives in, the material it is made of, the hands that make it. Not from a moodboard of other websites.',
+  },
+  {
+    t: 'One interaction has to be unrepeatable',
+    d: 'Every site here earns a single move that could belong to nothing else it sells: a surfboard that redraws to your height and wave, a riad courtyard that tracks the sun, a frame whose geometry is argued from one road.',
+  },
+  {
+    t: 'Nothing is a template',
+    d: 'No page-builder, no theme, no shared design system across projects. A shared system would pull every site toward the same look, which is the exact failure the work exists to avoid.',
+  },
+  {
+    t: 'It has to be fast and it has to be reachable',
+    d: 'Hand-written HTML and CSS, real semantics, keyboard paths, honest contrast, and behaviour that survives a bad connection. Beauty that only works on a fast laptop is a demo, not a website.',
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <article class="st">
+    <div class="page-wide">
+      <div class="marker">
+        <span class="marker__n">—</span>
+        <span class="marker__t">Studio</span>
+      </div>
+
+      <header class="st__head">
+        <h1 class="st__title">
+          A one-person studio<br />in Winter Garden, Florida.
+        </h1>
+        <p class="st__lede">
+          Winter Garden Web is run by {studio.person}. The Glass House is its
+          standing body of work — complete sites across {countries} countries,
+          each one invented, art-directed, written and built end to end.
+        </p>
+      </header>
+
+      <div class="st__grid">
+        <div class="st__main">
+          <h2 class="st__h2">Why a glass house</h2>
+          <p>
+            A winter garden is a glass house: a built climate where something
+            delicate can grow, protected, away from the weather. The phrase came
+            from the town this studio works from, a few miles west of Orlando —
+            but the idea is the method, not the address.
+          </p>
+          <p>
+            Every project here is a glass house built around one craft. A
+            controlled light, a palette, a vocabulary, a photographic language —
+            an interior warm and specific enough that a thing which would look
+            ordinary in the open air can finally be seen properly. The frame
+            itself is glass and steel with no colour of its own; everything it
+            holds keeps its own.
+          </p>
+
+          <h2 class="st__h2">How these are made</h2>
+          <p>
+            I have been designing and building websites for twenty years, and
+            these are made with AI. I am not quiet about that — but the thing
+            that changed is not the judgment. It is the distance between having
+            the judgment and seeing it built.
+          </p>
+          <p>
+            Every world here was argued for. Every palette was chosen against
+            its subject, every photograph directed, every signature interaction
+            designed before a line of it existed. Nothing decided what a
+            wrapping house in Osaka should feel like except me. What changed is
+            that I can find out in a day instead of a quarter — so a collection
+            that would have taken a decade exists instead as a body of work you
+            can open and use.
+          </p>
+          <p>
+            That is worth saying plainly, because it is the same bargain every
+            craft in this collection has already made with its own tools. The
+            smith in Sakai uses a power hammer. The frame builder in Val
+            Camonica mills his own lugs. None of them apologise for it, and
+            none of them let the tool decide what the thing should be.
+          </p>
+
+          <h2 class="st__h2">What the studio takes on</h2>
+          <p>
+            Makers and ateliers. Boutique hotels and places to stay. Specialist
+            brands whose product is genuinely good and whose website is
+            currently letting it down. The work suits businesses where the
+            buyer is discriminating, the product photographs well, and the sale
+            depends on trust rather than volume.
+          </p>
+          <p>
+            A small number of projects a year, run directly with the person
+            whose name is on the door — no account layer, no handoff to a
+            junior, no offshore build team.
+          </p>
+
+          <h2 class="st__h2">How it works</h2>
+          <ol class="st__beliefs">
+            {beliefs.map((b) => (
+              <li>
+                <h3 class="st__bt">{b.t}</h3>
+                <p class="st__bd">{b.d}</p>
+              </li>
+            ))}
+          </ol>
+
+          <h2 class="st__h2">Where</h2>
+          <p>
+            Based in Winter Garden, Florida, and glad to work with anyone in the
+            Orlando area in person — Windermere, Ocoee, Clermont, Dr. Phillips,
+            Downtown Orlando. The rest of the collection was made for places a
+            long way further out, and remote work is the norm rather than the
+            exception.
+          </p>
+
+          <p class="st__cta">
+            <a class="btn" href="/#inquire">Start a conversation</a>
+            <a class="btn btn--ghost" href="/#map">See the map</a>
+          </p>
+        </div>
+
+        <div class="rail" aria-hidden="true"><span class="rail__n">Winter Garden · Florida</span></div>
+
+        <aside class="st__aside">
+          <dl class="st__facts">
+            <div><dt class="meta">Studio</dt><dd>{studio.name}</dd></div>
+            <div><dt class="meta">Run by</dt><dd>{studio.person}</dd></div>
+            <div><dt class="meta">Where</dt><dd>{studio.place.label}<br />{studio.place.region}</dd></div>
+            <div><dt class="meta">Write</dt><dd><a class="link" href={`mailto:${studio.email}`}>{studio.email}</a></dd></div>
+            <div><dt class="meta">Collection</dt><dd>{sites.length} sites · {countries} countries</dd></div>
+            <div><dt class="meta">Catalog</dt><dd><a class="link" href="/api/collection.json">JSON</a></dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </article>
+</Base>
+
+<style>
+  /* The rail. Between the text column and the aside there was a ~500px void
+     on every detail page; a glass house is a structure of bars, so the gap
+     gets a mullion — a hairline with a tick and the section's own numeral. */
+  .rail {
+    display: none;
+  }
+
+  @media (min-width: 62rem) {
+    .rail {
+      display: block;
+      position: relative;
+      align-self: stretch;
+      inline-size: 1px;
+      background: var(--rule-soft);
+      justify-self: center;
+    }
+
+    .rail::before,
+    .rail::after {
+      content: '';
+      position: absolute;
+      inset-inline-start: -3px;
+      inline-size: 7px;
+      block-size: 1px;
+      background: var(--rule);
+    }
+
+    .rail::before { inset-block-start: 0; }
+    .rail::after { inset-block-end: 0; }
+
+    .rail__n {
+      position: sticky;
+      inset-block-start: 7rem;
+      display: block;
+      inline-size: max-content;
+      transform: translateX(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      background: var(--ground);
+      padding-block: var(--sp-3);
+      margin-inline-start: 0.5px;
+    }
+  }
+
+  .st {
+    padding-block-start: var(--sp-6);
+  }
+
+  .st__head {
+    margin-block-end: var(--sp-8);
+  }
+
+  .st__title {
+    font-size: var(--step-5);
+    letter-spacing: -0.04em;
+    margin-block-end: var(--sp-5);
+  }
+
+  .st__lede {
+    font-size: var(--step-1);
+    color: var(--ink-2);
+    max-inline-size: 40rem;
+    line-height: 1.45;
+  }
+
+  .st__grid {
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  .st__h2 {
+    font-size: var(--step-1);
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    margin-block: var(--sp-7) var(--sp-3);
+  }
+
+  .st__h2:first-child {
+    margin-block-start: 0;
+  }
+
+  .st__main p {
+    color: var(--ink-2);
+    line-height: 1.65;
+    max-inline-size: var(--measure);
+  }
+
+  .st__main p + p {
+    margin-block-start: var(--sp-4);
+  }
+
+  .st__beliefs {
+    list-style: none;
+    padding: 0;
+    counter-reset: b;
+    display: grid;
+    gap: var(--sp-5);
+    margin-block-start: var(--sp-5);
+  }
+
+  .st__beliefs li {
+    counter-increment: b;
+    padding-block-start: var(--sp-4);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .st__bt {
+    font-size: var(--step-0);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-block-end: var(--sp-2);
+  }
+
+  .st__bt::before {
+    content: counter(b, decimal-leading-zero) ' ';
+    font-family: var(--mono);
+    font-size: 0.75em;
+    color: var(--accent);
+    margin-inline-end: 0.5em;
+  }
+
+  .st__bd {
+    color: var(--ink-3);
+    font-size: var(--step--1);
+    line-height: 1.6;
+  }
+
+  .st__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-7);
+  }
+
+  .st__facts {
+    display: grid;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: var(--ground-2);
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+  }
+
+  .st__facts dt {
+    margin-block-end: var(--sp-1);
+  }
+
+  .st__facts dd {
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  @media (min-width: 62rem) {
+    .st__title {
+      font-size: var(--step-6);
+    }
+
+    .st__grid {
+      grid-template-columns: minmax(0, 36rem) 1fr 19rem;
+      gap: var(--sp-9);
+      align-items: start;
+    }
+
+    .st__aside {
+      position: sticky;
+      inset-block-start: 6rem;
+    }
+  }
+</style>

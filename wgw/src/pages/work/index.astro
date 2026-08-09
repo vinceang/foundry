@@ -1,0 +1,1155 @@
+---
+/**
+ * The collection, as a flight.
+ *
+ * The map is the stage. The cards are a filmstrip curving along the bottom,
+ * and whichever one sits at the centre of the arc is the one the camera has
+ * flown to — so scrolling the strip is travelling, not browsing. Between two
+ * sites the real great circle is drawn, because the distance between Osaka
+ * and Naples is part of what the collection is.
+ *
+ * The strip loops, and that is not a trick: the axis is the day. Nocturne,
+ * Aubade, Vesper, Pastorale, Vigil, round into Nocturne again. A cycle is the
+ * honest shape, and the seam falls where there is nothing to notice.
+ *
+ * Order comes from the registry via canvas-layout.mjs; positions are a pure
+ * function of scroll offset. Nothing needs replacing as the collection grows.
+ */
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import map from '../../data/map.json';
+import meta from '../../data/foundry-meta.json';
+import registers from '../../data/registers.json';
+import { makeProjector } from '../../lib/geo.mjs';
+import { cycleOrder } from '../../lib/canvas-layout.mjs';
+
+const sites = (await getCollection('sites')).map((e) => e.data);
+const { series } = meta;
+const registerName = Object.fromEntries(registers.map((r) => [r.id, r.name]));
+void series;
+
+const { order, runs } = cycleOrder(sites);
+const project = makeProjector(map.width, map.height, 0);
+const r2 = (n: number) => Math.round(n * 100) / 100;
+
+const cards = order.map((s, i) => {
+  const [mx, my] = project(s.place.lon, s.place.lat);
+  return {
+    i,
+    slug: s.slug,
+    name: s.name,
+    native: s.nativeName ?? '',
+    series: s.series,
+    what: s.what,
+    place: s.place.label,
+    country: s.place.country,
+    lat: s.place.lat,
+    lon: s.place.lon,
+    accent: s.palette.accent,
+    aspect: s.aspect,
+    blur: s.blur,
+    mx: r2(mx),
+    my: r2(my),
+  };
+});
+
+const payload = cards.map((c) => ({
+  i: c.i, slug: c.slug, name: c.name, native: c.native,
+  register: registerName[c.series] ?? c.series,
+  what: c.what, place: c.place, country: c.country,
+  lat: c.lat, lon: c.lon, accent: c.accent, mx: c.mx, my: c.my,
+}));
+
+const title = 'The collection — every site in The Glass House | Winter Garden Web';
+const description =
+  'The whole collection, arranged around the cycle of light each site lives in and mapped to where each one is set. Bespoke, art-directed websites for makers, ateliers, hotels and specialist brands.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'The collection',
+  description,
+  url: `${Astro.site}work`,
+  hasPart: sites.map((s) => ({
+    '@type': 'CreativeWork',
+    name: s.name,
+    about: s.what,
+    url: `${Astro.site}work/${s.slug}`,
+    dateCreated: s.shipped,
+  })),
+};
+---
+
+<Base title={title} description={description} schema={schema}>
+  <div class="fl" data-flight data-payload={JSON.stringify(payload)} data-runs={JSON.stringify(runs)}>
+    <div class="fl__world" aria-hidden="true">
+      <svg
+        class="fl__svg"
+        viewBox={`0 0 ${map.width} ${map.height}`}
+        preserveAspectRatio="xMidYMid slice"
+        data-world
+      >
+        <defs>
+          <filter id="fl-soft" x="-12%" y="-12%" width="124%" height="124%">
+            <feGaussianBlur stdDeviation="7" />
+          </filter>
+          <clipPath id="fl-sphere"><path d={map.sphere} /></clipPath>
+        </defs>
+
+        <g data-cam>
+          <path class="fl__ocean" d={map.sphere} />
+          <path class="fl__land" d={map.land} />
+          <path class="fl__grat" d={map.graticule} />
+          <g clip-path="url(#fl-sphere)">
+            <path class="fl__day" data-day d="" />
+            <path class="fl__night" data-night d="" fill-rule="evenodd" />
+          </g>
+          <path class="fl__term" data-term d="" />
+
+          <!-- The route flown between the last site and this one. -->
+          <path class="fl__route" data-route d="" />
+
+          {cards.map((c) => (
+            <circle class="fl__pin" data-pin={c.slug} cx={c.mx} cy={c.my} r="2.6" fill={c.accent} />
+          ))}
+
+          <g class="fl__hud" data-hud hidden>
+            <!-- Counter-scaled so the reticle is a fixed size on screen. In
+                 map units it would balloon: `slice` scales by height, which on
+                 a tall phone is nearly 2x before the camera zoom is applied. -->
+            <g data-hudscale>
+              <circle class="fl__hudring" r="34" />
+              <circle class="fl__huddot" r="2" />
+              <path class="fl__hudbr" d="M-42-24 h-12 v12 M42-24 h12 v12 M-42 24 h-12 v-12 M42 24 h12 v-12" />
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="fl__ui">
+      <header class="fl__head">
+        <h1 class="fl__title">The collection</h1>
+        <p class="fl__lede meta">Scroll to travel the day · {sites.length} sites · click to open</p>
+      </header>
+
+    </div>
+
+    <!-- The readout rides with the viewfinder: it is a label on the
+         instrument, not a caption in the corner. -->
+    <div class="fl__readout" data-readout aria-live="polite">
+      <p class="fl__reg meta" data-rd-reg>—</p>
+      <p class="fl__name" data-rd-name>—</p>
+      <p class="fl__coord meta" data-rd-coord>—</p>
+    </div>
+
+    <div class="fl__strip" data-strip>
+      <ul class="fl__arc" data-arc>
+        {cards.map((c) => (
+          <li class="fl__slot" data-slot={c.i} style={`--accent:${c.accent}`}>
+            <a class="fl__card" href={`/work/${c.slug}`} data-slug={c.slug} data-i={c.i}>
+              <span class="fl__frame" style={`background-image:url(${c.blur})`}>
+                <img
+                  src={`/collection/${c.slug}-800.webp`}
+                  width="800"
+                  height={Math.round(800 / c.aspect)}
+                  alt={`${c.name} — ${c.what}`}
+                  loading={c.i < 6 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+              </span>
+              <span class="fl__meta">
+                <span class="fl__cname">{c.name}</span>
+                <span class="fl__cwhat">{c.what}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <p class="fl__hint meta" data-hint>Swipe or drag<span class="fl__keys"> · or use <kbd>←</kbd> <kbd>→</kbd></span></p>
+    </div>
+
+    <!-- Progressive disclosure. The drawer pulls in the real case study, so
+         there is one canonical description per site rather than two. -->
+    <aside class="fl__drawer" data-drawer hidden aria-label="Case study" tabindex="-1">
+      <button type="button" class="fl__close" data-close aria-label="Close">✕</button>
+      <div class="fl__drawerin" data-drawerin></div>
+    </aside>
+    <div class="fl__scrim" data-scrim hidden></div>
+  </div>
+</Base>
+
+<style is:global>
+  /* The drawer injects the real case study, whose own styles are scoped to
+     its component and therefore do not reach it here. These are scoped by
+     the drawer's own class instead of duplicating the page. */
+  .fl__drawerin .cs__series { color: var(--accent); }
+
+  .fl__drawerin .cs__title {
+    font-family: var(--display);
+    font-size: var(--step-5);
+    letter-spacing: var(--display-tracking, -0.04em);
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    flex-wrap: wrap;
+    margin-block: var(--sp-2) var(--sp-3);
+  }
+
+  .fl__drawerin .cs__native { font-size: 0.5em; color: var(--ink-3); }
+  .fl__drawerin .cs__what { color: var(--ink-2); font-size: var(--step-1); }
+
+  .fl__drawerin .cs__tagline {
+    font-size: var(--step-2);
+    line-height: 1.32;
+    border-inline-start: 2px solid var(--accent);
+    padding-inline-start: var(--sp-4);
+    margin-block: var(--sp-4) var(--sp-6);
+  }
+
+  .fl__drawerin .cs__img {
+    inline-size: 100%;
+    border-radius: 2px;
+    border: 1px solid var(--rule-soft);
+    margin-block-end: var(--sp-6);
+  }
+
+  .fl__drawerin .cs__h2 {
+    font-size: var(--step-1);
+    color: var(--accent);
+    margin-block: var(--sp-6) var(--sp-3);
+  }
+
+  .fl__drawerin .cs__body p {
+    color: var(--ink-2);
+    line-height: 1.65;
+    max-inline-size: var(--measure);
+  }
+
+  .fl__drawerin .cs__body p + p { margin-block-start: var(--sp-4); }
+  .fl__drawerin .cs__body strong { color: var(--ink); font-weight: 500; }
+  .fl__drawerin .cs__cta { margin-block-start: var(--sp-5); }
+
+  .fl__drawerin .cs__palette {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-block: var(--sp-6) var(--sp-5);
+  }
+
+  .fl__drawerin .cs__sw {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    block-size: 4rem;
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+    padding-block-end: var(--sp-2);
+  }
+
+  .fl__drawerin .cs__sw .meta {
+    font-size: 0.5625rem;
+    color: rgb(255 255 255 / 0.62);
+    mix-blend-mode: difference;
+  }
+
+  .fl__drawerin .cs__facts {
+    display: grid;
+    gap: var(--sp-4);
+    padding-block-start: var(--sp-5);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .fl__drawerin .cs__fact dd { margin: 0; color: var(--ink); line-height: 1.4; }
+  .fl__drawerin .rail { display: none; }
+
+  @media (min-width: 62rem) {
+    .fl__drawerin .cs__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 15rem;
+      gap: var(--sp-7);
+      align-items: start;
+    }
+  }
+
+  /* The page is the instrument; nothing scrolls behind it. */
+  html:has(.fl),
+  html:has(.fl) body {
+    overflow: hidden;
+    height: 100%;
+  }
+
+  html:has(.fl) .site-foot {
+    display: none;
+  }
+</style>
+
+<style>
+  .fl {
+    position: relative;
+    block-size: calc(100svb - 4.5rem);
+    /* `clip`, not `hidden`. `hidden` makes this a scroll container, and the
+       arc is far wider than the viewport — so focusing anything inside made
+       the browser scroll it into view and drag every absolutely positioned
+       child sideways with it. That is what pushed the drawer off screen. */
+    overflow: clip;
+    background: var(--ground);
+  }
+
+  /* ------------------------------------------------------------- world */
+
+  .fl__world { position: absolute; inset: 0; }
+  .fl__svg { inline-size: 100%; block-size: 100%; }
+
+  .fl__ocean { fill: var(--map-ocean, #0b1016); }
+  .fl__land { fill: var(--map-land, #1b242e); }
+
+  .fl__grat {
+    fill: none;
+    stroke: var(--ink);
+    stroke-opacity: 0.05;
+    stroke-width: 0.5;
+  }
+
+  .fl__day {
+    fill: #dfeaff;
+    fill-opacity: var(--map-lit-op, 0.1);
+    filter: url(#fl-soft);
+  }
+
+  .fl__night {
+    fill: #071018;
+    fill-opacity: var(--map-night-op, 0);
+    filter: url(#fl-soft);
+  }
+
+  .fl__term {
+    fill: none;
+    stroke: var(--map-term, #ffd9a0);
+    stroke-opacity: 0.42;
+    stroke-width: 0.9;
+  }
+
+  .fl__pin { opacity: 0.3; transition: opacity 0.4s var(--ease); }
+  .fl__pin.is-live { opacity: 1; }
+
+  .fl__route {
+    fill: none;
+    stroke: var(--accent);
+    stroke-opacity: 0.65;
+    stroke-width: 0.7;
+    stroke-dasharray: 3 5;
+  }
+
+  .fl__hud { color: var(--hud, var(--accent)); }
+  .fl__hud[hidden] { display: none; }
+
+  .fl__hudring {
+    fill: none;
+    stroke: currentColor;
+    stroke-opacity: 0.45;
+    stroke-width: 0.6;
+    stroke-dasharray: 2 7;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fl-spin 16s linear infinite;
+  }
+
+  @keyframes fl-spin { to { transform: rotate(360deg); } }
+
+
+  .fl__huddot { fill: currentColor; }
+  .fl__hudbr { fill: none; stroke: currentColor; stroke-width: 0.8; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fl__hudring { animation: none; }
+  }
+
+  /* ---------------------------------------------------------------- ui */
+
+  .fl__ui {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--sp-5);
+    padding: var(--sp-5) var(--gutter);
+    pointer-events: none;
+  }
+
+  .fl__title {
+    font-size: var(--step-3);
+    letter-spacing: var(--display-tracking, -0.035em);
+  }
+
+  .fl__lede { margin-block-start: var(--sp-2); }
+
+  .fl__readout {
+    position: absolute;
+    z-index: 2;
+    max-inline-size: 17rem;
+    pointer-events: none;
+    opacity: 0;
+    /* Glides in from behind the reticle, so it reads as being drawn out of
+       it rather than arriving separately. */
+    transform: translate(-1.25rem, -50%);
+    transition:
+      opacity 0.8s var(--ease),
+      transform 1.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fl__readout.is-on {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fl__readout { transition: opacity 0.2s linear; transform: translate(0, -50%); }
+  }
+
+  .fl__reg { color: var(--accent); }
+
+  .fl__name {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    font-weight: var(--display-weight, 500);
+    letter-spacing: var(--display-tracking, -0.03em);
+    line-height: 1.1;
+    margin-block: var(--sp-1);
+  }
+
+  /* ------------------------------------------------------------- strip */
+
+  .fl__strip {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+    z-index: 3;
+    block-size: 27rem;
+    perspective: 1800px;
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .fl__strip.is-grabbing { cursor: grabbing; }
+
+  .fl__arc {
+    position: absolute;
+    inset-block-end: 3rem;
+    inset-inline-start: 50%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    transform-style: preserve-3d;
+  }
+
+  .fl__slot {
+    position: absolute;
+    inset-block-end: 0;
+    inline-size: 19rem;
+    margin-inline-start: -9.5rem;
+    transform-origin: 50% 120%;
+    will-change: transform, opacity;
+  }
+
+  .fl__card {
+    display: grid;
+    gap: var(--sp-2);
+    text-decoration: none;
+    color: inherit;
+    padding: var(--sp-2);
+    background: color-mix(in oklab, var(--ground-2) 88%, transparent);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    backdrop-filter: blur(6px);
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .fl__slot.is-live .fl__card {
+    border-color: var(--accent);
+    box-shadow: 0 1.5rem 3rem -1.5rem rgb(0 0 0 / 0.85);
+  }
+
+  .fl__frame {
+    display: block;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 2px;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .fl__frame img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    filter: saturate(0.78);
+    transition: filter 0.4s var(--ease);
+  }
+
+  .fl__slot.is-live .fl__frame img { filter: saturate(1.05); }
+
+  .fl__meta { display: grid; gap: 1px; padding-inline: var(--sp-1); }
+
+  .fl__cname {
+    font-family: var(--display);
+    font-size: var(--step-0);
+    font-weight: var(--display-weight, 500);
+    letter-spacing: var(--display-tracking, -0.02em);
+  }
+
+  .fl__cwhat {
+    font-size: 0.6875rem;
+    color: var(--ink-3);
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .fl__hint {
+    position: absolute;
+    inset-block-end: var(--sp-3);
+    inset-inline: 0;
+    text-align: center;
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  .fl__hint kbd {
+    font-family: var(--mono);
+    padding: 0.05em 0.3em;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+
+  /* ------------------------------------------------------------ drawer */
+
+  .fl__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: color-mix(in oklab, var(--ground) 55%, transparent);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .fl__scrim.is-on { opacity: 1; }
+  .fl__scrim[hidden] { display: none; }
+
+  .fl__drawer {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-end: 0;
+    z-index: 5;
+    inline-size: min(46rem, 100%);
+    background: var(--ground);
+    border-inline-start: 1px solid var(--rule);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    transform: translateX(100%);
+    transition: transform 0.5s var(--ease);
+  }
+
+  .fl__drawer.is-on { transform: none; }
+  .fl__drawer[hidden] { display: none; }
+
+  .fl__close {
+    position: absolute;
+    inset-block-start: var(--sp-4);
+    inset-inline-end: var(--sp-4);
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    background: var(--ground-2);
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    color: var(--ink-2);
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .fl__close:hover { border-color: var(--accent); color: var(--accent); }
+
+  .fl__drawerin { padding: var(--sp-8) var(--sp-6) var(--sp-9); }
+
+  @media (max-width: 56rem) {
+    .fl__strip { block-size: 21rem; }
+    .fl__slot { inline-size: 13.5rem; margin-inline-start: -6.75rem; }
+  }
+
+  @media (max-width: 40rem) {
+    .fl__title { font-size: var(--step-2); }
+    .fl__lede { display: none; }
+
+    .fl__strip { block-size: 19rem; }
+    .fl__slot { inline-size: 12rem; margin-inline-start: -6rem; }
+
+    /* Centred beneath the reticle, and quieter — it sits over the map now. */
+    .fl__readout {
+      max-inline-size: min(20rem, calc(100vw - 2.5rem));
+      text-align: center;
+      transform: translate(-50%, 0.5rem);
+    }
+
+    .fl__readout.is-on { transform: translate(-50%, 0); }
+
+    .fl__reg { font-size: 0.625rem; }
+    .fl__name { font-size: var(--step-0); margin-block: 2px; }
+    .fl__coord { font-size: 0.625rem; line-height: 1.45; }
+
+    .fl__keys { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @media (max-width: 40rem) {
+      .fl__readout { transform: translate(-50%, 0); }
+    }
+  }
+</style>
+
+<script>
+  import {
+    subsolarPoint, solarAltitude, terminatorLatitude, makeProjector, greatCircle,
+  } from '../../lib/geo.mjs';
+  import mapData from '../../data/map.json';
+
+  type C = {
+    i: number; slug: string; name: string; native: string; register: string;
+    what: string; place: string; country: string; lat: number; lon: number;
+    accent: string; mx: number; my: number;
+  };
+
+  const root = document.querySelector<HTMLElement>('[data-flight]');
+
+  if (root) {
+    const cards: C[] = JSON.parse(root.dataset.payload || '[]');
+    const N = cards.length;
+    if (N) {
+      const W = mapData.width;
+      const H = mapData.height;
+      const project = makeProjector(W, H, 0);
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const strip = root.querySelector<HTMLElement>('[data-strip]')!;
+      const slots = [...root.querySelectorAll<HTMLElement>('[data-slot]')];
+      const cam = root.querySelector<SVGGElement>('[data-cam]')!;
+      const hud = root.querySelector<SVGGElement>('[data-hud]')!;
+      const routeP = root.querySelector<SVGPathElement>('[data-route]')!;
+      const dayP = root.querySelector<SVGPathElement>('[data-day]')!;
+      const nightP = root.querySelector<SVGPathElement>('[data-night]')!;
+      const termP = root.querySelector<SVGPathElement>('[data-term]')!;
+      const rdReg = root.querySelector<HTMLElement>('[data-rd-reg]')!;
+      const rdName = root.querySelector<HTMLElement>('[data-rd-name]')!;
+      const rdCoord = root.querySelector<HTMLElement>('[data-rd-coord]')!;
+
+      /* ------------------------------------------------------- backdrop */
+
+      function dayPath(raw: { lat: number; lon: number }) {
+        const sun = Math.abs(raw.lat) < 0.5 ? { lat: raw.lat >= 0 ? 0.5 : -0.5, lon: raw.lon } : raw;
+        const poleLat = sun.lat > 0 ? 90 : -90;
+        const p: [number, number][] = [];
+        for (let lon = -180; lon <= 180; lon += 1.5) {
+          const lat = terminatorLatitude(lon, sun, 0);
+          p.push([lon, lat === null ? 0 : lat]);
+        }
+        const last = p[p.length - 1][1];
+        const first = p[0][1];
+        const n = 14;
+        for (let i = 1; i <= n; i++) p.push([180, last + ((poleLat - last) * i) / n]);
+        for (let i = 0; i <= n; i++) p.push([180 - (360 * i) / n, poleLat]);
+        for (let i = 1; i <= n; i++) p.push([-180, poleLat + ((first - poleLat) * i) / n]);
+        let d = '';
+        for (let i = 0; i < p.length; i++) {
+          const [x, y] = project(p[i][0], p[i][1]);
+          d += (i ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+        }
+        return d + 'Z';
+      }
+
+      function paintWorld() {
+        const sun = subsolarPoint(new Date());
+        const lit = dayPath(sun);
+        dayP.setAttribute('d', lit);
+        nightP.setAttribute('d', mapData.sphere + lit);
+        let d = '';
+        let pen = false;
+        for (let lon = -180; lon <= 180; lon += 1.5) {
+          const lat = terminatorLatitude(lon, sun, 0);
+          if (lat === null) { pen = false; continue; }
+          const [x, y] = project(lon, lat);
+          d += (pen ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+          pen = true;
+        }
+        termP.setAttribute('d', d);
+      }
+
+      paintWorld();
+      let wt = window.setInterval(paintWorld, 60000);
+      document.documentElement.addEventListener('registerchange', paintWorld);
+      document.addEventListener('visibilitychange', () => {
+        clearInterval(wt);
+        if (!document.hidden) { paintWorld(); wt = window.setInterval(paintWorld, 60000); }
+      });
+
+      /* ----------------------------------------------------------- arc */
+
+      // Arc geometry is read fresh on resize: a 1500px radius on a 430px
+      // phone puts every neighbour off screen, leaving one lonely card.
+      let STEP = 0.21;
+      let RX = 1500;
+      let RY = 620;
+      const WINDOW = 4;
+
+      /** Radius the reticle should occupy on screen, whatever the zoom. */
+      let RING_PX = 56;
+
+      /** Where in the frame the active site is held. Declared here rather than
+          with the camera below, because measure() runs before that block. */
+      let FOCUS_Y = 0.38;
+
+      function measure() {
+        const narrow = window.innerWidth < 640;
+        STEP = narrow ? 0.28 : 0.21;
+        RX = narrow ? 440 : 1500;
+        RY = narrow ? 200 : 620;
+        RING_PX = narrow ? 34 : 56;
+        // Lift the focal point on a phone: the label lives under the reticle
+        // there, and the card strip eats the bottom third of the screen.
+        FOCUS_Y = narrow ? 0.26 : 0.38;
+      }
+      measure();
+
+      let offset = 0;           // continuous position around the ring
+      let active = -1;
+
+      /** Shortest signed distance from card i to the current offset, on a ring. */
+      function ringDelta(i: number, at: number) {
+        let d = i - at;
+        d -= Math.round(d / N) * N;
+        return d;
+      }
+
+      function placeArc() {
+        for (const slot of slots) {
+          const i = Number(slot.dataset.slot);
+          const d = ringDelta(i, offset);
+          const a = Math.abs(d);
+
+          if (a > WINDOW) {
+            slot.style.visibility = 'hidden';
+            continue;
+          }
+          slot.style.visibility = 'visible';
+
+          const th = d * STEP;
+          const x = RX * Math.sin(th);
+          const y = RY * (1 - Math.cos(th));
+          // Cards swell continuously toward the centre, so the focal card is
+          // reached rather than simply highlighted.
+          const scale = 1 - Math.min(a, WINDOW) * 0.085;
+          const t = Math.min(a / WINDOW, 1);
+
+          slot.style.transform =
+            `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) rotate(${(th * 0.34).toFixed(3)}rad) scale(${scale.toFixed(3)})`;
+          slot.style.opacity = String(1 - t * 0.78);
+          slot.style.filter = a > 0.6 ? `blur(${Math.min(a * 1.2, 5).toFixed(1)}px)` : 'none';
+          slot.style.zIndex = String(100 - Math.round(a * 10));
+          slot.classList.toggle('is-live', a < 0.5);
+        }
+
+        const idx = ((Math.round(offset) % N) + N) % N;
+        if (idx !== active) setActive(idx);
+      }
+
+      /* -------------------------------------------------------- camera */
+
+      const camNow = { k: 1, x: 0, y: 0 };
+      const camTo = { k: 1, x: 0, y: 0 };
+      // Focus above the strip rather than at the true centre, or the active
+      // site sits behind the cards.
+      const ZOOM = 2.9;
+      /** Lowest the camera pulls back to on the longest crossing. */
+      const MIN_ZOOM = 1.05;
+
+      /** Put a projected point at the focal position, at a given zoom. */
+      function frame(px: number, py: number, k: number) {
+        camTo.k = k;
+        camTo.x = W / 2 - px * k;
+        camTo.y = H * FOCUS_Y - py * k;
+      }
+
+      function aimCamera(c: C) {
+        frame(c.mx, c.my, ZOOM);
+      }
+
+      const readout = root.querySelector<HTMLElement>('[data-readout]')!;
+      const hudScale = root.querySelector<SVGGElement>('[data-hudscale]')!;
+      const worldSvg = root.querySelector<SVGSVGElement>('[data-world]')!;
+      let readoutArmed = false;
+
+      /**
+       * Keep the reticle a constant number of screen pixels.
+       *
+       * preserveAspectRatio="slice" scales the plate by whichever axis covers,
+       * then the camera multiplies that again — so anything drawn in map units
+       * changes size with both the zoom and the viewport shape.
+       */
+      function scaleHud() {
+        const r = worldSvg.getBoundingClientRect();
+        if (!r.width) return;
+        const slice = Math.max(r.width / W, r.height / H);
+        const perUnit = camNow.k * slice;
+        if (perUnit > 0) hudScale.setAttribute('transform', `scale(${(RING_PX / 34 / perUnit).toFixed(4)})`);
+      }
+
+      /** Pin the readout just clear of the reticle's right-hand brackets. */
+      function placeReadout() {
+        const h = hud.getBoundingClientRect();
+        const r = root!.getBoundingClientRect();
+        if (!h.width) return;
+
+        if (window.innerWidth < 640) {
+          // No room beside the reticle on a phone: sit it underneath, centred.
+          readout.style.left = `${h.left - r.left + h.width / 2}px`;
+
+          // ...but never let it run under the card strip. Positioning purely
+          // off the reticle collided with the top card on a real device.
+          const wanted = h.bottom - r.top + 24;
+          const stripTop = strip.getBoundingClientRect().top - r.top;
+          const own = readout.offsetHeight || 96;
+          readout.style.top = `${Math.min(wanted, Math.max(0, stripTop - own - 14))}px`;
+        } else {
+          readout.style.left = `${h.right - r.left + 26}px`;
+          readout.style.top = `${h.top - r.top + h.height / 2}px`;
+        }
+      }
+
+      function tickCamera() {
+        // Slow. The map is the thing being read, and a fast pan across a
+        // hemisphere is what makes this dizzying rather than legible.
+        const e = reduced ? 1 : 0.045;
+        camNow.k += (camTo.k - camNow.k) * e;
+        camNow.x += (camTo.x - camNow.x) * e;
+        camNow.y += (camTo.y - camNow.y) * e;
+        cam.setAttribute(
+          'transform',
+          `translate(${camNow.x.toFixed(2)} ${camNow.y.toFixed(2)}) scale(${camNow.k.toFixed(4)})`
+        );
+
+        scaleHud();
+
+        if (readoutArmed) {
+          // The camera keeps easing after the viewfinder lands, so the label
+          // has to track it rather than being placed once and left behind.
+          placeReadout();
+          const settled =
+            Math.abs(camTo.k - camNow.k) < 0.03 && Math.abs(camTo.x - camNow.x) < 4;
+          if (settled) readout.classList.add('is-on');
+        }
+
+        requestAnimationFrame(tickCamera);
+      }
+
+      /* -------------------------------------------------------- active */
+
+      const describe = (alt: number) =>
+        alt > 12 ? 'full day' : alt > 0 ? 'low sun' : alt > -6 ? 'civil twilight'
+        : alt > -12 ? 'nautical twilight' : alt > -18 ? 'astronomical twilight' : 'night';
+
+      const dd = (v: number, p: string, n: string) =>
+        `${Math.abs(v).toFixed(2)}°${v >= 0 ? p : n}`;
+
+      let flightRaf = 0;
+
+      /** Great-circle separation in degrees. */
+      function angularDistance(a: C, b: C) {
+        const r = Math.PI / 180;
+        const dLat = (b.lat - a.lat) * r;
+        const dLon = (b.lon - a.lon) * r;
+        const h =
+          Math.sin(dLat / 2) ** 2 +
+          Math.cos(a.lat * r) * Math.cos(b.lat * r) * Math.sin(dLon / 2) ** 2;
+        return (2 * Math.asin(Math.min(1, Math.sqrt(h)))) / r;
+      }
+
+      /**
+       * Fly the viewfinder from one site to the next along the great circle,
+       * drawing the route under it as it goes. The reticle riding the same arc
+       * it draws is the point: it reads as travel rather than as a cut.
+       */
+      function flyTo(from: C | null, to: C) {
+        cancelAnimationFrame(flightRaf);
+
+        const land = () => {
+          hud.setAttribute('transform', `translate(${to.mx} ${to.my})`);
+          hud.removeAttribute('hidden');
+          readoutArmed = true;
+        };
+
+        // In flight the label is gone; it belongs to a place, not to the trip.
+        readoutArmed = false;
+        readout.classList.remove('is-on');
+
+        if (!from || from.slug === to.slug || reduced) {
+          routeP.setAttribute('d', '');
+          land();
+          return;
+        }
+
+        const pts = greatCircle(from, to, 72).map(([lon, lat]) => project(lon, lat));
+        let d = '';
+        for (let i = 0; i < pts.length; i++) {
+          d += (i ? 'L' : 'M') + pts[i][0].toFixed(1) + ',' + pts[i][1].toFixed(1);
+        }
+        routeP.setAttribute('d', d);
+
+        const len = routeP.getTotalLength();
+        routeP.style.transition = 'none';
+        routeP.style.opacity = '1';
+        routeP.style.strokeDasharray = `${len}`;
+        routeP.style.strokeDashoffset = `${len}`;
+
+        // How far, as a fraction of half the globe. Drives both how long the
+        // flight takes and how far the camera pulls back.
+        const span = Math.min(1, angularDistance(from, to) / 180);
+
+        // A long crossing gets more time and a higher arc. Cutting between
+        // hemispheres at full zoom is exactly what made this disorienting;
+        // rising, travelling, and descending is how a flight actually reads.
+        const DUR = 900 + span * 1800;
+        const cruise = ZOOM - (ZOOM - MIN_ZOOM) * Math.min(1, span * 1.35);
+
+        const t0 = performance.now();
+        hud.removeAttribute('hidden');
+
+        const step = (now: number) => {
+          const t = Math.min(1, (now - t0) / DUR);
+          // Slow in, slow out — no sudden departure or arrival.
+          const e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+          const at = e * (pts.length - 1);
+          const i0 = Math.floor(at);
+          const i1 = Math.min(pts.length - 1, i0 + 1);
+          const f = at - i0;
+          const x = pts[i0][0] + (pts[i1][0] - pts[i0][0]) * f;
+          const y = pts[i0][1] + (pts[i1][1] - pts[i0][1]) * f;
+
+          hud.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+          routeP.style.strokeDashoffset = `${(len * (1 - e)).toFixed(1)}`;
+
+          // The camera rides with the viewfinder rather than lerping across
+          // the map in a straight line, and breathes out at the midpoint.
+          frame(x, y, ZOOM - (ZOOM - cruise) * Math.sin(Math.PI * e));
+
+          if (t < 1) flightRaf = requestAnimationFrame(step);
+          else {
+            land();
+            aimCamera(to);
+            routeP.style.transition = 'opacity 0.7s ease';
+            routeP.style.opacity = '0';
+          }
+        };
+        flightRaf = requestAnimationFrame(step);
+      }
+
+      function setActive(idx: number) {
+        const prev = active >= 0 ? cards[active] : null;
+        active = idx;
+        const c = cards[idx];
+
+        root!.style.setProperty('--accent', c.accent);
+        hud.style.setProperty('--hud', c.accent);
+
+        root!.querySelectorAll<SVGCircleElement>('[data-pin]').forEach((p) =>
+          p.classList.toggle('is-live', p.dataset.pin === c.slug)
+        );
+
+        const alt = solarAltitude(c.lat, c.lon, subsolarPoint(new Date()));
+        rdReg.textContent = c.register;
+        rdName.textContent = c.native ? `${c.name} ${c.native}` : c.name;
+        rdCoord.textContent =
+          `${c.place}, ${c.country} · ${dd(c.lat, 'N', 'S')} ${dd(c.lon, 'E', 'W')} · ${describe(alt)}`;
+
+        aimCamera(c);
+        flyTo(prev, c);
+      }
+
+      /* ------------------------------------------------------- driving */
+
+      let target = 0;
+      let raf = 0;
+
+      function glide() {
+        const d = target - offset;
+        if (Math.abs(d) < 0.001) {
+          offset = target;
+          placeArc();
+          raf = 0;
+          return;
+        }
+        offset += d * (reduced ? 1 : 0.1);
+        placeArc();
+        raf = requestAnimationFrame(glide);
+      }
+
+      function goTo(next: number) {
+        target = next;
+        if (!raf) raf = requestAnimationFrame(glide);
+      }
+
+      const step = (n: number) => goTo(target + n);
+
+      strip.addEventListener(
+        'wheel',
+        (e) => {
+          e.preventDefault();
+          // Trackpads give horizontal deltas; wheels give vertical. Both mean
+          // "move along the strip" here, because nothing else can scroll.
+          const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+          goTo(target + d * 0.004);
+        },
+        { passive: false }
+      );
+
+      let down = false;
+      let lastX = 0;
+      let moved = false;
+
+      // No setPointerCapture here. Capturing on the strip steals the pointer
+      // from the card links inside it, so the anchor never receives its click
+      // and the drawer never opens — the same failure the map's zoom buttons
+      // had. Tracking on window keeps dragging working past the strip edge
+      // without taking the click away from anything.
+      strip.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0) return;
+        down = true;
+        moved = false;
+        lastX = e.clientX;
+        strip.classList.add('is-grabbing');
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - lastX;
+        lastX = e.clientX;
+        if (Math.abs(dx) > 2) moved = true;
+        goTo(target - dx / 190);
+      });
+
+      const endDrag = () => {
+        if (!down) return;
+        down = false;
+        strip.classList.remove('is-grabbing');
+        goTo(Math.round(target));
+      };
+      window.addEventListener('pointerup', endDrag);
+      window.addEventListener('pointercancel', endDrag);
+
+      strip.addEventListener('click', (e) => {
+        if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+      }, true);
+
+      window.addEventListener('keydown', (e) => {
+        if (root!.classList.contains('is-open')) return;
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      });
+
+      // Focusing a card by keyboard brings it to the centre.
+      slots.forEach((slot) => {
+        slot.querySelector('a')!.addEventListener('focus', () => {
+          const i = Number(slot.dataset.slot);
+          goTo(target + ringDelta(i, target));
+        });
+      });
+
+      /* -------------------------------------------------------- drawer */
+
+      const drawer = root.querySelector<HTMLElement>('[data-drawer]')!;
+      const drawerIn = root.querySelector<HTMLElement>('[data-drawerin]')!;
+      const scrim = root.querySelector<HTMLElement>('[data-scrim]')!;
+      const closeBtn = root.querySelector<HTMLButtonElement>('[data-close]')!;
+      let lastFocus: HTMLElement | null = null;
+
+      async function open(slug: string, push = true) {
+        const c = cards.find((x) => x.slug === slug);
+        if (!c) return;
+        lastFocus = document.activeElement as HTMLElement;
+
+        drawer.style.setProperty('--accent', c.accent);
+        drawerIn.innerHTML = `<p class="meta">Opening…</p>`;
+        drawer.hidden = false;
+        scrim.hidden = false;
+        requestAnimationFrame(() => {
+          drawer.classList.add('is-on');
+          scrim.classList.add('is-on');
+        });
+        root!.classList.add('is-open');
+        if (push) history.pushState({ slug }, '', `/work/${slug}`);
+        drawer.focus({ preventScroll: true });
+
+        try {
+          const res = await fetch(`/work/${slug}`, { headers: { accept: 'text/html' } });
+          if (!res.ok) throw new Error(String(res.status));
+          const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+          const article = doc.querySelector('.cs');
+          // Drop the in-page nav; the drawer has its own way out.
+          article?.querySelector('.cs__back')?.remove();
+          article?.querySelector('.cs__next')?.remove();
+          drawerIn.innerHTML = article ? article.innerHTML : '';
+        } catch {
+          // Never strand the reader in an empty panel.
+          drawerIn.innerHTML =
+            `<p>That case study could not be loaded here. ` +
+            `<a class="link" href="/work/${slug}">Open it as a page instead</a>.</p>`;
+        }
+      }
+
+      function close(pop = true) {
+        drawer.classList.remove('is-on');
+        scrim.classList.remove('is-on');
+        root!.classList.remove('is-open');
+        setTimeout(() => { drawer.hidden = true; scrim.hidden = true; drawerIn.innerHTML = ''; }, 500);
+        if (pop && history.state?.slug) history.pushState({}, '', '/work');
+        lastFocus?.focus({ preventScroll: true });
+      }
+
+      root.querySelectorAll<HTMLAnchorElement>('[data-slug]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+          if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+          e.preventDefault();
+          const i = Number(a.dataset.i);
+          goTo(target + ringDelta(i, target));
+          open(a.dataset.slug!);
+        });
+      });
+
+      closeBtn.addEventListener('click', () => close());
+      scrim.addEventListener('click', () => close());
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && root!.classList.contains('is-open')) close();
+      });
+      window.addEventListener('popstate', (e) => {
+        if (e.state?.slug) open(e.state.slug, false);
+        else if (root!.classList.contains('is-open')) close(false);
+      });
+
+      /* ---------------------------------------------------------- boot */
+
+      placeArc();
+      tickCamera();
+      camNow.k = ZOOM;
+      camNow.x = camTo.x;
+      camNow.y = camTo.y;
+      window.addEventListener('resize', () => { measure(); placeArc(); scaleHud(); });
+    }
+  }
+</script>

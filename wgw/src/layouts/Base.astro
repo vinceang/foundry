@@ -1,0 +1,498 @@
+---
+/* Every register's faces are declared here. Declaring an @font-face costs
+   nothing until a glyph actually needs it, so the browser only downloads the
+   family belonging to the register you are looking at. */
+import '@fontsource-variable/instrument-sans';
+import '@fontsource/instrument-serif/400.css';
+import '@fontsource-variable/newsreader';
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/gabarito';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '../styles/global.css';
+import '../styles/registers.css';
+import meta from '../data/foundry-meta.json';
+import registers from '../data/registers.json';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  bare?: boolean;
+}
+
+const { title, description, image = '/og-default.jpg', schema, bare = false } = Astro.props;
+const { studio } = meta;
+
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+
+const studioSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${Astro.site}#studio`,
+  name: studio.name,
+  alternateName: 'The Glass House',
+  url: String(Astro.site),
+  description:
+    'A boutique web design studio building bespoke, art-directed websites for makers, ateliers, hotels and specialist brands. Based in Winter Garden, Florida; working worldwide.',
+  founder: { '@type': 'Person', name: studio.person },
+  knowsAbout: [
+    'bespoke web design',
+    'art direction',
+    'brand identity',
+    'editorial web design',
+    'luxury hospitality websites',
+    'websites for artisans and ateliers',
+  ],
+  areaServed: [
+    { '@type': 'City', name: 'Orlando' },
+    { '@type': 'City', name: 'Winter Garden' },
+    { '@type': 'State', name: 'Florida' },
+    { '@type': 'Country', name: 'United States' },
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Winter Garden',
+    addressRegion: 'FL',
+    addressCountry: 'US',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: studio.place.lat, longitude: studio.place.lon },
+  email: `mailto:${studio.email}`,
+  priceRange: '$$$',
+};
+
+const graph = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const allSchema = bare ? graph : [studioSchema, ...graph];
+
+const nav = [
+  { href: '/#map', label: 'Map' },
+  { href: '/work', label: 'Work' },
+  { href: '/studio', label: 'Studio' },
+];
+
+// The sky each register is named for, as an actual gradient of that hour.
+// The switcher swatches and the Series section read from the same source.
+const skies: Record<string, string> = {
+  nocturne: 'linear-gradient(180deg, #05070a 0%, #0d1218 55%, #2a1a12 100%)',
+  aubade: 'linear-gradient(180deg, #24354a 0%, #8b7b6a 45%, #f0dcc0 100%)',
+  vesper: 'linear-gradient(180deg, #0e1626 0%, #33405c 45%, #c98a58 100%)',
+  pastorale: 'linear-gradient(180deg, #aab6bd 0%, #ccd6da 50%, #e9eff1 100%)',
+  vigil: 'linear-gradient(180deg, #04080c 0%, #0a1620 50%, #f2c46a 100%)',
+};
+---
+
+<!doctype html>
+<html lang="en" data-register="nocturne">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#08070a" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Glass House — Winter Garden Web" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script is:inline>
+      // Set the register before first paint, so there is no flash of the
+      // wrong light. A returning visitor gets their choice back; a new one
+      // arrives in whichever register matches the hour where they actually
+      // are — the same idea the map runs on, resolved cheaply enough to sit
+      // in the critical path.
+      (function () {
+        var valid = ['nocturne', 'aubade', 'vesper', 'pastorale', 'vigil'];
+        var r = null;
+
+        // ?light=aubade makes a register shareable — you can send someone the
+        // page in the light you want them to see it in.
+        var q = location.search.match(/[?&]light=([a-z]+)/);
+        if (q && valid.indexOf(q[1]) !== -1) r = q[1];
+
+        if (!r) {
+          try {
+            r = localStorage.getItem('gh-register');
+          } catch (e) {}
+        }
+        if (valid.indexOf(r) === -1) {
+          var h = new Date().getHours();
+          r =
+            h < 5 ? 'vigil'
+            : h < 9 ? 'aubade'
+            : h < 17 ? 'pastorale'
+            : h < 20 ? 'vesper'
+            : h < 22 ? 'nocturne'
+            : 'vigil';
+        }
+        var d = document.documentElement;
+        d.setAttribute('data-register', r);
+        d.classList.add('js');
+      })();
+    </script>
+
+    {allSchema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- The glazing frame. A glass house is a structure of bars and corners;
+         these are the corners. Hidden on small screens, where the viewport
+         edge is already the frame. -->
+    <div class="frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+    <header class="site-head">
+      <div class="page-wide site-head__in">
+        <a class="wordmark" href="/">
+          <span class="wordmark__a">The Glass House</span>
+          <span class="wordmark__b meta">Winter Garden Web</span>
+        </a>
+
+        <div class="site-head__right">
+          <nav class="site-nav" aria-label="Primary">
+            <ul>
+              {nav.map((n) => (
+                <li><a href={n.href}>{n.label}</a></li>
+              ))}
+            </ul>
+          </nav>
+
+          <fieldset class="reg" data-switch>
+            <legend class="visually-hidden">Quality of light</legend>
+            {registers.map((r) => (
+              <label class="reg__opt" title={`${r.name} — ${r.atmosphere}`}>
+                <input type="radio" name="register" value={r.id} class="visually-hidden" />
+                <span class="reg__sky" style={`background: ${skies[r.id]}`} aria-hidden="true"></span>
+                <span class="reg__name">{r.name}</span>
+              </label>
+            ))}
+          </fieldset>
+
+          <a class="site-head__cta" href="/#inquire">Inquire</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-foot">
+      <div class="page-wide">
+        <hr class="rule" />
+        <div class="site-foot__in">
+          <div>
+            <p class="site-foot__mark">The Glass House</p>
+            <p class="meta">Winter Garden Web</p>
+          </div>
+          <div class="site-foot__cols">
+            <div>
+              <p class="meta">Studio</p>
+              <p><a class="link" href="/studio">{studio.person}</a></p>
+              <p class="meta">{studio.place.label}</p>
+            </div>
+            <div>
+              <p class="meta">Write</p>
+              <p><a class="link" href={`mailto:${studio.email}`}>{studio.email}</a></p>
+            </div>
+            <div>
+              <p class="meta">Catalog</p>
+              <p><a class="link" href="/api/collection.json">JSON</a></p>
+              <p class="meta">{meta.count} sites</p>
+            </div>
+          </div>
+        </div>
+        <p class="meta site-foot__legal">
+          © {new Date().getFullYear()} Winter Garden Web · Winter Garden, Florida
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Reveal — progressive enhancement only.
+      const els = document.querySelectorAll('.reveal');
+      if ('IntersectionObserver' in window && els.length) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                (e.target as HTMLElement).classList.add('is-in');
+                io.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+        els.forEach((el) => io.observe(el));
+      } else {
+        els.forEach((el) => el.classList.add('is-in'));
+      }
+
+      // Register switcher.
+      const root = document.documentElement;
+      const sw = document.querySelector<HTMLFieldSetElement>('[data-switch]');
+      if (sw) {
+        const current = root.getAttribute('data-register') || 'nocturne';
+        const inputs = sw.querySelectorAll<HTMLInputElement>('input[name="register"]');
+        inputs.forEach((i) => {
+          i.checked = i.value === current;
+          i.addEventListener('change', () => {
+            if (!i.checked) return;
+            root.setAttribute('data-register', i.value);
+            try {
+              localStorage.setItem('gh-register', i.value);
+            } catch (e) {}
+            root.dispatchEvent(new CustomEvent('registerchange', { detail: i.value }));
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  /* ------------------------------------------------------------- frame */
+  .frame {
+    position: fixed;
+    inset: 10px;
+    pointer-events: none;
+    z-index: 60;
+  }
+
+  .frame i {
+    position: absolute;
+    inline-size: 14px;
+    block-size: 14px;
+    border: 0 solid var(--rule);
+    opacity: 0.85;
+  }
+
+  .frame i:nth-child(1) { inset-block-start: 0; inset-inline-start: 0; border-block-start-width: 1px; border-inline-start-width: 1px; }
+  .frame i:nth-child(2) { inset-block-start: 0; inset-inline-end: 0; border-block-start-width: 1px; border-inline-end-width: 1px; }
+  .frame i:nth-child(3) { inset-block-end: 0; inset-inline-start: 0; border-block-end-width: 1px; border-inline-start-width: 1px; }
+  .frame i:nth-child(4) { inset-block-end: 0; inset-inline-end: 0; border-block-end-width: 1px; border-inline-end-width: 1px; }
+
+  @media (max-width: 56rem) {
+    .frame { display: none; }
+  }
+
+  /* -------------------------------------------------------------- head */
+  .site-head {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 50;
+    background: color-mix(in oklab, var(--ground) 84%, transparent);
+    backdrop-filter: blur(14px) saturate(1.2);
+    border-block-end: 1px solid var(--rule-soft);
+  }
+
+  .site-head__in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding-block: var(--sp-3);
+  }
+
+  .wordmark {
+    display: grid;
+    gap: 1px;
+    text-decoration: none;
+    line-height: 1.05;
+    min-block-size: 2.75rem;
+    align-content: center;
+  }
+
+  .wordmark__a {
+    font-family: var(--display);
+    font-size: var(--step-0);
+    font-weight: var(--display-weight, 500);
+    letter-spacing: var(--display-tracking, -0.02em);
+    white-space: nowrap;
+  }
+
+  /* Below 40rem the header has room for exactly three things: the name, the
+     five lights, and the one link that has to be reachable. */
+  .wordmark__b {
+    display: none;
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+  }
+
+  .site-head__right {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: var(--sp-5);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .site-nav a {
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: color 0.25s var(--ease);
+  }
+
+  .site-nav a:hover { color: var(--accent); }
+
+  /* The one thing a phone must always be able to reach. */
+  .site-head__cta {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding-inline: var(--sp-4);
+    border: 1px solid var(--rule);
+    border-radius: 100px;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .site-head__cta:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ---------------------------------------------------------- switcher */
+  .reg {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    margin: 0;
+    padding: 2px;
+    border: 1px solid var(--rule-soft);
+    border-radius: 100px;
+  }
+
+  .reg__opt {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    cursor: pointer;
+    border-radius: 100px;
+    padding: 3px;
+  }
+
+  .reg__sky {
+    display: block;
+    inline-size: 1.1rem;
+    block-size: 1.1rem;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  }
+
+  .reg__opt:hover .reg__sky {
+    transform: scale(1.12);
+  }
+
+  .reg__opt:has(:checked) .reg__sky {
+    box-shadow: 0 0 0 2px var(--ground), 0 0 0 3px var(--accent);
+  }
+
+  .reg__opt:has(:focus-visible) .reg__sky {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* The name only shows for the active register — five labels at once
+     would be a menu; one is a readout. */
+  .reg__name {
+    display: none;
+    font-family: var(--mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    padding-inline-end: var(--sp-2);
+  }
+
+  .site-head__cta {
+    font-size: 0.6875rem;
+    padding-inline: var(--sp-3);
+  }
+
+  /* -------------------------------------------------------------- foot */
+  .site-foot {
+    padding-block: var(--sp-8) var(--sp-6);
+    margin-block-start: var(--sp-9);
+  }
+
+  .site-foot__in {
+    display: grid;
+    gap: var(--sp-7);
+    padding-block-start: var(--sp-7);
+  }
+
+  .site-foot__mark {
+    font-family: var(--display);
+    font-size: var(--step-2);
+    letter-spacing: var(--display-tracking, -0.03em);
+  }
+
+  .site-foot__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: var(--sp-6);
+  }
+
+  .site-foot__cols p + p { margin-block-start: var(--sp-1); }
+
+  .site-foot__legal { margin-block-start: var(--sp-7); }
+
+  @media (min-width: 40rem) {
+    .wordmark__a { font-size: var(--step-1); }
+    .wordmark__b { display: block; }
+
+    .reg { gap: 3px; padding: 3px; }
+    .reg__sky { inline-size: 1.35rem; block-size: 1.35rem; }
+
+    .reg__opt:has(:checked) .reg__name { display: block; padding-inline-end: var(--sp-3); }
+
+    .site-head__cta { font-size: var(--step--1); padding-inline: var(--sp-4); }
+  }
+
+  @media (min-width: 52rem) {
+    .site-nav { display: block; }
+  }
+
+  @media (min-width: 56rem) {
+    .site-foot__in {
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+    }
+  }
+</style>

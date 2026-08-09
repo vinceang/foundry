@@ -1,0 +1,436 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import meta from '../../data/foundry-meta.json';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('sites');
+  return entries.map((e) => ({ params: { slug: e.data.slug }, props: { site: e.data } }));
+}
+
+const { site } = Astro.props;
+const { series } = meta;
+const reg = series.find((s) => s.id === site.series)!;
+
+const all = (await getCollection('sites')).map((e) => e.data);
+const idx = all.findIndex((s) => s.slug === site.slug);
+const others = [all[(idx + 1) % all.length], all[(idx + 2) % all.length]];
+
+const fmtLong = new Date(site.shipped + 'T00:00:00Z').toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+
+const dd = (v: number, pos: string, neg: string) =>
+  `${Math.abs(v).toFixed(3)}° ${v >= 0 ? pos : neg}`;
+
+const title = `${site.name} — ${site.what} | The Glass House`;
+const description = `${site.tagline} A ${reg.name} in The Glass House collection, set in ${site.place.label}, ${site.place.country}. Signature interaction: ${site.signature}.`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: site.name,
+  headline: `${site.name} — ${site.what}`,
+  description,
+  url: `${Astro.site}work/${site.slug}`,
+  dateCreated: site.shipped,
+  image: `${Astro.site}collection/${site.slug}-1600.webp`,
+  genre: reg.name,
+  locationCreated: {
+    '@type': 'Place',
+    name: `${site.place.label}, ${site.place.country}`,
+    geo: { '@type': 'GeoCoordinates', latitude: site.place.lat, longitude: site.place.lon },
+  },
+  creator: { '@type': 'Person', name: meta.studio.person },
+  publisher: { '@type': 'Organization', name: meta.studio.name },
+};
+
+const facts = [
+  { k: 'Quality of light', v: reg.name },
+  { k: 'Place', v: `${site.place.label}, ${site.place.country}` },
+  { k: 'Coordinates', v: `${dd(site.place.lat, 'N', 'S')}, ${dd(site.place.lon, 'E', 'W')}` },
+  { k: 'Signature', v: site.signature },
+  { k: 'Built', v: fmtLong },
+];
+---
+
+<Base
+  title={title}
+  description={description}
+  schema={schema}
+  image={`/collection/${site.slug}-1600.webp`}
+>
+  <article class="cs" style={`--accent: ${site.palette.accent}`}>
+    <div class="page-wide">
+      <nav class="cs__back">
+        <a class="link" href="/#collection">← The collection</a>
+      </nav>
+
+      <header class="cs__head">
+        <p class="cs__series meta">{reg.name}</p>
+        <h1 class="cs__title">
+          {site.name}
+          {site.nativeName && <span class="cs__native">{site.nativeName}</span>}
+        </h1>
+        <p class="cs__what">{site.what}</p>
+        <p class="cs__tagline">{site.tagline}</p>
+      </header>
+    </div>
+
+    <div class="cs__figure">
+      <div class="page-wide">
+        <img
+          class="cs__img"
+          src={`/collection/${site.slug}-1600.webp`}
+          srcset={`/collection/${site.slug}-800.webp 800w, /collection/${site.slug}-1600.webp 1600w`}
+          sizes="(min-width: 88rem) 84rem, 94vw"
+          width="1600"
+          height={Math.round(1600 / site.aspect)}
+          alt={`${site.name} — ${site.what}, ${site.place.label}`}
+          fetchpriority="high"
+          decoding="async"
+        />
+      </div>
+    </div>
+
+    <div class="page-wide">
+      <div class="cs__grid">
+        <div class="cs__body prose">
+          <h2 class="cs__h2">What it is</h2>
+          <p>
+            <strong>{site.name}</strong> is {site.what.toLowerCase()}, set in
+            {' '}{site.place.label}, {site.place.country}. It was built as a
+            complete world rather than a page: a name, a history, a material
+            system, a vocabulary, a photographic language, and a reason to
+            exist — then the site that world would have made for itself.
+          </p>
+
+          <h2 class="cs__h2">The light it lives in</h2>
+          <p>
+            It belongs to the <strong>{reg.name}</strong> register:
+            {' '}{reg.atmosphere.toLowerCase()}. That decision is made from the
+            subject, never from the category — {reg.subjects.toLowerCase()}. It
+            settles the palette, the type, and how every photograph is lit
+            before a single section gets drawn.
+          </p>
+
+          <h2 class="cs__h2">The signature</h2>
+          <p>
+            Every site in the collection has to earn one interaction that could
+            belong to nothing else it sells. Here that is
+            {' '}<strong>{site.signature}</strong>. It is built first, and
+            everything else is arranged around it.
+          </p>
+
+          <h2 class="cs__h2">See it working</h2>
+          <p>
+            The site is live and behaves — the signature is not a video of an
+            idea. Open it and use it.
+          </p>
+          <p class="cs__cta">
+            <a class="btn" href={site.url} target="_blank" rel="noopener">
+              Visit {site.name} ↗
+            </a>
+          </p>
+        </div>
+
+        <div class="rail" aria-hidden="true">
+          <span class="rail__n">{site.place.label} · {site.place.country}</span>
+        </div>
+
+        <aside class="cs__aside">
+          <div class="cs__palette" aria-hidden="true">
+            {(['ground', 'light', 'accent'] as const).map((k) => (
+              <span class="cs__sw" style={`background: ${site.palette[k]}`}>
+                <span class="meta">{site.palette[k]}</span>
+              </span>
+            ))}
+          </div>
+
+          <dl class="cs__facts">
+            {facts.map((f) => (
+              <div class="cs__fact">
+                <dt class="meta">{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      </div>
+
+      <nav class="cs__next" aria-label="More from the collection">
+        <p class="marker__t meta">Elsewhere in the glass house</p>
+        <ul class="cs__nextlist">
+          {others.map((o) => (
+            <li style={`--accent: ${o.palette.accent}`}>
+              <a href={`/work/${o.slug}`}>
+                <img
+                  src={`/collection/${o.slug}-800.webp`}
+                  width="800"
+                  height={Math.round(800 / o.aspect)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="cs__nextname">{o.name}</span>
+                <span class="cs__nextwhat meta">{o.what}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </article>
+</Base>
+
+<style>
+  /* The rail. Between the text column and the aside there was a ~500px void
+     on every detail page; a glass house is a structure of bars, so the gap
+     gets a mullion — a hairline with a tick and the section's own numeral. */
+  .rail {
+    display: none;
+  }
+
+  @media (min-width: 62rem) {
+    .rail {
+      display: block;
+      position: relative;
+      align-self: stretch;
+      inline-size: 1px;
+      background: var(--rule-soft);
+      justify-self: center;
+    }
+
+    .rail::before,
+    .rail::after {
+      content: '';
+      position: absolute;
+      inset-inline-start: -3px;
+      inline-size: 7px;
+      block-size: 1px;
+      background: var(--rule);
+    }
+
+    .rail::before { inset-block-start: 0; }
+    .rail::after { inset-block-end: 0; }
+
+    .rail__n {
+      position: sticky;
+      inset-block-start: 7rem;
+      display: block;
+      inline-size: max-content;
+      transform: translateX(-50%) rotate(180deg);
+      writing-mode: vertical-rl;
+      font-family: var(--mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      background: var(--ground);
+      padding-block: var(--sp-3);
+      margin-inline-start: 0.5px;
+    }
+  }
+
+  .cs {
+    padding-block-start: var(--sp-6);
+  }
+
+  .cs__back {
+    margin-block-end: var(--sp-7);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+  }
+
+  .cs__head {
+    display: grid;
+    gap: var(--sp-3);
+    margin-block-end: var(--sp-7);
+  }
+
+  .cs__series {
+    color: var(--accent);
+  }
+
+  .cs__title {
+    font-size: var(--step-6);
+    letter-spacing: -0.045em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.35em;
+    flex-wrap: wrap;
+  }
+
+  .cs__native {
+    font-size: 0.5em;
+    color: var(--ink-3);
+    letter-spacing: -0.01em;
+  }
+
+  .cs__what {
+    color: var(--ink-2);
+    font-size: var(--step-1);
+  }
+
+  .cs__tagline {
+    font-size: var(--step-2);
+    line-height: 1.32;
+    letter-spacing: -0.02em;
+    max-inline-size: 38rem;
+    border-inline-start: 2px solid var(--accent);
+    padding-inline-start: var(--sp-4);
+    margin-block-start: var(--sp-3);
+  }
+
+  .cs__figure {
+    margin-block-end: var(--sp-8);
+  }
+
+  .cs__img {
+    inline-size: 100%;
+    block-size: auto;
+    border-radius: 2px;
+    border: 1px solid var(--rule-soft);
+  }
+
+  .cs__grid {
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  .cs__h2 {
+    font-size: var(--step-1);
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    margin-block: var(--sp-6) var(--sp-3);
+  }
+
+  .cs__h2:first-child {
+    margin-block-start: 0;
+  }
+
+  .cs__body p {
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .cs__body strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .cs__cta {
+    margin-block-start: var(--sp-5);
+  }
+
+  .cs__palette {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-block-end: var(--sp-5);
+  }
+
+  .cs__sw {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    block-size: 5rem;
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+    padding-block-end: var(--sp-2);
+  }
+
+  .cs__sw .meta {
+    font-size: 0.5625rem;
+    letter-spacing: 0.06em;
+    color: rgb(255 255 255 / 0.62);
+    mix-blend-mode: difference;
+  }
+
+  .cs__facts {
+    display: grid;
+    gap: var(--sp-4);
+    padding-block-start: var(--sp-5);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .cs__fact dt {
+    margin-block-end: var(--sp-1);
+  }
+
+  .cs__fact dd {
+    margin: 0;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+
+  .cs__next {
+    margin-block-start: var(--sp-9);
+    padding-block-start: var(--sp-6);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .cs__nextlist {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-6);
+    margin-block-start: var(--sp-5);
+  }
+
+  .cs__nextlist a {
+    display: grid;
+    gap: var(--sp-2);
+    text-decoration: none;
+  }
+
+  .cs__nextlist img {
+    inline-size: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 2px;
+    border: 1px solid var(--rule-soft);
+    filter: saturate(0.8);
+    transition: filter 0.6s var(--ease);
+  }
+
+  .cs__nextlist a:hover img {
+    filter: saturate(1.05);
+  }
+
+  .cs__nextname {
+    font-size: var(--step-1);
+    letter-spacing: -0.02em;
+  }
+
+  .cs__nextlist a:hover .cs__nextname {
+    color: var(--accent);
+  }
+
+  .cs__nextwhat {
+    text-transform: none;
+    letter-spacing: 0.03em;
+  }
+
+  @media (min-width: 40rem) {
+    .cs__nextlist {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 62rem) {
+    .cs__grid {
+      grid-template-columns: minmax(0, 38rem) 1fr 20rem;
+      gap: var(--sp-9);
+      align-items: start;
+    }
+
+    .cs__aside {
+      position: sticky;
+      inset-block-start: 6rem;
+    }
+  }
+</style>

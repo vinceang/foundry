@@ -1,0 +1,264 @@
+---
+/**
+ * The hero is the thesis image.
+ *
+ * A winter garden is a glass house: a built climate where something delicate
+ * grows, protected, out of the weather. That is also the method — every site
+ * in the collection is a controlled climate around one craft. So the building
+ * leads, and the words sit inside it.
+ *
+ * The video is an enhancement over the still; the poster carries the frame
+ * alone, and the source is only attached once the browser is near it.
+ */
+import blur from '../data/glass-blur.txt?raw';
+
+interface Props {
+  countries: number;
+  seriesCount: number;
+}
+const { countries, seriesCount } = Astro.props;
+const placeholder = blur.trim();
+
+const facts = [
+  { k: String(seriesCount), v: 'qualities of light' },
+  { k: String(countries), v: 'countries' },
+  { k: '1', v: 'studio' },
+];
+---
+
+<section class="hero">
+  <div class="hero__media" style={`background-image: url(${placeholder})`}>
+    <video
+      class="hero__v"
+      data-video
+      poster="/glasshouse-1600.webp"
+      muted
+      loop
+      playsinline
+      preload="none"
+      aria-hidden="true"
+    >
+      <source data-src="/glasshouse.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="page-wide hero__inner">
+      <p class="hero__eyebrow meta">
+        Winter Garden Web · a web design studio · Winter Garden, Florida
+      </p>
+      <h1 class="hero__display">The Glass House</h1>
+      <p class="hero__lede">
+        A winter garden is a glass house: a built climate where something
+        delicate can grow, protected, out of the weather.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-wide hero__below">
+    <div class="hero__body">
+      <p class="hero__sub">
+        I build these for people who make things by hand. Every site in the
+        collection is a glass house around one craft — a knife atelier in
+        Sakai, a keeper's house on a Scottish headland — a controlled light in
+        which work that would look ordinary in the open air can finally be seen
+        properly.
+      </p>
+      <p class="hero__thesis">A glass house of glass houses.</p>
+      <div class="hero__cta">
+        <a class="btn" href="#inquire">Commission a world</a>
+        <a class="btn btn--ghost" href="#collection">See the collection</a>
+      </div>
+    </div>
+
+    <dl class="hero__facts">
+      {facts.map((f) => (
+        <div class="hero__fact">
+          <dt class="hero__factk">{f.k}</dt>
+          <dd class="hero__factv meta">{f.v}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<script>
+  const v = document.querySelector<HTMLVideoElement>('[data-video]');
+
+  if (v && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const src = v.querySelector<HTMLSourceElement>('source[data-src]');
+
+    const load = () => {
+      if (!src || src.src) return;
+      src.src = src.dataset.src!;
+      v.load();
+      v.play().catch(() => {
+        // Autoplay refused — the poster is already doing the job.
+      });
+    };
+
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              load();
+              io.disconnect();
+            }
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      io.observe(v);
+    } else {
+      load();
+    }
+  }
+</script>
+
+<style>
+  .hero__media {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-block-size: min(86svb, 46rem);
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    border-block-end: 1px solid var(--rule-soft);
+  }
+
+  .hero__v {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* The picture is dark at the foot and bright through the middle, so the
+     scrim is weighted to the bottom where the words actually sit. */
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgb(4 6 9 / 0.62) 0%, rgb(4 6 9 / 0.1) 34%),
+      linear-gradient(0deg, rgb(4 6 9 / 0.92) 0%, rgb(4 6 9 / 0.35) 42%, rgb(4 6 9 / 0) 68%);
+  }
+
+  .hero__inner {
+    position: relative;
+    padding-block: var(--sp-8) var(--sp-7);
+  }
+
+  /* Over a photograph the type is always light, in every register — the
+     picture does not invert. */
+  .hero__eyebrow {
+    color: #d9c9a8;
+    margin-block-end: var(--sp-5);
+  }
+
+  .hero__display {
+    font-family: var(--display);
+    font-size: var(--display-size);
+    font-weight: var(--display-weight, 500);
+    letter-spacing: var(--display-tracking, -0.04em);
+    line-height: 0.94;
+    color: #f6f2ea;
+    margin-block-end: var(--sp-5);
+  }
+
+  .hero__lede {
+    font-size: var(--step-2);
+    line-height: 1.34;
+    letter-spacing: -0.015em;
+    max-inline-size: 34rem;
+    color: #ece5d8;
+  }
+
+  .hero__below {
+    padding-block: var(--sp-8);
+  }
+
+  .hero__body {
+    display: grid;
+    gap: var(--sp-5);
+    max-inline-size: 42rem;
+  }
+
+  .hero__sub {
+    color: var(--ink-2);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+
+  /* The one line that says what this whole site is. It gets the display face
+     and the accent rule, because everything else on the page is an
+     elaboration of it. */
+  .hero__thesis {
+    font-family: var(--display);
+    font-size: var(--step-3);
+    font-weight: var(--display-weight, 500);
+    letter-spacing: var(--display-tracking, -0.03em);
+    line-height: 1.2;
+    color: var(--ink);
+    border-inline-start: 2px solid var(--accent);
+    padding-inline-start: var(--sp-4);
+  }
+
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+  }
+
+  .hero__facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-4);
+    margin-block-start: var(--sp-8);
+    padding-block-start: var(--sp-5);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .hero__fact {
+    display: grid;
+    gap: var(--sp-1);
+  }
+
+  .hero__factk {
+    font-family: var(--display);
+    font-size: var(--step-3);
+    font-weight: var(--display-weight, 500);
+    letter-spacing: var(--display-tracking, -0.03em);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero__factv {
+    margin: 0;
+  }
+
+  @media (min-width: 48rem) {
+    .hero__inner {
+      padding-block: var(--sp-9) var(--sp-8);
+    }
+
+    .hero__facts {
+      gap: var(--sp-6);
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .hero__below {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--sp-8);
+      align-items: end;
+    }
+
+    .hero__facts {
+      margin-block-start: 0;
+      grid-template-columns: repeat(3, minmax(7rem, auto));
+    }
+  }
+</style>

@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.astro/
+.vercel/
+.env.local
+
+# Everything below is emitted by `npm run sync`, which the dev and build
+# scripts both run first. Nothing generated is committed, so the registry at
+# repo root stays the single source of truth and these can never drift from it.
+public/collection/
+src/data/foundry-sites.json
+src/data/foundry-meta.json
+src/data/map.json
+src/data/registers.json
+src/styles/registers.css

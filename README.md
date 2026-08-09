@@ -23,10 +23,10 @@ The two series share standards, not styling. Read
 
 | Site | Series | What it is | Culture / place | Project |
 |------|--------|------------|-----------------|---------|
-| Suntoku (寸徳) | Nocturne | Hand-forged kitchen knife atelier | Japan · Sakai | [`sites/kaji`](sites/kaji) |
-| Shokunin | Nocturne | Bespoke samurai ateliers | Japan · Kaga, Seki, Wajima | [`sites/shokunin`](sites/shokunin) |
-| Casa Vicente | Nocturne | Family-owned boutique guitar atelier | Spain · Andalusia | [`sites/vicente`](sites/vicente) |
-| Schwarzwald | Nocturne | Cuckoo clock house, est. 1854 | Germany · Black Forest | [`sites/schwarzwald`](sites/schwarzwald) |
+| [Suntoku (寸徳)](https://suntoku.vercel.app) | Nocturne | Hand-forged kitchen knife atelier | Japan · Sakai | [`sites/kaji`](sites/kaji) · live |
+| [Shokunin](https://shokunin-topaz.vercel.app) | Nocturne | Bespoke samurai ateliers | Japan · Kaga, Seki, Wajima | [`sites/shokunin`](sites/shokunin) · live |
+| [Casa Vicente](https://casavicente.vercel.app) | Nocturne | Family-owned boutique guitar atelier | Spain · Andalusia | [`sites/vicente`](sites/vicente) · live |
+| [Schwarzwald](https://schwarzwald-chi.vercel.app) | Nocturne | Cuckoo clock house, est. 1854 | Germany · Black Forest | [`sites/schwarzwald`](sites/schwarzwald) · live |
 | [Lagar do Sol](https://lagar-do-sol.vercel.app) | Aubade | Residential, collected olive-estate hotel | Portugal · Alentejo, between Estremoz and Vila Viçosa | [`sites/lagar-do-sol`](sites/lagar-do-sol) · live |
 | [Aresta](https://aresta-azure.vercel.app) | Aubade | Contemporary, architecture-led hotel | Portugal · Costa Vicentina, Carrapateira | [`sites/aresta`](sites/aresta) · live |
 | [Fornace alla Luna](https://alla-luna.vercel.app) | Nocturne | Murano glass furnace, one goblet atelier | Italy · Venice, Murano | [`sites/alla-luna`](sites/alla-luna) · live |
@@ -45,6 +45,28 @@ The two series share standards, not styling. Read
 | [Traccia](https://traccia-telai.vercel.app) | Pastorale | Steel frame builder — the road writes the specification | Italy · Edolo, Val Camonica | [`sites/traccia`](sites/traccia) · live |
 | [Fàire](https://rubha-na-faire.vercel.app) | Vigil | Lighthouse keeper's house — a light that counts | Scotland · Rubha na Fàire, Wester Ross | [`sites/faire`](sites/faire) · live |
 | [Tsutsumiya (包屋)](https://tsutsumiya.vercel.app) | Nocturne | Wrapping house — the cloth decides what you may take | Japan · Itachibori, Osaka | [`sites/tsutsumiya`](sites/tsutsumiya) · live |
+
+## The showcase — `wgw/`
+
+**[The Foundry by Winter Garden Web](https://wintergardenweb.vercel.app)** — the
+public gallery for the collection, at `wintergardenweb.com`. Its signature is a
+**light map**: every site placed by real coordinates on an Equal Earth
+projection, lit by the actual solar terminator, so the collection's five
+qualities of light become the map's rendering model. Scrub the day and the
+ateliers wake in order.
+
+### The registry — `foundry.json`
+
+One machine-readable file at the repo root is the content store for the whole
+collection. `wgw` derives everything from it: map nodes, roster, case-study
+pages, hero imagery, JSON API. **Registering a new site is one entry in this
+file and nothing else.**
+
+- `wgw/scripts/sync.mjs` validates it and derives per-site imagery. A missing
+  coordinate or palette fails the build with a named field, so an unattended
+  registration cannot ship a broken node.
+- `wgw/src/content.config.ts` types it as an Astro content collection.
+- `GET /api/collection.json` serves it.
 
 Each site is **fully self-contained** — its own stack, its own assets, its own `package.json`. They never import from each other. That separation is the point: it's what keeps each craft's identity distinct rather than collapsing into one house style.
 
