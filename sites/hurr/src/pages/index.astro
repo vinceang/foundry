@@ -1,0 +1,408 @@
+---
+import "@fontsource/amiri/400.css";
+import "@fontsource/amiri/700.css";
+import "@fontsource/barlow-semi-condensed/400.css";
+import "@fontsource/barlow-semi-condensed/500.css";
+import "../styles/global.css";
+
+const species = [
+  { id: "hurr", label: "Hurr", en: "Saker", block: 1.0, w: 46, h: 38 },
+  { id: "shaheen", label: "Shaheen", en: "Peregrine", block: 0.94, w: 42, h: 35 },
+  { id: "gyr", label: "Gyr", en: "Gyrfalcon", block: 1.12, w: 51, h: 43 },
+  { id: "hybrid", label: "Gyr-hurr", en: "Hybrid", block: 1.06, w: 49, h: 41 },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hurr — falconry furniture, Al Ain</title>
+    <meta
+      name="description"
+      content="A four-bench workshop in Al Ain making hoods, gloves and jesses for falcons flown at first and last light. Every burqu' cut to one bird."
+    />
+    <script is:inline>
+      // Motion is opt-in. Without this class the composition is already
+      // finished, so JS-off and reduced-motion both get the whole page.
+      const q = new URLSearchParams(location.search);
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!q.has("nofx") && !reduced) document.documentElement.classList.add("fx");
+      if (q.has("nofx")) document.documentElement.classList.add("nofx");
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#burqu">Skip to the hood</a>
+
+    <header class="head" id="top">
+      <a class="mark" href="#top">
+        <span class="mark__ar" lang="ar">حر</span>
+        <span class="mark__la">HURR</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#burqu">The burqu&rsquo;</a>
+        <a href="#commission">Commission</a>
+      </nav>
+    </header>
+
+    <!-- I. First light -->
+    <section class="hero" id="hero">
+      <div class="wrap">
+        <p class="record">
+          <span>Hurr</span><i aria-hidden="true">·</i>
+          <span><b>1,012 g</b></span><i aria-hidden="true">·</i>
+          <span>flown 17:42</span><i aria-hidden="true">·</i>
+          <span>burqu&rsquo; size 4</span>
+        </p>
+
+        <h1 class="hero__line settle">
+          Everything here is made<br />for a bird that could leave.
+        </h1>
+
+        <p class="hero__sub narrow settle">
+          A falcon is not owned. It is flown free at first and last light, and
+          it comes back — or it does not. Four benches in Al Ain, at the foot
+          of Jebel Hafeet, making the equipment that daily consent requires.
+        </p>
+      </div>
+    </section>
+
+    <hr class="stitch wrap" />
+
+    <!-- III. The burqu' — the signature -->
+    <section class="burqu" id="burqu">
+      <div class="wrap">
+        <p class="record">
+          <span>Pattern</span><i aria-hidden="true">·</i>
+          <span>three-piece Arab hood</span><i aria-hidden="true">·</i>
+          <span><b data-rd-size>size 4</b></span><i aria-hidden="true">·</i>
+          <span data-rd-leather>51 cm² kid-lined goat</span>
+        </p>
+
+        <div class="burqu__head">
+          <h2 class="burqu__title">Cut to one bird.</h2>
+          <p class="burqu__lede narrow">
+            A hood that does not fit is not a lesser object; it is a cruelty.
+            So it is cut to the individual bird — measured across the head and
+            from beak to crown, and shaped differently for a bird taken from
+            the nest than for one caught wild. Enter yours. The pattern is
+            drawn as a cutter would lay it, and this same panel places the
+            order.
+          </p>
+        </div>
+
+        <div class="burqu__grid">
+          <!-- the drawing -->
+          <figure class="pattern">
+            <svg
+              class="pattern__svg"
+              viewBox="0 0 900 560"
+              role="img"
+              aria-labelledby="pattern-desc"
+              data-pattern
+            >
+              <desc id="pattern-desc">
+                The three flat pattern pieces of an Arab falcon hood — the
+                centre block and two side panels — redrawn to the measurements
+                entered beside them.
+              </desc>
+
+              <g class="pattern__paper">
+                <path class="pc pc--panel" data-left d="" />
+                <path class="pc pc--panel" data-right d="" />
+                <path class="pc pc--block" data-block d="" />
+                <circle class="pc__socket" data-socket cx="430" cy="80" r="9" />
+                <path class="pc__eye" data-eyeL d="" />
+                <path class="pc__eye" data-eyeR d="" />
+                <path class="pc__brace" data-brace d="" />
+              </g>
+
+              <g class="pattern__dims" data-dims>
+                <line data-dimw x1="0" y1="0" x2="0" y2="0" />
+                <text data-dimwt x="0" y="0" text-anchor="middle">—</text>
+                <line data-dimh x1="0" y1="0" x2="0" y2="0" />
+                <text data-dimht x="0" y="0" text-anchor="middle">—</text>
+              </g>
+            </svg>
+            <figcaption class="pattern__cap">
+              <span data-cap-species>Hurr</span> ·
+              <span data-cap-temper>nest-taken</span> · pieces shown flat,
+              actual size <span data-cap-scale>1:1.6</span>
+            </figcaption>
+          </figure>
+
+          <!-- the measurements, which are also the order -->
+          <form class="fit" data-fit>
+            <fieldset class="fit__set">
+              <legend class="eyebrow">The bird</legend>
+
+              <div class="fit__species" role="radiogroup" aria-label="Species">
+                {species.map((s, i) => (
+                  <label class="sp">
+                    <input
+                      type="radio"
+                      name="species"
+                      value={s.id}
+                      data-w={s.w}
+                      data-h={s.h}
+                      data-block={s.block}
+                      checked={i === 0}
+                    />
+                    <span class="sp__la">{s.label}</span>
+                    <span class="sp__en">{s.en}</span>
+                  </label>
+                ))}
+              </div>
+
+              <label class="fit__row">
+                <span class="fit__label">Across the head</span>
+                <span class="fit__val"><output data-out-w>46</output> mm</span>
+                <input type="range" name="w" min="38" max="52" step="1" value="46" data-w />
+              </label>
+
+              <label class="fit__row">
+                <span class="fit__label">Beak to crown</span>
+                <span class="fit__val"><output data-out-h>38</output> mm</span>
+                <input type="range" name="h" min="30" max="46" step="1" value="38" data-h />
+              </label>
+
+              <div class="fit__temper" role="radiogroup" aria-label="How the bird was taken">
+                <label class="tm">
+                  <input type="radio" name="temper" value="eyas" checked />
+                  <span>Eyas</span><small>nest-taken, calm</small>
+                </label>
+                <label class="tm">
+                  <input type="radio" name="temper" value="passage" />
+                  <span>Passage</span><small>wild-caught, sharper</small>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="fit__spec" data-spec>
+              <div><dt>Size</dt><dd data-sp-size>4</dd></div>
+              <div><dt>Block</dt><dd data-sp-block>59 mm</dd></div>
+              <div><dt>Eye panel</dt><dd data-sp-eye>shallow</dd></div>
+              <div><dt>Leather</dt><dd data-sp-leather>51 cm²</dd></div>
+              <div><dt>Plume</dt><dd data-sp-plume>heron, natural</dd></div>
+              <div><dt>Price</dt><dd data-sp-price>AED 1,450</dd></div>
+            </div>
+
+            <div class="fit__order">
+              <label class="fit__field">
+                <span class="fit__label">Your name</span>
+                <input type="text" name="name" required autocomplete="name" />
+              </label>
+              <label class="fit__field">
+                <span class="fit__label">Email</span>
+                <input type="email" name="email" required autocomplete="email" />
+              </label>
+              <label class="fit__field">
+                <span class="fit__label">The bird&rsquo;s name, and anything we should know</span>
+                <textarea name="note" rows="2"></textarea>
+              </label>
+
+              <button class="btn" type="submit">Commission this hood</button>
+              <p class="fit__note" data-fit-note role="status">
+                We reply within two days. Nothing is charged here — the
+                measurements come to the bench and we write back.
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const form = document.querySelector<HTMLFormElement>("[data-fit]");
+      const svg = document.querySelector<SVGSVGElement>("[data-pattern]");
+
+      if (form && svg) {
+        const $ = <T extends Element>(s: string) => document.querySelector<T>(s)!;
+        const K = 6.4; // px per mm at the drawn scale
+        const PAD = 46; // breathing room around the laid-out pieces
+        let CX = 430;
+        const TOP = 62;
+
+        const el = {
+          left: $<SVGPathElement>("[data-left]"),
+          right: $<SVGPathElement>("[data-right]"),
+          block: $<SVGPathElement>("[data-block]"),
+          socket: $<SVGCircleElement>("[data-socket]"),
+          eyeL: $<SVGPathElement>("[data-eyeL]"),
+          eyeR: $<SVGPathElement>("[data-eyeR]"),
+          brace: $<SVGPathElement>("[data-brace]"),
+          dimw: $<SVGLineElement>("[data-dimw]"),
+          dimwt: $<SVGTextElement>("[data-dimwt]"),
+          dimh: $<SVGLineElement>("[data-dimh]"),
+          dimht: $<SVGTextElement>("[data-dimht]"),
+        };
+
+        const outW = $<HTMLOutputElement>("[data-out-w]");
+        const outH = $<HTMLOutputElement>("[data-out-h]");
+        // Scope to the sliders explicitly: the species radios also carry data-w/h
+        // (their typical head measurements), so input[data-w] matched a radio
+        // and Number("hurr") made every derived figure NaN.
+        const wIn = form.querySelector<HTMLInputElement>('input[type="range"][name="w"]')!;
+        const hIn = form.querySelector<HTMLInputElement>('input[type="range"][name="h"]')!;
+
+        /** Hood size, the way a maker numbers them: off the head width. */
+        const sizeOf = (w: number) => Math.max(1, Math.min(7, Math.round((w - 34) / 2.6)));
+
+        function draw() {
+          const data = new FormData(form);
+          const sp = form.querySelector<HTMLInputElement>('input[name="species"]:checked')!;
+          const blockScale = Number(sp.dataset.block);
+          const passage = data.get("temper") === "passage";
+
+          const w = Number(wIn.value);
+          const h = Number(hIn.value);
+          outW.value = String(w);
+          outH.value = String(h);
+
+          // Size the canvas to the pieces rather than hoping they fit: a gyr
+          // on a passage cut is far larger than a shaheen, and a fixed viewBox
+          // clipped the dimension lines at the top of the range.
+          const panelW = w * 0.95 * K;
+          const panelH = h * 1.15 * K;
+          const blockW = w * 0.5 * K;
+          const blockH = h * 1.5 * K * blockScale;
+
+          const gapPre = 26;
+          const halfSpan = blockW / 2 + gapPre + panelW;
+          const lowestPre = Math.max(TOP + 24 + panelH, TOP + blockH + 18);
+          const vbW = Math.round((halfSpan + PAD) * 2 + 70); // +70 for the side dimension
+          const vbH = Math.round(lowestPre + 96);
+          svg.setAttribute("viewBox", `0 0 ${vbW} ${vbH}`);
+          CX = (vbW - 70) / 2 + 10;
+
+          // Centre block: the strip over the crown. A gyr's is taller.
+          const bx = CX - blockW / 2;
+          el.block.setAttribute(
+            "d",
+            `M${bx} ${TOP + 16}
+             Q${CX} ${TOP - 10} ${bx + blockW} ${TOP + 16}
+             L${bx + blockW} ${TOP + blockH}
+             Q${CX} ${TOP + blockH + 18} ${bx} ${TOP + blockH}
+             Z`
+          );
+
+          el.socket.setAttribute("cx", String(CX));
+          el.socket.setAttribute("cy", String(TOP + 18));
+
+          // Side panels, mirrored, seamed to the block.
+          const gap = 26;
+          const panel = (dir: 1 | -1) => {
+            const x0 = CX + dir * (blockW / 2 + gap);
+            const x1 = x0 + dir * panelW;
+            const y0 = TOP + 24;
+            const y1 = y0 + panelH;
+            return `M${x0} ${y0}
+                    Q${x0 + dir * panelW * 0.55} ${y0 - 22} ${x1} ${y0 + panelH * 0.3}
+                    L${x1} ${y1 - panelH * 0.18}
+                    Q${x0 + dir * panelW * 0.5} ${y1 + 20} ${x0} ${y1}
+                    Z`;
+          };
+          el.left.setAttribute("d", panel(-1));
+          el.right.setAttribute("d", panel(1));
+
+          // The eye panel: deeper on a wild-caught bird, which sees more.
+          const eyeR = passage ? 0.42 : 0.3;
+          const eye = (dir: 1 | -1) => {
+            const cx = CX + dir * (blockW / 2 + gap + panelW * 0.52);
+            const cy = TOP + 24 + panelH * 0.46;
+            const rx = panelW * 0.26;
+            const ry = panelH * eyeR * 0.5;
+            return `M${cx - rx} ${cy}
+                    Q${cx} ${cy - ry * 1.6} ${cx + rx} ${cy}
+                    Q${cx} ${cy + ry * 1.6} ${cx - rx} ${cy} Z`;
+          };
+          el.eyeL.setAttribute("d", eye(-1));
+          el.eyeR.setAttribute("d", eye(1));
+
+          // The braces — the two straps that close the hood behind the head.
+          const by = TOP + 24 + panelH * 0.82;
+          const reach = passage ? 30 : 20;
+          el.brace.setAttribute(
+            "d",
+            `M${CX - blockW / 2 - gap - panelW} ${by} h${-reach}
+             M${CX + blockW / 2 + gap + panelW} ${by} h${reach}`
+          );
+
+          // Dimension lines, because this is a pattern, not a picture.
+          // The block hangs lower than the panels, so clear the lower of the two.
+          const lowest = Math.max(TOP + 24 + panelH, TOP + blockH + 18);
+          const dimY = lowest + 42;
+          const lx = CX - (blockW / 2 + gap + panelW);
+          const rx2 = CX + (blockW / 2 + gap + panelW);
+          el.dimw.setAttribute("x1", String(lx));
+          el.dimw.setAttribute("x2", String(rx2));
+          el.dimw.setAttribute("y1", String(dimY));
+          el.dimw.setAttribute("y2", String(dimY));
+          el.dimwt.setAttribute("x", String(CX));
+          el.dimwt.setAttribute("y", String(dimY + 20));
+          el.dimwt.textContent = `${w} mm across the head`;
+
+          const dimX = rx2 + 34;
+          el.dimh.setAttribute("x1", String(dimX));
+          el.dimh.setAttribute("x2", String(dimX));
+          el.dimh.setAttribute("y1", String(TOP + 16));
+          el.dimh.setAttribute("y2", String(TOP + blockH));
+          el.dimht.setAttribute("x", String(dimX + 4));
+          el.dimht.setAttribute("y", String(TOP + blockH / 2));
+          el.dimht.textContent = `${h} mm`;
+
+          /* ------------------------------------------------ the spec */
+
+          const size = sizeOf(w);
+          // px² → mm² (÷K²) → cm² (÷100). A hood is tens of cm², not dm².
+          const leather = ((panelW * panelH * 2 + blockW * blockH) / (K * K * 100)).toFixed(0);
+          const price = 900 + size * 110 + (passage ? 140 : 0) + (blockScale > 1.05 ? 180 : 0);
+
+          $("[data-sp-size]").textContent = String(size);
+          $("[data-sp-block]").textContent = `${Math.round(h * 1.5 * blockScale)} mm`;
+          $("[data-sp-eye]").textContent = passage ? "deep" : "shallow";
+          $("[data-sp-leather]").textContent = `${leather} cm²`;
+          $("[data-sp-plume]").textContent = passage ? "heron, trimmed" : "heron, natural";
+          $("[data-sp-price]").textContent = `AED ${price.toLocaleString("en-US")}`;
+
+          $("[data-rd-size]").textContent = `size ${size}`;
+          $("[data-rd-leather]").textContent = `${leather} cm² kid-lined goat`;
+          $("[data-cap-species]").textContent = sp.parentElement!.querySelector(".sp__la")!.textContent!;
+          $("[data-cap-temper]").textContent = passage ? "wild-caught" : "nest-taken";
+        }
+
+        // Changing species moves the sliders to that bird's typical head, so
+        // the drawing always starts from something real.
+        form.querySelectorAll<HTMLInputElement>('input[name="species"]').forEach((r) =>
+          r.addEventListener("change", () => {
+            wIn.value = r.dataset.w!;
+            hIn.value = r.dataset.h!;
+            draw();
+          })
+        );
+
+        form.addEventListener("input", draw);
+        draw();
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const note = $<HTMLElement>("[data-fit-note]");
+          note.textContent =
+            "Sent. The measurements are at the bench — we write back within two days.";
+          note.classList.add("is-sent");
+        });
+      }
+
+      // Entrances only when motion was opted into.
+      if (document.documentElement.classList.contains("fx")) {
+        const io = new IntersectionObserver(
+          (es) => es.forEach((x) => x.isIntersecting && (x.target.classList.add("landed"), io.unobserve(x.target))),
+          { rootMargin: "0px 0px -8% 0px" }
+        );
+        document.querySelectorAll(".settle").forEach((n) => io.observe(n));
+      }
+    </script>
+  </body>
+</html>
