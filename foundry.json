@@ -579,6 +579,28 @@
       },
       "signature": "The burqu', cut to one bird",
       "shipped": "2026-08-09"
+    },
+    {
+      "slug": "banaag",
+      "name": "Banaag",
+      "series": "vesper",
+      "what": "Custom jeepney body shop — the vehicle is the lamp",
+      "tagline": "We build the body. You finish it every morning, before the sun.",
+      "place": {
+        "label": "Sindalan, San Fernando",
+        "country": "Philippines",
+        "lat": 15.0233,
+        "lon": 120.6586
+      },
+      "url": "https://banaag-hulmahan.vercel.app",
+      "hero": "images/hero.webp",
+      "palette": {
+        "ground": "#0a161a",
+        "light": "#e9eae6",
+        "accent": "#e6b043"
+      },
+      "signature": "Ang hulma — chalk it out, and file it",
+      "shipped": "2026-08-09"
     }
   ]
 }
