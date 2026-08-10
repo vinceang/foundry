@@ -42,7 +42,7 @@ const DETALYE = [
       ["Bigat", "2,4 kg"],
       ["Yari sa", "brass, chrome over nickel"],
       ["Kabit", "M8 through-bolt, 3 mm backing plate"],
-      ["Gawa ni", "Fundidor Sy, Angeles"],
+      ["Gawa sa", "Fundición Sy, Angeles"],
     ],
   },
   {
@@ -59,7 +59,7 @@ const DETALYE = [
       ["Sukat", "1 640 × 300 mm"],
       ["Plantsa", "1,2 mm stainless, 304"],
       ["Letra", "hand-lettered enamel, two coats"],
-      ["Kasama", "front board and two side boards"],
+      ["Kasama", "harap at dalawang gilid"],
       ["Ilaw", "wired for a tube behind, if ordered"],
     ],
   },
@@ -74,11 +74,11 @@ const DETALYE = [
     blurb:
       "Everybody who ever rides steps on it, twice. Ours is a folded box section rather than an angle, so it does not oil-can under a man carrying a sack of rice, and the tread is bolted rubber that can be replaced in the yard for ₱600 instead of the whole board.",
     spec: [
-      ["Haba", "2 400 mm bawat panig"],
+      ["Haba", "2 400 mm bawat gilid"],
       ["Seksyon", "folded box, 2,0 mm"],
-      ["Tapak", "ribbed rubber, bolted"],
-      ["Bracket", "6 bawat panig, welded"],
-      ["Presyo", "pair, chromed, fitted"],
+      ["Tapakan", "ribbed rubber, bolted"],
+      ["Bracket", "6 bawat gilid, welded"],
+      ["Saklaw", "pares, chromed, kabit na"],
     ],
   },
   {
@@ -94,7 +94,7 @@ const DETALYE = [
     spec: [
       ["Panel", "0,6 mm anodised aluminium"],
       ["Pattern", "diamond, 90 mm pitch"],
-      ["Sakop", "buong kisame at haligi"],
+      ["Sakop", "buong kisame at poste"],
       ["Kabit", "chrome cup washer, 8 mm"],
       ["Oras", "dalawang araw sa dalawang tao"],
     ],
@@ -113,8 +113,8 @@ const DETALYE = [
       ["Rail", "chromed, 12 mm, full width"],
       ["Kasama", "12 tassels, 2 medallions"],
       ["Kulay", "sabihin mo lang"],
-      ["Presyo", "set, fitted"],
-      ["Bilin", "walang hahadlang sa salamin"],
+      ["Saklaw", "buong set, kabit na"],
+      ["Bilin", "walang haharang sa salamin"],
     ],
   },
   {
@@ -126,9 +126,9 @@ const DETALYE = [
     en: "the light valance",
     price: 26000,
     blurb:
-      "A single row of coloured fluorescent under each roof edge, in a chromed reflector channel, on its own fused circuit off the second battery. This is the fitting that decides what your jeepney looks like at 04:41, which is the hour that matters.",
+      "A single row of coloured fluorescent under each roof edge, in a chromed reflector channel, on its own fused circuit off the second battery. This is the fitting that decides what your jeepney looks like at 04:41, when the queue at the corner is choosing.",
     spec: [
-      ["Bawat panig", "4 × 600 mm tubes"],
+      ["Bawat gilid", "4 × 600 mm tubes"],
       ["Kulay", "aqua, rosas, berde, asul, ginto"],
       ["Sirkito", "fused, second battery"],
       ["Channel", "chromed reflector, riveted"],
@@ -141,8 +141,8 @@ const LEDGER = [
   { yr: 2026, op: "Rodolfo Manalastas", town: "Mexico, Pampanga", rt: "San Fernando — Mexico", cap: 18, ch: "4be1", bub: "hubog", kab: "isa", il: "rotor", pt: "eskrol", tb: "rosas", ded: "Ka Rudy" },
   { yr: 2025, op: "Herminia Sicat", town: "Bacolor", rt: "Bacolor — Guagua", cap: 16, ch: "4be1", bub: "patag", kab: "pares", il: "isahan", pt: "guhit", tb: "aqua", ded: "Sicat Lines" },
   { yr: 2025, op: "Alvin Punzalan", town: "Sto. Tomas", rt: "Sto. Tomas — Minalin", cap: 22, ch: "4hf1", bub: "kargahan", kab: "buo", il: "doble", pt: "mural", tb: "ginto", ded: "Katas ng Riyadh" },
-  { yr: 2024, op: "Benito Lacsamana", town: "Sindalan", rt: "Sindalan — Dolores", cap: 20, ch: "4d34", bub: "hubog", kab: "isa", il: "doble", pt: "eskrol", tb: "berde", ded: "Sta. Rita, ipanalangin" },
-  { yr: 2024, op: "Marilou Dizon", town: "San Simon", rt: "San Simon — Apalit", cap: 14, ch: "surplus", bub: "patag", kab: "wala", il: "isahan", pt: "guhit", tb: "asul", ded: "Para kay Inay" },
+  { yr: 2024, op: "Benito Lacsamana", town: "San Fernando", rt: "Sindalan — Dolores", cap: 20, ch: "4d34", bub: "hubog", kab: "isa", il: "doble", pt: "eskrol", tb: "berde", ded: "Sta. Rita, ipanalangin mo kami" },
+  { yr: 2024, op: "Marilou Dizon", town: "San Simon", rt: "San Simon — Apalit", cap: 14, ch: "surplus", bub: "patag", kab: "wala", il: "isahan", pt: "guhit", tb: "asul", ded: "Para kang Ima" },
   { yr: 2023, op: "Jhun Canlas", town: "Angeles", rt: "Angeles — Magalang", cap: 18, ch: "4d34", bub: "kargahan", kab: "pares", il: "rotor", pt: "mural", tb: "rosas", ded: "Canlas Bros." },
 ];
 ---
@@ -181,8 +181,8 @@ const LEDGER = [
 
     <header class="head" id="top">
       <a class="mark" href="#top">Banaag</a>
-      <nav class="nav" aria-label="Sections">
-        <a href="#hulmahan" data-opt>Ang hulmahan</a>
+      <nav class="nav" aria-label="Sections" lang="tl">
+        <a href="#karosera" data-opt>Ang karosera</a>
         <a href="#hulma">Ang hulma</a>
         <a href="#detalye" data-opt>Ang detalye</a>
         <a href="#letrista" data-opt>Ang letrista</a>
@@ -205,20 +205,20 @@ const LEDGER = [
         <div class="hero__scrim" aria-hidden="true"></div>
         <div class="wrap">
           <div class="chap">
-            <p class="dim"><b>04:41</b><i>sikat ng araw 05:22</i></p>
+            <p class="dim"><b>04:41</b><i>pagsikat 05:22</i></p>
             <div>
               <h1 class="hero__line settle">
-                We build the body. The man with the rag <em>finishes it.</em>
+                We build the body. <em>You finish it</em> every morning.
               </h1>
               <p class="hero__sub narrow settle">
-                The cock goes off, he carries his coffee out to the unit he is
-                still paying for, finds one spot of dust on a panel he polished
-                last night, wipes it, and stands there a minute and a half
-                before the day starts taking from him.
+                The rooster starts up at half four. You carry your coffee out
+                to the unit you are still paying for, find one spot of dust on
+                a panel you polished last night, wipe it off, and stand there a
+                minute and a half looking at it before the shift.
               </p>
               <p class="hero__sub narrow settle">
-                That minute is what we are actually selling. Twenty-two of us,
-                on the highway at Sindalan, since 1978.
+                We build the thing that is worth doing that to. Twenty-two of
+                us, on the highway at Sindalan, since 1978.
               </p>
             </div>
           </div>
@@ -227,10 +227,10 @@ const LEDGER = [
     </section>
 
     <!-- ------------------------------------------- II. Ang hulmahan -->
-    <section id="hulmahan">
+    <section id="karosera">
       <div class="wrap">
         <div class="chap">
-          <p class="dim"><b>22 tao</b><i>9–14 katawan a year</i></p>
+          <p class="dim"><b>22 katao</b><i>9–14 katawan a year</i></p>
           <div>
             <h2 class="big settle">
               A body is a hundred and forty panels, and not one of them arrives
@@ -242,13 +242,18 @@ const LEDGER = [
                 else. Everything above the frame rail we make: ribs bent over
                 the <strong>hulma</strong>, the wooden buck standing on the
                 floor since Boyet Dizon cut it in 1981, then stainless beaten
-                over the ribs a panel at a time with a hammer and a sandbag.
+                over the ribs a panel at a time with a hammer and a sandbag.{" "}
                 <span class="gloss">Hulma — a form, a mould.</span>
               </p>
               <p>
                 Before any of it, the whole side is chalked full size on the
                 concrete. You can stand on your own jeepney five months before
                 it exists. Most people do.
+              </p>
+              <p>
+                The floor argues in Kapampangan and the sheet is written in
+                Tagalog, because that is the language a franchise application
+                is in. Both are on this page, in that order.
               </p>
             </div>
           </div>
@@ -280,27 +285,54 @@ const LEDGER = [
             <p>
               <strong
                 >Come with a picture in your head and we will build that.</strong
-              >
+              >{" "}
               If you want the same body as everybody else on your route, there
               are three shops in Guagua who will do it faster and cheaper than
               us, and we will tell you which ones.
             </p>
           </div>
           <div class="body settle">
+            <h3 class="mid">The rules, said out loud</h3>
+            <p style="margin-block-start: var(--s-4)">
+              We will not pretend the rules are what they used to be. A new
+              traditional body on a surplus engine cannot be plated as a new
+              franchise, and has not been able to for years now.
+            </p>
+            <p>
+              <strong>So we ask about the paper before the picture.</strong>{" "}
+              Most of what leaves this gate is a rebody for a unit that already
+              holds a line, for a cooperative that consolidated and kept its
+              route. The rest goes to provincial, private and resort work
+              outside the franchise net entirely.
+            </p>
+            <p>
+              Tell us your plate, your cooperative and your route, and we will
+              tell you on the phone whether the jeepney you want can be
+              registered. If it cannot, you will have lost the price of a call
+              and nothing else.
+            </p>
+          </div>
+          <div class="body settle">
             <h3 class="mid">What it costs, plainly</h3>
             <p style="margin-block-start: var(--s-4)">
               Every price on this site is the real price, and the sheet below
-              adds itself up while you change your mind. A whole body runs
-              <span class="num">₱698,800</span> to
+              adds itself up while you change your mind. A whole body runs{" "}
+              <span class="num">₱698,800</span> to{" "}
               <span class="num">₱1,551,400</span> depending mostly on how many
               people you seat.
             </p>
             <p>
-              Thirty per cent to enter the queue, the rest in
-              <strong>hulog</strong> over 24, 36 or 48 months. We take your old
-              body against the price. Nobody here will ask what you do for a
-              living before quoting you.
-              <span class="gloss">Hulog — instalments.</span>
+              Thirty per cent to enter the queue, the rest sa{" "}
+              <strong>hulugan</strong> over 24, 36 or 48 months, with no
+              interest on any of it. A unit on a provincial route brings in
+              roughly <span class="num">₱700</span> to{" "}
+              <span class="num">₱1,100</span> boundary a day, so do the
+              arithmetic against the monthly figure on the sheet before you
+              sign anything — and if it does not work on one unit, say so and
+              we will tell you what does. We take your old body against the
+              price. Nobody here will ask what you do for a living before
+              quoting you.{" "}
+              <span class="gloss">Hulugan — paying by instalment.</span>
             </p>
           </div>
         </div>
@@ -317,16 +349,15 @@ const LEDGER = [
           <div>
             <h2 class="big settle">Chalk it out.</h2>
             <p class="body narrow lede settle">
-              This is the first document we make, and you are standing at it.
-              Change anything and the side view redraws — the bays multiply,
-              the wheelbase stretches, the chrome goes on, your own words go up
-              on the board. When it looks like your jeepney, send it. It is the
-              same sheet either way.
+              We chalk this out full size on the floor before a panel is cut,
+              and this is that drawing. Change anything and it changes with
+              you. When it looks like your jeepney, send it. It is the same
+              sheet whether you are buying a whole body or one chrome horse.
             </p>
           </div>
         </div>
 
-        <form class="hulma__grid" id="sheet" action="mailto:hulmahan@banaag.ph" method="post" enctype="text/plain" novalidate>
+        <form class="hulma__grid" id="sheet" action="mailto:karosera@banaag.ph" method="get" novalidate>
           <div>
             <div class="hulma__frame">
               <svg data-svg viewBox={P.vb} role="img" aria-labelledby="drawing-title" set:html={svg}>
@@ -338,7 +369,7 @@ const LEDGER = [
             </p>
 
             <fieldset>
-              <legend>Katawan <i>— the chassis under it</i></legend>
+              <legend lang="tl">Katawan <i lang="en">— the chassis under it</i></legend>
               <div class="opts">
                 {Object.entries(CHASSIS).map(([k, v]) => (
                   <label class="opt">
@@ -350,7 +381,7 @@ const LEDGER = [
             </fieldset>
 
             <fieldset>
-              <legend>Kapasidad <i>— how many people sit down</i></legend>
+              <legend lang="tl">Kapasidad <i lang="en">— how many people sit down</i></legend>
               <div class="opts">
                 {CAPACITY.map((c) => (
                   <label class="opt">
@@ -363,7 +394,7 @@ const LEDGER = [
 
             <div class="split" style="margin-block-start: 0; gap: var(--s-5)">
               <fieldset>
-                <legend>Bubong <i>— the roof</i></legend>
+                <legend lang="tl">Bubong <i lang="en">— the roof</i></legend>
                 <div class="opts">
                   {Object.entries(ROOF).map(([k, v]) => (
                     <label class="opt">
@@ -375,7 +406,7 @@ const LEDGER = [
               </fieldset>
 
               <fieldset>
-                <legend>Kabayo <i>— the chrome</i></legend>
+                <legend lang="tl">Kabayo <i lang="en">— the chrome</i></legend>
                 <div class="opts">
                   {Object.entries(KABAYO).map(([k, v]) => (
                     <label class="opt">
@@ -389,7 +420,7 @@ const LEDGER = [
 
             <div class="split" style="margin-block-start: 0; gap: var(--s-5)">
               <fieldset>
-                <legend>Ilaw <i>— the valance</i></legend>
+                <legend lang="tl">Ilaw <i lang="en">— the valance</i></legend>
                 <div class="opts">
                   {Object.entries(ILAW).map(([k, v]) => (
                     <label class="opt">
@@ -415,7 +446,7 @@ const LEDGER = [
               </fieldset>
 
               <fieldset>
-                <legend>Pinta <i>— the letrista's hand</i></legend>
+                <legend lang="tl">Pinta <i lang="en">— the letrista's hand</i></legend>
                 <div class="opts">
                   {Object.entries(PINTA).map(([k, v]) => (
                     <label class="opt">
@@ -429,11 +460,11 @@ const LEDGER = [
 
             <div class="split" style="margin-block-start: var(--s-5); gap: var(--s-5)">
               <div class="field" style="margin-block-start:0">
-                <label for="route">Karatula <i>— your route, on the board</i></label>
+                <label for="route">Karatula <i lang="en">— your route, on the board</i></label>
                 <input type="text" id="route" name="route" maxlength="34" value={DEFAULT.route} placeholder="San Fernando — Sto. Tomas" />
               </div>
               <div class="field" style="margin-block-start:0">
-                <label for="ded">Dedikasyon <i>— your line, on the side</i></label>
+                <label for="ded">Dedikasyon <i lang="en">— your line, on the side</i></label>
                 <input type="text" id="ded" name="dedication" maxlength="26" value={DEFAULT.dedication} placeholder="Katas ng Riyadh" />
               </div>
             </div>
@@ -447,14 +478,14 @@ const LEDGER = [
                 <span class="gloss">unit 0418</span>
               </div>
 
-              <div class="mode" role="group" aria-label="What you are ordering">
+              <div class="mode" role="group" aria-label="What you are ordering" lang="tl">
                 <label class="opt">
                   <input type="radio" name="mode" value="buo" checked />
                   <span>Buong katawan</span>
                 </label>
                 <label class="opt">
                   <input type="radio" name="mode" value="kabit" />
-                  <span>Kabit lang</span>
+                  <span>Pakabit lang</span>
                 </label>
               </div>
 
@@ -491,22 +522,23 @@ const LEDGER = [
               </div>
 
               <div class="total">
-                <span>Kabuuan</span>
+                <span lang="tl">Kabuuan <i lang="en">— total</i></span>
                 <b data-total>{peso(P.money.total)}</b>
               </div>
 
-              <div class="terms" data-terms>
+              <div class="terms" data-terms lang="tl">
                 <ul>
-                  <li>Paunang bayad, 30% — <b data-dep>{peso(P.money.deposit)}</b></li>
+                  <li>Paunang bayad <i>(deposit)</i>, 30% — <b data-dep>{peso(P.money.deposit)}</b></li>
                   {P.money.terms.map((t) => (
                     <li>{t.m} buwan — <b>{peso(t.monthly)}</b> kada buwan</li>
                   ))}
-                  <li data-slot>Simula sa queue: <b>{P.money.slotWeeks} linggo</b> mula sa deposito</li>
+                  <li><strong>Walang interes.</strong> Ang presyo ay presyo.</li>
+                  <li data-slot>Simula ng gawa: <b>{P.money.slotWeeks} linggo</b> mula sa paunang bayad</li>
                 </ul>
               </div>
 
               <div class="field">
-                <label for="pangalan">Pangalan <i>— who we call</i></label>
+                <label for="pangalan">Pangalan <i lang="en">— who we call</i></label>
                 <input type="text" id="pangalan" name="pangalan" required placeholder="Rodolfo Manalastas" />
                 <span class="err">We need a name to put on the sheet.</span>
               </div>
@@ -516,14 +548,14 @@ const LEDGER = [
                 <span class="err">A number we can actually reach, mobile is fine.</span>
               </div>
               <div class="field">
-                <label for="sabihin">May sasabihin ka? <i>— optional</i></label>
+                <label for="sabihin">May sasabihin ka? <i lang="en">— optional</i></label>
                 <textarea id="sabihin" name="sabihin" rows="3" placeholder="Kung ano ang nasa isip mo."></textarea>
               </div>
 
-              <button class="btn" type="submit" data-submit>Ipadala ang sheet</button>
+              <button class="btn" type="submit" data-submit lang="tl">Ipadala ang sheet</button>
               <p class="note" data-note role="status" aria-live="polite">
                 Nothing is charged here and no card is asked for. The sheet goes
-                to the shop and Merced calls you — you do not have to chase us.
+                to the shop and Merced calls you. You do not have to chase us.
               </p>
             </div>
           </aside>
@@ -537,7 +569,7 @@ const LEDGER = [
     <section id="detalye">
       <div class="wrap">
         <div class="chap">
-          <p class="dim"><b>₱2 400</b><i>to ₱52,000, fitted</i></p>
+          <p class="dim"><b>₱2,400</b><i>to ₱52,000, fitted</i></p>
           <div>
             <h2 class="big settle">
               The parts people stop and look at.
@@ -632,19 +664,20 @@ const LEDGER = [
                 </p>
                 <p>
                   He works in four hands, and he will tell you which one your
-                  route wants:
-                  <strong>bilog</strong> for a long name that must stay
-                  readable at forty metres, <strong>tabas</strong> when the
-                  board is short and the name is not,
-                  <strong>korido</strong> for a dedication that is meant to be
-                  read slowly, and <strong>bulaklak</strong> when somebody
-                  wants their mother's name on the side of a vehicle and wants
-                  it to look like it means something.
+                  route wants:{" "}
+                  <strong>blok</strong> for a long name that has to stay
+                  readable at forty metres, <strong>bilog</strong> when the
+                  board is short and the name is not,{" "}
+                  <strong>eskrito</strong> for a dedication meant to be read
+                  slowly, and <strong>sombra</strong> — block with a dropped
+                  shadow and a chrome outline — when somebody wants their
+                  mother's name on the side of a vehicle to be the first thing
+                  you see from across the highway.
                 </p>
                 <p>
-                  A route board is <span class="num">₱14,000</span> including
-                  both sides. A dedication is included. He has never charged
-                  for a saint.
+                  A route board set is <span class="num">₱14,000</span> — the
+                  front and both sides. A dedication is included, and so is a
+                  saint; Nolan has never once written one down on the sheet.
                 </p>
               </div>
             </div>
@@ -659,7 +692,7 @@ const LEDGER = [
     <section id="rotor">
       <div class="wrap">
         <div class="chap">
-          <p class="dim"><b>1908</b><i>unang Ligligan Parul</i></p>
+          <p class="dim"><b>1904</b><i>unang Ligligan Parul</i></p>
           <div>
             <h2 class="big settle">The lanterns taught us the lights.</h2>
             <div class="split">
@@ -672,6 +705,13 @@ const LEDGER = [
                   wrapped in cut foil contacts that a wireman files by hand,
                   one strip at a time, until the pattern in the lantern matches
                   the pattern he has in his head.
+                </p>
+                <p>
+                  Then the wireman lays a strip of tape on the barrel, and
+                  wherever the tape is, the hairpin lifts off the steel and the
+                  bulb goes dark. So the pattern is never written. It is{" "}
+                  <strong>cut as silence</strong> — he tapes the light away
+                  until what is left is what he heard in his head.
                 </p>
                 <p>
                   That is the same trade as a light valance, done by the same
@@ -698,8 +738,8 @@ const LEDGER = [
                   <div class="rotor-cell" style="animation-delay: 1.8s"></div>
                 </div>
                 <p class="gloss" style="margin-block-start: var(--s-2)">
-                  Ten contacts off a four-hundred-contact drum. The lit ones
-                  have been cut; the rest are still blank foil.
+                  Ten hairpins off a four-hundred-hairpin barrel. The dark
+                  cells are where the tape is.
                 </p>
               </div>
               <figure class="fig settle" style="margin-block-start:0">
@@ -707,13 +747,13 @@ const LEDGER = [
                   src="/images/rotor.webp"
                   width="980"
                   height="1461"
-                  alt="A hand-built lantern rotor: a wooden drum wrapped in cut foil contact strips, fine copper brush wires resting on it, and bundles of coloured wire fanning away across a worn bench."
+                  alt="A hand-built lantern rotor: a steel barrel banded with cut strips, dozens of fine wire hairpins resting on it, and bundles of coloured wire fanning away across a worn bench."
                   loading="lazy"
                   decoding="async"
                 />
                 <figcaption>
-                  A rotor part-cut. Each foil strip is one bulb, on for as long
-                  as the strip is wide.
+                  A barrel part-taped. Each hairpin is one bulb; each strip is
+                  how long that bulb stays dark.
                 </figcaption>
               </figure>
             </div>
@@ -728,9 +768,9 @@ const LEDGER = [
     <section id="inilabas">
       <div class="wrap">
         <div class="chap">
-          <p class="dim"><b>162</b><i>katawan since 1978</i></p>
+          <p class="dim"><b>521</b><i>katawan since 1978</i></p>
           <div>
-            <h2 class="big settle">Brought out.</h2>
+            <h2 class="big settle">Mga inilabas.</h2>
             <p class="body narrow lede settle">
               What has left the gate, and who it went to. Tap a line and the
               sheet above goes back to that specification. It is the fastest
@@ -757,7 +797,7 @@ const LEDGER = [
               data-ded={r.ded}
             >
               <span class="yr">{r.yr}</span>
-              <span class="op">{r.op}<i>{r.town}</i></span>
+              <span class="op" lang="tl">{r.op}<i>{r.town}</i></span>
               <span class="rt">
                 {r.rt}
                 <i>
@@ -783,7 +823,7 @@ const LEDGER = [
         <div class="plate-sig">
           <b>Banaag</b>
           <dl>
-            <dt>Hulmahan</dt>
+            <dt>Karosera</dt>
             <dd>MacArthur Highway, Sindalan</dd>
             <dt>Lungsod</dt>
             <dd>San Fernando, Pampanga</dd>
@@ -791,7 +831,7 @@ const LEDGER = [
             <dd>1978 — Ambrosio Dizon</dd>
             <dt>Ngayon</dt>
             <dd>Merced Dizon-Lansang</dd>
-            <dt>Bukas</dt>
+            <dt>Oras</dt>
             <dd>Lunes–Sabado, 06:00–17:00</dd>
           </dl>
         </div>
@@ -869,17 +909,18 @@ const LEDGER = [
           const terms = document.querySelector<HTMLElement>("[data-terms]")!;
           if (kabitMode) {
             terms.innerHTML =
-              `<ul><li>Bayad sa pagkuha — <b>${peso(total)}</b></li>` +
+              `<ul><li>Bayad sa pagkuha <i>(on collection)</i> — <b>${peso(total)}</b></li>` +
               `<li>Dalhin sa Martes, karaniwang tapos sa Biyernes.</li></ul>`;
           } else {
             const dep = Math.round(total * 0.3);
             const fin = total - dep;
             terms.innerHTML =
-              `<ul><li>Paunang bayad, 30% — <b>${peso(dep)}</b></li>` +
+              `<ul><li>Paunang bayad <i>(deposit)</i>, 30% — <b>${peso(dep)}</b></li>` +
               [24, 36, 48]
                 .map((m) => `<li>${m} buwan — <b>${peso(Math.round(fin / m / 100) * 100)}</b> kada buwan</li>`)
                 .join("") +
-              `<li>Simula sa queue: <b>${P.money.slotWeeks} linggo</b> mula sa deposito</li></ul>`;
+              `<li><strong>Walang interes.</strong> Ang presyo ay presyo.</li>` +
+              `<li>Simula ng gawa: <b>${P.money.slotWeeks} linggo</b> mula sa paunang bayad</li></ul>`;
           }
         }
 
@@ -932,18 +973,19 @@ const LEDGER = [
 
           note.classList.remove("is-bad");
           btn.setAttribute("aria-disabled", "true");
-          btn.textContent = "Pinapadala…";
+          btn.textContent = "Ipinapadala…";
           note.innerHTML = "<b>Sending.</b>Do not close this yet.";
 
           setTimeout(() => {
             const kabitMode = val("mode") === "kabit";
             const total = document.querySelector("[data-total]")!.textContent;
+            const weeks = hulma(spec()).money.slotWeeks;
             btn.removeAttribute("aria-disabled");
             btn.textContent = "Ipadala ang sheet";
             note.classList.add("is-sent");
             note.innerHTML = kabitMode
-              ? `<b>Nakapasok. Resibo:</b>Fittings totalling ${total}. Bring the unit in any Tuesday from 06:00 — no need to call first. Nothing has been charged.`
-              : `<b>Nakapasok. Resibo:</b>One body at ${total}, filed as unit 0418. You are third in the queue. Merced calls you within two days on the number you gave, and nothing is owed until you have seen the chalk on the floor.`;
+              ? `<b>Natanggap na. Resibo:</b>Fittings totalling ${total}. Bring the unit in any Tuesday from 06:00. No need to call first. Nothing has been charged.`
+              : `<b>Natanggap na. Resibo:</b>One body at ${total}, filed as unit 0418. Work starts in about ${weeks} weeks. Merced calls you within two days on the number you gave, and nothing is owed until you have seen the chalk on the floor.`;
           }, 900);
         });
       }

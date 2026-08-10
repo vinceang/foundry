@@ -265,7 +265,8 @@ section[id], .opt, .field, .kabit-row, .row { scroll-margin-block-start: 6rem; }
 
 .hero__body {
   position: relative;
-  margin-block-start: calc(var(--s-8) * -1);
+  margin-block-start: 0;
+  padding-block-start: var(--s-7);
   padding-block-end: var(--s-9);
 }
 
@@ -273,7 +274,7 @@ section[id], .opt, .field, .kabit-row, .row { scroll-margin-block-start: 6rem; }
   position: absolute;
   inset-block-start: calc(var(--s-9) * -3.5);
   inset-inline: 0;
-  block-size: calc((var(--s-9) * 3.5) + var(--s-8));
+  block-size: calc(var(--s-9) * 3.5);
   background: linear-gradient(
     to bottom,
     rgba(10, 22, 26, 0) 0%,

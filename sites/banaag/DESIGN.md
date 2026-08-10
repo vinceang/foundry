@@ -5,8 +5,14 @@ Fernando, Pampanga, in the third register: **Vesper**.*
 
 ## The one-line brief
 
-**We build the body. The man with the rag finishes it, every morning, before
-the sun.**
+**We build the body. You finish it every morning, before the sun.**
+
+*Written in the second person, deliberately.* An early draft described the
+operator in the third person — "the man with the rag," watched from outside,
+"before the day starts taking from him." That is the anthropologist's camera
+position, and it is exactly what the anti-luxury clause below exists to
+prevent. The buyer of this product is the man in that scene. The page speaks
+to him.
 
 A jeepney leaves this shop unfinished, and everybody here knows it. What
 completes it happens at 04:41 on a concrete apron somewhere in Luzon: the cock
@@ -87,11 +93,21 @@ operator's route, his capacity, his saint, and his colour of light.
 ### The lineage (this is the site's provenance argument)
 
 San Fernando is the **Christmas capital of the Philippines**, and has run the
-*Ligligan Parul* — the Giant Lantern Festival — since 1908. Its lanterns are
-five metres across, steel-framed, and carry thousands of bulbs whose flashing
-is sequenced by a hand-built drum called a **rotor**: a rotating cylinder wound
-with foil contacts that a wireman cuts and files by hand until the light runs
-around the lantern in the pattern he heard in his head.
+*Ligligan Parul* — the Giant Lantern Festival — since 1904, electrified from
+the 1930s once current reached the town. Its lanterns are about six metres
+across, steel-framed, and carry four to five thousand bulbs whose flashing is
+sequenced by a hand-built **rotor**.
+
+**Get the mechanism right — an early draft had it exactly backwards.** The
+rotor is a *steel barrel*, and the barrel itself is the conductor. Every bulb's
+wire ends in a **hairpin** that rides on it: bare steel closes the circuit and
+the bulb burns. The wireman then lays **strips of tape** on the barrel, and
+wherever the tape is, the hairpin lifts off and the bulb goes dark.
+
+So one hairpin is one bulb, one strip is one *interval of darkness*, and the
+pattern is not written on — it is **cut as silence**. He tapes the light away
+until what is left is what he heard in his head. That is both the true
+mechanism and the better sentence, which is the whole argument for checking.
 
 That is the same trade as a jeepney's light valance, done by the same families,
 in the same barangays, in the other half of the year. Every parol maker in San
@@ -215,11 +231,17 @@ set in the working voice between two end ticks, the way a body layout is
 annotated on the shop floor:
 
 ```
-   ├── 5 940 mm ──┤        (the body length under discussion)
-   ├── 1,2 mm ────┤        (the gauge of the panel being beaten)
-   ├── 18 upuan ──┤        (the capacity the chapter is about)
-   ├── 04:41 ─────┤        (the hour)
+   ├── 04:41 ─────┤        pagsikat 05:22        (the hour)
+   ├── 22 katao ──┤        9–14 katawan a year   (the shop)
+   ├── 1,2 mm ────┤        stainless, 304        (the gauge being beaten)
+   ├── ₱2,400 ────┤        to ₱52,000, fitted    (the fittings band)
+   ├── 29 taon ───┤        sa brotsa             (the letterer)
+   ├── 1904 ──────┤        unang Ligligan Parul  (the lineage)
+   ├── 521 ───────┤        katawan since 1978    (the archive)
 ```
+
+These are the seven actually shipped. Each is a fact the chapter would lose if
+the rail were deleted, which is the test.
 
 It carries real information — deleting it loses a fact — and it is the
 drawing's own convention rather than a graphic one. Held site-wide.
@@ -280,7 +302,7 @@ costume:
 | Word | Meaning |
 |---|---|
 | **hulma** | the buck — the form a panel is beaten over |
-| **hulmahan** | the shop; the place of forming |
+| **karosera** | the body shop — the trade's own word, from *carrocería*. An early draft invented "hulmahan," which reads as a verb and passed over the one word that signals real trade knowledge |
 | **plantsa** | sheet steel; the panel work |
 | **letrista** | the sign letterer (a trade, not a hobby) |
 | **karatula** | the route signboard |
@@ -298,8 +320,18 @@ costume:
 | **boundary** | what the driver owes the operator per day |
 | **inilabas** | "brought out" — the day a body leaves the shop |
 
-Navigation uses them: *Ang hulmahan · Ang hulma · Ang detalye · Ang letrista ·
-Ipagawa*. Every Tagalog term is glossed in English once, on first use, in the
+Navigation uses them: *Ang karosera · Ang hulma · Ang detalye · Ang letrista ·
+Ipagawa*.
+
+**Kapampangan.** San Fernando's floor language is Kapampangan, not Tagalog —
+the surnames and towns in the archive already are (Manalastas, Sicat,
+Punzalan, Lacsamana, Canlas, Dizon, Simbulan; Bacolor–Guagua, Sto.
+Tomas–Minalin, San Simon–Apalit). Translating the whole site would be
+costume; ignoring it is the tell. So the site **acknowledges** it instead:
+the shop chapter says the floor argues in Kapampangan and the sheet is
+written in Tagalog, because that is the language a franchise application is
+in. Tagalog passages carry `lang="tl"` so a screen reader does not read them
+with English phonology. Every Tagalog term is glossed in English once, on first use, in the
 working voice — never a parenthetical every time, and never italic-exotic.
 
 ## Page arc
@@ -309,8 +341,10 @@ for him.*
 
 I. **04:41** — the hero: the operator, the coffee, the rag, the unit with its
    tubes still on. Vince's minute, and the site's argument.
-II. **Ang hulmahan** — the shop: twenty-two men, one buck, nine to fourteen
-   bodies a year, and what "a body" actually means on a bare chassis.
+II. **Ang karosera** — the shop: twenty-two men, one buck, nine to fourteen
+   bodies a year (**521 bodies since 1978**), and what "a body" actually means
+   on a bare chassis. It carries two hard chapters: *who we take*, and **the
+   rules, said out loud** (below).
 III. **Ang hulma** — **the signature**: chalk out your body, and file it.
 IV. **Ang detalye** — the fittings, plate by plate: *kabayo*, *karatula*,
    *estribo*, *salamin*, *tubo*, *sabit*. Each plate opens into its record —
@@ -319,8 +353,9 @@ IV. **Ang detalye** — the fittings, plate by plate: *kabayo*, *karatula*,
 V. **Ang letrista** — Nolan Simbulan, twenty-nine years on the brush, and the
    four hands he letters in. Human presence.
 VI. **Ang rotor** — the parol lineage: why the electrician outranks everyone.
-VII. **Inilabas** — the archive of bodies that have left, by operator, route,
-   capacity and year.
+VII. **Mga inilabas** — the archive of bodies that have left, by operator,
+   route, capacity and year. Each row also prints the build it loads, so the
+   click is declared rather than mysterious.
 VIII. **Colophon** — the plate, signed.
 
 ## How the site takes an order
@@ -339,11 +374,33 @@ and, per the anti-luxury clause, **every number is on the page**:
   line, so this is a plain, honest **order form** — the `Kabit lang` mode of
   the same sheet, with line items and a total.
 
+### The rules, said out loud
+
+The site is set in 2026, and a jeepney site set in 2026 that never mentions
+the **PUV Modernization Programme** is fiction in the bad way. A new
+traditional body on a pre-Euro-4 surplus engine cannot be plated as a new
+franchise, and every real operator knows it. So the shop says so, in its own
+voice, before it takes any money:
+
+- most of what leaves the gate is a **rebody** for a unit that already holds a
+  line, for a cooperative that consolidated and kept its route;
+- the rest is provincial, private and resort work outside the franchise net;
+- and the shop asks about the paper *before* the picture — plate, cooperative,
+  route — and tells you on the phone whether what you want can be registered.
+
+This is the opposite of a problem. It is a **stronger** anti-luxury argument
+than the one it replaced, because it is the argument the buyer actually needs,
+and no other site in the collection has to make it.
+
 **Terms are part of the product and appear beside the total:**
 
-- 30% *paunang bayad* (deposit) to enter the queue, the balance in *hulog*
-  over 24, 36 or 48 months, stated as an actual monthly figure the buyer can
-  compare against a day's takings.
+- 30% *paunang bayad* (deposit) to enter the queue, the balance sa *hulugan*
+  over 24, 36 or 48 months, **at no interest** — which is real trade practice
+  and surprising enough to be worth saying.
+- The monthly figure is printed **beside the thing it has to be compared
+  against**: a provincial unit takes ₱700–₱1,100 boundary a day. The doctrine
+  asked for that comparison and the first draft omitted it, which quietly
+  flattered the numbers.
 - Old body accepted against the price, assessed on the floor.
 - The queue is honest and public: nine to fourteen bodies a year, so the sheet
   says which month you would be starting in.

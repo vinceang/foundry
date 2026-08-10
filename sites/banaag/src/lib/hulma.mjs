@@ -17,10 +17,10 @@
 /* ---------------------------------------------------------------- catalogue */
 
 export const CHASSIS = {
-  surplus: { label: "Surplus rebuild", note: "reconditioned donor, the shop's own rebuild", nose: 1040, wheel: 355, base: 640000 },
-  "4be1": { label: "Isuzu 4BE1", note: "3.6 four, the route standard", nose: 1120, wheel: 380, base: 780000 },
-  "4d34": { label: "Mitsubishi 4D34", note: "3.9 four, for the long provincial runs", nose: 1200, wheel: 405, base: 890000 },
-  "4hf1": { label: "Isuzu 4HF1", note: "4.3 four, for 20 upuan and above", nose: 1300, wheel: 430, base: 935000 },
+  surplus: { label: "Surplus", note: "a reconditioned donor engine and frame, rebuilt on our own floor — the cheapest way in, and the one we explain to you in person", nose: 1040, wheel: 355, base: 640000 },
+  "4be1": { label: "Isuzu 4BE1", note: "3,6-litre four in an Elf NKR — the route standard", nose: 1120, wheel: 380, base: 780000 },
+  "4d34": { label: "Mitsubishi 4D34", note: "3,9-litre four in a Canter — for the long provincial runs", nose: 1200, wheel: 405, base: 890000 },
+  "4hf1": { label: "Isuzu 4HF1", note: "4,3-litre four in a Forward — for 20 upuan and above", nose: 1300, wheel: 430, base: 935000 },
 };
 
 export const CAPACITY = [14, 16, 18, 20, 22];
@@ -42,7 +42,7 @@ export const ILAW = {
   wala: { label: "Wala", en: "no valance", rows: 0, rotor: false, price: 0 },
   isahan: { label: "Isahan", en: "single row", rows: 1, rotor: false, price: 26000 },
   doble: { label: "Dobleng linya", en: "double row", rows: 2, rotor: false, price: 41000 },
-  rotor: { label: "May rotor", en: "double row on a hand-cut rotor", rows: 2, rotor: true, price: 68000 },
+  rotor: { label: "May rotor", en: "double row, plus a hand-cut rotor at ₱42,000", rows: 2, rotor: true, price: 83000 },
 };
 
 /* The letrista's four hands. A mural is a painted panel; the other three are
@@ -382,7 +382,7 @@ export function hulma(spec) {
     { k: `${extraBays} dagdag na bintana`, v: extraBays * BAY_PRICE, hide: extraBays === 0 },
     { k: `Bubong — ${roofOpt.label.toLowerCase()}`, v: roofOpt.price, hide: roofOpt.price === 0 },
     { k: `Upuan — ${cap} × ₱${UPUAN_PRICE.toLocaleString("en-US")}`, v: cap * UPUAN_PRICE },
-    { k: "Karatula, kinamay", v: KARATULA_PRICE },
+    { k: "Karatula, sulat-kamay", v: KARATULA_PRICE },
     { k: `Kabayo — ${kab.label.toLowerCase()}`, v: kab.price, hide: kab.price === 0 },
     { k: `Ilaw — ${ilaw.label.toLowerCase()}`, v: ilaw.price, hide: ilaw.price === 0 },
     { k: `Pinta — ${pinta.label.toLowerCase()}`, v: pinta.price, hide: pinta.price === 0 },
