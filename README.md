@@ -46,6 +46,7 @@ The two series share standards, not styling. Read
 | [Fàire](https://rubha-na-faire.vercel.app) | Vigil | Lighthouse keeper's house — a light that counts | Scotland · Rubha na Fàire, Wester Ross | [`sites/faire`](sites/faire) · live |
 | [Tsutsumiya (包屋)](https://tsutsumiya.vercel.app) | Nocturne | Wrapping house — the cloth decides what you may take | Japan · Itachibori, Osaka | [`sites/tsutsumiya`](sites/tsutsumiya) · live |
 | [Hurr (حر)](https://hurr-alain.vercel.app) | Vesper | Falconry furniture — a hood cut to one bird | UAE · Al Jimi, Al Ain | [`sites/hurr`](sites/hurr) · live |
+| [Banaag](https://banaag-hulmahan.vercel.app) | Vesper | Custom jeepney body shop — the vehicle is the lamp | Philippines · Sindalan, San Fernando, Pampanga | [`sites/banaag`](sites/banaag) · live |
 
 ## The showcase — `wgw/`
 

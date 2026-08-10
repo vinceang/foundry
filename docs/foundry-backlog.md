@@ -28,15 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Custom jeepney builder
-
-- **Series:** Vesper
-- **Place idea:** San Pablo City, Laguna, Philippines — a custom body shop that fabricates bespoke jeepneys from stripped chassis up, serving operators across Luzon who want a commission that stands out on a route
-- **Why it earns a place:** Jeepneys are already flamboyant objects — chrome horses, hand-lettered saints, mirrored panels, colored tube-light valances — but a bespoke builder frames all that as serious craft: welding, panel-beating, hand-painting, and upholstery treated with the same gravity as a coachbuilder's portfolio. No other site in the collection covers this. The Filipino audience for this is real and prideful.
-- **Catalog wares / commission options:** chassis conversion and cab extension, full body fabrication in aluminum or steel, chrome stallion hood ornaments and bumper sculpture, hand-painted side murals and lettering (patron saints, landscapes, portraits on request), mirrored and anodized interior panel kits, colored fluorescent and LED valance lighting, custom upholstered bench seating, route-name and operator signage packages
-- **Signature interaction:** the build configurator — choose your base chassis, body length, chrome package, mural subject, and lighting color; the jeepney redraws panel by panel as each choice is committed, the way a body shop's chalk layout fills in
-- **Other page ideas:** a fleet gallery of past commissions with the operator's name and route; a hand-lettered type specimen showing the painter's available script styles; a provenance note on where San Pablo sits in the coachbuilding lineage (post-WWII surplus vehicles → Filipino icon)
-- **Notes:** Nipis (barong Tagalog, Lumban) is already in the collection and Filipino — ensure the voice and world feel distinct: industrial craft vs. textile craft, Laguna vs. Lumban, loud vs. quiet. The jeepney's visual register is maximalist; the site's design should be the counter-pressure — spare, confident, letting the vehicle carry the color.
+*(empty)*
 
 ## Proposed — awaiting approval
 
@@ -131,6 +123,24 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 
 ## Built
+
+### Custom jeepney builder — **Banaag**
+
+- **Built:** 2026-08-09 · **Series:** Vesper · **Live:** https://banaag-hulmahan.vercel.app
+- **Project:** `sites/banaag` · handoff: `docs/2026-08-09-banaag-handoff.md`
+- **Landed as:** Barangay Sindalan, City of San Fernando, **Pampanga** — moved off the
+  backlog's San Pablo, Laguna to keep the map clear of Nipis (Lumban, Laguna) and to
+  pick up a real provenance: San Fernando's giant-lantern wiremen and their hand-cut
+  rotors are the same trade as a jeepney light valance.
+- **Signature as built:** the chalk — a side elevation that redraws from the build
+  sheet (capacity multiplies the window bays and stretches the wheelbase), and the
+  buyer's own route and dedication are lettered onto the karatula and the flank. The
+  same panel files the order, in whole-body or fittings-only mode.
+- **What the entry did not anticipate:** the site is the collection's first
+  **anti-luxury** brief — every price published with its instalment terms, filtered on
+  passion rather than money — and it had to address the PUV Modernization Programme
+  out loud to survive being set in 2026.
+
 
 | Site | Series | Subject | Live |
 |---|---|---|---|
