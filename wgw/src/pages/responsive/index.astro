@@ -392,9 +392,54 @@ const principles = [
       showLoader(true);
       try {
         if (!moduleLoaded) {
-          await import(
-            /* @vite-ignore */ 'https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js'
-          );
+          /* Served from our own origin, not a CDN.
+             `public/vendor/model-viewer-4.0.0.min.js` — @google/model-viewer
+             4.0.0, BSD-3-Clause, byte-identical to the unpkg copy so it can be
+             re-verified:
+
+               curl -sL https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js | shasum -a 256
+               774edda21e1be2a0934e460ca5943af1fe3f88da130a9f98bd6a9d611576cacf
+
+             It used to be imported straight from unpkg, which made a feature of
+             this site depend on someone else's uptime and sent every visitor who
+             opened the viewer to a third party. The old argument for a CDN — that
+             the file is probably already in the visitor's cache from some other
+             site — stopped being true when browsers partitioned the HTTP cache
+             per site, so it was buying nothing.
+
+             Being byte-identical means it still carries an upstream
+             `sourceMappingURL`, and the .map is deliberately not vendored: it is
+             3.6MB, and the request only happens with devtools open. A 404 there
+             is expected.
+
+             One latent CDN dependency remains, unreached: model-viewer fetches
+             Draco and Basis decoders from gstatic.com, but only for models that
+             use them, and all three of ours are uncompressed. Re-export a GLB
+             with Draco and that request comes back.
+
+             Loaded with a <script> tag rather than `await import()`. Vite refuses
+             to analyse an import of anything inside public/ — "can only be
+             referenced via <script src>" — and while the production build did
+             emit a working import, the dev server returned a 500, so the page
+             only worked in one of the two places. A tag is the honest way to run
+             a self-registering module anyway: the library calls
+             `customElements.define('model-viewer', ...)` as a side effect and we
+             never touch an exported binding, so there is nothing for an import to
+             give us. `type="module"` because the file is ESM. */
+          await new Promise<void>((resolve, reject) => {
+            const tag = document.createElement('script');
+            tag.type = 'module';
+            tag.src = '/vendor/model-viewer-4.0.0.min.js';
+            tag.onload = () => resolve();
+            tag.onerror = () => reject(new Error('model-viewer failed to load'));
+            document.head.appendChild(tag);
+          });
+          /* The tag resolving means the module ran, not that the element is
+             registered — defining a custom element is synchronous within that
+             module, but waiting on the registry is what actually guarantees
+             `createElement` returns an upgraded element rather than an unknown
+             one. */
+          await customElements.whenDefined('model-viewer');
           moduleLoaded = true;
         }
 
