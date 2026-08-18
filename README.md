@@ -113,3 +113,26 @@ Non-design engineering scaffolds, shared across all sites.
 ## Deploy
 
 One repo → one independent Vercel project per site, each with its **Root Directory** set to a `sites/*` folder. Each gets its own framework detection, env vars, and domain. Optional per-project "Ignored Build Step" (`git diff --quiet HEAD^ HEAD -- sites/<name>`) skips rebuilds when that folder didn't change.
+
+### `wgw` is not self-contained, and its deploy has to know that
+
+Every `sites/*` folder can be built in isolation. `wgw` cannot: `wgw/scripts/sync.mjs`
+runs before `astro build` and reads `foundry.json` from the **repo root**, one level
+above `wgw/`.
+
+So the `wintergardenweb` project must deploy from the repo root with its **Root
+Directory** set to `wgw` — the same shape as every other site, and for a reason
+that is easy to miss. Uploading `wgw/` on its own leaves the registry behind and
+the build stops with:
+
+```
+✗ registry sync failed
+  no registry at /vercel/foundry.json
+```
+
+`vercel deploy` run from inside `wgw/` fails exactly this way. If it ever has to be
+shipped by hand, build first where the parent exists and send the result:
+
+```
+cd wgw && vercel build --prod && vercel deploy --prebuilt --prod
+```
