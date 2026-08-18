@@ -1,0 +1,954 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const title = 'Responsive — Winter Garden Web | One site, every width';
+const description =
+  'Every site this studio builds is designed to hold together at any width, on any device, on any connection. Not a mobile version and a real version — one site, built once, right everywhere.';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'One site, every width',
+  description,
+  url: `${Astro.site}responsive`,
+  author: { '@type': 'Person', name: 'Vincent Ang' },
+  about: { '@type': 'Thing', name: 'Responsive web design' },
+};
+
+/* The three devices. Each is a 3D model of the same site — suntoku.vercel.app —
+   captured at that device's own native viewport, so what the screens show is
+   genuinely three layouts rather than one screenshot at three sizes.
+
+   Flat plates do double duty: they are the thumbnails that switch the hero, and
+   they are the poster that stands in the hero while a model loads or in place
+   of it entirely when there is no JS and no WebGL.
+
+   Trimmed to the alpha bounding box, so their aspect ratios describe the
+   hardware. Reading a real device height back through those ratios gives 72.3mm
+   for the phone and 179.3mm for the tablet against actual widths of 70.6mm and
+   177.5mm — inside 2%. */
+const devices = [
+  {
+    id: 'phone',
+    label: 'Phone',
+    /* Framing chosen by eye, then verified clip-free at every rotation.
+       `zoom` is a fraction of the computed all-angles-safe distance rather
+       than a distance in metres: metres would be wrong the moment the stage
+       changes aspect, since a narrower frame needs the camera further back. */
+    orbit: { az: 16.6, pol: 85.8, zoom: 0.959 },
+    viewport: '393 pixels wide',
+    glb: '/responsive/phone.glb',
+    weight: '0.3 MB',
+    src: '/responsive/phone-760.webp',
+    srcset: '/responsive/phone-440.webp 440w, /responsive/phone-760.webp 760w',
+    w: 760,
+    h: 1542,
+    alt: 'The site on a phone: the navigation has collapsed to the name alone, the opening line has wrapped to two lines, and the four specifications sit in two rows of two.',
+    note: 'The navigation collapses to the name. The opening line takes a second line. Four specifications become two rows of two.',
+  },
+  {
+    id: 'tablet',
+    label: 'Tablet',
+    orbit: { az: 16.6, pol: 85.8, zoom: 0.905 },
+    viewport: '834 pixels wide',
+    glb: '/responsive/tablet.glb',
+    weight: '0.3 MB',
+    src: '/responsive/tablet-1100.webp',
+    srcset: '/responsive/tablet-640.webp 640w, /responsive/tablet-1100.webp 1100w',
+    w: 1100,
+    h: 1532,
+    alt: 'The site on a tablet held upright: the full navigation has returned, the headline runs three lines, and the specification row has dropped below the fold.',
+    note: 'The navigation comes back. The headline holds three lines. The specifications move below the fold, where there is room for them.',
+  },
+  {
+    id: 'laptop',
+    label: 'Laptop',
+    orbit: { az: 16.1, pol: 87.3, zoom: 0.846 },
+    viewport: '1512 pixels wide',
+    glb: '/responsive/laptop.glb',
+    weight: '0.8 MB',
+    src: '/responsive/laptop-1600.webp',
+    srcset: '/responsive/laptop-900.webp 900w, /responsive/laptop-1600.webp 1600w',
+    w: 1600,
+    h: 1035,
+    alt: 'The site on a laptop: the full navigation, a headline set across three wide lines, and all four specifications in a single row along the bottom edge.',
+    note: 'Everything at once — the whole navigation, a wide measure, all four specifications on one line.',
+  },
+];
+
+/* The phone leads, because that is the order the work is done in. */
+const initial = devices[0];
+
+const principles = [
+  {
+    n: '01',
+    t: 'A narrow screen is not a small screen',
+    d: 'The phone layout is not the wide one with the air squeezed out. Things change rank: what was a navigation bar becomes a name, what was a row becomes two. Deciding what survives that compression is the design work, and most of your visitors will only ever see the result of it. Skip it and you have not built a small version of your site — you have built a worse one.',
+  },
+  {
+    n: '02',
+    t: 'Right at every width, not at three',
+    d: 'Screens do not come in three sizes. They come in every size, plus a split window, plus a phone held sideways, plus whatever ships next year. So type and spacing here scale continuously rather than jumping at a handful of breakpoints, which are reserved for the moments a layout genuinely has to reorganise. A site that is correct at three widths is wrong at all the others.',
+  },
+  {
+    n: '03',
+    t: 'Touch comes before hover',
+    d: 'Most people arrive with a thumb, not a cursor. So the things that matter are large enough to hit without aiming, spaced so the wrong one is hard to catch, and reachable without stretching. Hover effects are a courtesy for whoever happens to have a pointer. Nothing important is ever hidden behind one.',
+  },
+  {
+    n: '04',
+    t: 'Weight is part of the design',
+    d: 'A page is only as good as the connection it arrives on, and the visitor on two bars in a car park is the one most likely to give up. Images are sized to the screen asking for them rather than the largest screen imaginable, and nothing loads until it earns its place. Speed is not a technical concern that comes after the design. It is the design.',
+  },
+];
+---
+
+<Base title={title} description={description} schema={schema}>
+  <article class="rs">
+    <div class="page-wide">
+      <div class="marker">
+        <span class="marker__n">—</span>
+        <span class="marker__t">Responsive</span>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------- hero -->
+    <header class="page-wide rs__hero">
+      <div class="rs__hero-copy">
+        <h1 class="rs__title">One site,<br />every width.</h1>
+        <div class="rs__lede prose">
+          <p>
+            There is no mobile version and no real version. There is one site,
+            designed once, that arranges itself for whatever it is opened on —
+            a phone on a train, a tablet on a counter, a laptop at a desk.
+          </p>
+          <p>
+            Here is a site this studio built, <a
+              href="https://suntoku.vercel.app/"
+              rel="noopener">Suntoku</a
+            >, on all three. Pick one up and turn it over. The narrow layout is
+            not the wide one shrunk — it is what the page becomes when it has
+            393 pixels, and it was designed to become that.
+          </p>
+        </div>
+      </div>
+
+      <!-- The stage. The flat plate is what everyone gets first and what
+           anyone without JS or WebGL keeps; the model is layered over it. -->
+      <div class="rs__hero-stage">
+        <div class="stage3" data-stage>
+          <img
+            class="stage3__poster"
+            data-poster
+            src={initial.src}
+            srcset={initial.srcset}
+            sizes="(min-width: 64rem) 60vw, 90vw"
+            width={initial.w}
+            height={initial.h}
+            alt={initial.alt}
+            fetchpriority="high"
+            decoding="async"
+          />
+
+          <!-- Announced politely so a switch is heard once, not narrated. -->
+          <p class="stage3__loader meta" data-loader hidden aria-live="polite">
+            <span data-loader-text>Loading</span>
+            <span class="stage3__bar" aria-hidden="true"><i data-loader-bar></i></span>
+          </p>
+
+          <button class="stage3__go" type="button" data-go hidden>
+            <span>Load the model</span>
+            <span class="meta stage3__wt" data-go-weight>{initial.weight}</span>
+          </button>
+        </div>
+
+        <p class="meta stage3__cap">
+          <span data-cap>Drag to turn it.</span>
+        </p>
+      </div>
+    </header>
+
+    <!-- ----------------------------------------------------------- picker -->
+    <section class="page-wide rs__picker" aria-labelledby="pick-h">
+      <h2 id="pick-h" class="visually-hidden">Choose a device</h2>
+
+      <ul class="picker">
+        {devices.map((d) => (
+          <li>
+            <button
+              class="pick"
+              type="button"
+              data-pick={d.id}
+              data-glb={d.glb}
+              data-src={d.src}
+              data-srcset={d.srcset}
+              data-alt={d.alt}
+              data-weight={d.weight}
+              data-az={String(d.orbit.az)}
+              data-pol={String(d.orbit.pol)}
+              data-zoom={String(d.orbit.zoom)}
+              data-label={d.label}
+              aria-pressed={d.id === initial.id ? 'true' : 'false'}
+            >
+              <span class="pick__shot">
+                <img
+                  src={d.src}
+                  srcset={d.srcset}
+                  sizes="(min-width: 64rem) 20vw, 30vw"
+                  width={d.w}
+                  height={d.h}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="pick__foot">
+                <span class="pick__label">{d.label}</span>
+                <span class="meta pick__vp">{d.viewport}</span>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- ------------------------------------------------------ what changed -->
+    <section class="page-wide section rs__notes" aria-labelledby="notes-h">
+      <h2 id="notes-h" class="rs__h2">What actually changed</h2>
+      <dl class="notes">
+        {devices.map((d) => (
+          <div class="notes__row reveal">
+            <dt>
+              <span class="notes__device">{d.label}</span>
+              <span class="meta notes__vp">{d.viewport}</span>
+            </dt>
+            <dd>{d.note}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <!-- --------------------------------------------------------- principles -->
+    <section class="page-wide section" aria-labelledby="pr-h">
+      <h2 id="pr-h" class="rs__h2">Four things it has to do</h2>
+      <ol class="prin">
+        {principles.map((p) => (
+          <li class="prin__item reveal">
+            <span class="meta prin__n">{p.n}</span>
+            <div>
+              <h3 class="prin__t">{p.t}</h3>
+              <p class="prin__d">{p.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  </article>
+</Base>
+
+<script>
+  /* The polar range the camera may travel through. Framing is computed against
+     exactly this range, so narrowing it lets a model sit closer and widening it
+     without recomputing would let a corner escape. 45° is a steep look down;
+     105° is a shade below eye level, which is as far under a device as anyone
+     needs to see. Azimuth stays free — turning it right around is the point. */
+  const POLAR = { min: 45, max: 105 };
+
+  const stage = document.querySelector<HTMLElement>('[data-stage]');
+  const poster = document.querySelector<HTMLImageElement>('[data-poster]');
+  const loader = document.querySelector<HTMLElement>('[data-loader]');
+  const loaderText = document.querySelector<HTMLElement>('[data-loader-text]');
+  const loaderBar = document.querySelector<HTMLElement>('[data-loader-bar]');
+  const go = document.querySelector<HTMLButtonElement>('[data-go]');
+  const goWeight = document.querySelector<HTMLElement>('[data-go-weight]');
+  const cap = document.querySelector<HTMLElement>('[data-cap]');
+  const picks = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-pick]'));
+
+  if (stage && poster && picks.length) {
+    type Device = {
+      id: string; glb: string; src: string; srcset: string; alt: string;
+      weight: string; label: string; az: number; pol: number; zoom: number;
+    };
+    const read = (b: HTMLButtonElement): Device => ({
+      id: b.dataset.pick!,
+      glb: b.dataset.glb!,
+      src: b.dataset.src!,
+      srcset: b.dataset.srcset!,
+      alt: b.dataset.alt!,
+      weight: b.dataset.weight!,
+      label: b.dataset.label!,
+      az: Number(b.dataset.az),
+      pol: Number(b.dataset.pol),
+      zoom: Number(b.dataset.zoom),
+    });
+
+    let mv: any = null;
+    let moduleLoaded = false;
+    let current = read(picks.find((b) => b.getAttribute('aria-pressed') === 'true') ?? picks[0]);
+
+    /* Frame a model so no angle in the allowed range can push part of it out
+       of shot.
+
+       model-viewer's own `auto` distance comes from the bounding box as first
+       oriented, so turning the model clips it. Fitting the bounding sphere is
+       safe but wasteful on anything flat: a phone is 8mm thick and 150mm tall,
+       and reserving room for its diagonal in both axes leaves it tiny. So the
+       eight corners are projected at every reachable angle and the distance is
+       whatever the worst of them needs.
+
+       Perspective, not orthographic: a corner nearer the camera projects
+       larger, so each corner's depth along the view axis is added. Leaving that
+       out under-frames a deep object badly — it cost a laptop its margins. */
+    const pin = (keepAngles = false) => {
+      if (!mv) return;
+      const d = mv.getDimensions();
+      const corners: number[][] = [];
+      for (const sx of [-0.5, 0.5])
+        for (const sy of [-0.5, 0.5])
+          for (const sz of [-0.5, 0.5]) corners.push([sx * d.x, sy * d.y, sz * d.z]);
+
+      const vHalf = (mv.getFieldOfView() * Math.PI) / 180 / 2;
+      const hHalf = Math.atan(Math.tan(vHalf) * (mv.clientWidth / mv.clientHeight));
+
+      let worst = 0;
+      for (let a = 0; a < 360; a += 5) {
+        for (let p = POLAR.min; p <= POLAR.max; p += 5) {
+          const t = (a * Math.PI) / 180;
+          const ph = (p * Math.PI) / 180;
+          const dir = [Math.sin(ph) * Math.sin(t), Math.cos(ph), Math.sin(ph) * Math.cos(t)];
+          let r = [-dir[2], 0, dir[0]];
+          const rl = Math.hypot(r[0], r[1], r[2]);
+          r = rl < 1e-6 ? [1, 0, 0] : r.map((v) => v / rl);
+          const u = [
+            r[1] * dir[2] - r[2] * dir[1],
+            r[2] * dir[0] - r[0] * dir[2],
+            r[0] * dir[1] - r[1] * dir[0],
+          ];
+          for (const c of corners) {
+            const x = Math.abs(c[0] * r[0] + c[1] * r[1] + c[2] * r[2]);
+            const y = Math.abs(c[0] * u[0] + c[1] * u[1] + c[2] * u[2]);
+            const depth = c[0] * dir[0] + c[1] * dir[1] + c[2] * dir[2];
+            worst = Math.max(worst, x / Math.tan(hHalf) + depth, y / Math.tan(vHalf) + depth);
+          }
+        }
+      }
+
+      // 4% margin: the contact shadow falls outside the mesh, and the bounding
+      // box measures the mesh alone.
+      const conservative = worst * 1.04;
+
+      /* The chosen framing, as a fraction of that conservative distance.
+         Scaling from a computed baseline rather than storing metres is what
+         keeps the composition intact when the stage changes shape: a narrower
+         frame needs the camera further back, and the baseline already knows it.
+
+         The fractions are all below 1.0 — i.e. tighter than the worst case the
+         maths reserves for — and that is fine. The maths works from the
+         bounding box `getDimensions()` reports, which is bigger than the mesh
+         actually drawn (0.234 x 0.264 for the laptop against a real
+         0.212 x 0.300), so it reserves room for space nothing occupies. All
+         three of these were then checked by rendering every 15° of azimuth and
+         every 5° of polar and looking at the pixels: no edge contact anywhere. */
+      /* The fractions were judged on a landscape stage, where the computed
+         baseline has slack to give back. A portrait stage has none: the same
+         0.846 that flatters the laptop at 1560px crops it at 390px, measured
+         at 8 of 12 rotations. So the tightening only applies where the frame
+         is wider than it is tall; portrait keeps the full baseline, which is
+         known clip-free from earlier measurement. */
+      const portrait = mv.clientWidth < mv.clientHeight;
+      const radius = conservative * (portrait ? 1 : current.zoom);
+
+      // Locked. Turn, but do not zoom.
+      const { theta, phi } = mv.getCameraOrbit();
+      mv.setAttribute('min-camera-orbit', `auto ${POLAR.min}deg ${radius}m`);
+      mv.setAttribute('max-camera-orbit', `auto ${POLAR.max}deg ${radius}m`);
+      mv.cameraOrbit = keepAngles
+        ? `${theta}rad ${phi}rad ${radius}m`
+        : `${current.az}deg ${current.pol}deg ${radius}m`;
+      mv.jumpCameraToGoal();
+    };
+
+    const showLoader = (on: boolean, label = 'Loading') => {
+      if (!loader) return;
+      loader.hidden = !on;
+      if (loaderText) loaderText.textContent = label;
+      if (on && loaderBar) loaderBar.style.inlineSize = '0%';
+    };
+
+    const wireProgress = () => {
+      mv.addEventListener('progress', (e: any) => {
+        const pct = Math.round((e.detail?.totalProgress ?? 0) * 100);
+        if (loaderBar) loaderBar.style.inlineSize = `${pct}%`;
+      });
+      mv.addEventListener('load', () => {
+        pin();
+        stage.classList.add('is-live');
+        showLoader(false);
+        go?.remove();
+      });
+    };
+
+    const ensureModel = async (device: Device) => {
+      showLoader(true);
+      try {
+        if (!moduleLoaded) {
+          /* Served from our own origin, not a CDN.
+             `public/vendor/model-viewer-4.0.0.min.js` — @google/model-viewer
+             4.0.0, BSD-3-Clause, byte-identical to the unpkg copy so it can be
+             re-verified:
+
+               curl -sL https://unpkg.com/@google/model-viewer@4.0.0/dist/model-viewer.min.js | shasum -a 256
+               774edda21e1be2a0934e460ca5943af1fe3f88da130a9f98bd6a9d611576cacf
+
+             It used to be imported straight from unpkg, which made a feature of
+             this site depend on someone else's uptime and sent every visitor who
+             opened the viewer to a third party. The old argument for a CDN — that
+             the file is probably already in the visitor's cache from some other
+             site — stopped being true when browsers partitioned the HTTP cache
+             per site, so it was buying nothing.
+
+             Being byte-identical means it still carries an upstream
+             `sourceMappingURL`, and the .map is deliberately not vendored: it is
+             3.6MB, and the request only happens with devtools open. A 404 there
+             is expected.
+
+             One latent CDN dependency remains, unreached: model-viewer fetches
+             Draco and Basis decoders from gstatic.com, but only for models that
+             use them, and all three of ours are uncompressed. Re-export a GLB
+             with Draco and that request comes back.
+
+             Loaded with a <script> tag rather than `await import()`. Vite refuses
+             to analyse an import of anything inside public/ — "can only be
+             referenced via <script src>" — and while the production build did
+             emit a working import, the dev server returned a 500, so the page
+             only worked in one of the two places. A tag is the honest way to run
+             a self-registering module anyway: the library calls
+             `customElements.define('model-viewer', ...)` as a side effect and we
+             never touch an exported binding, so there is nothing for an import to
+             give us. `type="module"` because the file is ESM. */
+          await new Promise<void>((resolve, reject) => {
+            const tag = document.createElement('script');
+            tag.type = 'module';
+            tag.src = '/vendor/model-viewer-4.0.0.min.js';
+            tag.onload = () => resolve();
+            tag.onerror = () => reject(new Error('model-viewer failed to load'));
+            document.head.appendChild(tag);
+          });
+          /* The tag resolving means the module ran, not that the element is
+             registered — defining a custom element is synchronous within that
+             module, but waiting on the registry is what actually guarantees
+             `createElement` returns an upgraded element rather than an unknown
+             one. */
+          await customElements.whenDefined('model-viewer');
+          moduleLoaded = true;
+        }
+
+        if (!mv) {
+          mv = document.createElement('model-viewer');
+          mv.className = 'stage3__mv';
+          mv.setAttribute('camera-controls', '');
+          mv.setAttribute('touch-action', 'pan-y');
+          mv.setAttribute('shadow-intensity', '0.6');
+          mv.setAttribute('exposure', '1');
+          /* No auto-orbit hint. It drifts the camera away from the framing we
+             computed, and its hand glyph sits on top of the device — which on
+             a page whose whole subject is the device is the wrong thing to put
+             in front of it. The caption says to drag. */
+          mv.setAttribute('interaction-prompt', 'none');
+          /* Pin the lens. Left to itself model-viewer re-derives the field of
+             view per model and per viewport — 30° for the phone but 38° for
+             the laptop on a narrow screen — which silently invalidates any
+             distance computed from it: the framing maths and the actual render
+             end up disagreeing, and the model overflows. 30° is what it chose
+             on a wide screen, which is what the saved framings were judged
+             against, so fixing it there keeps them true. */
+          mv.setAttribute('field-of-view', '30deg');
+          mv.setAttribute('camera-orbit', '15deg 75deg auto');
+          /* Locked: turn it, but no zooming. This also leaves the scroll
+             wheel to the page — with zoom on, scrolling over the canvas zooms
+             the model instead of scrolling past it. */
+          mv.setAttribute('disable-zoom', '');
+          wireProgress();
+          stage.insertBefore(mv, stage.firstChild);
+
+          /* The stage changes shape between breakpoints, and which half-angle
+             binds flips with it, so a distance computed for one aspect clips
+             in the other. */
+          if ('ResizeObserver' in window) {
+            /* Re-pin whenever the box actually changes size, tracked by
+               comparing dimensions rather than by skipping the first callback.
+               Skipping the first was wrong: on a narrow screen the stage
+               settles into its portrait ratio *after* the initial pin, so the
+               one callback that mattered was the one being thrown away — and
+               the camera kept a distance computed for a landscape frame, which
+               clipped at two thirds of all rotations. */
+            let lastW = 0;
+            let lastH = 0;
+            new ResizeObserver(() => {
+              const w = Math.round(mv.clientWidth);
+              const h = Math.round(mv.clientHeight);
+              if (w === lastW && h === lastH) return;
+              lastW = w;
+              lastH = h;
+              pin(true); // a resize must not throw away where they turned it
+            }).observe(mv);
+          }
+        }
+
+        mv.setAttribute('alt', device.alt);
+        mv.setAttribute('src', device.glb);
+      } catch {
+        // The poster is already correct and still visible; say so and stop.
+        showLoader(false);
+        if (cap) cap.textContent = 'The model could not load — the picture above is the same view.';
+      }
+    };
+
+    const select = (device: Device, { load }: { load: boolean }) => {
+      current = device;
+
+      for (const b of picks) b.setAttribute('aria-pressed', String(b.dataset.pick === device.id));
+
+      // Swap the poster first: it is what shows while the model streams in.
+      poster.src = device.src;
+      poster.srcset = device.srcset;
+      poster.alt = device.alt;
+      if (goWeight) goWeight.textContent = device.weight;
+
+      if (load) {
+        // Back to the flat plate until the new model reports itself loaded.
+        stage.classList.remove('is-live');
+        void ensureModel(device);
+      }
+    };
+
+    for (const b of picks) {
+      b.addEventListener('click', () => {
+        const device = read(b);
+        if (device.id === current.id && stage.classList.contains('is-live')) return;
+        select(device, { load: true });
+      });
+    }
+
+    /* Whether the first model arrives on its own or has to be asked for.
+
+       Compressed, the heaviest of the three is 0.8MB, so it can simply appear
+       when you reach it — the difference between a feature most visitors never
+       press and one they all see. Nothing loads for anyone who does not scroll
+       this far. Except where someone has said they are watching their data, in
+       which case the button comes back and the choice stays theirs. */
+    const frugal =
+      window.matchMedia?.('(prefers-reduced-data: reduce)').matches === true ||
+      (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
+
+    if (frugal) {
+      go?.removeAttribute('hidden');
+      go?.addEventListener('click', () => select(current, { load: true }));
+    } else {
+      go?.remove();
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                io.disconnect();
+                select(current, { load: true });
+              }
+            }
+          },
+          { rootMargin: '300px 0px' },
+        );
+        io.observe(stage);
+      } else {
+        select(current, { load: true });
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ------------------------------------------------------------------ hero */
+  .rs__hero {
+    display: grid;
+    gap: var(--sp-7);
+    padding-block-end: var(--sp-7);
+  }
+
+  .rs__title {
+    font-family: var(--display);
+    font-size: clamp(2.6rem, 1.2rem + 6.4vi, 5.4rem);
+    line-height: 0.96;
+    letter-spacing: var(--display-tracking, -0.035em);
+    text-wrap: balance;
+    margin-block-end: var(--sp-5);
+  }
+
+  .rs__lede {
+    color: var(--ink-2);
+  }
+
+  /* An in-prose link, not the standalone .link component — that one is
+     inline-flex, which swallows the space before it and drops its underline
+     onto a separate line when it sits inside a sentence. */
+  .rs__lede a {
+    color: var(--ink);
+    text-decoration: none;
+    border-block-end: 1px solid color-mix(in oklab, var(--accent) 55%, transparent);
+    transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+  }
+
+  .rs__lede a:hover {
+    color: var(--accent);
+    border-block-end-color: var(--accent);
+  }
+
+  .rs__h2 {
+    font-size: var(--step-3);
+    margin-block-end: var(--sp-6);
+    text-wrap: balance;
+  }
+
+  /* ----------------------------------------------------------------- stage */
+  .rs__hero-stage {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .stage3 {
+    position: relative;
+    inline-size: 100%;
+    /* Portrait on a phone, where height is the scarce dimension and a 4:3 box
+       would leave the device postage-stamp sized. */
+    aspect-ratio: 3 / 4;
+    display: grid;
+  }
+
+  .stage3 > * {
+    grid-area: 1 / 1;
+    min-inline-size: 0;
+    min-block-size: 0;
+  }
+
+  .stage3__poster {
+    inline-size: 100%;
+    block-size: 100%;
+    /* Contained, not stretched: the plate and the model it stands in for have
+       to occupy the same space or the swap jumps. */
+    object-fit: contain;
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .stage3.is-live .stage3__poster {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* :global because this element is created in script, so Astro's scoping
+     attribute is never stamped on it — which also means the `.stage3 > *`
+     rule above cannot reach it. Its grid placement has to be repeated here,
+     or it is auto-placed into a second row and collapses to zero height. */
+  .stage3 :global(.stage3__mv) {
+    grid-area: 1 / 1;
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: 0;
+    min-block-size: 0;
+    background: transparent;
+    --poster-color: transparent;
+    opacity: 0;
+    transition: opacity 0.5s var(--ease);
+  }
+
+  .stage3.is-live :global(.stage3__mv) {
+    opacity: 1;
+  }
+
+  /* ---------------------------------------------------------------- loader */
+  .stage3__loader {
+    place-self: end center;
+    display: grid;
+    justify-items: center;
+    gap: var(--sp-2);
+    margin-block-end: var(--sp-5);
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.12em;
+  }
+
+  /* A class setting `display` outranks the user-agent's `[hidden]` rule, so
+     hiding these needs saying explicitly or the attribute does nothing. */
+  .stage3__loader[hidden],
+  .stage3__go[hidden] {
+    display: none;
+  }
+
+  .stage3__bar {
+    display: block;
+    inline-size: 6rem;
+    block-size: 1px;
+    background: var(--rule-soft);
+    overflow: hidden;
+  }
+
+  .stage3__bar i {
+    display: block;
+    block-size: 100%;
+    inline-size: 0;
+    background: var(--accent);
+    transition: inline-size 0.2s linear;
+  }
+
+  .stage3__go {
+    place-self: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-block-size: 2.75rem;
+    padding: var(--sp-2) var(--sp-5);
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: 100px;
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: var(--step--1);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .stage3__go:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .stage3__wt {
+    font-size: 0.625rem;
+    color: var(--ink-3);
+  }
+
+  .stage3__cap {
+    text-align: center;
+    color: var(--ink-3);
+    text-transform: none;
+    letter-spacing: 0.04em;
+  }
+
+  /* ---------------------------------------------------------------- picker */
+  .picker {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-3);
+  }
+
+  .pick {
+    inline-size: 100%;
+    display: grid;
+    gap: var(--sp-3);
+    padding: var(--sp-3);
+    background: none;
+    border: 1px solid transparent;
+    /* The hairline is the whole affordance: a filled button would compete with
+       the devices, which are the only pictures on this page. */
+    border-block-end-color: var(--rule-soft);
+    color: var(--ink-2);
+    cursor: pointer;
+    text-align: start;
+    transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+  }
+
+  .pick:hover {
+    color: var(--ink);
+    border-block-end-color: var(--rule);
+  }
+
+  .pick[aria-pressed='true'] {
+    color: var(--ink);
+    border-block-end-color: var(--accent);
+  }
+
+  /* One bucket, the same for all three, so devices of wildly different
+     proportions read as a row of equals rather than three sizes.
+
+     Positioned rather than grid-centred on purpose. With `place-items: center`
+     the row is content-sized, so a percentage height on the image has no
+     definite box to resolve against, silently falls back to the intrinsic
+     1542px, and a portrait plate erupts out of its bucket over everything
+     below. Absolute inside a definite box cannot do that. */
+  .pick__shot {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .pick__shot img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: contain;
+    opacity: 0.55;
+    transition: opacity 0.25s var(--ease);
+  }
+
+  .pick:hover .pick__shot img,
+  .pick[aria-pressed='true'] .pick__shot img {
+    opacity: 1;
+  }
+
+  .pick__foot {
+    display: grid;
+    gap: 1px;
+  }
+
+  .pick__label {
+    font-family: var(--display);
+    font-size: var(--step-0);
+  }
+
+  .pick__vp {
+    color: var(--ink-3);
+    font-size: 0.6875rem;
+  }
+
+  /* ----------------------------------------------------------------- notes */
+  .notes {
+    display: grid;
+    gap: 0;
+    margin: 0;
+  }
+
+  .notes__row {
+    display: grid;
+    gap: var(--sp-2);
+    padding-block: var(--sp-5);
+    border-block-start: 1px solid var(--rule-soft);
+  }
+
+  .notes__row:last-child {
+    border-block-end: 1px solid var(--rule-soft);
+  }
+
+  .notes dt {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-3);
+  }
+
+  .notes__device {
+    font-family: var(--display);
+    font-size: var(--step-1);
+  }
+
+  .notes__vp {
+    color: var(--ink-3);
+  }
+
+  .notes dd {
+    margin: 0;
+    color: var(--ink-2);
+    max-inline-size: var(--measure);
+  }
+
+  /* ------------------------------------------------------------ principles */
+  .prin {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--sp-7);
+  }
+
+  .prin__item {
+    display: grid;
+    gap: var(--sp-3);
+  }
+
+  .prin__n {
+    color: var(--accent);
+  }
+
+  .prin__t {
+    font-size: var(--step-2);
+    margin-block-end: var(--sp-3);
+    text-wrap: balance;
+  }
+
+  .prin__d {
+    color: var(--ink-2);
+    max-inline-size: var(--measure);
+  }
+
+  /* ------------------------------------------------------------------ 48rem */
+  @media (min-width: 48rem) {
+    .stage3 {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* ------------------------------------------------------------------ 64rem
+     Twelve columns. Copy takes 1–4, the stage takes 5–12, and the rule between
+     them is the join — the same hairline the rest of the site uses to divide
+     one thing from another. */
+  @media (min-width: 64rem) {
+    .rs__hero {
+      grid-template-columns: repeat(12, 1fr);
+      align-items: center;
+      gap: 0;
+      /* No bottom padding: at this width the picker sits centred below the
+         stage and reads as its own control strip, so the 80px that used to
+         separate them only pushed the hero apart. Narrow screens keep
+         var(--sp-7) from the base rule, where the stage and picker stack and do
+         need separating. */
+      padding-block-end: 0;
+    }
+
+    .rs__hero-copy {
+      grid-column: 1 / span 4;
+      padding-inline-end: var(--sp-7);
+    }
+
+    .rs__hero-stage {
+      grid-column: 5 / span 8;
+      border-inline-start: 1px solid var(--rule-soft);
+      /* No inline padding, so the stage runs right up to the rule. The model is
+         framed by its own computed camera distance, which already keeps it clear
+         of the edges; adding padding here only shrank the thing on display. */
+    }
+
+    .stage3 {
+      max-block-size: 74vh;
+    }
+
+    /* Centred on the page rather than tucked under the stage. As a row of
+       three equal buckets it reads as a control strip in its own right, and
+       hanging it off the stage's left edge left it visibly off-centre.
+       Capped, so the buckets stay a sane size on a wide screen instead of
+       stretching to fill it. */
+    .picker {
+      inline-size: min(100%, 56rem);
+      margin-inline: auto;
+      gap: var(--sp-5);
+    }
+
+    .notes__row {
+      grid-template-columns: 18rem 1fr;
+      gap: var(--sp-6);
+      align-items: baseline;
+    }
+
+    .prin {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-8) var(--sp-7);
+    }
+
+    .prin__item {
+      grid-template-columns: 3rem 1fr;
+      gap: var(--sp-4);
+    }
+  }
+</style>

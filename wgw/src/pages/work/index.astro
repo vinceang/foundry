@@ -118,6 +118,9 @@ const schema = {
                  map units it would balloon: `slice` scales by height, which on
                  a tall phone is nearly 2x before the camera zoom is applied. -->
             <g data-hudscale>
+              <!-- The hit area is its own circle so the target stays a
+                   comfortable size while the ring itself is a hairline. -->
+              <circle class="fl__hudhit" r="44" />
               <circle class="fl__hudring" r="34" />
               <circle class="fl__huddot" r="2" />
               <path class="fl__hudbr" d="M-42-24 h-12 v12 M42-24 h12 v12 M-42 24 h-12 v-12 M42 24 h12 v-12" />
@@ -130,7 +133,7 @@ const schema = {
     <div class="fl__ui">
       <header class="fl__head">
         <h1 class="fl__title">The collection</h1>
-        <p class="fl__lede meta">Scroll to travel the day · {sites.length} sites · click to open</p>
+        <p class="fl__lede meta">Scroll to travel the day · {sites.length} sites · arrive, then open</p>
       </header>
 
     </div>
@@ -157,6 +160,13 @@ const schema = {
                   loading={c.i < 6 ? 'eager' : 'lazy'}
                   decoding="async"
                 />
+                <!--
+                  A span, not a button. The card is already a link and this is
+                  its label, so a nested control would be a second tab stop
+                  promising a second destination. Hidden from assistive
+                  technology for the same reason: the link says where it goes.
+                -->
+                <span class="fl__open" aria-hidden="true">View details</span>
               </span>
               <span class="fl__meta">
                 <span class="fl__cname">{c.name}</span>
@@ -167,7 +177,7 @@ const schema = {
         ))}
       </ul>
 
-      <p class="fl__hint meta" data-hint>Swipe or drag<span class="fl__keys"> · or use <kbd>←</kbd> <kbd>→</kbd></span></p>
+      <p class="fl__hint meta" data-hint>Click, swipe or drag to travel<span class="fl__keys"> · or use <kbd>←</kbd> <kbd>→</kbd></span></p>
     </div>
 
     <!-- Progressive disclosure. The drawer pulls in the real case study, so
@@ -299,7 +309,8 @@ const schema = {
 
   /* ------------------------------------------------------------- world */
 
-  .fl__world { position: absolute; inset: 0; }
+  /* The map is scenery. Only the reticle takes a click, and only on arrival. */
+  .fl__world { position: absolute; inset: 0; pointer-events: none; }
   .fl__svg { inline-size: 100%; block-size: 100%; }
 
   .fl__ocean { fill: var(--map-ocean, #0b1016); }
@@ -343,6 +354,18 @@ const schema = {
   }
 
   .fl__hud { color: var(--hud, var(--accent)); }
+  .fl__hudhit { fill: transparent; }
+
+  /*
+   * The reticle only answers once it has arrived. Offering it mid-flight would
+   * be offering to open a place the map has not reached yet.
+   */
+  .fl[data-phase='landed'] .fl__hud { pointer-events: auto; cursor: pointer; }
+
+  .fl[data-phase='landed'] .fl__hud:hover .fl__hudring {
+    stroke-opacity: 0.9;
+    stroke-dasharray: none;
+  }
   .fl__hud[hidden] { display: none; }
 
   .fl__hudring {
@@ -476,12 +499,60 @@ const schema = {
   }
 
   .fl__frame {
+    position: relative;
     display: block;
     aspect-ratio: 4 / 3;
     overflow: hidden;
     border-radius: 2px;
     background-size: cover;
     background-position: center;
+  }
+
+  /*
+   * The arrival cue. It appears on the centred card once the flight lands, and
+   * it is the difference between a card you are looking at and a card you can
+   * open — the distinction the single click used to collapse.
+   */
+  .fl__open {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    padding: 0.6rem var(--sp-3);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    background: color-mix(in oklab, var(--ground) 78%, transparent);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    /* Rises the last few pixels as it arrives, so the cue reads as landing. */
+    transform: translate(-50%, calc(-50% + 0.4rem));
+    backdrop-filter: blur(4px);
+    transition:
+      opacity 0.35s var(--ease),
+      transform 0.35s var(--ease),
+      background 0.2s var(--ease),
+      color 0.2s var(--ease);
+  }
+
+  .fl[data-phase='landed'] .fl__slot.is-live .fl__open {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .fl__slot.is-live .fl__card:hover .fl__open {
+    background: var(--accent);
+    color: var(--ground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fl__open {
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s linear;
+    }
   }
 
   .fl__frame img {
@@ -730,6 +801,24 @@ const schema = {
       let offset = 0;           // continuous position around the ring
       let active = -1;
 
+      /*
+       * Travelling and arriving are two different states, and the page has two
+       * animations that have to finish before it has arrived: the strip glides
+       * to a card, and the camera flies to that card's place on the map. Keying
+       * off only the camera would show the arrival cue while the strip was
+       * still moving, so both report in here.
+       *
+       * The phase is mirrored onto the root as `data-phase`, which is what the
+       * stylesheet reads. Nothing is clickable in transit: an arrival cue you
+       * can press before it means anything is worse than no cue.
+       */
+      let flightLanded = false;
+
+      function settle() {
+        const next = flightLanded && raf === 0 ? 'landed' : 'transit';
+        if (root!.dataset.phase !== next) root!.dataset.phase = next;
+      }
+
       /** Shortest signed distance from card i to the current offset, on a ring. */
       function ringDelta(i: number, at: number) {
         let d = i - at;
@@ -892,6 +981,8 @@ const schema = {
           hud.setAttribute('transform', `translate(${to.mx} ${to.my})`);
           hud.removeAttribute('hidden');
           readoutArmed = true;
+          flightLanded = true;
+          settle();
         };
 
         // In flight the label is gone; it belongs to a place, not to the trip.
@@ -965,6 +1056,10 @@ const schema = {
         active = idx;
         const c = cards[idx];
 
+        /* A new destination: whatever had arrived has now departed. */
+        flightLanded = false;
+        settle();
+
         root!.style.setProperty('--accent', c.accent);
         hud.style.setProperty('--hud', c.accent);
 
@@ -993,6 +1088,8 @@ const schema = {
           offset = target;
           placeArc();
           raf = 0;
+          /* The strip has stopped; the camera decides whether that is an arrival. */
+          settle();
           return;
         }
         offset += d * (reduced ? 1 : 0.1);
@@ -1122,14 +1219,47 @@ const schema = {
         lastFocus?.focus({ preventScroll: true });
       }
 
+      /*
+       * One click did two things: it travelled to a site and opened its case
+       * study, so choosing what to look at and committing to read it were the
+       * same gesture, and the flight played out behind a scrim nobody watched.
+       *
+       * They are separate now. A click on any other card travels to it. Only
+       * once both the strip and the camera have arrived does the card offer to
+       * open — by which point the map is showing the place the case study is
+       * about, which is the whole reason the flight exists.
+       *
+       * Modifier-clicks are left alone throughout, so the card never stops
+       * being a link to its case study.
+       */
       root.querySelectorAll<HTMLAnchorElement>('[data-slug]').forEach((a) => {
         a.addEventListener('click', (e) => {
           if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
           e.preventDefault();
+
           const i = Number(a.dataset.i);
+
+          /*
+           * `detail` is 0 when a click came from the keyboard. Making a keyboard
+           * user press Enter, wait out a flight they cannot see the point of,
+           * and press Enter again would be a worse page, not a more consistent
+           * one — focusing a card already centres it, so the intent is clear.
+           */
+          if (e.detail === 0) { open(a.dataset.slug!); return; }
+
+          if (i === active && root!.dataset.phase === 'landed') {
+            open(a.dataset.slug!);
+            return;
+          }
+
           goTo(target + ringDelta(i, target));
-          open(a.dataset.slug!);
         });
+      });
+
+      /* The reticle is the arrival itself, so it opens what it has arrived at. */
+      hud.addEventListener('click', () => {
+        if (root!.dataset.phase !== 'landed' || active < 0) return;
+        open(cards[active].slug);
       });
 
       closeBtn.addEventListener('click', () => close());
