@@ -5,17 +5,38 @@ and Aubade builds. Following these avoids relearning expensive lessons.
 
 ## Choosing the model
 
-Two generators are available. Choose per shot, not per site:
+**Bench Studio is the default.** It runs locally, keeps the key in `~/.env`,
+mirrors every plate to disk, and records the cost of each one.
 
-| | Higgsfield MCP (`soul_2`) | gpt-image (`tools/gen-image.mjs`) |
-|---|---|---|
-| Best at | Photographic stills, atmosphere, interiors, video loops | Product plates, controlled palettes, graphic compositions |
-| Video | Yes — pass a completed image `job_id` as `start_image` | No |
-| Reliability | Connection drops occasionally | Stable (key in `~/.config/site-assets/openai.key`) |
+```bash
+node tools/gen-image-bench.mjs --prompt "..." \
+  --out sites/<name>/assets-src/<shot>.png --size 1536x1024
+```
 
-If Higgsfield is down, gpt-image is a proven fallback for everything — the
-Schwarzwald plates came out palette-compliant on the first batch. Re-load
-Higgsfield tools via ToolSearch when it reconnects.
+Do not start its server; the tool starts it if it is down.
+
+| | Bench (`tools/gen-image-bench.mjs`) | gpt-image (`tools/gen-image.mjs`) | Higgsfield MCP |
+|---|---|---|---|
+| Best at | Stills, atmosphere, interiors, product plates | Graphic compositions, tight palettes | Upscaling, video finishing |
+| Aspect | **3:2 and 2:3 exact** | 4:3 / 3:4 only | n/a |
+| Video | Yes — `i2v` lane, still uploaded as the start frame | No | Yes |
+| Upscale | **No** | No | Yes |
+| Cost | ~$0.15/plate, recorded | Untracked | Untracked |
+| Key | `~/.env` | `~/.config/site-assets/openai.key` | account |
+
+The aspect row is the one that bites. This repo cuts portrait plates to 2:3.
+gpt-image cannot make 2:3 — it returns 3:4, and `object-fit: cover` then crops
+crowns, pendulums and handles. Bench's default `fal-ai/nano-banana-pro` returns
+true 2:3. Run `--dry-run` to see the ratio a model will actually use before
+paying for a batch.
+
+Bench generates at `--res 2K` by default (≈2528px on the long edge), so the
+`-Z 1536` step in `optimize.sh` downscales into sharpness rather than
+upscaling into mush.
+
+If Bench is down, gpt-image is a proven fallback for stills — the Schwarzwald
+plates came out palette-compliant on the first batch. Keep Higgsfield for
+upscaling and video finishing, which Bench does not do.
 
 ## Art direction
 
@@ -29,7 +50,7 @@ Higgsfield tools via ToolSearch when it reconnects.
   people are makers and hosts, never lifestyle models. For maker shots,
   keep the batch's constant phrase and add "a craftsman at work, face lit
   by the work itself."
-- The taste profile's imagery recipe is binding: the palette *inside the
+- The standard's imagery recipe is binding: the palette *inside the
   frame* must match the site's tokens. Regenerate violations; never ship
   them, never fix them in CSS.
 - No text in images, ever — generated signage/lettering is always wrong.
@@ -48,27 +69,42 @@ page. Instead:
   plates that were technically compliant but read murky — when in doubt,
   the richer, brighter take wins.
 - **Never darken plates in CSS.**
+- The gamma lift was a gpt-image remedy. Bench's `nano-banana-pro` has not
+  needed it so far — the one Aubade test plate landed at mean luma 102 from the
+  prompt alone. Measure first; only lift what actually reads dark.
 - If a still has a settle video, apply the identical lift to the video
   (`ffmpeg -vf lutrgb='r=gammaval(0.8):g=gammaval(0.8):b=gammaval(0.8)'`)
   or the video-to-still dissolve pops.
 
 ## Aspect and crop
 
-Generate portrait product plates at 1024x1536 and match the CSS box to 2:3.
-`object-fit: cover` on a mismatched box crops crowns, pendulums, and
-handles — decide the crop at generation time, not in CSS.
+Generate portrait product plates at `--size 1024x1536` and match the CSS box to
+2:3; landscape at `--size 1536x1024` against a 3:2 box. `object-fit: cover` on a
+mismatched box crops crowns, pendulums, and handles — decide the crop at
+generation time, not in CSS.
+
+The flag is written in pixels for continuity with the old gpt-image scripts.
+`gen-image-bench.mjs` converts it to whatever the chosen model actually accepts,
+so the ratio survives even though the pixel numbers do not.
 
 ## Video
 
 Only where CSS could not fake it (parallax, revealed geometry, light raking
-a surface). Generate the loop from the exact still it layers over
-(`start_image` = the still's job_id) so a dip-to-still masks the loop seam.
-Upscale 720p output via `upscale_video` (bytedance, aigc preset). One video
-per page; desktop-only, lazy, ≤4MB — dark footage compresses brilliantly.
+a surface). Generate the loop from the exact still it layers over, so a
+dip-to-still masks the loop seam.
+
+Through Bench, that is the `i2v` lane over MCP: `upload_media` the finished
+still, then `create_media` with an `i2v` model, passing the returned URL in the
+field `get_model_capabilities` names for it. A video call blocks for minutes —
+say so before starting one.
+
+**Bench cannot upscale.** If a loop lands at 720p and needs more, that step
+stays on Higgsfield (`upscale_video`, bytedance, aigc preset). One video per
+page; desktop-only, lazy, ≤4MB — dark footage compresses brilliantly.
 
 ## Files
 
 - Raw generated PNGs → `sites/<name>/assets-src/` (gitignored).
 - Ship optimized JPEGs from `public/`: `sips -s format jpeg -s formatOptions 78`.
-- Every shipped image ≤500KB (a taste-profile floor).
+- Every shipped image ≤500KB (a standard floor).
 - `rm` is deny-listed in this repo — move rejected assets aside instead.

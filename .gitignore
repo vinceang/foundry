@@ -24,9 +24,11 @@ tools/.cache/
 # Excluded by size: worktrees (~6GB) and the eval workspace (~420MB of
 # generated site outputs), neither of which is source.
 .claude/*
+!.claude/agents/
 !.claude/skills/
 .claude/skills/*
 !.claude/skills/foundry-site/
+!.claude/skills/foundry-imagery/
 !.claude/skills/foundry-scout/
 !.claude/skills/glasshouse-register/
 !.claude/skills/glasshouse-nightly/
@@ -42,3 +44,7 @@ sites/*/assets-src/
 wgw/assets-src/glass-b.png
 wgw/src/components/Plate.astro
 foundry.json.bak
+
+# BENT scratch (raw plates are gitignored by sites/*/assets-src/)
+sites/bent/dist/
+sites/bent/.astro/
