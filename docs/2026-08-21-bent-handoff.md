@@ -262,6 +262,20 @@ lede 12.52:1, foot meta 9.00:1** — all from 1.10:1. Still 15.81:1, mobile 8.77
   because it was picking up dark timber elsewhere in the crop. Use a strip that
   contains both glyphs and real ground, or look at the picture.
 
+**Then Vince said it read too dark, and he was right.** Worth knowing which lever
+actually controls that: pulling the scrim back from .94 to .74 changed the
+composite almost not at all (15.65 → 14.47) because in the text zone the
+darkness was coming from the *graded video*, not the gradient. Giving most of
+the grade back (gamma 0.93, brightness −0.012) opened the plate up properly.
+
+The contrast that was lost there was bought back by lifting the hero's own foot
+meta from `#c3bcae` to `#d8d1c4` — **raise the text, not the background.** The
+tightest line ended up better than before the lightening (8.78 → 10.45) on a
+visibly brighter plate.
+
+Final, at the loop's brightest frame: h1 11.72:1, lede 12.81:1, foot meta
+10.45:1. Still 14.77:1 / 10.67:1, mobile 8.57:1.
+
 ## Video — done, and how
 
 `public/video/hero-loop.mp4` — 6s, 1280×720, **1.0MB**, generated through the
