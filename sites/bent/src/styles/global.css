@@ -1,0 +1,505 @@
+/* BENT — Northumberland County, Pennsylvania.
+   Materials, not tokens: weathered pine, ash-grey face, first-light sky,
+   creosote, iron, and one gold — wood that was replaced recently.
+   See DESIGN.md. */
+
+:root {
+  --silver: #c9c3b8;      /* weathered southern yellow pine — the page ground */
+  --silver-lift: #d4cfc5;
+  --ash: #dbd6cc;         /* lighter weathered face — panels */
+  --ash-lo: #c0b9ad;
+  --sky: #8fa3ad;         /* first light through the lattice — decorative only */
+  --sky-deep: #5c6f79;
+  --creosote: #332d26;    /* 7.76:1 on silver — Foundry's body floor */
+  --creosote-lo: #554c40;
+  --iron: #1b1815;        /* 10.08:1 — structure, headings, rules */
+  --fresh: #c98a3c;       /* THE accent — newly milled pine */
+  --fresh-deep: #a06b26;
+
+  --display: "Fraunces", Georgia, "Times New Roman", serif;
+  --work: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+  --gutter: clamp(24px, 5vw, 64px);
+  --measure: 58ch;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--silver);
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--silver);
+  color: var(--creosote);
+  font-family: var(--work);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* ---------------------------------------------------------------- type */
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  color: var(--iron);
+  letter-spacing: 0.005em;
+  line-height: 1.06;
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(44px, 8.5vw, 118px); }
+h2 { font-size: clamp(30px, 4.6vw, 60px); }
+h3 { font-size: clamp(20px, 2.2vw, 27px); line-height: 1.2; }
+
+p { margin: 0 0 1.15em; max-width: var(--measure); }
+p:last-child { margin-bottom: 0; }
+
+.lede {
+  font-size: clamp(19px, 2.05vw, 25px);
+  line-height: 1.5;
+  color: var(--creosote);
+  max-width: 46ch;
+}
+
+/* The whisper label. Used sparingly and NEVER as the automatic opener —
+   see DESIGN.md: the opening move is the measure, not a label. */
+.mark {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--creosote-lo);
+}
+
+/* Measurements. Everything that is a real figure is set here. */
+.fig {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "zero" 1;
+}
+
+.big-fig {
+  font-family: var(--display);
+  font-size: clamp(40px, 7vw, 82px);
+  line-height: 0.94;
+  color: var(--iron);
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+.big-fig small {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--creosote-lo);
+  margin-top: 12px;
+}
+
+a { color: var(--creosote); text-decoration-color: var(--fresh-deep); text-underline-offset: 3px; }
+a:hover { color: var(--iron); text-decoration-color: var(--iron); }
+
+:focus-visible {
+  outline: 2px solid var(--fresh-deep);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------ structure */
+
+.wrap { padding-inline: var(--gutter); }
+.chapter { padding-block: clamp(72px, 13vw, 168px); }
+.chapter--tight { padding-block: clamp(56px, 9vw, 112px); }
+
+.rule { height: 1px; background: var(--ash-lo); border: 0; margin: 0; }
+
+/* The bent mark — the site's only ornament. An A-frame in elevation. */
+.bentmark { width: 26px; height: 20px; display: block; flex: none; }
+.bentmark path { stroke: var(--fresh-deep); stroke-width: 1.5; fill: none; }
+
+/* ---------------------------------------------------------------- chrome */
+
+.top {
+  position: fixed; inset: 0 0 auto; z-index: 60;
+  display: flex; align-items: center; gap: 20px;
+  padding: 16px var(--gutter);
+  transition: background .5s var(--ease), border-color .5s var(--ease), transform .45s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+.top[data-veiled="1"] {
+  background: color-mix(in srgb, var(--silver) 88%, transparent);
+  backdrop-filter: blur(9px);
+  border-bottom-color: var(--ash-lo);
+}
+.top[data-hidden="1"] { transform: translateY(-104%); }
+
+.top__name {
+  font-family: var(--display);
+  font-size: 19px;
+  letter-spacing: 0.16em;
+  color: var(--iron);
+  text-decoration: none;
+}
+.top nav { margin-left: auto; display: flex; gap: clamp(12px, 2vw, 30px); }
+.top nav a {
+  font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--creosote); text-decoration: none; padding: 6px 0;
+  border-bottom: 1px solid transparent;
+}
+.top nav a:hover { border-bottom-color: var(--fresh-deep); color: var(--iron); }
+@media (max-width: 800px) { .top nav a:nth-child(n+4) { display: none; } }
+
+/* ----------------------------------------------------------------- hero */
+
+.hero { position: relative; min-height: 92svh; display: flex; align-items: flex-end; }
+.hero__img { position: absolute; inset: 0; }
+.hero__img img { width: 100%; height: 100%; object-fit: cover; }
+.hero__img::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(15,13,11,.82) 0%, rgba(15,13,11,.45) 34%, rgba(15,13,11,.08) 68%);
+}
+.hero__body { position: relative; z-index: 2; padding: 0 var(--gutter) clamp(40px, 7vw, 84px); width: 100%; }
+.hero h1 { color: #f0ece4; max-width: 15ch; }
+.hero .lede { color: #ded8cd; margin-top: 22px; }
+.hero__foot {
+  margin-top: clamp(28px, 4vw, 46px);
+  display: flex; flex-wrap: wrap; gap: 8px 30px; align-items: baseline;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: #c3bcae;
+}
+.hero__foot b { color: var(--fresh); font-weight: 500; }
+
+/* -------------------------------------------------------------- editorial */
+
+.two {
+  display: grid; gap: clamp(28px, 5vw, 76px);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .two { grid-template-columns: 1fr 1fr; }
+  .two--wide-left { grid-template-columns: 1.25fr 1fr; }
+  .two--wide-right { grid-template-columns: 1fr 1.25fr; }
+}
+
+figure { margin: 0; }
+figcaption {
+  margin-top: 12px;
+  font-family: var(--mono); font-size: 12px; line-height: 1.55;
+  color: var(--creosote-lo); max-width: 42ch;
+}
+figcaption b { color: var(--iron); font-weight: 500; }
+
+/* Specimen: a small plate opens into its record. Commitment 10. */
+.plate { display: block; position: relative; border: 0; padding: 0; background: none; cursor: zoom-in; width: 100%; }
+.plate img { width: 100%; }
+.plate::after {
+  content: ""; position: absolute; inset: auto 10px 10px auto;
+  width: 26px; height: 20px;
+  background: no-repeat center/contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 19 L13 1 L25 19 M5 13 h16' stroke='%23c98a3c' stroke-width='1.6' fill='none'/%3E%3C/svg%3E");
+  opacity: .85;
+}
+
+dialog.record {
+  border: 0; padding: 0; max-width: min(1080px, 94vw); width: 100%;
+  background: var(--ash); color: var(--creosote);
+}
+dialog.record::backdrop { background: rgba(15, 13, 11, .84); }
+.record__in { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 860px) { .record__in { grid-template-columns: 1.35fr 1fr; } }
+.record__txt { padding: clamp(22px, 3.4vw, 40px); }
+.record__txt h3 { margin-bottom: 14px; }
+.record dl { margin: 18px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 7px 18px; font-size: 14px; }
+.record dt { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); align-self: center; }
+.record dd { margin: 0; font-family: var(--mono); color: var(--iron); }
+.record__close {
+  margin-top: 26px; background: none; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--creosote); border-bottom: 1px solid var(--fresh-deep);
+}
+
+/* ------------------------------------------------------------------ form */
+
+.field { margin-bottom: 22px; }
+.field > label {
+  display: block; margin-bottom: 7px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--creosote-lo);
+}
+input[type="text"], input[type="email"], select, textarea {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; padding: 12px 14px;
+  background: var(--ash); color: var(--iron);
+  border: 1px solid var(--ash-lo); border-radius: 0;
+  font-family: var(--work); font-size: 16px;
+}
+textarea { min-height: 128px; resize: vertical; }
+select {
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 1 L13 19 L25 1' stroke='%23332d26' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; background-size: 13px 10px;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--fresh-deep); outline-offset: 2px;
+  border-color: var(--fresh-deep);
+}
+input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="true"] {
+  border-color: var(--fresh-deep); border-left-width: 3px;
+}
+.err {
+  display: block; margin-top: 6px; min-height: 1em;
+  font-family: var(--mono); font-size: 12px; color: var(--fresh-deep);
+}
+.err:not(:empty)::before { content: "— "; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--iron); color: var(--fresh);
+  border: 0; border-radius: 0; cursor: pointer;
+  padding: 15px 28px;
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase;
+  transition: background .3s var(--ease);
+}
+.btn:hover { background: var(--creosote); }
+.btn[disabled] { opacity: .55; cursor: progress; }
+
+.sent {
+  border-left: 3px solid var(--fresh-deep);
+  padding: 20px 24px; background: var(--ash);
+}
+
+/* ----------------------------------------------------------------- footer */
+
+footer { background: var(--iron); color: #b3aa9c; padding-block: clamp(48px, 7vw, 88px); }
+footer h3 { color: #ece6dc; }
+footer a { color: #cfc6b6; }
+footer a:hover { color: var(--fresh); }
+.foot__grid { display: grid; gap: 34px; grid-template-columns: 1fr; }
+@media (min-width: 780px) { .foot__grid { grid-template-columns: 2fr 1fr 1fr; } }
+.foot__mark { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.foot__mark span { font-family: var(--display); font-size: 21px; letter-spacing: .16em; color: #ece6dc; }
+
+/* ------------------------------------------------------------------ motion */
+
+/* Progressive enhancement, and the direction matters: content is visible by
+   default. Only when JS has confirmed motion is wanted does it opt IN to the
+   hidden-then-revealed state. The other way round leaves a JS-off visitor
+   staring at an empty page — which is exactly what it did. */
+html.fx .rise { opacity: 0; transform: translateY(18px); transition: opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+html.fx .rise.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.fx .rise { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ------------------------------------------------------- THE SWAY */
+
+.sway__head { max-width: 62ch; }
+.sway__stage { margin-top: clamp(28px, 4vw, 48px); }
+@media (min-width: 1100px) {
+  /* the drawing is tall now — sit the readout beside it rather than under */
+  .sway__stage { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(30px, 4vw, 60px); align-items: center; }
+  .sway__stage .sway__panel { margin-top: 0; grid-template-columns: 1fr; }
+  .sway__stage .sway__note { grid-column: auto; }
+}
+
+.sway__fig { background: none; margin: 0; }
+#sway-svg {
+  display: block; height: auto;
+  /* Cap by height so the lean and the figure that names it share a viewport,
+     but cap the width to match, or the drawing letterboxes against its ground. */
+  width: 100%;
+  max-width: calc(78svh * 660 / 820);
+  margin-inline: auto;
+  background: var(--iron);
+  touch-action: none; cursor: ew-resize;
+}
+.sway__scrim { fill: #14110e; opacity: .74; }
+
+.sway__leg    { stroke: #efe9de;         stroke-width: 5;   fill: none; stroke-linecap: square; }
+.sway__ledger { stroke: #efe9de;         stroke-width: 4;   fill: none; stroke-linecap: square; }
+.sway__brace  { stroke: #cfc6b6;         stroke-width: 2.2; fill: none; opacity: .85; }
+.sway__bolt   { fill: #14110e; stroke: #efe9de; stroke-width: 1.4; }
+.sway__ghosts { opacity: .3; }
+.sway__track  { stroke: #efe9de; stroke-width: 6; fill: none; stroke-linecap: round; }
+.sway__car     { fill: none; stroke: #efe9de; stroke-width: 2.4; }
+.sway__chassis { fill: #efe9de; }
+.sway__wheel  { fill: #efe9de; }
+.sway__ground { stroke: #efe9de; stroke-width: 2.5; fill: none; }
+.sway__plumb  { stroke: #8a8073; stroke-width: 1.5; stroke-dasharray: 3 7; }
+.sway__ghostbent path { stroke: #9d9384; stroke-width: 2; fill: none; stroke-dasharray: 5 6; }
+/* Sistered and re-bolted members. The gold appears as the timber ages, so the
+   Timber control changes where the craft last touched the ride — not a number. */
+.sway__sister path { stroke: var(--fresh); stroke-width: 5; fill: none; stroke-linecap: square; }
+.sway__sister { display: none; }
+#sway-svg[data-timber="mid"] .sway__sister--mid,
+#sway-svg[data-timber="old"] .sway__sister--mid,
+#sway-svg[data-timber="old"] .sway__sister--old { display: block; }
+
+.sway__scalenote {
+  margin-top: 12px; font-size: 12px; line-height: 1.55;
+  color: var(--creosote-lo); max-width: 64ch;
+}
+
+/* The one control the visitor's hand actually touches must not ship as OS
+   chrome — a pill track and a round thumb break "zero border-radius". */
+.sway__scrub input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 26px; background: none; cursor: ew-resize;
+}
+.sway__scrub input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px; background: var(--iron); border-radius: 0;
+}
+.sway__scrub input[type="range"]::-moz-range-track { height: 3px; background: var(--iron); border-radius: 0; }
+.sway__scrub input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 26px; height: 20px; margin-top: -9px; border-radius: 0; border: 0;
+  background: no-repeat center/contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 19 L13 1 L25 19 M5 13 h16' stroke='%231b1815' stroke-width='2.4' fill='%23c98a3c'/%3E%3C/svg%3E");
+}
+.sway__scrub input[type="range"]::-moz-range-thumb {
+  width: 26px; height: 20px; border-radius: 0; border: 0;
+  background: no-repeat center/contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 19 L13 1 L25 19 M5 13 h16' stroke='%231b1815' stroke-width='2.4' fill='%23c98a3c'/%3E%3C/svg%3E");
+}
+
+/* The readout sits under the drawing as one instrument row, not a sidebar —
+   the drawing is the spend and it gets the full width. */
+.sway__panel {
+  margin-top: clamp(22px, 3vw, 38px);
+  display: grid; gap: clamp(24px, 3.4vw, 52px);
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .sway__panel { grid-template-columns: 1.25fr 1fr; }
+  .sway__note { grid-column: 1 / -1; }
+}
+.sway__readout { display: grid; gap: clamp(20px, 2.4vw, 30px); }
+
+.sway__bandbar { position: relative; height: 13px; background: var(--ash); }
+.sway__bandzone { position: absolute; top: 0; height: 100%; background: var(--ash-lo); }
+.sway__bandzone--ok { background: var(--fresh); opacity: .5; }
+.sway__needle {
+  position: absolute; top: -7px; width: 2px; height: 27px; background: var(--iron);
+  transform: translateX(-1px); transition: left .18s var(--ease);
+}
+.sway__ticks { position: relative; height: 16px; margin-top: 7px; }
+.sway__ticks span {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-size: 11px; letter-spacing: .1em; color: var(--creosote-lo); white-space: nowrap;
+}
+.sway__ticks span:first-child { transform: none; }
+.sway__verdict {
+  margin: 14px 0 0; font-family: var(--mono); font-size: 13px;
+  letter-spacing: .02em; color: var(--creosote);
+}
+.sway__band[data-state="stiff"] .sway__verdict,
+.sway__band[data-state="loose"] .sway__verdict { color: var(--fresh-deep); font-weight: 500; }
+
+.sway__figs { margin: 0; display: grid; gap: 16px 24px; grid-template-columns: repeat(3, 1fr); }
+.sway__figs dt { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); margin-bottom: 4px; }
+.sway__figs dd { margin: 0; font-size: clamp(18px, 1.7vw, 23px); color: var(--iron); }
+
+.sway__ctl { display: grid; gap: 16px; align-content: start; }
+.sway__ctl fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.sway__ctl legend { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); padding: 0 0 8px; float: left; width: 100%; }
+.sway__ctl label { display: inline-flex; align-items: center; }
+.sway__ctl input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+.sway__ctl input[type="radio"] + span {
+  display: inline-block; padding: 8px 14px; cursor: pointer;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
+  border: 1px solid var(--ash-lo); color: var(--creosote); background: var(--ash);
+}
+.sway__ctl input[type="radio"]:checked + span { background: var(--iron); color: var(--fresh); border-color: var(--iron); }
+.sway__ctl input[type="radio"]:focus-visible + span { outline: 2px solid var(--fresh-deep); outline-offset: 2px; }
+
+.sway__scrub span { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); margin-bottom: 8px; }
+.sway__scrub input { width: 100%; accent-color: var(--fresh-deep); }
+
+.sway__note { font-size: 15px; line-height: 1.6; color: var(--creosote); max-width: 62ch; margin: 0; }
+.sway__note b { color: var(--iron); }
+
+/* -------------------------------------------------------- salvage stock */
+
+.stock {
+  margin: clamp(34px, 5vw, 60px) 0 0;
+  display: grid; gap: 1px; background: var(--ash-lo);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 720px) { .stock { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1180px) { .stock { grid-template-columns: repeat(4, 1fr); } }
+.stock__item { background: var(--silver); padding: clamp(20px, 2.4vw, 28px); }
+.stock__item h3 { font-size: 20px; margin-bottom: 16px; }
+.stock__item dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 5px 14px; }
+.stock__item dt { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--creosote-lo); }
+.stock__item dd { margin: 0; font-size: 13px; color: var(--iron); }
+.stock__price { font-size: 22px; color: var(--iron); margin: 18px 0 0; }
+
+.order { margin-top: clamp(44px, 6vw, 78px); max-width: 1000px; }
+.order h3 { margin-bottom: 12px; }
+
+/* The fixed header must never sit on a chapter's opening measure. */
+section[id] { scroll-margin-top: 76px; }
+
+/* Salvage: a ledger of specimens, not a rack of identical cards. Rows carry
+   their record and open it; a uniform card grid is on the Never list. */
+.salvage__lead { margin: clamp(30px, 4vw, 52px) 0 0; }
+.salvage__lead img { width: 100%; }
+.salvage__lead figcaption { max-width: 52ch; }
+
+.ledgerlist { list-style: none; margin: clamp(28px, 3.6vw, 46px) 0 0; padding: 0; border-top: 1px solid var(--ash-lo); }
+.ledgerlist__row { border-bottom: 1px solid var(--ash-lo); }
+.ledgerlist__open {
+  width: 100%; background: none; border: 0; cursor: pointer; text-align: left;
+  display: grid; align-items: baseline; gap: 6px 20px;
+  grid-template-columns: 26px 1fr; padding: 20px 2px;
+  font-family: var(--work); color: var(--creosote);
+  transition: background .3s var(--ease);
+}
+@media (min-width: 860px) {
+  .ledgerlist__open { grid-template-columns: 26px minmax(220px, 1.2fr) 1fr auto auto auto; }
+}
+.ledgerlist__open:hover { background: var(--ash); }
+.ledgerlist__open .bentmark { opacity: .55; align-self: center; }
+.ledgerlist__open:hover .bentmark { opacity: 1; }
+.ledgerlist__name { font-family: var(--display); font-size: clamp(19px, 1.8vw, 24px); color: var(--iron); }
+.ledgerlist__from { font-family: var(--mono); font-size: 12px; color: var(--creosote-lo); }
+.ledgerlist__yrs { font-size: 13px; color: var(--creosote-lo); }
+.ledgerlist__price { font-size: clamp(17px, 1.5vw, 21px); color: var(--iron); }
+@media (min-width: 860px) { .ledgerlist__price { text-align: right; min-width: 6ch; } }
+
+.ledgerlist__rec {
+  font-size: 12px; color: var(--fresh-deep); letter-spacing: .06em; white-space: nowrap;
+}
+@media (min-width: 860px) { .ledgerlist__rec { text-align: right; } }
+.ledgerlist__open:hover .ledgerlist__rec { color: var(--iron); }
+
+.record__in--narrow { grid-template-columns: 1fr !important; max-width: 620px; }
+
+/* Over the hero the chrome sits on sky, and creosote-on-sky is unreadable.
+   Until the header takes its veil, it carries its own scrim and light ink. */
+.top::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to bottom, rgba(15,13,11,.55), rgba(15,13,11,0));
+  transition: opacity .5s var(--ease);
+}
+.top[data-veiled="1"]::before { opacity: 0; }
+.top[data-veiled="0"] .top__name { color: #f0ece4; }
+.top[data-veiled="0"] nav a { color: #e2dcd1; }
+.top[data-veiled="0"] nav a:hover { color: #fff; border-bottom-color: var(--fresh); }

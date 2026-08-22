@@ -28,13 +28,23 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-*(empty)*
+### Wooden coaster works — **BENT** · built, not deployed
+
+- **Light:** bright — first light before the park opens
+- **Place:** Northumberland County, Pennsylvania, on the West Branch of the Susquehanna
+- **Signature:** The Sway — a bent is designed to deflect under a loaded train and return; the visitor can drive it out of the band in both directions, and *too stiff* is the surprising failure
+- **State:** complete and passing every floor; `npm --prefix sites/bent run build` clean. **Never deployed**, not in the README table. Three `wow-check` rounds, all NOT YET.
+- **Full record:** [`docs/2026-08-21-bent-handoff.md`](2026-08-21-bent-handoff.md) — read this before resuming
+- **Open 1:** the laminate chapter tells the thesis instead of drawing it. Number and date the nine laminates on the plate, gold on the three laid last spring only.
+- **Open 2:** the apparatus under the signature is still configurator-shaped. Demote Train and Timber to inline text switches in the caption — "a **full** train on **fifty-year** timber".
+- **Open 3:** line-work registration on the photographed bent is close, not exact — nudge `CENTRE`'s `halfTop`/`halfBase` in `sites/bent/src/sway.mjs`.
+- **Open 4:** no video. Needs the Bench MCP (`i2v` lane); see the handoff's video section.
 
 ## Proposed — awaiting approval
 
 ### Palekh lacquer miniature atelier
 
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Palekh, Ivanovo Oblast, Russia — a village of maybe 5,000 people that collectively produces the world's most intricate lacquer miniature painting: fairytale and epic scenes in gold leaf on jet-black papier-mâché boxes, trays, and brooches
 - **Why it earns a place:** The imagery is extraordinary and barely known outside Russia — microscopic figures against absolute black, gold halos and troikas and firebirds rendered with brushes made from a single squirrel hair. It earns the globe pin as the only Russian craft in the collection. The audience is collectors and museums.
 - **Signature interaction:** the brush — a single composition's figures are revealed one by one as the cursor moves across the box lid, the way the painter builds up a scene from outline to gold, working figure by figure
@@ -43,7 +53,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ### Sarchí oxcart workshop
 
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Sarchí, Alajuela, Costa Rica — the town where Costa Rica's hand-painted oxcart (carreta) is made and has been made for over a century; the craft is UNESCO Intangible Cultural Heritage
 - **Why it earns a place:** The painted wheel is one of the most recognizable folk-geometry objects in Latin America — concentric mandalas in saturated primary pigments, every town and family with its own pattern. The carreta earns the Costa Rica pin. A bespoke commission framing (family crest pattern, ceremonial cart) lifts it above souvenir into craft territory.
 - **Signature interaction:** the wheel configurator — the patron's pattern (ring count, petal geometry, color sequence) assembles concentrically as each choice is committed, the finished wheel spinning slowly once complete
@@ -52,7 +62,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ### Varanasi silk weaving house
 
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Varanasi, Uttar Pradesh, India — a family-run karkhana (loom room) producing Banarasi silk with zari gold-thread inlay, serving the bridal and collector market across the subcontinent
 - **Why it earns a place:** Banarasi silk is among the most technically dense textiles in the world — warp and weft in pure silk, supplementary gold and silver zari brocade patterns drawn from Mughal floral manuscripts. Loom-room imagery (a weaver's hands, the heddle lifting, zari bobbins stacked like spools) is extraordinary. Earns the India pin.
 - **Signature interaction:** the motif builder — the patron chooses a field pattern (jangla, butidar, shikargah), a border style, and a zari weight; a partial weave preview updates as each choice is committed, threads appearing as if rising from the loom
@@ -61,7 +71,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ### Benjarong porcelain atelier
 
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Bangkok or Samut Prakan, Thailand — a studio producing Benjarong (five-color) royal porcelain in the centuries-old Thai court tradition: miniature scenes of mythological figures, lotus borders, and enamel geometry on white porcelain fired multiple times
 - **Why it earns a place:** Benjarong is visually extraordinary and almost entirely unknown outside Thailand — dense enamel painting at a scale that demands a loupe, royal patronage going back to the Ayutthaya period, and a collector audience that understands it as equivalent to Chinese imperial ware. Earns the Thailand pin.
 - **Signature interaction:** the glaze-layer reveal — a single teacup or covered bowl is shown in cross-section, and scrolling through the firing sequence adds each color layer one at a time: the underpainting, then each of the five enamels in order, then the gold outline last
@@ -69,58 +79,83 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 - **Notes:** The palette — Thai red, cobalt, saffron, forest green, white — is the site's palette. Tone is court-serious, not tourist-craft.
 
 ### Tiny home / ADU maker
-- **Series:** decided at build time — a maker of dwellings; argue Nocturne craft vs Aubade dwelling vs Pastorale outdoor build (the log-cabin precedent)
+- **Light:** decided at build time from the subject
 - **Place idea:** Pacific Northwest, compact-timber Japan, or Scandinavia — a small shop building backyard homes and accessory dwelling units to order
 - **Why it earns a place:** Vince-named; compact joinery, fold-down and built-in furniture, big windows framing a garden — warm interiors and clever section drawings both photograph well
 - **Signature interaction:** the unit fitted to a real backyard — plan and section redraw to a lot's dimensions and setback, or the interior unfolding/compacting as you scroll
 - **Notes:** dwellings run well above $5,000 → commission model, but stock plans and finish packages could sit under it → an order form there (commitment 7). Must not read as the Nordic log houses (Tyri/Malmfuru) — a modern material system and voice, not heritage.
 
 ### Wooden boat yard
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Hardanger fjord, Norway — clinker-built oselvar
 - **Why it earns a place:** steam-bent strakes, copper rivets, hull curves like instrument bodies
 - **Signature interaction:** lofting — the hull's lines drawn full-size as you scroll, the way a yard lofts a hull on the floor
 
 ### Pipe organ builder
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Alsace or Saxony
 - **Why it earns a place:** ranks of tin and oak pipes are cathedral-scale imagery; generational workshop craft
 - **Signature interaction:** voicing — hovering a stop sounds its pipe and lights its rank
 
 ### Bespoke watch dial atelier
 
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** La Chaux-de-Fonds or Geneva — a dial studio for lacquer, enamel, guilloché, and applied indices
 - **Why it earns a place:** Dials are tiny but visually dense, which makes them perfect for close-up macro imagery, slow reveals, and a premium audience that understands finishing as status.
 - **Signature interaction:** Layer-by-layer dial assembly, where textures, markers, lume, and hands appear one at a time as the user scrolls.
 
 ### Specialist equestrian bootmaker
 
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Northampton or Verona — a bootmaker serving riders, collectors, and bespoke fit clients
 - **Why it earns a place:** It extends the saddlery world without duplicating it, and it gives you rich leather, stitching, welt, and fit storytelling at a high-end, codependent-craft level.
 - **Signature interaction:** A boot configurator that tracks shaft height, calf fit, leather choice, and sole construction in real time.
 
 
 ### Bespoke shoemaker
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Budapest or Northampton
 - **Why it earns a place:** lasts as sculpture, hand-welting, burnished calf under one lamp
 - **Signature interaction:** the last — a customer's measurements carve the last on screen, station by station
 
 ### English saddlery
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** Walsall, England — the last of the great saddlery town
 - **Why it earns a place:** bridle leather, brass fittings, saddle trees; smells like it photographs
 - **Signature interaction:** the hide map — where each part of one hide becomes each part of one saddle
 
 ### Telescope maker
-- **Series:** Nocturne
+- **Light:** dark — one lamp, the subject emerging from shadow
 - **Place idea:** hand-figured mirrors, small atelier — Arizona or Provence
 - **Why it earns a place:** mirror blanks under test light, star fields as the product's proof; night is the subject itself
 - **Signature interaction:** the mirror's figure — interference fringes resolving as the mirror approaches perfection
 
+### Mackinac Island carriage and wheelwright works
 
+- **Light:** bright — northern lake daylight, varnish and limestone
+- **Place idea:** Mackinac Island, Michigan, USA — an island that has banned motor vehicles since 1898 and still runs entirely on horses, carriages and bicycles. Someone has to build and keep them.
+- **Why it earns a place:** the car ban is a true, still-enforced constraint you could not invent, and it makes a vehicle shop on that island genuinely singular. Buyers are the Grand Hotel, the carriage companies, and generational cottagers. Fills the collection's empty North America slot. The craft — wheelwrighting, wood and iron — is distinct from Traccia's steel tubes and Banaag's body panels.
+- **Signature interaction:** the tire — the iron ring comes out of the fire oversized, drops over the wooden felloes, and pulls itself tight as it cools. A heat-shrink fit; nothing else in the collection is one.
+- **Other page ideas:** an island map with no roads for cars; a wheel exploded into hub, spokes and felloes, each named; a winter chapter (population drops to a few hundred and the ice bridge forms)
+- **Notes:** quiet, varnished, northern. Lilacs and Lake Huron light. Resist making it twee — the island's tourism face is the trap; the subject is the workshop that keeps it moving.
+
+### Vicuña — the chaccu, Peruvian high Andes
+
+- **Light:** cold thin high-altitude daylight on ochre puna grass
+- **Place idea:** the puna above 4,000m, Peru — a house holding chaccu rights with Andean communities, selling finished cloth
+- **Why it earns a place:** vicuña is the finest animal fibre on earth and **cannot be farmed**. Every two years communities form a human chain kilometres long, herd the wild animals, shear them and release them — a pre-Inca practice called the *chaccu*. One animal yields about 500g. Opens South America, and it is a landscape rather than a workshop, which all 24 built sites are.
+- **Signature interaction:** the scarcity math — a live counter turning a bolt of cloth into N animals across N years. Commitment 9 done exactly: a device that encodes something true.
+- **Other page ideas:** the human cordon closing across a valley, drawn as it tightens; the fibre at micron scale against cashmere and merino; a register of which community holds which chaccu
+- **Notes:** **handle with care.** This is a living indigenous practice, and "costume use of a culture's motifs" is an instant fail. Research it properly or do not build it.
+
+### Bell foundry
+
+- **Light:** dark — molten bronze as the only light source
+- **Place idea:** Innsbruck, Austria (Grassmayr, founded 1599, fourteen generations) or a comparable European house. Austria is unclaimed.
+- **Why it earns a place:** monumental bronze, wax, clay moulds, and a night pour. The buyers are cathedrals, monasteries and civic towers — as discriminating as it gets. Sound is a dimension the collection has never used.
+- **Signature interaction:** tuning the partials — a bell is tuned by shaving metal from the inside on a lathe, and its hum, prime, tierce, quint and nominal converge as you cut. Let the visitor cut, and hear them converge.
+- **Other page ideas:** the lost-wax sequence as a vertical descent; a bell's inscription band; a register of where each bell now hangs
+- **Notes:** check the overlap with the proposed pipe organ builder before approving both — two "large tuned bronze instrument" sites would collide. Pick one.
 
 ## Built
 

@@ -1,0 +1,650 @@
+---
+import "../styles/global.css";
+import {
+  shearMatrix, peakDeflection, returnTime, trackPath, trainAt,
+  BAND, SCALE_MAX, TRAINS, TIMBER, VIEW, CENTRE, GHOSTS, EXAGGERATION, SISTERS,
+} from "../sway.mjs";
+
+const ssrInchesEarly = peakDeflection("half", "mid");
+const ssrTrain = trainAt(0.5, ssrInchesEarly);
+
+// Server-rendered at the mid state, so a JS-off visitor gets a real drawing
+// of a bent under load rather than an empty box.
+const ssrInches = peakDeflection("half", "mid");
+
+const salvage = [
+  {
+    id: "L-114",
+    name: "Track section, curve 6",
+    ride: "Cyclone, third turn",
+    laid: 1974,
+    lifted: 2019,
+    trains: "2.9 million",
+    len: "38 in",
+    rail: "rail on",
+    price: 1450,
+  },
+  {
+    id: "L-118",
+    name: "Track section, airtime hill 2",
+    ride: "Cyclone, second hill",
+    laid: 1968,
+    lifted: 2011,
+    trains: "4.1 million",
+    len: "52 in",
+    rail: "rail on",
+    price: 2380,
+  },
+  {
+    id: "L-127",
+    name: "Ledger board, bent 41",
+    ride: "Wildwood, station straight",
+    laid: 1951,
+    lifted: 2022,
+    trains: "—",
+    len: "60 in",
+    rail: "no rail",
+    price: 480,
+  },
+  {
+    id: "L-131",
+    name: "Track section, valley",
+    ride: "Wildwood, first valley",
+    laid: 1988,
+    lifted: 2024,
+    trains: "1.6 million",
+    len: "44 in",
+    rail: "rail off",
+    price: 1120,
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BENT — wooden coaster works, Northumberland County, Pennsylvania</title>
+    <meta
+      name="description"
+      content="A wooden roller coaster is not a structure that holds still. It is a structure that is allowed to move, and someone has to keep deciding how much. Built and kept since 1946."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 19 L13 1 L25 19 M5 13 h16' stroke='%23c98a3c' stroke-width='2' fill='none'/%3E%3C/svg%3E"
+    />
+    <script is:inline>
+      var r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("fx");
+    </script>
+  </head>
+
+  <body>
+    <header class="top" id="top" data-veiled="0">
+      <a class="top__name" href="#hero">BENT</a>
+      <nav aria-label="Sections">
+        <a href="#bent">The Bent</a>
+        <a href="#sway">The Sway</a>
+        <a href="#laminate">The Laminate</a>
+        <a href="#walk">The Walk</a>
+        <a href="#salvage">Salvage</a>
+        <a href="#commission">Commission</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ------------------------------------------------------------ hero -->
+      <section class="hero" id="hero">
+        <div class="hero__img">
+          <img
+            src="/images/hero.jpg"
+            srcset="/images/hero-800.jpg 800w, /images/hero.jpg 1536w"
+            sizes="100vw"
+            alt="A wooden roller coaster structure photographed along its length at first light, empty, its lattice of timber bents throwing long shadows."
+            fetchpriority="high"
+            width="1536"
+            height="1030"
+          />
+        </div>
+        <div class="hero__body">
+          <h1>It is built to move.</h1>
+          <p class="lede">
+            A wooden coaster is not a structure that holds still. It is a
+            structure that is allowed to move, and someone has to keep deciding
+            how much.
+          </p>
+          <div class="hero__foot">
+            <span>Northumberland County, Pennsylvania</span>
+            <span>Built and kept since <b>1946</b></span>
+            <span>Third generation</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ------------------------------------------------------------ bent -->
+      <section class="chapter wrap" id="bent">
+        <div class="two two--wide-left">
+          <div class="rise">
+            <span class="big-fig">38<small>feet — the tallest bent on the Cyclone</small></span>
+            <h2>A bent is the unit.</h2>
+            <p style="margin-top:28px">
+              Two raking legs, a ledger across them, an X of bracing between
+              each level. Timber framers have called it a bent for four hundred
+              years. A coaster is one bent, repeated, until it reaches the end
+              of the land.
+            </p>
+            <p>
+              We build in southern yellow pine because it is stiff enough to
+              carry the train and springy enough to give it somewhere to go. It
+              is graded, pressure-treated, and cut on site. Every joint is
+              bolted, never glued and never welded, because a bolted joint can
+              be taken apart by the person who has to replace it in thirty
+              years.
+            </p>
+            <p>
+              <b>Wood is more work than steel, and it always will be.</b> We are
+              not going to pretend otherwise. What you get for the work is a
+              ride that can be repaired by a carpenter instead of replaced by a
+              foundry.
+            </p>
+          </div>
+          <figure class="rise">
+            <img
+              src="/images/bent.jpg"
+              srcset="/images/bent-800.jpg 800w, /images/bent.jpg 1536w"
+              sizes="(min-width:900px) 44vw, 100vw"
+              alt="Looking up at a single A-frame timber bent from below, its raking legs and cross-braces converging against a pale dawn sky."
+              loading="lazy"
+              width="1030"
+              height="1536"
+            />
+            <figcaption>
+              <b>Bent 41.</b> Legs, ledger, brace, footer. The bolt plates are
+              re-torqued every spring; the ovalling you can see around the older
+              holes is the structure telling you how much it has moved.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ------------------------------------------------ SIGNATURE: the sway -->
+      <section class="chapter wrap sway" id="sway">
+        <div class="sway__head rise">
+          <span class="big-fig" id="sway-read">3.1<small>inches at the top chord, right now</small></span>
+          <h2>The Sway</h2>
+          <p class="lede" style="margin-top:22px">
+            Push the train across the bent. Watch it lean, and watch it come
+            back. A wooden coaster built rigid would tear itself apart, because
+            the energy would have nowhere to go.
+          </p>
+        </div>
+
+        <div class="sway__stage rise">
+          <figure class="sway__fig">
+            <svg
+              id="sway-svg"
+              data-timber="mid"
+              viewBox={`0 0 ${VIEW.w} ${VIEW.h}`}
+              role="img"
+              aria-labelledby="sway-title sway-desc"
+              preserveAspectRatio="xMidYMax meet"
+            >
+              <image
+                href="/images/bent.jpg" x="0" y="0" width={VIEW.w} height={VIEW.h}
+                preserveAspectRatio="xMidYMid slice"
+              />
+              <rect class="sway__scrim" x="0" y="0" width={VIEW.w} height={VIEW.h} />
+
+              <title id="sway-title">One timber bent under a passing train</title>
+              <desc id="sway-desc">
+                A front elevation of a wooden coaster bent. As the train crosses,
+                the bent leans sideways and returns to plumb. The current
+                deflection is reported in the figure beside the drawing.
+              </desc>
+
+              <!-- the rest of the structure, so one bent reads as part of a ride -->
+              <g class="sway__ghosts">
+                {GHOSTS.map((g) => (
+                  <g>
+                    {g.braces.map((d) => <path class="sway__brace" d={d} />)}
+                    {g.ledgers.map((d) => <path class="sway__ledger" d={d} />)}
+                    {g.legs.map((d) => <path class="sway__leg" d={d} />)}
+                  </g>
+                ))}
+              </g>
+
+              <!-- the same bent at plumb. The lean means nothing without it. -->
+              <g class="sway__ghostbent">
+                {CENTRE.legs.map((d) => <path d={d} />)}
+                {CENTRE.ledgers.map((d) => <path d={d} />)}
+              </g>
+              <line class="sway__plumb" x1={CENTRE.cx} y1={CENTRE.top} x2={CENTRE.cx} y2={VIEW.base} />
+
+              <g id="sway-body" transform={shearMatrix(ssrInches)}>
+                {CENTRE.braces.map((d) => <path class="sway__brace" d={d} />)}
+                {CENTRE.ledgers.map((d) => <path class="sway__ledger" d={d} />)}
+                {CENTRE.legs.map((d) => <path class="sway__leg" d={d} />)}
+                {CENTRE.bolts.map((b) => <circle class="sway__bolt" cx={b.x} cy={b.y} r="3.6" />)}
+                <g class="sway__sister sway__sister--mid">
+                  {SISTERS.mid.map((d) => <path d={d} />)}
+                </g>
+                <g class="sway__sister sway__sister--old">
+                  {SISTERS.old.map((d) => <path d={d} />)}
+                </g>
+              </g>
+
+              <!-- the running track, crossing the whole structure -->
+              <path class="sway__track" id="sway-track" d={trackPath(ssrInches)} />
+
+              <g id="sway-train" transform={`translate(${ssrTrain.x},${ssrTrain.y}) rotate(${ssrTrain.deg})`}>
+                {[-56, -19, 18].map((x) => (
+                  <g>
+                    <rect class="sway__car" x={x} y="-24" width="38" height="15" />
+                    <rect class="sway__chassis" x={x + 2} y="-9" width="34" height="4" />
+                    <circle class="sway__wheel" cx={x + 8} cy="-3" r="3.6" />
+                    <circle class="sway__wheel" cx={x + 30} cy="-3" r="3.6" />
+                  </g>
+                ))}
+              </g>
+
+              <!-- the footer line: the one thing that does not move -->
+              <path class="sway__ground" d={`M 0 ${VIEW.base} L ${VIEW.w} ${VIEW.base}`} />
+            </svg>
+            <figcaption class="sway__scalenote fig">
+              Lean drawn ×{EXAGGERATION} · dashed outline = the same bent at plumb
+              · gold = members the crew has sistered and re-bolted
+            </figcaption>
+          </figure>
+
+          <div class="sway__panel">
+           <div class="sway__readout">
+            <div class="sway__band" id="sway-band" data-state="held">
+              <div class="sway__bandbar">
+                <span class="sway__bandzone" style={`left:0%;width:${(BAND.lo / SCALE_MAX) * 100}%`}></span>
+                <span
+                  class="sway__bandzone sway__bandzone--ok"
+                  style={`left:${(BAND.lo / SCALE_MAX) * 100}%;width:${((BAND.hi - BAND.lo) / SCALE_MAX) * 100}%`}
+                ></span>
+                <span
+                  class="sway__bandzone"
+                  style={`left:${(BAND.hi / SCALE_MAX) * 100}%;width:${((SCALE_MAX - BAND.hi) / SCALE_MAX) * 100}%`}
+                ></span>
+                <i class="sway__needle" id="sway-needle" style={`left:${(ssrInches / SCALE_MAX) * 100}%`}></i>
+              </div>
+              <div class="sway__ticks fig" aria-hidden="true">
+                <span style="left:0%">0</span>
+                <span style={`left:${(BAND.lo / SCALE_MAX) * 100}%`}>{BAND.lo}″ split</span>
+                <span style={`left:${(BAND.hi / SCALE_MAX) * 100}%`}>{BAND.hi}″ valley</span>
+              </div>
+              <p class="sway__verdict" id="sway-verdict">In the band — the structure is taking it</p>
+            </div>
+
+            <dl class="sway__figs">
+              <div><dt>Deflection</dt><dd class="fig" id="fig-defl">3.1 in</dd></div>
+              <div><dt>Load on this bent</dt><dd class="fig" id="fig-load">14,600 lb</dd></div>
+              <div><dt>Return to plumb</dt><dd class="fig" id="fig-ret">1.40 s</dd></div>
+            </dl>
+           </div>
+
+            <div class="sway__ctl">
+              <fieldset>
+                <legend>Train</legend>
+                {Object.entries(TRAINS).map(([k, v], i) => (
+                  <label>
+                    <input type="radio" name="train" value={k} checked={k === "half"} />
+                    <span>{v.label}</span>
+                  </label>
+                ))}
+              </fieldset>
+              <fieldset>
+                <legend>Timber</legend>
+                {Object.entries(TIMBER).map(([k, v]) => (
+                  <label>
+                    <input type="radio" name="timber" value={k} checked={k === "mid"} />
+                    <span>{v.label}</span>
+                  </label>
+                ))}
+              </fieldset>
+              <label class="sway__scrub">
+                <span>Train position</span>
+                <input type="range" id="sway-pos" min="0" max="1000" value="500" aria-label="Train position along the track" />
+              </label>
+            </div>
+
+            <p class="sway__note">
+              Below <span class="fig">{BAND.lo}″</span>, the joints take the shock
+              instead of the timber, and they split. Above <span class="fig">{BAND.hi}″</span>,
+              the train fights the track and will eventually valley. <b>Too stiff is the failure nobody expects.</b> Try an empty train on
+              new timber and watch it fall out of the band the wrong way.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- -------------------------------------------------------- laminate -->
+      <section class="chapter wrap" id="laminate">
+        <div class="two two--wide-right">
+          <figure class="rise">
+            <button
+              class="plate"
+              type="button"
+              data-record="rec-laminate"
+              aria-haspopup="dialog"
+            >
+              <img
+                src="/images/laminate.jpg"
+                srcset="/images/laminate-800.jpg 800w, /images/laminate.jpg 1536w"
+                sizes="(min-width:900px) 52vw, 100vw"
+                alt="The sawn end of a section of coaster track: nine stacked layers of pine, the newest bright gold, the oldest weathered grey, with a steel running rail bolted along the top."
+                loading="lazy"
+                width="1536"
+                height="1030"
+              />
+            </button>
+            <figcaption>
+              <b>Nine layers.</b> The top three were laid last spring. The bottom
+              six have been under trains since the Reagan administration.{" "}
+              <a href="/images/laminate.jpg">Open the full plate.</a>
+            </figcaption>
+          </figure>
+          <div class="rise">
+            <span class="big-fig">9<small>layers of pine in one running track</small></span>
+            <h2>The ride is not the wood.</h2>
+            <p style="margin-top:28px">
+              Track is built up from nine layers of pine, laid one on top of the
+              next and bent by hand around the curve. A steel running rail is
+              bolted along the top edge — a strip a quarter of an inch thick,
+              and the only steel in the whole assembly.
+            </p>
+            <p>
+              The top layers wear out. They are cut out and replaced, a few feet
+              at a time, every spring, for as long as the ride stands. A coaster
+              built in 1947 may contain almost none of its 1947 wood.
+            </p>
+            <p>
+              People find that sad. We do not. <b>The ride is not the wood. The
+              ride is the replacing.</b> A structure that is maintained is a
+              structure that is still loved, and the crew that shows up in March
+              with a saw is the reason it is still standing.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <dialog class="record" id="rec-laminate" aria-labelledby="rec-laminate-h">
+        <div class="record__in">
+          <img src="/images/laminate.jpg" alt="" width="1536" height="1030" />
+          <div class="record__txt">
+            <h3 id="rec-laminate-h">Running track, curve 6</h3>
+            <p>
+              Nine layers of southern yellow pine, each one inch nominal, laid
+              up and bent around a 74-foot radius. The steel running rail takes
+              the wheel; the pine takes everything else.
+            </p>
+            <dl>
+              <div><dt>Layers</dt><dd>9</dd></div>
+              <div><dt>Radius</dt><dd>74 ft</dd></div>
+              <div><dt>Rail</dt><dd>0.25 in flat steel</dd></div>
+              <div><dt>Top layers laid</dt><dd>2026</dd></div>
+              <div><dt>Lower layers laid</dt><dd>1984</dd></div>
+              <div><dt>Replaced every</dt><dd>6–9 years</dd></div>
+            </dl>
+            <button class="record__close" type="button" data-close>Close</button>
+          </div>
+        </div>
+      </dialog>
+
+      <hr class="rule" />
+
+      <!-- ------------------------------------------------------------ walk -->
+      <section class="chapter wrap" id="walk">
+        <div class="two">
+          <div class="rise">
+            <span class="big-fig">2.4<small>miles walked before the gates open</small></span>
+            <h2>Somebody walks it. Every morning.</h2>
+            <p style="margin-top:28px">
+              Before a single train runs, someone walks the whole circuit on the
+              catwalk, in the dark end of the morning, looking at every joint
+              they can reach. Loose bolt, split ledger, a rail end lifting, a
+              board that has gone soft at the knot.
+            </p>
+            <p>
+              It takes about ninety minutes. It cannot be done from the ground,
+              it cannot be done with a camera, and it has never once been done
+              by a computer. It is the oldest job in this trade and it is still
+              the one that matters most.
+            </p>
+            <p>
+              Eleven people work here. Three of them do nothing but walk and
+              replace track.
+            </p>
+          </div>
+          <figure class="rise">
+            <img
+              src="/images/walk.jpg"
+              srcset="/images/walk-800.jpg 800w, /images/walk.jpg 1536w"
+              sizes="(min-width:900px) 46vw, 100vw"
+              alt="A carpenter with a tool belt walking the catwalk beside the track at sunrise, carrying a fresh gold plank, dwarfed by the weathered timber structure."
+              loading="lazy"
+              width="1030"
+              height="1536"
+            />
+            <figcaption>
+              <b>0620, the last week of March.</b> Carrying one board up. The
+              gold is new pine; everything grey around it has been in the
+              weather since before he was born.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- --------------------------------------------------------- salvage -->
+      <section class="chapter wrap" id="salvage">
+        <div class="rise" style="max-width:62ch">
+          <span class="big-fig">{salvage.length}<small>pieces in the yard this month</small></span>
+          <h2>Buy the wood that was replaced.</h2>
+          <p style="margin-top:28px">
+            When we retrack a ride, the old track comes back here. We cut it
+            into sections, clean it, and keep its record — which ride, which
+            curve, the year it was laid and the year it came off, and roughly
+            how many trains crossed it.
+          </p>
+          <p>
+            It is the only part of this trade you can own. Every piece has been
+            under load for decades and is polished smooth on top by nothing but
+            wheels.
+          </p>
+        </div>
+
+        <figure class="rise salvage__lead">
+          <img
+            src="/images/salvage.jpg"
+            srcset="/images/salvage-800.jpg 800w, /images/salvage.jpg 1536w"
+            sizes="100vw"
+            alt="A cut section of laminated coaster track lying on a workbench in daylight, its pine layers visible at the sawn end, the steel running rail still bolted on top."
+            loading="lazy"
+            width="1536"
+            height="1030"
+          />
+          <figcaption>
+            <b>L-118, off the bench.</b> Polished smooth on top by nothing but
+            wheels. Every piece keeps its record; open one and it tells you where
+            it stood.
+          </figcaption>
+        </figure>
+
+        <ul class="ledgerlist rise">
+          {salvage.map((s) => (
+            <li class="ledgerlist__row">
+              <button type="button" class="ledgerlist__open" data-record={`rec-${s.id}`} aria-haspopup="dialog">
+                <svg class="bentmark" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 19 L13 1 L25 19 M5 13 h16" /></svg>
+                <span class="ledgerlist__name">{s.name}</span>
+                <span class="ledgerlist__from">{s.ride}</span>
+                <span class="ledgerlist__yrs fig">{s.lifted - s.laid} yrs under load</span>
+                <span class="ledgerlist__price fig">${s.price.toLocaleString("en-US")}</span>
+                <span class="ledgerlist__rec fig" aria-hidden="true">{s.id} record →</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        {salvage.map((s) => (
+          <dialog class="record" id={`rec-${s.id}`} aria-labelledby={`h-${s.id}`}>
+            <div class="record__in record__in--narrow">
+              <div class="record__txt">
+                <h3 id={`h-${s.id}`}>{s.name}</h3>
+                <p>
+                  Lifted off {s.ride.split(",")[0]} in {s.lifted}, cut, cleaned,
+                  and kept with its record. Nothing has been sanded or refinished —
+                  the top face is exactly as the wheels left it.
+                </p>
+                <dl>
+                  <div><dt>Piece</dt><dd>{s.id}</dd></div>
+                  <div><dt>From</dt><dd>{s.ride}</dd></div>
+                  <div><dt>Laid</dt><dd>{s.laid}</dd></div>
+                  <div><dt>Lifted</dt><dd>{s.lifted}</dd></div>
+                  <div><dt>Under load</dt><dd>{s.lifted - s.laid} years</dd></div>
+                  <div><dt>Trains over it</dt><dd>{s.trains}</dd></div>
+                  <div><dt>Length</dt><dd>{s.len}</dd></div>
+                  <div><dt>Running rail</dt><dd>{s.rail}</dd></div>
+                  <div><dt>Price</dt><dd>${s.price.toLocaleString("en-US")}</dd></div>
+                </dl>
+                <button class="record__close" type="button" data-close>Close</button>
+              </div>
+            </div>
+          </dialog>
+        ))}
+
+        <form class="order rise" id="order" novalidate>
+          <h3>Request a piece</h3>
+          <p style="margin-bottom:26px">
+            This sends an order request. Nothing is charged here — we write back
+            with a total including crating and freight from Pennsylvania.
+          </p>
+          <div class="two">
+            <div>
+              <div class="field">
+                <label for="o-piece">Which piece</label>
+                <select id="o-piece" name="piece" required>
+                  {salvage.map((s) => (
+                    <option value={s.id}>{s.id} — {s.name} — ${s.price.toLocaleString("en-US")}</option>
+                  ))}
+                </select>
+                <span class="err" id="e-piece" aria-live="polite"></span>
+              </div>
+              <div class="field">
+                <label for="o-name">Your name</label>
+                <input id="o-name" name="name" type="text" autocomplete="name" required />
+                <span class="err" id="e-name" aria-live="polite"></span>
+              </div>
+              <div class="field">
+                <label for="o-email">Email</label>
+                <input id="o-email" name="email" type="email" autocomplete="email" required />
+                <span class="err" id="e-email" aria-live="polite"></span>
+              </div>
+            </div>
+            <div>
+              <div class="field">
+                <label for="o-ship">Collection or freight</label>
+                <select id="o-ship" name="ship">
+                  <option value="collect">Collect from the yard</option>
+                  <option value="freight">Freight, quote me</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="o-note">Anything we should know</label>
+                <textarea id="o-note" name="note"></textarea>
+              </div>
+              <button class="btn" type="submit">Send the request</button>
+            </div>
+          </div>
+          <div id="order-sent" hidden class="sent" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <hr class="rule" />
+
+      <!-- ------------------------------------------------------ commission -->
+      <section class="chapter chapter--tight wrap" id="commission">
+        <div class="two two--wide-left">
+          <div class="rise">
+            <span class="big-fig">22<small>months, drawings to first train</small></span>
+            <h2>A ride is a letter, not a form.</h2>
+            <p style="margin-top:28px">
+              We cannot quote a coaster from a web page and we are not going to
+              pretend we can. A ride is a survey, a soil report, a state
+              inspector, two winters, and about twenty-two months.
+            </p>
+            <p>
+              Write to us with the park, the plot, and what you think you want
+              it to do. If you have drawings, send them. If you do not, say so —
+              most people do not.
+            </p>
+            <p style="margin-top:30px">
+              <a class="btn" href="mailto:shop@bent.example?subject=Commission%20enquiry">Write to the shop</a>
+            </p>
+          </div>
+          <figure class="rise">
+            <img
+              src="/images/timber.jpg"
+              srcset="/images/timber-800.jpg 800w, /images/timber.jpg 1536w"
+              sizes="(min-width:900px) 44vw, 100vw"
+              alt="A stack of newly milled bright gold southern yellow pine boards leaning against the weathered grey legs of a coaster structure."
+              loading="lazy"
+              width="1536"
+              height="1030"
+            />
+            <figcaption>
+              <b>Next spring's track, delivered in October.</b> It sits in the
+              yard through the winter so it moves before it is asked to.
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div class="foot__grid">
+        <div>
+          <div class="foot__mark">
+            <svg class="bentmark" viewBox="0 0 26 20" aria-hidden="true"><path d="M1 19 L13 1 L25 19 M5 13 h16" /></svg>
+            <span>BENT</span>
+          </div>
+          <p style="max-width:38ch">
+            Wooden coaster works. Built and kept since 1946, on the West Branch
+            of the Susquehanna.
+          </p>
+        </div>
+        <div>
+          <h3 style="font-size:17px;margin-bottom:10px">The yard</h3>
+          <p class="fig" style="font-size:14px;line-height:1.8">
+            Northumberland County<br />Pennsylvania<br />Mon–Fri, 0700–1600
+          </p>
+        </div>
+        <div>
+          <h3 style="font-size:17px;margin-bottom:10px">Write</h3>
+          <p style="font-size:14px;line-height:1.8">
+            <a href="mailto:shop@bent.example">shop@bent.example</a><br />
+            <a href="#salvage">Salvage stock</a><br />
+            <a href="#commission">Commission a ride</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../client.mjs"></script>
+  </body>
+</html>
