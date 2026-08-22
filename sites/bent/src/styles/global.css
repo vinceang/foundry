@@ -167,11 +167,26 @@ a:hover { color: var(--iron); text-decoration-color: var(--iron); }
 .hero { position: relative; min-height: 92svh; display: flex; align-items: flex-end; }
 .hero__img { position: absolute; inset: 0; }
 .hero__img img { width: 100%; height: 100%; object-fit: cover; }
+/* The hero copy sits on a photograph AND on a moving loop, so the ground under
+   any given glyph is not knowable in advance. Measured worst case behind the
+   text was cream at 1.10:1 — invisible. This scrim is tuned to the measured
+   bright decile of the plate, not guessed: it stays clear of the lift hill and
+   the sky in the top half, and carries the lower half dark enough that body
+   copy clears 7:1 wherever it lands. */
 .hero__img::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(15,13,11,.82) 0%, rgba(15,13,11,.45) 34%, rgba(15,13,11,.08) 68%);
+  content: ""; position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(12,10,9,0)    0%,
+    rgba(12,10,9,.06) 40%,
+    rgba(12,10,9,.30) 50%,
+    rgba(12,10,9,.62) 58%,
+    rgba(12,10,9,.84) 66%,
+    rgba(12,10,9,.92) 76%,
+    rgba(12,10,9,.94) 100%
+  );
 }
-.hero__body { position: relative; z-index: 2; padding: 0 var(--gutter) clamp(40px, 7vw, 84px); width: 100%; }
+.hero__body { position: relative; z-index: 3; padding: 0 var(--gutter) clamp(40px, 7vw, 84px); width: 100%; }
 .hero h1 { color: #f0ece4; max-width: 15ch; }
 .hero .lede { color: #ded8cd; margin-top: 22px; }
 .hero__foot {

@@ -221,6 +221,47 @@ separate them from links, but nobody has watched a first-time user find them.
 dark band and the photo underlay are unconditional in CSS so they should be
 correct, but no screenshot of the shipped mobile signature exists.
 
+## Round five — the hero copy, reported by Vince
+
+He screenshotted the hero **with the loop playing** and the copy was hard to
+read. He was right, and the cause is worth writing down.
+
+**Every contrast check I had run used the still.** All my screenshots were
+`?nofx` or caught the poster frame. Measured properly, the loop's bright decile
+behind the text runs **0.615 → 0.762 across six seconds** — it drifts *into* the
+failure. Cream on the worst frame was **1.10:1**. Invisible.
+
+Worse: the poster itself measured **1.29:1** by the same method. The hero copy
+had been marginal since the first build; the video only exposed it.
+
+Two causes, two fixes:
+
+1. **The loop shipped 19% brighter than the still it layers over.** An i2v model
+   does not inherit the plate's grade. Regraded with
+   `eq=gamma=0.80:brightness=-0.045:saturation=0.94`, which takes the worst frame
+   to 0.573 — now slightly darker than the poster, which is right for the moving
+   layer.
+2. **The scrim was painting underneath the video.** `.hero__loop` sits at
+   `z-index: 1` inside `.hero__img`; `.hero__img::after` had no z-index, so the
+   gradient rendered *below* the loop and did nothing while it played. The scrim
+   is now `z-index: 2` and `.hero__body` moved to 3.
+
+The gradient was also reshaped to the measured bright decile rather than guessed
+— it stays clear of the lift hill and sky in the top half and carries the lower
+half dark enough that body copy clears its floor wherever it lands.
+
+Verified on the composited page at the loop's brightest frame: **h1 15.65:1,
+lede 12.52:1, foot meta 9.00:1** — all from 1.10:1. Still 15.81:1, mobile 8.77:1.
+
+**Two method lessons, both the same shape as the nav breach in round four:**
+
+- **Check contrast against every layer that can be behind the text**, including
+  a video's later frames. A poster-only check is a check of the best case.
+- **Sampling "the darkest pixels in the box" is not the ground behind the
+  glyphs.** That method reported 12.38:1 for a hero that was visibly failing,
+  because it was picking up dark timber elsewhere in the crop. Use a strip that
+  contains both glyphs and real ground, or look at the picture.
+
 ## Video — done, and how
 
 `public/video/hero-loop.mp4` — 6s, 1280×720, **1.0MB**, generated through the
