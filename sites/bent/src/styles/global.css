@@ -310,21 +310,52 @@ html.fx .rise.in { opacity: 1; transform: none; }
 /* ------------------------------------------------------- THE SWAY */
 
 .sway__head { max-width: 62ch; }
-.sway__stage { margin-top: clamp(28px, 4vw, 48px); }
+
+/* The signature leaves the page ground. It is the only dark field between the
+   hero and the footer, which is the emphasis it earns — and a full-bleed dark
+   instrument panel is a shape no sibling has. */
+.sway__stage {
+  margin-top: clamp(34px, 4.5vw, 62px);
+  background: var(--iron);
+  padding-block: clamp(34px, 5vw, 72px);
+}
+.sway__inner { max-width: 1680px; margin-inline: auto; }
 @media (min-width: 1100px) {
-  /* the drawing is tall now — sit the readout beside it rather than under */
-  .sway__stage { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(30px, 4vw, 60px); align-items: center; }
-  .sway__stage .sway__panel { margin-top: 0; grid-template-columns: 1fr; }
-  .sway__stage .sway__note { grid-column: auto; }
+  .sway__inner { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(34px, 4vw, 72px); align-items: center; }
+  .sway__inner .sway__panel { margin-top: 0; grid-template-columns: 1fr; }
+  .sway__inner .sway__note { grid-column: auto; }
 }
 
+/* Everything inside the dark field inverts. */
+.sway__stage .sway__bandbar { background: #2c2723; }
+.sway__stage .sway__bandzone { background: #3d372f; }
+.sway__stage .sway__bandzone--ok { background: var(--fresh); opacity: .55; }
+.sway__stage .sway__needle { background: #f2ede4; }
+.sway__stage .sway__ticks span { color: #b5ab9b; }
+.sway__stage .sway__verdict { color: #ded7ca; }
+.sway__stage .sway__band[data-state="stiff"] .sway__verdict,
+.sway__stage .sway__band[data-state="loose"] .sway__verdict { color: var(--fresh); }
+.sway__stage .sway__figs dt { color: #b5ab9b; }
+.sway__stage .sway__figs dd { color: #f2ede4; }
+.sway__stage .sway__say { color: #ded7ca; }
+.sway__stage .sway__sw { color: #f7f3ea; border-bottom-color: var(--fresh); }
+.sway__stage .sway__sw:hover { background: var(--fresh); color: var(--iron); }
+.sway__stage .sway__scrub span { color: #b5ab9b; }
+.sway__stage .sway__scrub input[type="range"]::-webkit-slider-runnable-track { background: #6b6053; }
+.sway__stage .sway__scrub input[type="range"]::-moz-range-track { background: #6b6053; }
+.sway__stage .sway__note { color: #cec6b8; }
+.sway__stage .sway__note b { color: #f7f3ea; }
+.sway__stage :focus-visible { outline-color: var(--fresh); }
+
 .sway__fig { background: none; margin: 0; }
+.sway__fig figcaption { color: #bbb1a1; }
 #sway-svg {
   display: block; height: auto;
+  background: none;
   /* Cap by height so the lean and the figure that names it share a viewport,
      but cap the width to match, or the drawing letterboxes against its ground. */
   width: 100%;
-  max-width: calc(78svh * 660 / 820);
+  max-width: calc(88svh * 660 / 820);
   margin-inline: auto;
   background: var(--iron);
   touch-action: none; cursor: ew-resize;
@@ -425,10 +456,15 @@ html.fx .rise.in { opacity: 1; transform: none; }
 }
 .sway__sw {
   font: inherit; color: var(--iron); background: none; cursor: pointer;
-  border: 0; border-bottom: 2px solid var(--fresh-deep); border-radius: 0;
+  border: 0; border-bottom: 2px dotted var(--fresh-deep); border-radius: 0;
   padding: 0 1px; transition: background .25s var(--ease);
 }
-.sway__sw:hover { background: var(--fresh); color: var(--iron); }
+.sway__sw::after {
+  content: ""; display: inline-block; width: 11px; height: 9px; margin-left: 5px;
+  background: no-repeat center/contain
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 19 L13 1 L25 19 M5 13 h16' stroke='%23a06b26' stroke-width='2.6' fill='none'/%3E%3C/svg%3E");
+}
+.sway__sw:hover { background: var(--fresh); color: var(--iron); border-bottom-style: solid; }
 .sway__sw:focus-visible { outline: 2px solid var(--fresh-deep); outline-offset: 3px; }
 
 .sway__scrub span { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); margin-bottom: 8px; }
@@ -497,13 +533,14 @@ section[id] { scroll-margin-top: 76px; }
 /* Over the hero the chrome sits on sky, and creosote-on-sky is unreadable.
    Until the header takes its veil, it carries its own scrim and light ink. */
 .top::before {
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(to bottom, rgba(15,13,11,.55), rgba(15,13,11,0));
+  content: ""; position: absolute; inset: 0 0 auto; z-index: -1;
+  background: linear-gradient(to bottom, rgba(15,13,11,.86) 0%, rgba(15,13,11,.72) 46%, rgba(15,13,11,0) 100%);
+  height: 132px;
   transition: opacity .5s var(--ease);
 }
 .top[data-veiled="1"]::before { opacity: 0; }
 .top[data-veiled="0"] .top__name { color: #f0ece4; }
-.top[data-veiled="0"] nav a { color: #e2dcd1; }
+.top[data-veiled="0"] nav a { color: #f2ede4; }
 .top[data-veiled="0"] nav a:hover { color: #fff; border-bottom-color: var(--fresh); }
 
 /* The laminate stack. Nine layers is a countable, datable fact sitting on the
@@ -517,9 +554,9 @@ section[id] { scroll-margin-top: 76px; }
   grid-template-columns: 1fr !important;
 }
 .stack__rail span { display: block; border-top: 4px solid var(--iron); padding-top: 7px; }
-.stack__lam { padding: 3px 0; }
+.stack__lam { padding: 0; }
 .stack__n { font-size: 11px; color: var(--creosote-lo); text-align: right; }
-.stack__bar { height: 13px; background: var(--ash-lo); }
+.stack__bar { height: 15px; background: var(--ash-lo); box-shadow: 0 1px 0 var(--silver); }
 .stack__lam[data-fresh="1"] .stack__bar { background: var(--fresh); }
 .stack__yr { font-size: 12px; color: var(--creosote-lo); min-width: 5ch; text-align: right; }
 .stack__lam[data-fresh="1"] .stack__yr { color: var(--iron); }

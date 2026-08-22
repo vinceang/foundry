@@ -16,7 +16,7 @@ the signature, and the Never list, and it records why each was chosen.
 |---|---|
 | Build | `npm --prefix sites/bent run build` passes clean |
 | Floors | all green (see below) |
-| `wow-check` | 3 rounds; verdicts NOT YET → NOT YET → NOT YET |
+| `wow-check` | 4 rounds; NOT YET ×3, then **CLOSE** — both CLOSE findings acted on |
 | Deployed | **yes** — https://bent-ten.vercel.app, production verified |
 | Registered | foundry.json, README table, backlog → Built |
 | Video | hero loop, 6s, 1.0MB, desktop-only |
@@ -179,6 +179,34 @@ which a real bent does — but the readout was reporting the transient, so it
 briefly showed **−0.5 in**. `paint()` now takes a separate `readout` argument:
 the drawing shows the overshoot, the figures report the steady state.
 
+## Round four — CLOSE, and what it caught
+
+**A live contrast breach my own floor script could not see.** Three nav labels
+measured **2.25–2.53:1** against open sky on the hero. The script compared
+tokens to tokens; nothing compared text to the *image underneath it*. The header
+scrim is now opaque enough at the top (.86 → .72 → 0 over 132px) that the band
+is reliably dark whatever the plate does. Re-measured on live production:
+worst label is now **8.88:1**.
+
+**If you write a floor check, sample the rendered pixels.** A token-versus-token
+contrast test will pass a page that is unreadable.
+
+**The signature was the third-largest composition on its own page** — 632px wide
+beside a 1440px photograph. It is now a **full-bleed `--iron` band**: the only
+dark field between the hero and the footer, with the drawing, the band bar, the
+figures and the sentence all inside it. That is also the last of the Traccia and
+Banaag collision — both are drawing-left / spec-column-right on their page
+ground; a full-bleed dark instrument panel is nobody else's shape.
+
+Three colours inside that new dark field measured 5.84–6.61:1 and were lifted to
+clear 7:1.
+
+**Two smaller ones.** The laminate stack had 18px of gutter between 8px boards,
+so it read as a bar chart rather than a cross-section — the rows are now flush
+with a hairline. And the photo caption said the bottom *six* had been under
+trains since the Reagan administration while the drawing eight pixels below
+dated layers 4–6 to **1998**; the copy now says the bottom three.
+
 ## Still open
 
 **1. Registration is close, not exact.** The drawn elevation sits on the
@@ -186,8 +214,12 @@ photographed bent and they broadly agree, but the drawn legs are narrower than
 the photographed ones. Iterative: nudge `CENTRE`'s `halfTop`/`halfBase` in
 `sway.mjs`, screenshot, repeat.
 
-**2. A fourth `wow-check` was never run** on the final state. Everything after
-round three was verified by hand and by the floor script, not by the agent.
+**2. The cycling switches** now carry a dotted rule and a small bent glyph to
+separate them from links, but nobody has watched a first-time user find them.
+
+**3. The live mobile signature has never been looked at** in its final form. The
+dark band and the photo underlay are unconditional in CSS so they should be
+correct, but no screenshot of the shipped mobile signature exists.
 
 ## Video — done, and how
 
