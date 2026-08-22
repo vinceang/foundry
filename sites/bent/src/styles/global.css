@@ -92,6 +92,7 @@ p:last-child { margin-bottom: 0; }
 }
 
 .big-fig {
+  margin-bottom: clamp(30px, 3.6vw, 42px);
   font-family: var(--display);
   font-size: clamp(40px, 7vw, 82px);
   line-height: 0.94;
@@ -103,11 +104,15 @@ p:last-child { margin-bottom: 0; }
   display: block;
   font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 0.28em;
+  line-height: 1.75;          /* it inherited the display face's .94 and jammed when it wrapped */
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--creosote-lo);
-  margin-top: 12px;
+  margin-top: 14px;
+  max-width: 34ch;
+  text-wrap: balance;
 }
+@media (max-width: 620px) { .big-fig small { letter-spacing: 0.16em; line-height: 1.8; } }
 
 a { color: var(--creosote); text-decoration-color: var(--fresh-deep); text-underline-offset: 3px; }
 a:hover { color: var(--iron); text-decoration-color: var(--iron); }
@@ -178,15 +183,24 @@ a:hover { color: var(--iron); text-decoration-color: var(--iron); }
   background: linear-gradient(
     to bottom,
     rgba(12,10,9,0)    0%,
-    rgba(12,10,9,.03) 42%,
-    rgba(12,10,9,.16) 52%,
-    rgba(12,10,9,.40) 60%,
-    rgba(12,10,9,.60) 68%,
-    rgba(12,10,9,.70) 78%,
-    rgba(12,10,9,.74) 100%
+    rgba(12,10,9,.04) 44%,
+    rgba(12,10,9,.14) 58%,
+    rgba(12,10,9,.26) 72%,
+    rgba(12,10,9,.34) 100%
   );
 }
-.hero__body { position: relative; z-index: 3; padding: 0 var(--gutter) clamp(40px, 7vw, 84px); width: 100%; }
+.hero__body {
+  position: relative; z-index: 3; width: 100%;
+  padding: clamp(56px, 12vw, 120px) var(--gutter) clamp(40px, 7vw, 84px);
+  background: linear-gradient(
+    to bottom,
+    rgba(12,10,9,0)   0%,
+    rgba(12,10,9,.34) 22%,
+    rgba(12,10,9,.62) 44%,
+    rgba(12,10,9,.74) 70%,
+    rgba(12,10,9,.78) 100%
+  );
+}
 .hero h1 { color: #f0ece4; max-width: 15ch; }
 .hero .lede { color: #ded8cd; margin-top: 22px; }
 .hero__foot {

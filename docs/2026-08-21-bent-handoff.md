@@ -276,6 +276,42 @@ visibly brighter plate.
 Final, at the loop's brightest frame: h1 11.72:1, lede 12.81:1, foot meta
 10.45:1. Still 14.77:1 / 10.67:1, mobile 8.57:1.
 
+## Round six — the phone, reported by Vince
+
+He photographed his own Galaxy S25 and the h1 was much weaker than in
+Chrome's device simulator. Both observations were correct, and the reason
+matters for every future site.
+
+**A percentage-based scrim silently assumes a crop.** The hero plate is 3:2
+landscape; on a portrait phone `object-fit: cover` renders 412×276 of natural
+image into a 412×708 box, so the phone sees only the plate's **bright centre
+strip** — the sunlit lift hill — while the desktop crop puts darker timber under
+the same text. The gradient stops were tuned against the desktop crop's
+brightness distribution and did not survive the change.
+
+**And the simulator is not the device.** Real Chrome on Android gives up ~120px
+of viewport to browser chrome, so the hero is 708px rather than the 820px the
+simulator reports at the same nominal size. That moves the h1 from 60–66% of the
+hero to 54–61% — into a much weaker part of a percentage gradient. Anything
+anchored to viewport percentages will drift between the two.
+
+The fix removes the dependency rather than retuning it: **`.hero__body` now
+carries its own gradient**, so the copy brings its ground with it whatever the
+crop or the viewport does. The image scrim was relaxed to a light grounding pass
+(peak .34) since it is no longer doing the legibility work.
+
+Measured after, across three phone geometries: **15.00–15.42:1**, versus a
+desktop that held at 15.58 / 13.72 / 10.68.
+
+**Lesson: if text sits on a photograph, anchor its scrim to the text, not to a
+percentage of a box whose aspect ratio you do not control.**
+
+Also fixed here: the `.big-fig` eyebrow inherited the display face's `.94`
+line-height and jammed when it wrapped to two lines on narrow screens. It now
+sets `line-height: 1.75` (1.8 under 620px), slightly tighter tracking on mobile,
+and `.big-fig` carries a `clamp(30px, 3.6vw, 42px)` bottom margin so a wrapped
+measure no longer runs into the heading it introduces.
+
 ## Video — done, and how
 
 `public/video/hero-loop.mp4` — 6s, 1280×720, **1.0MB**, generated through the
