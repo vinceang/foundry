@@ -28,17 +28,7 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ## Building
 
-### Wooden coaster works — **BENT** · built, not deployed
-
-- **Light:** bright — first light before the park opens
-- **Place:** Northumberland County, Pennsylvania, on the West Branch of the Susquehanna
-- **Signature:** The Sway — a bent is designed to deflect under a loaded train and return; the visitor can drive it out of the band in both directions, and *too stiff* is the surprising failure
-- **State:** complete and passing every floor; `npm --prefix sites/bent run build` clean. **Never deployed**, not in the README table. Three `wow-check` rounds, all NOT YET.
-- **Full record:** [`docs/2026-08-21-bent-handoff.md`](2026-08-21-bent-handoff.md) — read this before resuming
-- **Open 1:** the laminate chapter tells the thesis instead of drawing it. Number and date the nine laminates on the plate, gold on the three laid last spring only.
-- **Open 2:** the apparatus under the signature is still configurator-shaped. Demote Train and Timber to inline text switches in the caption — "a **full** train on **fifty-year** timber".
-- **Open 3:** line-work registration on the photographed bent is close, not exact — nudge `CENTRE`'s `halfTop`/`halfBase` in `sites/bent/src/sway.mjs`.
-- **Open 4:** no video. Needs the Bench MCP (`i2v` lane); see the handoff's video section.
+*(empty)*
 
 ## Proposed — awaiting approval
 
@@ -158,6 +148,12 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 - **Notes:** check the overlap with the proposed pipe organ builder before approving both — two "large tuned bronze instrument" sites would collide. Pick one.
 
 ## Built
+
+### Wooden coaster works — **BENT**
+
+- **Built:** 2026-08-21 · **Light:** first light, before the park opens · **Live:** https://bent-ten.vercel.app
+- **Signature:** The Sway — a bent is designed to deflect under a loaded train and return; drivable out of the band in both directions, and *too stiff* is the surprising failure
+- **Handoff:** [`docs/2026-08-21-bent-handoff.md`](2026-08-21-bent-handoff.md)
 
 ### Custom jeepney builder — **Banaag**
 

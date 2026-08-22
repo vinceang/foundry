@@ -60,21 +60,25 @@ function state() {
   return { peak, inches };
 }
 
-function paint(inches) {
+/* The drawing may overshoot past plumb while it settles — a real bent does.
+   The figures must not: they answer "right now" for the load, and a transient
+   negative would report a deflection no bent has ever had. Draw the transient,
+   read out the steady state. */
+function paint(inches, readout = inches) {
   shown = inches;
   body.setAttribute("transform", shearMatrix(inches));
   track.setAttribute("d", trackPath(inches));
   const tr = trainAt(t, inches);
   train.setAttribute("transform", `translate(${tr.x.toFixed(1)},${tr.y.toFixed(1)}) rotate(${tr.deg.toFixed(2)})`);
 
-  const pct = Math.max(0, Math.min(100, (inches / SCALE_MAX) * 100));
+  const pct = Math.max(0, Math.min(100, (readout / SCALE_MAX) * 100));
   needle.style.left = pct + "%";
 
-  const v = verdict(inches);
+  const v = verdict(readout);
   bandEl.dataset.state = v.state;
   verdictEl.textContent = v.text;
 
-  const n = inches.toFixed(1);
+  const n = readout.toFixed(1);
   readEl.firstChild.nodeValue = n;
   figDefl.textContent = n + " in";
   figLoad.textContent =
@@ -103,7 +107,7 @@ function settle() {
     }
     const decay = Math.exp(-4.2 * p);
     const target = state().inches;
-    paint(target + (from - target) * decay * Math.cos(p * Math.PI * 2.4));
+    paint(target + (from - target) * decay * Math.cos(p * Math.PI * 2.4), target);
     settling = requestAnimationFrame(step);
   };
   settling = requestAnimationFrame(step);
@@ -116,21 +120,30 @@ if (svg) {
   });
   pos.addEventListener("change", settle);
 
-  document.querySelectorAll('input[name="train"]').forEach((r) =>
-    r.addEventListener("change", () => {
-      trainKey = r.value;
-      update();
-      settle();
-    })
-  );
-  document.querySelectorAll('input[name="timber"]').forEach((r) =>
-    r.addEventListener("change", () => {
-      timberKey = r.value;
-      svg.dataset.timber = timberKey;
-      update();
-      settle();
-    })
-  );
+  /* Train and Timber are a sentence, not a spec sheet: each word cycles.
+     The button carries the value as its label and states what it does. */
+  const swTrain = document.getElementById("sw-train");
+  const swTimber = document.getElementById("sw-timber");
+  const trainKeys = Object.keys(TRAINS);
+  const timberKeys = Object.keys(TIMBER);
+
+  function sayState() {
+    swTrain.textContent = TRAINS[trainKey].say;
+    swTrain.setAttribute("aria-label", `Train load: ${TRAINS[trainKey].say} train. Activate to change.`);
+    swTimber.textContent = TIMBER[timberKey].say;
+    swTimber.setAttribute("aria-label", `Timber age: ${TIMBER[timberKey].say}. Activate to change.`);
+  }
+
+  swTrain.addEventListener("click", () => {
+    trainKey = trainKeys[(trainKeys.indexOf(trainKey) + 1) % trainKeys.length];
+    sayState(); update(); settle();
+  });
+  swTimber.addEventListener("click", () => {
+    timberKey = timberKeys[(timberKeys.indexOf(timberKey) + 1) % timberKeys.length];
+    svg.dataset.timber = timberKey;
+    sayState(); update(); settle();
+  });
+  sayState();
 
   /* Drag the train directly on the drawing. */
   let dragging = false;
@@ -239,4 +252,23 @@ if (order) {
     btn.textContent = "Sent";
     sent.scrollIntoView({ behavior: still ? "auto" : "smooth", block: "center" });
   });
+}
+
+/* ------------------------------------------------------------ hero loop */
+
+const loop = document.getElementById("hero-loop");
+if (loop && !still && matchMedia("(min-width: 901px)").matches) {
+  // Nothing is fetched until we are actually going to play it.
+  loop.src = "/video/hero-loop.mp4";
+  loop.addEventListener("canplay", () => {
+    loop.play().then(() => { loop.dataset.on = "1"; }).catch(() => {});
+  }, { once: true });
+  loop.load();
+
+  // Stop paying for decode once the hero is off screen.
+  const seen = new IntersectionObserver((es) => {
+    if (es[0].isIntersecting) loop.play().catch(() => {});
+    else loop.pause();
+  }, { threshold: 0.05 });
+  seen.observe(loop);
 }

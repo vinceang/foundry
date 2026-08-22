@@ -15,18 +15,18 @@ export const SCALE_MAX = 6;                        // the band bar's full scale
 
 /* Train weight over one bent, in pounds. A PTC-style three-car train. */
 export const TRAINS = {
-  empty: { label: "Empty", lb: 9800 },
-  half:  { label: "Half",  lb: 14600 },
-  full:  { label: "Full",  lb: 19400 },
+  empty: { label: "Empty", say: "an empty", lb: 9800 },
+  half:  { label: "Half",  say: "a half-full", lb: 14600 },
+  full:  { label: "Full",  say: "a full", lb: 19400 },
 };
 
 /* Lateral compliance, inches per 10,000 lb. Older timber has bedded in: the
  * bolt holes have ovalled slightly and the joints have taken a set. The crew
  * answers it by sistering and re-bolting, which is most of the spring work. */
 export const TIMBER = {
-  new: { label: "New build", years: 0,  c: 0.85 },
-  mid: { label: "20 years",  years: 20, c: 1.45 },
-  old: { label: "50 years",  years: 50, c: 2.35 },
+  new: { label: "New build", say: "new", years: 0,  c: 0.85 },
+  mid: { label: "20 years",  say: "twenty-year", years: 20, c: 1.45 },
+  old: { label: "50 years",  say: "fifty-year", years: 50, c: 2.35 },
 };
 
 export function peakDeflection(trainKey, timberKey) {

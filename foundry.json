@@ -601,6 +601,29 @@
       },
       "signature": "Ang hulma — chalk it out, and file it",
       "shipped": "2026-08-09"
+    },
+    {
+      "slug": "bent",
+      "name": "BENT",
+      "series": "pastorale",
+      "what": "Wooden roller coaster works — the structure is built to move",
+      "tagline": "The ride is not the wood. The ride is the replacing.",
+      "place": {
+        "label": "Northumberland County, Pennsylvania",
+        "country": "United States",
+        "lat": 40.8865,
+        "lon": -76.7947
+      },
+      "url": "https://bent-ten.vercel.app",
+      "hero": "images/hero.jpg",
+      "video": "video/hero-loop.mp4",
+      "palette": {
+        "ground": "#c9c3b8",
+        "light": "#332d26",
+        "accent": "#c98a3c"
+      },
+      "signature": "The Sway — the bent leans, and comes back",
+      "shipped": "2026-08-21"
     }
   ]
 }

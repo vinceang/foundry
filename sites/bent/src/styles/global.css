@@ -416,18 +416,20 @@ html.fx .rise.in { opacity: 1; transform: none; }
 .sway__figs dt { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); margin-bottom: 4px; }
 .sway__figs dd { margin: 0; font-size: clamp(18px, 1.7vw, 23px); color: var(--iron); }
 
-.sway__ctl { display: grid; gap: 16px; align-content: start; }
-.sway__ctl fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
-.sway__ctl legend { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); padding: 0 0 8px; float: left; width: 100%; }
-.sway__ctl label { display: inline-flex; align-items: center; }
-.sway__ctl input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
-.sway__ctl input[type="radio"] + span {
-  display: inline-block; padding: 8px 14px; cursor: pointer;
-  font-family: var(--mono); font-size: 12px; letter-spacing: .06em;
-  border: 1px solid var(--ash-lo); color: var(--creosote); background: var(--ash);
+/* The controls are a sentence the crew would say, not a configurator panel.
+   Traccia and Banaag earn a spec panel because the panel IS their order; the
+   Sway is an argument, and it should not wear a spec sheet's clothes. */
+.sway__say {
+  font-size: clamp(19px, 1.9vw, 25px); line-height: 1.5;
+  color: var(--creosote); margin: 0; max-width: 34ch;
 }
-.sway__ctl input[type="radio"]:checked + span { background: var(--iron); color: var(--fresh); border-color: var(--iron); }
-.sway__ctl input[type="radio"]:focus-visible + span { outline: 2px solid var(--fresh-deep); outline-offset: 2px; }
+.sway__sw {
+  font: inherit; color: var(--iron); background: none; cursor: pointer;
+  border: 0; border-bottom: 2px solid var(--fresh-deep); border-radius: 0;
+  padding: 0 1px; transition: background .25s var(--ease);
+}
+.sway__sw:hover { background: var(--fresh); color: var(--iron); }
+.sway__sw:focus-visible { outline: 2px solid var(--fresh-deep); outline-offset: 3px; }
 
 .sway__scrub span { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--creosote-lo); margin-bottom: 8px; }
 .sway__scrub input { width: 100%; accent-color: var(--fresh-deep); }
@@ -503,3 +505,33 @@ section[id] { scroll-margin-top: 76px; }
 .top[data-veiled="0"] .top__name { color: #f0ece4; }
 .top[data-veiled="0"] nav a { color: #e2dcd1; }
 .top[data-veiled="0"] nav a:hover { color: #fff; border-bottom-color: var(--fresh); }
+
+/* The laminate stack. Nine layers is a countable, datable fact sitting on the
+   cut end of a board — draw it rather than describe it, and let the gold say
+   which three the crew laid last spring. */
+.stack { list-style: none; margin: clamp(22px, 3vw, 34px) 0 0; padding: 0; }
+.stack li { display: grid; grid-template-columns: 2.2ch 1fr auto; align-items: center; gap: 14px; }
+.stack__rail {
+  margin-bottom: 5px; font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--creosote-lo);
+  grid-template-columns: 1fr !important;
+}
+.stack__rail span { display: block; border-top: 4px solid var(--iron); padding-top: 7px; }
+.stack__lam { padding: 3px 0; }
+.stack__n { font-size: 11px; color: var(--creosote-lo); text-align: right; }
+.stack__bar { height: 13px; background: var(--ash-lo); }
+.stack__lam[data-fresh="1"] .stack__bar { background: var(--fresh); }
+.stack__yr { font-size: 12px; color: var(--creosote-lo); min-width: 5ch; text-align: right; }
+.stack__lam[data-fresh="1"] .stack__yr { color: var(--iron); }
+.stack__key { margin: 16px 0 0; font-size: 12px; line-height: 1.6; color: var(--creosote-lo); max-width: 44ch; }
+
+/* The hero loop. It was generated from the exact still beneath it, so it can
+   dip back to the image without a seam. Desktop only, and it never loads at
+   all until JS decides it should — the still is the real hero. */
+.hero__loop {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity 1.6s var(--ease);
+  z-index: 1; pointer-events: none;
+}
+.hero__loop[data-on="1"] { opacity: 1; }
+@media (max-width: 900px), (prefers-reduced-motion: reduce) { .hero__loop { display: none; } }

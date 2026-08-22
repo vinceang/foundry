@@ -1,8 +1,10 @@
 # BENT — handoff, 2026-08-21
 
 A wooden roller coaster works in Northumberland County, Pennsylvania. Built in
-one session against the new `docs/foundry-standard.md`. **Complete and passing
-every floor. Not deployed.** Three `wow-check` rounds; two findings still open.
+one session against the new `docs/foundry-standard.md`.
+
+**Live: https://bent-ten.vercel.app** — deployed, registered, and verified with a
+production screenshot. Three `wow-check` rounds, all acted on.
 
 Source of truth: [`sites/bent/DESIGN.md`](../sites/bent/DESIGN.md). Read it
 before touching anything — it states the light, the ground, the accent rule,
@@ -15,9 +17,10 @@ the signature, and the Never list, and it records why each was chosen.
 | Build | `npm --prefix sites/bent run build` passes clean |
 | Floors | all green (see below) |
 | `wow-check` | 3 rounds; verdicts NOT YET → NOT YET → NOT YET |
-| Deployed | **no** — never pushed to Vercel |
-| Committed | yes, local only, not pushed |
-| Imagery spend | $1.35 across 9 generations |
+| Deployed | **yes** — https://bent-ten.vercel.app, production verified |
+| Registered | foundry.json, README table, backlog → Built |
+| Video | hero loop, 6s, 1.0MB, desktop-only |
+| Spend | $1.51 across 11 generations (10 images + 1 video at $0.0092) |
 
 Dev server was left running on **http://localhost:4340** (`npx astro dev --port 4340`
 from `sites/bent`). Restart it if it is gone.
@@ -157,47 +160,65 @@ elevation cannot register with it. Re-plated onto `bent.jpg` (square-on from bel
 one bent, empty sky — orthographic by accident) and turned the frame portrait,
 which also took the mobile signature from 342×213 to **342×425**.
 
-## OPEN — pick these up next
+## What was closed after the third round
 
-**1. The laminate chapter tells the thesis instead of drawing it.** Nine layers is
-a countable, datable fact sitting on the photographed cut end — top three laid last
-spring, bottom six under trains since 1983. The page passes it by in prose.
-*Number and date the nine laminates on the plate, with fresh-cut gold on the three
-laid last spring and nothing else.* Obeys commitments 9 and 10 exactly; the
-specimen `<dialog>` already exists as the room for the full record.
+**The laminate chapter now draws the thesis.** Nine numbered, dated laminates
+below the plate — three gold at 2026, three grey at 1998, three at 1983 — with a
+key saying layers 1–6 have all been replaced at least once. It reads as a
+countable fact rather than a sentence about one.
 
-**2. The apparatus under the drawing is still configurator-shaped.** Chips plus a
-readout row. Traccia and Banaag earn that shape because the panel *is* their order.
-BENT's Sway is an argument wearing a spec sheet's clothes. *Demote Train and Timber
-to inline text switches in the caption line* — "a **full** train on **fifty-year**
-timber" — which reads as a sentence the crew would say.
+**The configurator apparatus is gone.** Train and Timber are no longer chips.
+They are two cycling words in a sentence: *"Right now: a full train on
+fifty-year timber."* Each is a `<button>` carrying its value as its label with an
+`aria-label` stating what activating it does. The slider survives as the keyboard
+path, labelled "Drag the train on the structure, or use this". Verified through
+all three states: 3.1″ in band → 4.6″ too loose → 0.8″ too stiff.
 
-**3. Registration is close, not exact.** The drawn elevation sits on the
-photographed bent and they broadly agree, but the drawn legs are narrower than the
-photographed ones. This is an iterative loop: draw, screenshot, nudge the
-`halfTop`/`halfBase` constants in `sway.mjs`'s `CENTRE`.
+**One bug found while verifying that.** The damped settle overshoots past plumb —
+which a real bent does — but the readout was reporting the transient, so it
+briefly showed **−0.5 in**. `paint()` now takes a separate `readout` argument:
+the drawing shows the overshoot, the figures report the steady state.
 
-**4. Never deployed.** No Vercel project, not in the README table, backlog entry
-still under Building.
+## Still open
 
-## Video — needs a Claude restart first
+**1. Registration is close, not exact.** The drawn elevation sits on the
+photographed bent and they broadly agree, but the drawn legs are narrower than
+the photographed ones. Iterative: nudge `CENTRE`'s `halfTop`/`halfBase` in
+`sway.mjs`, screenshot, repeat.
 
-No video was made. The plan in DESIGN.md is a settle loop generated from the exact
-still it layers over, so a dip-to-still masks the seam.
+**2. A fourth `wow-check` was never run** on the final state. Everything after
+round three was verified by hand and by the floor script, not by the agent.
 
-**The MCP was registered mid-session, so `mcp__bench-studio__*` was never available.**
-After restarting Claude Code the tools load and the path is:
+## Video — done, and how
 
-1. `upload_media` the finished still
-2. `get_model_capabilities` on an `i2v` model — **pass the input in the exact field
-   name it returns**, do not guess
-3. `create_media` — a video call blocks for minutes; say so before starting one
+`public/video/hero-loop.mp4` — 6s, 1280×720, **1.0MB**, generated through the
+Bench MCP from the exact hero still it layers over, so the dip back to the image
+has no seam.
 
-`tools/gen-image-bench.mjs` is images only; video has no CLI path. **Bench cannot
-upscale** — if a loop lands at 720p, that step stays on Higgsfield.
+The path, for the next one:
 
-Rules that still hold: video only where CSS could not fake it, one per page,
-desktop-only, lazy, ≤4MB.
+1. `upload_media` the finished still → returns a fal URL
+2. `list_models` with `accepts: image, output: video` → read the **exact** input
+   field name. It differs by model: LTX and Seedance want `image_url`, Kling wants
+   `start_image_url`. Guessing costs a failed paid call.
+3. `create_media` with `input_assets: [{url, field, media_type}]`
+4. Compress before shipping. Raw was 4.03MB; `ffmpeg -crf 30 -preset slow -an`
+   took it to 1.0MB. ffmpeg is at `tools/node_modules/ffmpeg-static/ffmpeg`.
+
+`lightricks/ltx-2.5/image-to-video/fast` cost **$0.0092** for six seconds — video
+here is cheaper than a single image plate.
+
+Prompt lesson: say *"the structure itself is completely still and rigid — no
+swaying, no camera shake"* explicitly. An i2v model will otherwise animate the
+subject, and on this site a swaying structure would contradict the signature.
+
+It is wired desktop-only (`max-width: 900px` hides it), never fetched until JS
+decides to play it (`preload="none"`, `src` set in JS), paused when off screen,
+and the still is the poster. **Verified in a headless browser: playing, 1280px,
+and on mobile the `src` is never set at all.**
+
+**Bench cannot upscale** — if a loop lands at 720p and needs more, that step stays
+on Higgsfield.
 
 ## Conventions worth carrying to the next site
 

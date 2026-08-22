@@ -8,6 +8,21 @@ import {
 const ssrInchesEarly = peakDeflection("half", "mid");
 const ssrTrain = trainAt(0.5, ssrInchesEarly);
 
+// The laminate stack, top layer first. Nine layers of pine, each one inch
+// nominal. The top three were cut in and bolted down last spring; the rest
+// have been under trains for as long as their year says.
+const laminates = [
+  { n: 1, laid: 2026, fresh: true },
+  { n: 2, laid: 2026, fresh: true },
+  { n: 3, laid: 2026, fresh: true },
+  { n: 4, laid: 1998, fresh: false },
+  { n: 5, laid: 1998, fresh: false },
+  { n: 6, laid: 1998, fresh: false },
+  { n: 7, laid: 1983, fresh: false },
+  { n: 8, laid: 1983, fresh: false },
+  { n: 9, laid: 1983, fresh: false },
+];
+
 // Server-rendered at the mid state, so a JS-off visitor gets a real drawing
 // of a bent under load rather than an empty box.
 const ssrInches = peakDeflection("half", "mid");
@@ -103,6 +118,16 @@ const salvage = [
       <!-- ------------------------------------------------------------ hero -->
       <section class="hero" id="hero">
         <div class="hero__img">
+          <video
+            id="hero-loop"
+            class="hero__loop"
+            muted
+            playsinline
+            loop
+            preload="none"
+            aria-hidden="true"
+            poster="/images/hero.jpg"
+          ></video>
           <img
             src="/images/hero.jpg"
             srcset="/images/hero-800.jpg 800w, /images/hero.jpg 1536w"
@@ -295,30 +320,21 @@ const salvage = [
             </dl>
            </div>
 
-            <div class="sway__ctl">
-              <fieldset>
-                <legend>Train</legend>
-                {Object.entries(TRAINS).map(([k, v], i) => (
-                  <label>
-                    <input type="radio" name="train" value={k} checked={k === "half"} />
-                    <span>{v.label}</span>
-                  </label>
-                ))}
-              </fieldset>
-              <fieldset>
-                <legend>Timber</legend>
-                {Object.entries(TIMBER).map(([k, v]) => (
-                  <label>
-                    <input type="radio" name="timber" value={k} checked={k === "mid"} />
-                    <span>{v.label}</span>
-                  </label>
-                ))}
-              </fieldset>
-              <label class="sway__scrub">
-                <span>Train position</span>
-                <input type="range" id="sway-pos" min="0" max="1000" value="500" aria-label="Train position along the track" />
-              </label>
-            </div>
+            <p class="sway__say" aria-live="polite">
+              Right now:{" "}
+              <button type="button" class="sway__sw" id="sw-train"
+                      aria-label="Train load: a full train. Activate to change.">a full</button>{" "}
+              train on{" "}
+              <button type="button" class="sway__sw" id="sw-timber"
+                      aria-label="Timber age: fifty-year. Activate to change.">fifty-year</button>{" "}
+              timber.
+            </p>
+
+            <label class="sway__scrub">
+              <span>Drag the train on the structure, or use this</span>
+              <input type="range" id="sway-pos" min="0" max="1000" value="500"
+                     aria-label="Train position along the track" />
+            </label>
 
             <p class="sway__note">
               Below <span class="fig">{BAND.lo}″</span>, the joints take the shock
@@ -357,6 +373,21 @@ const salvage = [
               six have been under trains since the Reagan administration.{" "}
               <a href="/images/laminate.jpg">Open the full plate.</a>
             </figcaption>
+
+            <ol class="stack" aria-label="The nine laminates, top layer first">
+              <li class="stack__rail"><span class="fig">steel running rail</span></li>
+              {laminates.map((l) => (
+                <li class="stack__lam" data-fresh={l.fresh ? "1" : "0"}>
+                  <span class="stack__n fig">{l.n}</span>
+                  <span class="stack__bar"></span>
+                  <span class="stack__yr fig">{l.laid}</span>
+                </li>
+              ))}
+            </ol>
+            <p class="stack__key fig">
+              Gold = laid last spring. Layers 1 to 6 have all been cut out and
+              replaced at least once; only 7, 8 and 9 are close to original.
+            </p>
           </figure>
           <div class="rise">
             <span class="big-fig">9<small>layers of pine in one running track</small></span>
