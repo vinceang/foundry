@@ -1,5 +1,10 @@
 # Nocturne — a taste profile
 
+> [!NOTE]
+> **Superseded by [`foundry-standard.md`](foundry-standard.md).** Builds no longer
+> read this file. It is kept for the record, for its palette calibration, and
+> because existing sites and handoff docs reference it.
+
 A lamplit room in a private museum: darkness as the ground, one metal as the
 light, and the conviction that restraint — not decoration — is what reads as
 premium. Distilled from the Shokunin build (July 2026), with the brand

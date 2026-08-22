@@ -4,7 +4,14 @@ A collection of bespoke digital worlds built with reverence, restraint, and
 material honesty. Foundry is not a template portfolio. Each site invents a
 complete place, vocabulary, photographic language, and reason to exist.
 
-The collection now works in **five qualities of light**:
+Sites are built against one house standard —
+[`docs/foundry-standard.md`](docs/foundry-standard.md). Light is chosen per
+site from its subject and recorded in that site's `DESIGN.md`.
+
+The five series below are **historical**. They describe how the built
+collection was organized; they no longer govern a new build, and you do not
+pick one. They survive as tags in `foundry.json` and as a filter on the
+showcase.
 
 | Series | Atmosphere | Subjects |
 |---|---|---|
@@ -14,10 +21,9 @@ The collection now works in **five qualities of light**:
 | **Pastorales** | Cold bright overcast, a craft worked outdoors in snow-light | Northern outdoor trades and makers |
 | **Vigils** | Maritime night, weather as material, one distant timed light | Things that exist in order to be seen |
 
-The two series share standards, not styling. Read
-[`docs/foundry-series.md`](docs/foundry-series.md),
-[`docs/nocturne-taste-profile.md`](docs/nocturne-taste-profile.md), and
-[`docs/aubade-taste-profile.md`](docs/aubade-taste-profile.md).
+Sites share doctrine, not styling. The doctrine is
+[`docs/foundry-standard.md`](docs/foundry-standard.md). The retired per-series
+profiles remain in `docs/` for the record and for their palette calibrations.
 
 > This repo's original brief was three unrelated categories (ecommerce/SaaS/event) proving generic range. It pivoted after Suntoku and Shokunin — see [`docs/2026-07-12-repositioning-luxury-ateliers.md`](docs/2026-07-12-repositioning-luxury-ateliers.md) for the full history, including the two concepts (Roster, SIGNAL) retired in the move.
 

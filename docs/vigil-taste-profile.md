@@ -1,5 +1,10 @@
 # Vigil — a taste profile
 
+> [!NOTE]
+> **Superseded by [`foundry-standard.md`](foundry-standard.md).** Builds no longer
+> read this file. It is kept for the record, for its palette calibration, and
+> because existing sites and handoff docs reference it.
+
 Deep maritime night with one deliberate light in it. Darkness as the ground —
 but an *exterior*, weather-bearing darkness rather than a room — and a light
 that is distant, rhythmic, and doing a job. Distilled from the Fàire build

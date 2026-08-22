@@ -1,5 +1,10 @@
 # Pastorale — a taste profile
 
+> [!NOTE]
+> **Superseded by [`foundry-standard.md`](foundry-standard.md).** Builds no longer
+> read this file. It is kept for the record, for its palette calibration, and
+> because existing sites and handoff docs reference it.
+
 A craft worked in the open, under a cold northern sky: overcast snow-light as
 the ground, fresh-hewn wood and winter blue carrying the color, and the
 conviction that a bright register can be as reverent as a dark one. Distilled

@@ -10,8 +10,8 @@ description: >-
   unattended on a loop or schedule. This is the right tool for ANY request to
   produce a new site in this collection, whether the subject is named, implied,
   or left to the queue — reach for it eagerly rather than building an ad-hoc
-  page yourself. Use it whenever the user asks for a new Foundry site, a new
-  Nocturne/Aubade/Vesper/Pastorale, "add a site for X", "build the next
+  page yourself. Use it whenever the user asks for a new Foundry site,
+  "add a site for X", "build the next
   atelier/hotel/house", "build the next site/one", "open a new site", "spin up
   a new site for X", "start the next one from the queue", "work the backlog",
   or invokes /foundry-site [subject] [--dry-run] — even if they only name the
@@ -47,8 +47,8 @@ could belong to no other subject.
   it. Only stop for genuine external blockers you cannot work around
   (expired auth, exhausted quota) — and even then, first try the documented
   fallback.
-- **The taste profile is the floor, not the ceiling.** Everything in the
-  relevant taste profile is binding; going beyond it — a bolder signature
+- **The standard is the floor, not the ceiling.** Everything in
+  `docs/foundry-standard.md` is binding; going beyond it — a bolder signature
   interaction, a braver composition — is why each site is worth making.
   Creativity spends itself in one subject-specific place; the rest stays
   disciplined.
@@ -62,33 +62,28 @@ could belong to no other subject.
 Read, in order:
 
 1. `README.md` — the collection table (what already exists, what's live).
-2. `docs/foundry-series.md` — the two series and the six shared commitments.
-3. The taste profile for the series this subject belongs to:
-   `docs/nocturne-taste-profile.md` (reverence, artifacts, craft under one
-   lamp) or `docs/aubade-taste-profile.md` (daylight, dwelling, hospitality).
-4. The `DESIGN.md` of the most recent sibling site in the same series —
-   for engineering conventions and to know what to *avoid repeating*.
-   Sites must share doctrine, never a skin.
+2. `docs/foundry-standard.md` — the house standard. Ten commitments, the
+   floors, the anti-patterns, and the per-project axes. This is the only
+   doctrine file you need.
+3. The `DESIGN.md` of two or three recent sites — for engineering
+   conventions, and to know what to *avoid repeating*. Sites share doctrine,
+   never a skin.
 
-**The series is a decision about light, and it must come from the subject —
-not from a bucket.** Before assigning a series, ask: at what hour does this
-world actually live? A forge lives at night under one lamp; a hotel lives in
-morning light. But a private jet lives at civil twilight on a tarmac; a
-lighthouse lives at dusk. Do not force a subject into Nocturne because
-"craft = dark and premium" — chiaroscuro is Shokunin's lamp, not Foundry's
-default, and a page darker than its world needs to be is a real failure
-mode (it has happened: a jet-charter build shipped over-dark Nocturne
-chiaroscuro when the subject's native light was twilight, and it read
-worse than an unconstrained build of the same subject).
+**Decide the light from the subject, then stop thinking about it.** At what
+hour does this world actually live? A forge lives at night under one lamp; a
+hotel lives in morning light; a private jet lives at civil twilight on a
+tarmac; a lighthouse lives at dusk. Write the answer into the site's
+`DESIGN.md` as one line and build.
 
-If the subject's native light is neither night-lamp nor morning, open a new
-register: the collection has expanded before (Nocturnes → Aubades). Propose
-the new series' quality of light in a short addition to
-`docs/foundry-series.md` and derive its taste commitments from the existing
-two profiles' structure — they are templates for *how* to hold taste, not
-the only two answers. This is the place to be genuinely inventive at the
-doctrine level, and choosing correctly here matters more than anything in
-the build.
+There are no registers to join, no series to assign, and nothing to justify.
+The old time-of-day names survive as tags in `foundry.json` and on the
+showcase; they do not govern a build and you do not need to pick one.
+
+The one real failure mode this replaces: **a page darker than its world needs
+to be.** It has happened — a jet-charter build shipped over-dark chiaroscuro
+when the subject's native light was twilight, and it read worse than an
+unconstrained build of the same subject. Chiaroscuro is Shokunin's lamp, not
+Foundry's default. Murky loses to rich every time.
 
 ## Phase 1 — Choose the subject
 
@@ -145,13 +140,12 @@ in writing, before any component exists:
   world — do not default to a previous site's faces.
 - **The opening move.** How a chapter announces itself, chosen once and held
   across this site. It is a decision, not a template — read "The opening
-  move" in the relevant taste profile and pick from it. **Do not default to
+  move" in `docs/foundry-standard.md` and pick from it. **Do not default to
   a tracked caps label above the heading.** That was Shokunin's answer, the
   collection has now spent it everywhere, and a device that appears on every
-  site distinguishes none of them. The register's own alternatives —
-  Vesper's operational readout, Pastorale's trade measure, Aubade's named
-  preparation, Nocturne's margin rail — carry real information where a
-  decorative label carries none. Record the choice in `DESIGN.md`.
+  site distinguishes none of them. The alternatives listed there — an operational
+  readout, a trade measure, a named preparation, a margin rail — carry real
+  information where a decorative label carries none. Record the choice in `DESIGN.md`.
 - **Vocabulary.** The domain's own nouns (Register / Works / Petition;
   Rooms by light) used everywhere, navigation included.
 - **Page arc.** One page thesis and a chapter sequence, written as a single
@@ -169,7 +163,7 @@ in writing, before any component exists:
   subject itself on another axis — material/process (a goblet cooling, a
   graduation map, varnish building), spatial/structural (a corner assembling,
   a flight profile), provenance/archive (a tree-ring scrub, a ledger), or the
-  configurable fusion below. See docs/aubade-taste-profile.md ("Signature
+  configurable fusion below. See docs/foundry-standard.md ("The signature
   interaction — and the light-over-time trap").
   **The highest form of it — reach for this whenever the product is
   made-to-order or configurable — fuses the signature with the order form:
@@ -222,12 +216,16 @@ Read `references/asset-pipeline.md` (in this skill) before generating
 anything — it encodes hard-won lessons about model choice, exposure, and
 batching that are expensive to relearn. The short version:
 
-- Higgsfield MCP (`soul_2`) is the primary path for photographic stills and
-  video loops; `tools/gen-image.mjs` (gpt-image) is a proven fallback and
-  often the better choice for product plates. Choose per shot, not per site.
+- **Bench Studio is the primary path** for photographic stills and video
+  loops: `node tools/gen-image-bench.mjs --prompt "..." --out
+  sites/<name>/assets-src/<shot>.png --size 1536x1024`. It is the only
+  generator here that hits 3:2 and 2:3 exactly, which is what the CSS boxes
+  are cut to. Do not start its server — the tool does that.
+  `tools/gen-image.mjs` (gpt-image) is the proven fallback if Bench is down.
+  Higgsfield is still the path for upscaling, which Bench cannot do.
 - One constant art-direction phrase across the whole batch keeps a site's
   photography coherent — this is the single highest-leverage rule.
-- The taste profile's imagery recipe is binding: palette inside the frame
+- The standard's imagery recipe is binding: palette inside the frame
   must match the tokens; regenerate any asset that violates it rather than
   shipping or CSS-correcting it.
 - **Generously lit beats atmospherically dark.** Builds have shipped too
@@ -239,12 +237,12 @@ batching that are expensive to relearn. The short version:
   human presence — a maker profiled, hands mid-process, a quiet service
   moment (Lagar do Sol) — because a world nobody inhabits reads as a
   rendering. Put at least one human-presence shot in every shot list, in
-  the register's own way: Nocturne gives the craftsman the same lamp as
-  the artifacts; Aubade shows the evidence and act of hosting.
+  site's own way: a dark site gives the craftsman the same lamp as the
+  artifacts; a bright one shows the evidence and act of hosting.
 
 Derive the shot list from the world you built in Phase 2 (the briefs in
 `docs/` show the form: establishing, chapters, material close-ups, one
-restrained human moment if the series allows it).
+restrained human moment).
 
 ## Phase 5 — Build in critique passes
 
@@ -296,13 +294,13 @@ Any output is a violation. Tracked micro-labels count; being on the
 needed and never had — it finds 105 existing violations across the built
 sites.
 
-**The taste profile outranks the detector, always.** Seven rules are
+**The standard outranks the detector, always.** Seven rules are
 already muted repo-wide in `.impeccable/config.json` because they fire on
-our registers by design (Aubade's cream ground, Nocturne's lamp-on-void);
+our grounds by design (a cream page, a lamp-on-void page);
 `.impeccable/README.md` explains each. Expect one to three false positives
 per site among the rules that remain — `side-tab` fires on any 3–4px
 absolute pseudo-element, including text cursors and decorative rings. If a
-finding contradicts an explicit line in the taste profile, the profile is
+finding contradicts an explicit line in the standard, the standard is
 right: waive it inline with a reason, never sand off the register to
 satisfy it.
 
@@ -314,11 +312,11 @@ This matters most in unattended runs, where there is no one to catch a
 "fix" that quietly destroys the world the profile exists to protect. A
 detector finding is evidence, not an instruction.
 
-**The taste profile outranks the detector, always.** Seven rules are
+**The standard outranks the detector, always.** Seven rules are
 already muted repo-wide in `.impeccable/config.json` because they fire on
-our registers by design (Aubade's cream ground, Nocturne's lamp-on-void);
+our grounds by design (a cream page, a lamp-on-void page);
 `.impeccable/README.md` explains each. If a *remaining* finding contradicts
-an explicit line in the taste profile, the profile is right — waive the
+an explicit line in the standard, the standard is right — waive the
 finding inline with a reason, never sand off the register to satisfy it:
 
 ```html
@@ -336,7 +334,7 @@ ones: *is this page darker (or lighter) than its world's actual hour needs
 it to be?* and *is the imagery leaning on a sibling site's recipe instead
 of this subject's own light?* Drama borrowed from another site's register
 reads as costume. Verify geometry (overlaps, clearances, sticky behavior) with
-measurements from the screenshots, not eyeballs. Apply the taste profile's
+measurements from the screenshots, not eyeballs. Apply the standard's
 anti-pattern list as a hard checklist each pass, and its relentless test in
 **both** directions:
 
@@ -350,25 +348,49 @@ anti-pattern list as a hard checklist each pass, and its relentless test in
 
 **Small imagery must open.** If the build shows plates as thumbnails, accession
 plates, or a contact sheet, wire the enlargement (commitment 10 in
-`docs/foundry-series.md`) — a real link to the full image, upgraded by JS to a
+`docs/foundry-standard.md`) — a real link to the full image, upgraded by JS to a
 native `<dialog>` carrying the piece's full record in the site's own voice, not
 just a bigger picture. A thumbnail with nothing more to say than its own
 enlargement is a thumbnail that should not exist.
 
-Before calling the build done, verify the floors (they are in every taste
-profile): complete page with JS off, visible focus states, body contrast,
-no functional text below 11px (tracked micro-labels included), keyboard
-paths, reduced-motion gets the finished static composition, images ≤500KB,
-and a dedicated mobile pass — a smaller lamp, not a lesser brand. If the
-site has a form, walk it in every state — rest, focus, error, submitting,
+Before calling the build done, verify the floors (they are in
+`docs/foundry-standard.md`): complete page with JS off, visible focus states,
+body contrast, no functional text below 11px (tracked micro-labels included),
+keyboard paths, reduced-motion gets the finished static composition, images
+≤500KB, and a dedicated mobile pass — a smaller lamp, not a lesser brand. If
+the site has a form, walk it in every state — rest, focus, error, submitting,
 sent — and screenshot the error state; an undesigned failure path is the
 one interaction that loses a commission outright.
+
+## Phase 5b — The wow check (required)
+
+The floors above are the **floor**. Passing them means the site is not broken;
+it does not mean the site is good. Nothing so far has checked the ceiling.
+
+Once the critique passes have settled and the floors are clean, hand the build
+to the **`wow-check`** agent (`.claude/agents/wow-check.md`). Give it:
+
+- the site path and its `DESIGN.md`
+- screenshots of every major section, desktop and mobile
+- at least one sibling site's screenshots, for the "could this be another
+  Foundry site?" test
+
+It returns **SHIP**, **CLOSE**, or **NOT YET**, plus at most five ranked
+findings.
+
+**A `NOT YET` is not advisory.** Act on the top finding and run the check again.
+Do not ship past it because the floors are green — a compliant, unmemorable site
+is exactly what this collection is trying not to produce, and it is the outcome
+that screenshots well enough to slip through.
+
+Two rounds is normal. If a third comes back `NOT YET` on the same finding, the
+problem is structural rather than cosmetic: reopen Phase 2 and rethink the
+signature instead of polishing.
 
 ## Phase 6 — Ship and verify
 
 1. `npm --prefix sites/<name> run build` must pass clean.
-2. Update the repo record: README site table, `docs/foundry-series.md`
-   site list, the backlog (entry moves from Building to Built with the live
+2. Update the repo record: README site table, the backlog (entry moves from Building to Built with the live
    URL), and a dated handoff doc `docs/<date>-<name>-handoff.md`
    (decisions, asset conventions, live URL — follow an existing handoff's
    form).
@@ -460,10 +482,12 @@ budget. Everything through Phase 5 runs for real, with these substitutions:
 - [ ] If the site has a form: every state designed, error state screenshot
 - [ ] Any small/thumbnail imagery opens into a record-carrying `<dialog>`
       (commitment 10), and the trigger still works with JS off
-- [ ] Zero taste-profile anti-patterns on final screenshots
+- [ ] Zero standard anti-patterns on final screenshots
+- [ ] `wow-check` agent returned SHIP or CLOSE (a NOT YET was acted on and
+      re-run, not overridden)
 - [ ] Both directions of the relentless test answered — including "could
       this belong to another Foundry site?"
-- [ ] README table + `foundry-series.md` + backlog + dated handoff doc
+- [ ] README table + backlog + dated handoff doc
       updated
 - [ ] Committed and pushed; **production URL screenshot verified** — or, if
       Vercel failed after a genuine attempt, localhost verified **and** logged

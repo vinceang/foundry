@@ -1,5 +1,10 @@
 # Aubade — a taste profile
 
+> [!NOTE]
+> **Superseded by [`foundry-standard.md`](foundry-standard.md).** Builds no longer
+> read this file. It is kept for the record, for its palette calibration, and
+> because existing sites and handoff docs reference it.
+
 A quiet room after the curtains are opened: warm daylight as the ground,
 natural materials carrying the color, and hospitality expressed through what
 has been prepared rather than what is promised.

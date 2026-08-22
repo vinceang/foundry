@@ -1,5 +1,10 @@
 # Vesper — a taste profile
 
+> [!NOTE]
+> **Superseded by [`foundry-standard.md`](foundry-standard.md).** Builds no longer
+> read this file. It is kept for the record, for its palette calibration, and
+> because existing sites and handoff docs reference it.
+
 The apron at civil twilight: the sun down, the sky still luminous, the first
 instrument lights coming on. Drafted 2026-07-24 for the third Foundry series,
 alongside the Auriga dry-run. Structure follows the Nocturne and Aubade

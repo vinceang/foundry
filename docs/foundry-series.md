@@ -1,5 +1,10 @@
 # Foundry — two qualities of light
 
+> [!NOTE]
+> **Superseded by [`foundry-standard.md`](foundry-standard.md).** Builds no longer
+> read this file. It is kept for the record, for its palette calibration, and
+> because existing sites and handoff docs reference it.
+
 Foundry creates complete fictional brands rather than isolated landing pages.
 Every project must have a believable world, a material system, a precise
 vocabulary, art-directed imagery, and one interaction that could belong only
