@@ -18,6 +18,9 @@
   /* the same pigment dried down. Sel on fleur is 3.51:1 and fails; on this it
      is 4.98:1, measured. Used only where white type sits on the accent. */
   --fleur-deep: #a85643;
+  /* error text at 12px needs real headroom, not a pass by 0.17. 5.72:1 on the
+     page ground, 6.10:1 inside an input, and it is still the same pigment. */
+  --fleur-alert: #9a4736;
 
   --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --body: "IBM Plex Sans", system-ui, sans-serif;

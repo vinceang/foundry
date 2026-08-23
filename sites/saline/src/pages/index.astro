@@ -1030,6 +1030,17 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
            as volume arriving rather than a rectangle getting bigger */
         filter: drop-shadow(0 calc(var(--swell, 0) * 5px) calc(var(--swell, 0) * 9px) rgb(34 32 28 / calc(var(--swell, 0) * 0.28)));
       }
+      .pan-g .pan {
+        /* widen the tap target outward from the drawn edge; the pans shrink
+           by design, so the smallest one needs the help most */
+        stroke: transparent;
+        stroke-width: 26;
+        paint-order: stroke;
+        /* SVG hit-tests visiblePainted by default, so a transparent stroke is
+           skipped entirely. `all` makes the invisible stroke tappable, which is
+           the whole point of widening it. */
+        pointer-events: all;
+      }
       .pan__ring {
         stroke: var(--encre);
         stroke-width: 0;
@@ -1045,6 +1056,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       /* the parcel you are following. It has a position, so the eye has
          something continuous to hold while the numbers step. */
       .parcel {
+        /* a marker, not a control — without this it swallows taps on whichever
+           pan it is currently sitting in, which is the pan the visitor is most
+           likely to reach for */
+        pointer-events: none;
         stroke: var(--glare);
         stroke-width: 3;
         transition: r 0.2s var(--ease);
@@ -1543,10 +1558,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         margin: 0;
         font-family: var(--mono);
         font-size: 12px;
-        color: var(--fleur);
+        color: var(--fleur-alert);
       }
       .order [aria-invalid="true"] {
-        border-color: var(--fleur);
+        border-color: var(--fleur-alert);
         border-width: 2px;
       }
       .order__foot {
@@ -1677,8 +1692,22 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         .top nav::-webkit-scrollbar {
           display: none;
         }
+        /* 19px tall is not a thumb target. Padding rather than font-size, so
+           the tracked-caps rhythm of the row is untouched. */
         .top nav a {
           white-space: nowrap;
+          padding: 11px 2px;
+          display: inline-block;
+        }
+        .top nav {
+          padding-bottom: 0;
+        }
+        .weather button {
+          padding: 12px var(--s3);
+        }
+        .mark {
+          padding: 6px 0;
+          display: inline-block;
         }
         section[id] {
           scroll-margin-top: 96px;
@@ -1699,23 +1728,56 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         .cascade__grid .sect {
           margin: 0;
         }
+        /* the stacked frame has to fit inside one clipped viewport, or the
+           plan — the primary control — is scrolled out of a sticky box and
+           can never be reached. Measured: the stack was 1140px in an 844px
+           frame, so the pans were invisible on a phone. */
         .sect__pan {
-          min-height: 210px;
+          min-height: 128px;
+        }
+        .read .measure {
+          font-size: 44px;
+        }
+        .figs {
+          gap: var(--s1);
+          margin: var(--s2) 0;
+        }
+        .note {
+          font-size: 14px;
+          min-height: 0;
+        }
+        .weather {
+          padding-top: var(--s1);
+        }
+        .weather__msg {
+          font-size: 13px;
+        }
+        .plan__cap {
+          margin-top: var(--s1);
         }
         .cascade__grid .plan {
-          margin-top: var(--s1);
+          margin-top: var(--s2);
+        }
+        .cascade__grid .plan__svg {
+          min-height: 132px;
         }
         .figs > div {
           gap: var(--s1);
         }
+        /* No pin on a phone. A 100dvh frame cannot hold the section, the
+           readout and the plan stacked — measured at 1140px in an 844px box,
+           which clipped the plan away entirely and put the primary control
+           out of reach. The instrument still scrubs from the section's own
+           position, so nothing is lost but the freeze. */
         .cascade[data-live="true"] {
-          height: 240vh;
+          height: auto;
         }
-        /* the mobile header is two rows; anything less than this and the
-           section runs underneath it */
         .cascade[data-live="true"] .cascade__sticky {
-          padding-block: var(--s6) var(--s3);
-          align-items: flex-start;
+          position: static;
+          height: auto;
+          overflow: visible;
+          padding-block: var(--s5) var(--s4);
+          align-items: stretch;
         }
         .plate--bleed {
           height: 62vh;
