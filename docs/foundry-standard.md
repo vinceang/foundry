@@ -91,11 +91,33 @@ from the subject and record the answers in the site's `DESIGN.md`.
 | Opening move | How a chapter announces itself — see below |
 | Signature interaction | The one bold thing |
 
+## The fingerprint gate
+
+**Before writing any markup, clear the gate in `docs/foundry-fingerprints.md`.**
+
+It records six dimensions per site — grammar, opening move, chapter device,
+signature move, close pattern, type and register. A new build must differ from
+**every existing row on at least 4 of the 6**, checked against each row
+individually, not averaged across the table.
+
+This exists because the collection kept varying world and holding shape
+constant. Twenty-five places, twenty-five crafts, three grammars. The gate is
+the only mechanism here that runs *before* the build; everything else in this
+file is a rule the build can drift past, and a critique after the fact is too
+late to change what the page is.
+
+If a planned build fails the gate, **change the plan, not the table.**
+
+After shipping, append one row and say plainly what it shares with prior rows.
+The shared columns are what the next build has to avoid.
+
 ## The signature interaction — and the light-over-time trap
 
 Each site spends its boldness in exactly one place. Choose that axis by
 surveying what the built sites already do (their `DESIGN.md` signatures) and
 then going somewhere else.
+
+The registry is the survey. Do not do it from memory.
 
 **Light over time is a mannerism to avoid by default.** It was distinctive
 once. The collection has now spent it four times over — Lagar do Sol's day
