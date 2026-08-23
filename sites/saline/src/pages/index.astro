@@ -68,11 +68,11 @@ const PANS = [
           </p>
         </div>
         <figure class="plate plate--bleed ph ph--aerial">
-          <figcaption class="label wrap">
-            The saline from above · noon · three concentrations in one frame
+          <figcaption class="wrap">
+            <span class="label">The saline from above · noon · three concentrations in one frame</span>
+            <span class="label hero__cue">Scroll to walk the water through</span>
           </figcaption>
         </figure>
-        <p class="hero__cue label wrap">Scroll to walk the water through</p>
       </section>
 
       <!-- ---------------------------------------------- la cascade (signature) -->
@@ -535,9 +535,15 @@ const PANS = [
           if (rule) rule.style.bottom = `${pct}%`;
           if (depth2) depth2.textContent = `${fmt.depth(s.depth)} cm`;
 
+          // The crust forms ON the surface, so it rides the waterline rather
+          // than growing from the floor. It used to be 14% of the pan sitting
+          // on a 7.5% band, which meant white swallowed the rose exactly when
+          // the rose was the point.
           const cry = crystalAmount(s.be);
           els.crust.style.opacity = String(cry);
-          els.crust.style.height = `${4 + cry * 10}%`;
+          els.crust.style.bottom = `${pct}%`;
+          els.crust.style.transform = `translateY(${50 + cry * 20}%)`;
+          root.classList.toggle("is-crystal", cry > 0.02);
 
           // The plan is a live map, not a legend: every pan is filled at the
           // concentration standing in it right now, so rain visibly drains the
@@ -747,19 +753,31 @@ const PANS = [
         font-size: 19px;
         max-width: 52ch;
       }
-      .hero__cue {
-        display: block;
-        margin-top: var(--s3);
-      }
-      /* the page opens on water, not on paper */
+      /* the page opens on water. The frame that would stop a stranger gets a
+         full viewport, not a letterbox strip, and carries its own caption. */
       .plate--bleed {
-        margin: var(--s5) 0 var(--s2);
+        margin: var(--s5) 0 0;
+        position: relative;
       }
       .plate--bleed.ph::before {
-        aspect-ratio: 24 / 9;
+        aspect-ratio: auto;
+        height: 88vh;
+        min-height: 480px;
       }
       .plate--bleed figcaption {
-        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: var(--s3);
+        display: flex;
+        justify-content: space-between;
+        gap: var(--s3);
+        flex-wrap: wrap;
+      }
+      .plate--bleed figcaption .label {
+        color: var(--encre);
+        background: color-mix(in srgb, var(--glare) 82%, transparent);
+        padding: var(--s1) var(--s2);
       }
       .ph--tremet::before {
         background: linear-gradient(
@@ -921,15 +939,32 @@ const PANS = [
           height 0.28s var(--ease),
           background 0.28s var(--ease);
       }
+      /* a broken crust riding the waterline, not a slab on the floor */
       .sect__crust {
         position: absolute;
         left: 0;
         right: 0;
         bottom: 0;
-        height: 6%;
-        background: var(--sel);
+        height: 11px;
+        z-index: 2;
+        background:
+          repeating-linear-gradient(
+            90deg,
+            var(--sel) 0 17px,
+            transparent 17px 21px,
+            var(--sel) 21px 46px,
+            transparent 46px 49px
+          );
         opacity: 0;
-        transition: opacity 0.3s var(--ease);
+        transition:
+          opacity 0.3s var(--ease),
+          bottom 0.28s var(--ease);
+      }
+      /* the finished salt is the point, so the terminal state is the loudest
+         frame in the pane — not the flood */
+      .cascade.is-crystal .sect__pan {
+        border-color: var(--fleur-deep);
+        box-shadow: inset 0 0 0 1px var(--fleur-deep);
       }
       .sect figcaption {
         margin-top: var(--s1);
@@ -1404,23 +1439,48 @@ const PANS = [
           scroll-margin-top: 96px;
         }
 
-        /* a 830-unit plan at 390px is illegible. The section carries the
-           instrument here, which is the reading that matters anyway. */
-        .plan__svg {
-          display: none;
+        /* the instrument is the reason to visit, so on a phone it gets the top
+           of the screen at full width — section, then readout, then the plan
+           as a locator. Squeezing the desktop grid made it a thumbnail. */
+        .cascade__grid {
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "sect"
+            "read"
+            "plan";
+          grid-template-rows: auto auto auto;
+          gap: var(--s3);
         }
-        .plan__cap {
-          margin-top: 0;
+        .cascade__grid .sect {
+          margin: 0;
         }
         .sect__pan {
-          height: 280px;
+          min-height: 210px;
+        }
+        .cascade__grid .plan {
+          margin-top: var(--s1);
+        }
+        .figs > div {
+          gap: var(--s1);
         }
         .cascade[data-live="true"] {
-          height: 380vh;
+          height: 420vh;
         }
+        /* the mobile header is two rows; anything less than this and the
+           section runs underneath it */
         .cascade[data-live="true"] .cascade__sticky {
           padding-block: var(--s6) var(--s3);
           align-items: flex-start;
+        }
+        .plate--bleed.ph::before {
+          height: 62vh;
+          min-height: 340px;
+        }
+        /* the row scrolls, so fade the right edge — otherwise it stops at
+           "Le las" and La récolte looks like it does not exist */
+        .top nav {
+          -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
+          mask-image: linear-gradient(90deg, #000 82%, transparent);
         }
       }
     </style>

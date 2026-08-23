@@ -88,11 +88,24 @@ export function stateAt(p) {
  */
 export function brineColour(be) {
   const t = clamp01((be - 3.5) / (CRYSTAL_BE - 3.5));
-  // saumure #6f8478 -> fleur #c2705f
-  const r = Math.round(lerp(0x6f, 0xc2, t));
-  const g = Math.round(lerp(0x84, 0x70, t));
-  const b = Math.round(lerp(0x78, 0x5f, t));
-  return `rgb(${r} ${g} ${b})`;
+
+  // Three stops, not two. A straight saumure→fleur lerp passes through mud at
+  // the midpoint, so the ramp peaked in the middle and died at the end — the
+  // opposite of what the water does. Climbing through a pale, sun-bleached
+  // shallow stop keeps it monotonic: green, pale, rose.
+  const STOPS = [
+    [0.0, [0x6f, 0x84, 0x78]], // saumure — deep and green
+    [0.45, [0xc4, 0xbb, 0x9c]], // pale, warming, barely covering the clay
+    [1.0, [0xc2, 0x70, 0x5f]], // fleur — the bloom, salt is hours away
+  ];
+
+  let i = 0;
+  while (i < STOPS.length - 2 && t > STOPS[i + 1][0]) i++;
+  const [t0, c0] = STOPS[i];
+  const [t1, c1] = STOPS[i + 1];
+  const f = (t - t0) / (t1 - t0);
+  const c = c0.map((v, k) => Math.round(lerp(v, c1[k], f)));
+  return `rgb(${c[0]} ${c[1]} ${c[2]})`;
 }
 
 /**
