@@ -1,5 +1,12 @@
 # The Foundry standard
 
+**Two phases share this standard.** Foundry takes subjects whose value is an
+**object** — a house, a board, a plate. Sluice, the second phase, takes subjects
+whose value is **duration** — a process, a route, a shift, a cycle — and adds one
+defining constraint: scroll is a controller, never a trigger. See
+`sluice-standard.md`, which overrides this file only where it says so. If a
+subject would survive losing the passage of time, it is a Foundry site.
+
 One house standard for every site in the collection. It replaces the five
 time-of-day taste profiles as the thing you read before building.
 

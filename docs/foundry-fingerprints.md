@@ -22,8 +22,13 @@ Foundry's own; the gate mechanic is his.
 
 ## The six dimensions
 
+Both phases share this table. Foundry and Sluice use the same tools, the same
+taste and the same showcase, so they are fully capable of colliding with each
+other — a Sluice site is gated against every Foundry row and the reverse.
+
 | # | Dimension | What it records |
 |---|---|---|
+| 0 | **Phase** | `foundry` (value is an object) or `sluice` (value is duration). |
 | 1 | **Grammar** | What the page *is*. Chaptered record, instrument panel, catalogue, ledger, dossier, single-object study, route, correspondence. |
 | 2 | **Opening move** | What the first screen does before the visitor scrolls. |
 | 3 | **Chapter device** | What a chapter unit is, and how it announces itself. |
