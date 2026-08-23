@@ -1314,6 +1314,138 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         color: var(--vase-ink);
       }
 
+
+      /* ---------- entrances, tied to scroll position ----------
+         Fade-up-on-scroll is banned in this phase because it is a TRIGGER: it
+         fires once at a threshold and cannot be undone. These are the same idea
+         built as a CONTROLLER — every one is driven by a view() timeline, so
+         scrolling back un-resolves it exactly. Reversible, user-paced, and
+         consistent with the grammar rule rather than an exception to it.
+
+         The material idea is the subject's own: things arrive the way water
+         arrives in a pan — filling from the bottom edge, not floating up from
+         nowhere. Plates wipe upward, measures rise into place, rows fill in
+         sequence.
+
+         No JS. Where view() timelines are unsupported the default state is the
+         finished composition, so nothing is ever hidden by a missing feature. */
+      @supports (animation-timeline: view()) {
+        @media (prefers-reduced-motion: no-preference) {
+          @keyframes rise {
+            from {
+              opacity: 0;
+              transform: translateY(18px);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+          /* the plate fills like a pan: the image is uncovered from the bottom */
+          @keyframes fill {
+            from {
+              clip-path: inset(72% 0 0 0);
+            }
+            to {
+              clip-path: inset(0 0 0 0);
+            }
+          }
+          @keyframes settle {
+            from {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+
+          /* the chapter measure — the trade's own figure — rises first */
+          .ch__m,
+          .ch .pond-name {
+            animation-name: rise;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 8% cover 26%;
+          }
+          .ch__h {
+            animation-name: rise;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 12% cover 30%;
+          }
+
+          /* plates fill from the bottom edge */
+          .ch .plate img,
+          .salt__img {
+            animation-name: fill;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 4% cover 24%;
+          }
+
+          /* the yield table fills row by row, because it is a record being read
+             down, and the stagger is the reading order */
+          .tbl--yield tbody tr {
+            animation-name: settle;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 6% cover 30%;
+          }
+          .tbl--yield tbody tr:nth-child(2) { animation-range: entry 9% cover 33%; }
+          .tbl--yield tbody tr:nth-child(3) { animation-range: entry 12% cover 36%; }
+          .tbl--yield tbody tr:nth-child(4) { animation-range: entry 15% cover 39%; }
+          .tbl--yield tbody tr:nth-child(5) { animation-range: entry 18% cover 42%; }
+
+          /* the two salts, one after the other, since the section argues one
+             against the other */
+          .two .salt:first-child {
+            animation-name: settle;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 6% cover 28%;
+          }
+          .two .salt:last-child  { animation: settle linear both; animation-timeline: view(); animation-range: entry 13% cover 35%; }
+
+          /* the three paludiers, left to right */
+          .three .plate:nth-child(1) {
+            animation-name: settle;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 6% cover 26%;
+          }
+          .three .plate:nth-child(2) {
+            animation-name: settle;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 10% cover 30%;
+          }
+          .three .plate:nth-child(3) {
+            animation-name: settle;
+            animation-duration: 1ms;
+            animation-timing-function: linear;
+            animation-fill-mode: both;
+            animation-timeline: view();
+            animation-range: entry 14% cover 34%;
+          }
+        }
+      }
+
       /* ---------- chapters ---------- */
       .ch {
         padding: var(--s7) 0 var(--s6);
