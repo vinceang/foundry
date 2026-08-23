@@ -15,6 +15,7 @@ const nav = [
 // shapes are deliberately irregular — a surveyed grid would be a lie.
 // The pans step down and to the right, because the water does — a saline is
 // cut so gravity moves the brine and nothing else has to.
+export const PAN_CENTRES = [];
 const PANS = [
   { x: 10, y: 8, w: 232, h: 186, skew: 7 },
   { x: 262, y: 54, w: 176, h: 150, skew: -5 },
@@ -22,6 +23,7 @@ const PANS = [
   { x: 614, y: 132, w: 104, h: 88, skew: -4 },
   { x: 738, y: 162, w: 78, h: 64, skew: 5 },
 ];
+PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
 ---
 
 <!doctype html>
@@ -85,7 +87,12 @@ const PANS = [
       </section>
 
       <!-- ---------------------------------------------- la cascade (signature) -->
-      <section id="cascade" class="cascade" data-cascade>
+      <section
+        id="cascade"
+        class="cascade"
+        data-cascade
+        data-pans={JSON.stringify(PAN_CENTRES)}
+      >
         <div class="cascade__sticky">
           <div class="wrap cascade__grid">
             <!-- the section is the argument: the pan gets shallower as the
@@ -168,6 +175,10 @@ const PANS = [
                     </g>
                   ))
                 }
+                <!-- the parcel: the water you are following, with a position.
+                     Something must visibly cross the frame or the eye has
+                     nothing continuous to hold. -->
+                <circle class="parcel" data-parcel r="13" cx="0" cy="0" />
                 <!-- trémet walkways between pans -->
                 {
                   PANS.slice(0, -1).map((p, i) => (
@@ -542,6 +553,8 @@ const PANS = [
 
       const root = document.querySelector("[data-cascade]");
       if (root) {
+        const PAN_PTS = JSON.parse(root.dataset.pans);
+        const grid = root.querySelector(".cascade__grid");
         const stat = root.querySelector("[data-static]");
         const weather = root.querySelector("[data-weather]");
         const out = (k) => root.querySelector(`[data-out="${k}"]`);
@@ -608,6 +621,25 @@ const PANS = [
           root.querySelectorAll("[data-pan-ring]").forEach((r, i) => {
             r.classList.toggle("is-on", i === STAGES.indexOf(s.stage));
           });
+
+          // the parcel travels the plan continuously, so the eye always has
+          // one moving thing even while the numbers step
+          const parcel = root.querySelector("[data-parcel]");
+          if (parcel) {
+            const t = Math.min(Math.max(p, 0), 1) * (PAN_PTS.length - 1);
+            const i0 = Math.min(Math.floor(t), PAN_PTS.length - 2);
+            const f = t - i0;
+            const a = PAN_PTS[i0], b2 = PAN_PTS[i0 + 1];
+            parcel.setAttribute("cx", String(a.x + (b2.x - a.x) * f));
+            parcel.setAttribute("cy", String(a.y + (b2.y - a.y) * f));
+            parcel.setAttribute("fill", c);
+            parcel.setAttribute("r", String(26 - 11 * p));
+          }
+
+          // a pinned frame gives no positional feedback, which is what reads
+          // as "stuck". A small continuous drift restores it without giving up
+          // the scrub.
+          grid.style.transform = `translateY(${(0.5 - p) * 40}px)`;
 
           root.classList.toggle("is-rain", raining);
           els.wmsg.textContent = raining
@@ -840,7 +872,7 @@ const PANS = [
         position: relative;
       }
       .cascade[data-live="true"] {
-        height: 460vh;
+        height: 260vh;
       }
       .cascade__sticky {
         display: none;
@@ -855,7 +887,8 @@ const PANS = [
         height: 100dvh;
         display: flex;
         align-items: center;
-        padding-block: 78px var(--s3);
+        /* 78 clears the header, +22 absorbs the drift range below */
+        padding-block: 100px var(--s3);
         overflow: hidden;
       }
       /* section large left, readout right, plan a locator beneath it */
@@ -881,6 +914,14 @@ const PANS = [
       .cascade__grid .read {
         grid-area: read;
       }
+      /* the figure the instrument exists to deliver, sized like it */
+      .read .measure {
+        font-size: clamp(56px, 7.5vw, 104px);
+        line-height: 0.92;
+      }
+      .read .pond-name {
+        margin-top: var(--s1);
+      }
       .cascade__grid .plan {
         grid-area: plan;
         margin: 0;
@@ -905,6 +946,17 @@ const PANS = [
       .pan__ring.is-on {
         stroke-width: 4;
         stroke-opacity: 1;
+      }
+      /* the parcel you are following. It has a position, so the eye has
+         something continuous to hold while the numbers step. */
+      .parcel {
+        stroke: var(--glare);
+        stroke-width: 3;
+        transition: r 0.2s var(--ease);
+        filter: drop-shadow(0 1px 2px rgb(34 32 28 / 0.35));
+      }
+      .cascade__grid {
+        transition: transform 0.18s linear;
       }
       .tremet {
         stroke: var(--argile-deep);
@@ -1435,7 +1487,7 @@ const PANS = [
           gap: var(--s3);
         }
         .cascade[data-live="true"] {
-          height: 420vh;
+          height: 240vh;
         }
         .two,
         .three,
@@ -1502,7 +1554,7 @@ const PANS = [
           gap: var(--s1);
         }
         .cascade[data-live="true"] {
-          height: 420vh;
+          height: 240vh;
         }
         /* the mobile header is two rows; anything less than this and the
            section runs underneath it */

@@ -112,42 +112,80 @@ An instrument is a continuous, reversible mapping from scroll position to state,
 which means it needs to hold a coherent scene across every position the visitor
 can land on. Three ways to get there, and only one of them works:
 
-- **A generated frame sequence** — N stills of the same scene in N states.
-  **Do not attempt this.** Image models cannot hold registration across frames:
-  the pond changes shape, the pot moves, the light jumps. You would need every
-  frame identical but for one variable, which is the one thing generation cannot
-  promise. It also scales badly — a smooth scrub wants dozens of frames at
-  ≤500KB each.
-- **A scrubbed video** — one clip, `currentTime` driven by scroll. Workable for
-  short continuous motion, but generated clips run about five seconds and cannot
-  carry a three-week transformation coherently. Reserve it for real footage of a
-  real continuous action.
-- **Procedural — SVG, canvas, or WebGL driven by data.** This is the default.
+- **Independently generated stills, one per state.** **Do not attempt this.**
+  Image models cannot hold registration across separate generations: the pond
+  changes shape, the pot moves, the light jumps. You need every frame identical
+  but for one variable, which is the one thing separate generations cannot
+  promise.
+- **A scrubbed clip, or a frame sequence extracted from one.** **This is a real
+  option and the ban above does not cover it.** A single clip holds registration
+  by construction — it is one continuous shot, so nothing drifts between frames.
+  Drive `currentTime` from scroll, or extract frames and swap them, which is what
+  product pages that feel like 3D are usually doing. It buys photoreal,
+  continuous, reversible motion with no WebGL and no 3D pipeline.
+
+  Its real constraints, so they are not a surprise: generated clips run about
+  five seconds, so a long transformation needs either several clips or a slow
+  camera move rather than a fast one; scrubbing a compressed clip seeks badly
+  unless it is encoded with dense keyframes, so encode for scrubbing or extract
+  frames; and the whole thing is desktop-only, lazy, and still bound by the
+  video budget in `foundry-standard.md`. Frame sequences must be small enough
+  that the set, not each file, is the budget.
+- **Procedural — SVG, canvas, or WebGL driven by data.** Still the right answer
+  whenever the instrument is showing *numbers*.
   Sharp at any size, exact at every scroll position, trivially reversible, tiny,
   and its reduced-motion fallback is just the static end state. The two best
   instruments already in the collection — BENT's Sway and Malmfuru's Årringene —
   are both this, and neither uses a generated asset for the moving part.
 
-So the split for every Sluice build: **the instrument is drawn from numbers, the
-world around it is photographed.** Generate the establishing plates, the
-material close-ups and the human presence through Bench as usual. Do not
-generate the moving part.
+**Choose by what the instrument is arguing.** If it is arguing a *quantity* —
+a salinity, a tension, a temperature — draw it from numbers; a photograph cannot
+show 25 °Bé. If it is arguing a *transformation you would recognise on sight* —
+a pot gaining ash, a wheel pulling true, a landscape crossing a season — a
+scrubbed clip is the stronger tool and will read as far more alive than any
+diagram of it.
 
-A corollary worth stating, because it will be tempting: if the instrument can
-only be built by generating assets, the signature is probably a video wearing a
-scrollbar, and the subject needs a different one.
+Nothing stops a site doing both: a photoreal scrub carrying the world, with a
+procedural readout laid over it carrying the numbers. That combination is
+probably the best version of this phase and no site has built it yet.
 
-## 4. Slowness is part of the pattern
+## 4. Activity density — the page must never sit still
 
-An instrument the visitor cannot follow is decoration with extra steps.
+The first Sluice build failed here, so this rule is written from a specific
+failure rather than from theory.
 
-The most common failure in this phase is motion that resolves faster than a
-person can read it. Tune every scrubbed sequence so a normal scroll — not a
-deliberate slow drag — lets the visitor see the state change and understand what
-changed. When in doubt, halve the rate.
+Saline pinned one composition for 460vh of scroll and changed one bar and one
+number inside it. Every individual state was correct and reversible, and it
+still read as **stuck**: the wheel spins, the page does not travel, and roughly
+92vh of scrolling buys one stage. An earlier draft of this file made it worse by
+telling builds to halve the rate and to run *one instrument per site, given
+room*. Together those produce a frozen screen with a single slow needle on it.
 
-Corollary: **one instrument per site, given room.** Two competing scrubbed
-sequences cancel, the same way two signatures cancel.
+The replacement rule:
+
+> **Something is always entering, moving, or resolving.** At any scroll position
+> the visitor should be able to point at more than one thing that is changing.
+
+Concretely, in rough order of leverage:
+
+- **Do not pin unless the pin earns it.** A sticky frame removes all positional
+  feedback — the one signal that tells a person their input is working. Prefer a
+  composition that travels with the page and transforms as it goes. If you do
+  pin, pin briefly and release.
+- **Move several things at once.** The subject, its readout, its locator and its
+  ground can all respond to the same value. One element changing while four sit
+  still is a chart.
+- **Spend less scroll per state.** If a stage costs most of a viewport, the
+  instrument is too slow to feel operable. Budget roughly a third of a viewport
+  per meaningful change and tune from there.
+- **Let something travel.** A parcel, a playhead, a level, a marker — a thing
+  with a position that visibly crosses the frame gives the eye continuous motion
+  even when the underlying data steps.
+
+The old rule was not entirely wrong: a sequence that resolves faster than a
+person can read is also a failure. But that is a tuning problem at the end, not
+a design principle at the start. **Reach for density first and slow down only
+what turns out to be illegible.**
 
 ## 5. The signature move
 
