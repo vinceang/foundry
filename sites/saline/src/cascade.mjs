@@ -95,6 +95,24 @@ export function brineColour(be) {
   return `rgb(${r} ${g} ${b})`;
 }
 
+/**
+ * The concentration standing in each pan right now.
+ *
+ * Normally every pan holds brine at its own stage. Rain floods the whole
+ * saline, and it costs the concentrated pans most: the œillet is three
+ * centimetres deep, so a shower halves it, while the vasière is forty and
+ * barely notices. That asymmetry is the entire reason a paludier watches the
+ * sky, so the plan has to show it.
+ */
+export function panBe(i, raining) {
+  const be = STAGES[i].be;
+  if (!raining) return be;
+  const depth = STAGES[i].depth;
+  // shallow pans dilute hard, deep ones shrug it off
+  const hit = 1 - Math.min(depth / STAGES[0].depth, 1) * 0.85;
+  return Math.max(STAGES[0].be, be * (1 - 0.55 * hit));
+}
+
 /** How much crystal is showing, 0..1. Only past saturation. */
 export function crystalAmount(be) {
   if (be < CRYSTAL_BE) return 0;

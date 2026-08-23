@@ -52,25 +52,82 @@ const PANS = [
       <!-- ---------------------------------------------- hero -->
       <section class="hero">
         <div class="wrap">
-          <p class="label hero__eyebrow">Guérande · Loire-Atlantique · depuis 1743</p>
+          <p class="measure hero__m">
+            3.5<span class="measure__unit">°Bé</span>
+          </p>
+          <p class="pond-name">L'Atlantique · l'eau entre ici</p>
           <h1 class="hero__h">
             The water does the work.<br />We only decide how fast.
           </h1>
           <p class="hero__sub">
-            Sixty œillets cut into blue clay. No pumps, no heat, no machinery of
-            any kind. The only energy in this system is the tide that fills it
-            and the sun that empties it. Seawater enters at three and a half
-            degrees Baumé and leaves, twenty-one days later, as salt.
+            Sixty œillets cut into blue clay at Guérande, worked by the same
+            family since 1743. No pumps, no heat, no machinery of any kind. The
+            only energy in this system is the tide that fills it and the sun
+            that empties it. Seawater enters at three and a half degrees Baumé
+            and leaves, twenty-one days later, as salt.
           </p>
-          <p class="hero__cue label">Scroll to walk the water through</p>
         </div>
+        <figure class="plate plate--bleed ph ph--aerial">
+          <figcaption class="label wrap">
+            The saline from above · noon · three concentrations in one frame
+          </figcaption>
+        </figure>
+        <p class="hero__cue label wrap">Scroll to walk the water through</p>
       </section>
 
       <!-- ---------------------------------------------- la cascade (signature) -->
       <section id="cascade" class="cascade" data-cascade>
         <div class="cascade__sticky">
           <div class="wrap cascade__grid">
-            <!-- plan view -->
+            <!-- the section is the argument: the pan gets shallower as the
+                 brine gets stronger, and that is what a caption cannot carry -->
+            <figure class="sect">
+              <div class="sect__pan">
+                <div class="sect__water" data-out="water"></div>
+                <div class="sect__crust" data-out="crust"></div>
+                <span class="sect__rule sect__rule--top"><i class="label">40 cm</i></span>
+                <span class="sect__rule sect__rule--now" data-out="rule"
+                  ><i class="label" data-out="depth2">40 cm</i></span
+                >
+              </div>
+              <figcaption class="label"
+                >Section through one pan · depth falls as the brine
+                concentrates</figcaption
+              >
+            </figure>
+
+            <!-- readout, with the plan as a locator beneath it -->
+            <div class="read">
+              <p class="measure">
+                <span data-out="be">{STAGES[0].be.toFixed(1)}</span
+                ><span class="measure__unit">°Bé</span>
+              </p>
+              <p class="pond-name" data-out="name">{STAGES[0].name}</p>
+
+              <dl class="figs">
+                <div>
+                  <dt class="label">Profondeur</dt>
+                  <dd data-out="depth">{STAGES[0].depth} cm</dd>
+                </div>
+                <div>
+                  <dt class="label">Jour</dt>
+                  <dd data-out="day">{STAGES[0].day}</dd>
+                </div>
+              </dl>
+
+              <p class="note" data-out="note">{STAGES[0].note}</p>
+
+              <div class="weather" data-weather hidden>
+                <span class="label">Temps</span>
+                <div class="weather__set" role="group" aria-label="Météo sur la saline">
+                  <button type="button" data-w="sun" aria-pressed="true">Soleil</button>
+                  <button type="button" data-w="rain" aria-pressed="false">Pluie</button>
+                </div>
+                <p class="weather__msg" data-out="wmsg" role="status"></p>
+              </div>
+            </div>
+
+            <!-- plan locator -->
             <figure class="plan">
               <svg
                 viewBox="0 0 830 250"
@@ -119,48 +176,6 @@ const PANS = [
                 Vasière → cobier → fares → adernes → œillet
               </figcaption>
             </figure>
-
-            <!-- readout -->
-            <div class="read">
-              <p class="measure">
-                <span data-out="be">{STAGES[0].be.toFixed(1)}</span
-                ><span class="measure__unit">°Bé</span>
-              </p>
-              <p class="pond-name" data-out="name">{STAGES[0].name}</p>
-
-              <dl class="figs">
-                <div>
-                  <dt class="label">Profondeur</dt>
-                  <dd data-out="depth">{STAGES[0].depth} cm</dd>
-                </div>
-                <div>
-                  <dt class="label">Jour</dt>
-                  <dd data-out="day">{STAGES[0].day}</dd>
-                </div>
-              </dl>
-
-              <!-- section: the thing a caption cannot teach -->
-              <figure class="sect">
-                <div class="sect__pan">
-                  <div class="sect__water" data-out="water"></div>
-                  <div class="sect__crust" data-out="crust"></div>
-                </div>
-                <figcaption class="label"
-                  >Section · the pan gets shallower as the brine gets stronger</figcaption
-                >
-              </figure>
-
-              <p class="note" data-out="note">{STAGES[0].note}</p>
-
-              <div class="weather" data-weather hidden>
-                <span class="label">Temps</span>
-                <div class="weather__set" role="group" aria-label="Météo sur la saline">
-                  <button type="button" data-w="sun" aria-pressed="true">Soleil</button>
-                  <button type="button" data-w="rain" aria-pressed="false">Pluie</button>
-                </div>
-                <p class="weather__msg label" data-out="wmsg" role="status"></p>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -236,9 +251,9 @@ const PANS = [
             </p>
           </div>
         </div>
-        <figure class="plate plate--wide ph ph--aerial">
-          <figcaption class="label">
-            The pan grid from above · noon · three concentrations in one frame
+        <figure class="plate plate--wide ph ph--tremet">
+          <figcaption class="label wrap">
+            A trémet running to the horizon between full pans
           </figcaption>
         </figure>
       </section>
@@ -465,6 +480,7 @@ const PANS = [
         SALT,
         stateAt,
         brineColour,
+        panBe,
         crystalAmount,
         withRain,
         fmt,
@@ -495,6 +511,8 @@ const PANS = [
         let p = 0;
 
         const maxDepth = STAGES[0].depth;
+        const depth2 = root.querySelector('[data-out="depth2"]');
+        const rule = root.querySelector('[data-out="rule"]');
 
         function paint() {
           let s = stateAt(p);
@@ -504,21 +522,34 @@ const PANS = [
           els.name.textContent = s.stage.name;
           els.depth.textContent = `${fmt.depth(s.depth)} cm`;
           els.day.textContent = fmt.day(s.day);
-          els.note.textContent = s.stage.note;
+          // during a flood the stage note contradicts the readout, so say what
+          // is actually true of the pan instead
+          els.note.textContent = raining
+            ? "Rainwater is sitting on top of the brine. It has to evaporate off before the pan is back where it was, and nothing can be raked until it does."
+            : s.stage.note;
 
           const c = brineColour(s.be);
-          els.water.style.height = `${(s.depth / maxDepth) * 100}%`;
+          const pct = (s.depth / maxDepth) * 100;
+          els.water.style.height = `${pct}%`;
           els.water.style.background = c;
+          if (rule) rule.style.bottom = `${pct}%`;
+          if (depth2) depth2.textContent = `${fmt.depth(s.depth)} cm`;
 
           const cry = crystalAmount(s.be);
           els.crust.style.opacity = String(cry);
           els.crust.style.height = `${4 + cry * 10}%`;
 
-          // ring the pan the water is in
+          // The plan is a live map, not a legend: every pan is filled at the
+          // concentration standing in it right now, so rain visibly drains the
+          // œillet back toward the adernes instead of only moving a bar.
+          root.querySelectorAll("[data-pan-fill]").forEach((f, i) => {
+            f.setAttribute("fill", brineColour(panBe(i, raining)));
+          });
           root.querySelectorAll("[data-pan-ring]").forEach((r, i) => {
             r.classList.toggle("is-on", i === STAGES.indexOf(s.stage));
           });
 
+          root.classList.toggle("is-rain", raining);
           els.wmsg.textContent = raining
             ? "Six jours perdus. Le bassin est noyé."
             : "";
@@ -527,7 +558,11 @@ const PANS = [
         function onScroll() {
           const r = root.getBoundingClientRect();
           const span = r.height - window.innerHeight;
-          p = span > 0 ? Math.min(Math.max(-r.top / span, 0), 1) : 0;
+          const raw = span > 0 ? Math.min(Math.max(-r.top / span, 0), 1) : 0;
+          // The last fifth of the scroll holds at the œillet. The payoff frame —
+          // 25 °Bé, 3 cm, day 21 — has to sit still at full height long enough
+          // to be read, rather than arriving as the sticky releases.
+          p = Math.min(raw / 0.8, 1);
           paint();
         }
 
@@ -697,23 +732,43 @@ const PANS = [
 
       /* ---------- hero ---------- */
       .hero {
-        padding: var(--s7) 0 var(--s6);
+        padding: var(--s6) 0 var(--s5);
       }
-      .hero__eyebrow {
-        margin: 0 0 var(--s3);
+      .hero__m {
+        margin: 0;
       }
       .hero__h {
         font-size: clamp(44px, 8.2vw, 116px);
         font-variation-settings: "wdth" 92, "opsz" 96;
         max-width: 16ch;
-        margin-bottom: var(--s4);
+        margin: var(--s4) 0 var(--s3);
       }
       .hero__sub {
         font-size: 19px;
         max-width: 52ch;
       }
       .hero__cue {
-        margin-top: var(--s5);
+        display: block;
+        margin-top: var(--s3);
+      }
+      /* the page opens on water, not on paper */
+      .plate--bleed {
+        margin: var(--s5) 0 var(--s2);
+      }
+      .plate--bleed.ph::before {
+        aspect-ratio: 24 / 9;
+      }
+      .plate--bleed figcaption {
+        display: block;
+      }
+      .ph--tremet::before {
+        background: linear-gradient(
+          8deg,
+          var(--vase) 0 38%,
+          var(--argile) 38% 46%,
+          var(--saumure) 46% 78%,
+          #b9bfc4 78% 100%
+        );
       }
 
       /* ---------- la cascade ---------- */
@@ -734,15 +789,31 @@ const PANS = [
         align-items: center;
         padding-block: var(--s5) var(--s4);
       }
+      /* section large left, readout right, plan a locator beneath it */
       .cascade__grid {
         display: grid;
-        grid-template-columns: 1.75fr 0.68fr;
-        gap: var(--s5);
-        align-items: center;
+        grid-template-columns: 1.05fr 0.95fr;
+        grid-template-areas:
+          "sect read"
+          "sect plan";
+        grid-template-rows: 1fr auto;
+        gap: var(--s3) var(--s5);
+        align-items: start;
         width: min(1240px, 100% - var(--s4) * 2);
       }
-      .plan {
+      .cascade__grid .sect {
+        grid-area: sect;
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+      }
+      .cascade__grid .read {
+        grid-area: read;
+      }
+      .cascade__grid .plan {
+        grid-area: plan;
         margin: 0;
+        opacity: 0.92;
       }
 
       .plan__svg {
@@ -800,19 +871,47 @@ const PANS = [
       .sect {
         margin: 0 0 var(--s3);
       }
-      /* tall and narrow on purpose: 40 cm down to 3 cm has to be felt
-         vertically, and a wide short bar reads as a swatch instead. */
+      /* the large graphic now: 40 cm down to 3 cm has to be felt at full
+         height, because it is the fact a caption cannot carry. */
       .sect__pan {
         position: relative;
-        height: 230px;
+        flex: 1;
+        min-height: 300px;
         width: 100%;
         border: 1px solid var(--vase);
         border-top: 0;
-        border-bottom-width: 5px;
+        border-bottom-width: 6px;
         background: var(--argile);
         display: flex;
         align-items: flex-end;
         overflow: hidden;
+      }
+      .sect__rule {
+        position: absolute;
+        left: 0;
+        right: 0;
+        border-top: 1px dashed var(--vase);
+        pointer-events: none;
+      }
+      .sect__rule--top {
+        top: 0;
+        border-top-style: solid;
+      }
+      .sect__rule--now {
+        bottom: 100%;
+        border-top-color: var(--encre);
+        transition: bottom 0.28s var(--ease);
+        z-index: 3;
+      }
+      .sect__rule i {
+        position: absolute;
+        right: var(--s1);
+        top: 3px;
+        font-style: normal;
+      }
+      .sect__rule--now i {
+        top: -18px;
+        color: var(--encre);
       }
       .sect__water {
         width: 100%;
@@ -868,10 +967,17 @@ const PANS = [
         border-color: var(--encre);
         color: var(--sel);
       }
+      /* the line worth remembering, sized like it */
       .weather__msg {
-        color: var(--fleur);
-        min-height: 1.4em;
-        margin: 0;
+        font-family: var(--mono);
+        font-size: 15px;
+        letter-spacing: 0.02em;
+        color: var(--fleur-deep);
+        min-height: 1.6em;
+        margin: var(--s1) 0 0;
+      }
+      .cascade.is-rain .sect__pan {
+        border-color: var(--fleur-deep);
       }
 
       /* ---------- static composition (JS off) ---------- */
