@@ -100,6 +100,43 @@ A Sluice site must never degrade to nothing.
 Budget for this. It is close to a second design per site, and pretending
 otherwise is how the fallback ends up being a blank div at 2am.
 
+## 3b. What an instrument is made of
+
+The collection's asset governance — `foundry-standard.md` § Imagery and the
+`asset-pipeline.md` reference — covers stills and short loops. It does not cover
+the thing this phase needs most, so this is the rule.
+
+**Build the instrument procedurally. Photograph everything around it.**
+
+An instrument is a continuous, reversible mapping from scroll position to state,
+which means it needs to hold a coherent scene across every position the visitor
+can land on. Three ways to get there, and only one of them works:
+
+- **A generated frame sequence** — N stills of the same scene in N states.
+  **Do not attempt this.** Image models cannot hold registration across frames:
+  the pond changes shape, the pot moves, the light jumps. You would need every
+  frame identical but for one variable, which is the one thing generation cannot
+  promise. It also scales badly — a smooth scrub wants dozens of frames at
+  ≤500KB each.
+- **A scrubbed video** — one clip, `currentTime` driven by scroll. Workable for
+  short continuous motion, but generated clips run about five seconds and cannot
+  carry a three-week transformation coherently. Reserve it for real footage of a
+  real continuous action.
+- **Procedural — SVG, canvas, or WebGL driven by data.** This is the default.
+  Sharp at any size, exact at every scroll position, trivially reversible, tiny,
+  and its reduced-motion fallback is just the static end state. The two best
+  instruments already in the collection — BENT's Sway and Malmfuru's Årringene —
+  are both this, and neither uses a generated asset for the moving part.
+
+So the split for every Sluice build: **the instrument is drawn from numbers, the
+world around it is photographed.** Generate the establishing plates, the
+material close-ups and the human presence through Bench as usual. Do not
+generate the moving part.
+
+A corollary worth stating, because it will be tempting: if the instrument can
+only be built by generating assets, the signature is probably a video wearing a
+scrollbar, and the subject needs a different one.
+
 ## 4. Slowness is part of the pattern
 
 An instrument the visitor cannot follow is decoration with extra steps.
