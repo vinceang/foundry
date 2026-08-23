@@ -169,6 +169,58 @@ One ambient effect per viewport, maximum. All motion is progressive
 enhancement, and reduced-motion gets the finished static composition — never a
 broken one.
 
+### Ambient motion vs. signature motion
+
+These are different things and the standard treats them differently.
+
+**Ambient motion** is the settling and breathing above. It is atmosphere. It
+should be barely noticed, and the rules above are the whole of it.
+
+**Signature motion** is when the site's one bold move *is* the motion — the
+thing a still frame cannot show. It is a candidate for the signature axis, not a
+decoration laid over one.
+
+**When signature motion is the honest choice: when the craft's value is
+duration.** If what the workshop sells involves time passing — settling, curing,
+drying, fermenting, firing, tempering, growing, the tide — then a static page is
+arguing the case in prose while refusing to show it. That is the test. If the
+subject has no duration in it, do not reach for motion; a still composition is
+the honest answer and the collection has many good ones.
+
+Three patterns, all proven or half-built here. Pick by subject, never by turn:
+
+- **The instrument.** A physical artifact the reader scrubs, drags or steps
+  through, and it discloses a record as they move. Malmfuru's *Årringene* — 228
+  rings, 228 years, pith to bark — is the exemplar. Reach for it when the craft
+  *keeps* a record.
+- **The configurator.** Inputs redraw the product live, and the order is placed
+  in the same act. Veta's "draw your board". Reach for it when the product is
+  made to order. (See the signature-interaction section above; this is the same
+  axis, named here as motion.)
+- **The process.** One transformation the craft performs, shown across its real
+  duration rather than described. Reach for it when the making itself is the
+  thing worth watching.
+
+Two disciplines, or signature motion decays into the ambient kind:
+
+1. **One nameable move per site.** If you cannot say what it is in a sentence,
+   there isn't one — there is just animation.
+2. **Write down what does not animate.** Put the sentence in the site's
+   `DESIGN.md`. That line is what stops fade-up-on-scroll creeping back across
+   every section, which is the single most recognisable machine-made motion tell.
+
+**Frequency.** Signature motion joins the pool of signature axes surveyed in the
+section above — it is not a requirement and not a rotation. It should turn up
+more often than it has, because the collection has reached for light and
+composition far more readily than for movement. Survey the siblings, and when the
+subject has duration in it, prefer the moving answer.
+
+**Reviewing it.** A screenshot cannot judge motion, and a static capture of a
+site whose signature moves will show the no-JS fallback and read as a hole. Shoot
+a filmstrip — `node tools/shot-strip.mjs <url> <outPrefix>`, or
+`--mode action` with the interaction steps — and review the frames in order. A
+signature that only exists in the live page is a signature nobody reviewed.
+
 ## Imagery
 
 One recipe per site, held across the whole batch: **one subject, one light
