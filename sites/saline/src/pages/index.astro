@@ -1,0 +1,584 @@
+---
+import "../styles/global.css";
+import { STAGES, brineColour, CRYSTAL_BE } from "../cascade.mjs";
+
+const nav = [
+  ["#saline", "La saline"],
+  ["#cascade", "La cascade"],
+  ["#sel", "Le sel"],
+  ["#las", "Le las"],
+  ["#paludiers", "Les paludiers"],
+  ["#recolte", "La récolte"],
+];
+
+// Plan geometry for the pond sequence. Pans are cut by eye into clay, so the
+// shapes are deliberately irregular — a surveyed grid would be a lie.
+// The pans step down and to the right, because the water does — a saline is
+// cut so gravity moves the brine and nothing else has to.
+const PANS = [
+  { x: 10, y: 8, w: 232, h: 186, skew: 7 },
+  { x: 262, y: 54, w: 176, h: 150, skew: -5 },
+  { x: 458, y: 96, w: 136, h: 116, skew: 8 },
+  { x: 614, y: 132, w: 104, h: 88, skew: -4 },
+  { x: 738, y: 162, w: 78, h: 64, skew: 5 },
+];
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Saline de Kervalet — sel de Guérande, récolté à la main depuis 1743</title>
+    <meta
+      name="description"
+      content="Une saline sur les marais salants de Guérande. Soixante œillets taillés dans l'argile, aucune pompe, aucune chaleur. Trois semaines d'eau de mer pour un sel."
+    />
+  </head>
+  <body>
+    <a class="skip" href="#cascade">Aller à la cascade</a>
+
+    <header class="top">
+      <div class="wrap top__in">
+        <a class="mark" href="#top">Saline&nbsp;de&nbsp;Kervalet</a>
+        <nav aria-label="Sections">
+          {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ---------------------------------------------- hero -->
+      <section class="hero">
+        <div class="wrap">
+          <p class="label hero__eyebrow">Guérande · Loire-Atlantique · depuis 1743</p>
+          <h1 class="hero__h">
+            The water does the work.<br />We only decide how fast.
+          </h1>
+          <p class="hero__sub">
+            Sixty œillets cut into blue clay. No pumps, no heat, no machinery of
+            any kind — the only energy in this system is the tide that fills it
+            and the sun that empties it. Seawater enters at three and a half
+            degrees Baumé and leaves, twenty-one days later, as salt.
+          </p>
+          <p class="hero__cue label">Scroll to walk the water through</p>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------- la cascade (signature) -->
+      <section id="cascade" class="cascade" data-cascade>
+        <div class="cascade__sticky">
+          <div class="wrap cascade__grid">
+            <!-- plan view -->
+            <figure class="plan">
+              <svg
+                viewBox="0 0 830 250"
+                role="img"
+                aria-labelledby="plan-t plan-d"
+                class="plan__svg"
+              >
+                <title id="plan-t">The pond sequence of a saline, in plan</title>
+                <desc id="plan-d">
+                  Five pans in sequence, each smaller and shallower than the
+                  last, the water darkening from green to rose as it
+                  concentrates from 3.5 to 25 degrees Baumé.
+                </desc>
+                {
+                  PANS.map((p, i) => (
+                    <g data-pan={i}>
+                      <path
+                        class="pan"
+                        data-pan-fill={i}
+                        d={`M${p.x} ${p.y + p.skew} L${p.x + p.w} ${p.y} L${p.x + p.w - p.skew} ${p.y + p.h} L${p.x + 2} ${p.y + p.h - p.skew} Z`}
+                        fill={brineColour(STAGES[i].be)}
+                      />
+                      <path
+                        class="pan__ring"
+                        data-pan-ring={i}
+                        d={`M${p.x} ${p.y + p.skew} L${p.x + p.w} ${p.y} L${p.x + p.w - p.skew} ${p.y + p.h} L${p.x + 2} ${p.y + p.h - p.skew} Z`}
+                        fill="none"
+                      />
+                    </g>
+                  ))
+                }
+                <!-- trémet walkways between pans -->
+                {
+                  PANS.slice(0, -1).map((p, i) => (
+                    <line
+                      class="tremet"
+                      x1={p.x + p.w}
+                      y1={p.y + p.h / 2}
+                      x2={PANS[i + 1].x}
+                      y2={PANS[i + 1].y + PANS[i + 1].h / 2}
+                    />
+                  ))
+                }
+              </svg>
+              <figcaption class="label plan__cap">
+                Vasière → cobier → fares → adernes → œillet
+              </figcaption>
+            </figure>
+
+            <!-- readout -->
+            <div class="read">
+              <p class="measure">
+                <span data-out="be">{STAGES[0].be.toFixed(1)}</span
+                ><span class="measure__unit">°Bé</span>
+              </p>
+              <p class="pond-name" data-out="name">{STAGES[0].name}</p>
+
+              <dl class="figs">
+                <div>
+                  <dt class="label">Profondeur</dt>
+                  <dd data-out="depth">{STAGES[0].depth} cm</dd>
+                </div>
+                <div>
+                  <dt class="label">Jour</dt>
+                  <dd data-out="day">{STAGES[0].day}</dd>
+                </div>
+              </dl>
+
+              <!-- section: the thing a caption cannot teach -->
+              <figure class="sect">
+                <div class="sect__pan">
+                  <div class="sect__water" data-out="water"></div>
+                  <div class="sect__crust" data-out="crust"></div>
+                </div>
+                <figcaption class="label"
+                  >Section · the pan gets shallower as the brine gets stronger</figcaption
+                >
+              </figure>
+
+              <p class="note" data-out="note">{STAGES[0].note}</p>
+
+              <div class="weather" data-weather hidden>
+                <span class="label">Temps</span>
+                <div class="weather__set" role="group" aria-label="Météo sur la saline">
+                  <button type="button" data-w="sun" aria-pressed="true">Soleil</button>
+                  <button type="button" data-w="rain" aria-pressed="false">Pluie</button>
+                </div>
+                <p class="weather__msg label" data-out="wmsg" role="status"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static composition. Present in the markup, so the argument survives
+             with JS off; the script hides it once the instrument is live. -->
+        <div class="static" data-static>
+          <div class="wrap">
+            <h2 class="static__h">La cascade</h2>
+            <p>
+              Seawater takes about three weeks to cross a saline, climbing from
+              3.5 to 25 degrees Baumé through five named ponds. It gets stronger
+              and it gets shallower — forty centimetres at the tide gate, three
+              in the pan where salt forms. That is why one still afternoon
+              finishes a harvest and one shower of rain undoes three weeks.
+            </p>
+            <table class="tbl">
+              <thead>
+                <tr>
+                  <th scope="col">Bassin</th>
+                  <th scope="col">°Bé</th>
+                  <th scope="col">Profondeur</th>
+                  <th scope="col">Jour</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  STAGES.map((s) => (
+                    <tr>
+                      <th scope="row">
+                        <span
+                          class="swatch"
+                          style={`background:${brineColour(s.be)}`}
+                          aria-hidden="true"
+                        />
+                        {s.name}
+                      </th>
+                      <td>{s.be.toFixed(1)}</td>
+                      <td>{s.depth} cm</td>
+                      <td>{s.day}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+            <p class="static__note">
+              Past {CRYSTAL_BE} °Bé the salt comes out of solution. The water
+              turns rose a little before that, which is the paludier's warning
+              that the pan is nearly ready.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      import {
+        STAGES,
+        stateAt,
+        brineColour,
+        crystalAmount,
+        withRain,
+        fmt,
+      } from "../cascade.mjs";
+
+      const root = document.querySelector("[data-cascade]");
+      if (root) {
+        const stat = root.querySelector("[data-static]");
+        const weather = root.querySelector("[data-weather]");
+        const out = (k) => root.querySelector(`[data-out="${k}"]`);
+        const els = {
+          be: out("be"),
+          name: out("name"),
+          depth: out("depth"),
+          day: out("day"),
+          water: out("water"),
+          crust: out("crust"),
+          note: out("note"),
+          wmsg: out("wmsg"),
+        };
+
+        // JS is live: the instrument replaces the static composition.
+        root.dataset.live = "true";
+        if (stat) stat.hidden = true;
+        if (weather) weather.hidden = false;
+
+        let raining = false;
+        let p = 0;
+
+        const maxDepth = STAGES[0].depth;
+
+        function paint() {
+          let s = stateAt(p);
+          if (raining) s = withRain(s);
+
+          els.be.textContent = fmt.be(s.be);
+          els.name.textContent = s.stage.name;
+          els.depth.textContent = `${fmt.depth(s.depth)} cm`;
+          els.day.textContent = fmt.day(s.day);
+          els.note.textContent = s.stage.note;
+
+          const c = brineColour(s.be);
+          els.water.style.height = `${(s.depth / maxDepth) * 100}%`;
+          els.water.style.background = c;
+
+          const cry = crystalAmount(s.be);
+          els.crust.style.opacity = String(cry);
+          els.crust.style.height = `${4 + cry * 10}%`;
+
+          // ring the pan the water is in
+          root.querySelectorAll("[data-pan-ring]").forEach((r, i) => {
+            r.classList.toggle("is-on", i === STAGES.indexOf(s.stage));
+          });
+
+          els.wmsg.textContent = raining
+            ? "Six jours perdus. Le bassin est noyé."
+            : "";
+        }
+
+        function onScroll() {
+          const r = root.getBoundingClientRect();
+          const span = r.height - window.innerHeight;
+          p = span > 0 ? Math.min(Math.max(-r.top / span, 0), 1) : 0;
+          paint();
+        }
+
+        weather?.addEventListener("click", (e) => {
+          const b = e.target.closest("[data-w]");
+          if (!b) return;
+          raining = b.dataset.w === "rain";
+          weather.querySelectorAll("[data-w]").forEach((x) =>
+            x.setAttribute("aria-pressed", String(x === b))
+          );
+          paint();
+        });
+
+        // keyboard path: arrow keys step the stages
+        root.tabIndex = 0;
+        root.addEventListener("keydown", (e) => {
+          const step = 1 / (STAGES.length - 1);
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+            p = Math.min(p + step, 1);
+          } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+            p = Math.max(p - step, 0);
+          } else return;
+          e.preventDefault();
+          paint();
+        });
+
+        addEventListener("scroll", onScroll, { passive: true });
+        addEventListener("resize", onScroll);
+        onScroll();
+      }
+    </script>
+
+    <style>
+      /* ---------- chrome ---------- */
+      .top {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: color-mix(in srgb, var(--glare) 88%, transparent);
+        backdrop-filter: blur(6px);
+        border-bottom: 1px solid var(--argile-deep);
+      }
+      .top__in {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--s3);
+        padding: var(--s2) 0;
+      }
+      .mark {
+        font-family: var(--display);
+        font-size: 18px;
+        text-decoration: none;
+        font-variation-settings: "wdth" 85;
+      }
+      .top nav {
+        display: flex;
+        gap: var(--s3);
+        flex-wrap: wrap;
+      }
+      .top nav a {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-decoration: none;
+        color: var(--vase-ink);
+      }
+      .top nav a:hover {
+        color: var(--encre);
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        padding: var(--s7) 0 var(--s6);
+      }
+      .hero__eyebrow {
+        margin: 0 0 var(--s3);
+      }
+      .hero__h {
+        font-size: clamp(44px, 8.2vw, 116px);
+        font-variation-settings: "wdth" 92, "opsz" 96;
+        max-width: 16ch;
+        margin-bottom: var(--s4);
+      }
+      .hero__sub {
+        font-size: 19px;
+        max-width: 52ch;
+      }
+      .hero__cue {
+        margin-top: var(--s5);
+      }
+
+      /* ---------- la cascade ---------- */
+      .cascade {
+        position: relative;
+      }
+      .cascade[data-live="true"] {
+        height: 460vh;
+      }
+      .cascade__sticky {
+        display: none;
+      }
+      .cascade[data-live="true"] .cascade__sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-block: var(--s5) var(--s4);
+      }
+      .cascade__grid {
+        display: grid;
+        grid-template-columns: 1.75fr 0.68fr;
+        gap: var(--s5);
+        align-items: center;
+        width: min(1240px, 100% - var(--s4) * 2);
+      }
+      .plan {
+        margin: 0;
+      }
+
+      .plan__svg {
+        width: 100%;
+        height: auto;
+      }
+      .pan {
+        transition: fill 0.28s var(--ease);
+      }
+      .pan__ring {
+        stroke: var(--encre);
+        stroke-width: 0;
+        transition:
+          stroke-width 0.2s var(--ease),
+          stroke-opacity 0.2s var(--ease);
+        stroke-opacity: 0;
+      }
+      .pan__ring.is-on {
+        stroke-width: 4;
+        stroke-opacity: 1;
+      }
+      .tremet {
+        stroke: var(--argile-deep);
+        stroke-width: 5;
+      }
+      .plan__cap {
+        margin-top: var(--s3);
+      }
+
+      /* the readout is a rail: measure, then figures stacked, then section */
+      .figs {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s2);
+        margin: var(--s3) 0;
+      }
+      .figs > div {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: var(--s2);
+        border-bottom: 1px solid var(--argile-deep);
+        padding-bottom: var(--s1);
+      }
+      .figs dt {
+        margin: 0;
+      }
+      .figs dd {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 20px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .sect {
+        margin: 0 0 var(--s3);
+      }
+      /* tall and narrow on purpose: 40 cm down to 3 cm has to be felt
+         vertically, and a wide short bar reads as a swatch instead. */
+      .sect__pan {
+        position: relative;
+        height: 230px;
+        width: 100%;
+        border: 1px solid var(--vase);
+        border-top: 0;
+        border-bottom-width: 5px;
+        background: var(--argile);
+        display: flex;
+        align-items: flex-end;
+        overflow: hidden;
+      }
+      .sect__water {
+        width: 100%;
+        height: 100%;
+        background: var(--saumure);
+        transition:
+          height 0.28s var(--ease),
+          background 0.28s var(--ease);
+      }
+      .sect__crust {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 6%;
+        background: var(--sel);
+        opacity: 0;
+        transition: opacity 0.3s var(--ease);
+      }
+      .sect figcaption {
+        margin-top: var(--s1);
+        display: block;
+      }
+
+      .note {
+        color: var(--vase-ink);
+        font-size: 15px;
+        min-height: 4.4em;
+      }
+
+      .weather {
+        border-top: 1px solid var(--argile-deep);
+        padding-top: var(--s2);
+      }
+      .weather__set {
+        display: flex;
+        gap: var(--s1);
+        margin: var(--s1) 0;
+      }
+      .weather button {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        padding: var(--s1) var(--s2);
+        background: transparent;
+        border: 1px solid var(--vase);
+        color: var(--vase-ink);
+        cursor: pointer;
+      }
+      .weather button[aria-pressed="true"] {
+        background: var(--encre);
+        border-color: var(--encre);
+        color: var(--sel);
+      }
+      .weather__msg {
+        color: var(--fleur);
+        min-height: 1.4em;
+        margin: 0;
+      }
+
+      /* ---------- static composition (JS off) ---------- */
+      .static {
+        padding: var(--s6) 0;
+      }
+      .static__h {
+        font-size: clamp(36px, 5vw, 64px);
+        margin-bottom: var(--s3);
+      }
+      .tbl {
+        border-collapse: collapse;
+        margin: var(--s4) 0;
+        font-family: var(--mono);
+        font-size: 14px;
+      }
+      .tbl th,
+      .tbl td {
+        text-align: left;
+        padding: var(--s1) var(--s3) var(--s1) 0;
+        border-bottom: 1px solid var(--argile-deep);
+        font-weight: 400;
+      }
+      .tbl thead th {
+        font-size: 11px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--vase-ink);
+      }
+      .swatch {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin-right: var(--s1);
+        vertical-align: -1px;
+      }
+      .static__note {
+        color: var(--vase-ink);
+      }
+
+      @media (max-width: 900px) {
+        .cascade__grid {
+          grid-template-columns: 1fr;
+          gap: var(--s3);
+        }
+        .cascade[data-live="true"] {
+          height: 420vh;
+        }
+      }
+    </style>
+  </body>
+</html>

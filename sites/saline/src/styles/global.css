@@ -1,0 +1,154 @@
+/* SALINE — tokens and floors. See DESIGN.md; values are binding. */
+
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap");
+
+:root {
+  /* materials from the marsh */
+  --glare: #f4f4f0;
+  --argile: #d9d3c6;
+  --vase: #8f8a7c;
+  --saumure: #6f8478;
+  --fleur: #c2705f;
+  --sel: #fcfbf8;
+  --encre: #22201c;
+
+  /* derived, for hairlines and quiet fields */
+  --argile-deep: #c8c1b1;
+  --vase-ink: #5c584e;
+
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  /* 8pt rhythm */
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 40px;
+  --s5: 64px;
+  --s6: 104px;
+  --s7: 168px;
+
+  --measure: 58ch;
+  --ease: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--glare);
+  color: var(--encre);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 0;
+  font-variation-settings: "wdth" 100, "opsz" 72;
+}
+
+p {
+  margin: 0 0 var(--s2);
+  max-width: var(--measure);
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ---------- the measure: this site's opening move ---------- */
+
+.measure {
+  font-family: var(--mono);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-size: clamp(38px, 4.4vw, 62px);
+  line-height: 1;
+  margin: 0;
+  color: var(--encre);
+  font-variant-numeric: tabular-nums;
+}
+
+.measure__unit {
+  font-size: 0.42em;
+  color: var(--vase-ink);
+  margin-left: 0.12em;
+}
+
+.pond-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--vase-ink);
+  margin-top: var(--s2);
+}
+
+/* whisper labels — 11px is the floor, never below */
+.label {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--vase-ink);
+}
+
+.wrap {
+  width: min(1240px, 100% - var(--s4) * 2);
+  margin-inline: auto;
+}
+
+/* ---------- floors ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--fleur);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+.skip:focus {
+  left: var(--s2);
+  top: var(--s2);
+  z-index: 99;
+  background: var(--sel);
+  padding: var(--s1) var(--s2);
+  border: 1px solid var(--encre);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
