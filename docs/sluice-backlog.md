@@ -32,15 +32,7 @@ showcase.
 
 ## Building
 
-### Guérande saltern — the first SLUICE site
-
-- **Light:** bright — midday glare on open water, deliberately not Nocturne. The collection is too dark and this subject has no night in it.
-- **Place idea:** the *marais salants* of Guérande, Loire-Atlantique, Brittany — a thousand-year-old clay-floored salt marsh worked by *paludiers* with a wooden *las*, producing *gros sel* and *fleur de sel* by evaporation alone. No pumps, no heat, no machinery.
-- **Why it earns a place:** the photography is aerial geometry — hundreds of shallow clay pans in a hand-cut grid, water shifting green to rose to white as it concentrates, and salt heaped in blinding cones on the banks. Nothing in the collection is bright, aerial, or geometric, and nothing else is a landscape that is also a machine. The audience is chefs and specialist grocers.
-- **The duration:** seawater takes about three weeks to cross the cascade, climbing from roughly 30 g/L to 260 g/L across a sequence of named ponds. Crystallisation happens in a window of a few hours, on hot still afternoons only, and one shower of rain resets weeks of work.
-- **Signature interaction:** **the cascade.** Scroll drives seawater through the pond sequence — *vasière*, *cobier*, *fares*, *adernes*, *œillets* — and the water's salinity, colour and depth change continuously with position. Fully reversible: scrub back and the brine dilutes. At the last pond, hold and the *fleur de sel* forms on the surface; a weather control alongside lets the visitor put a day of rain into the season and watch the cascade reset.
-- **Other page ideas:** the *œillet* as a unit of production, with one paludier's named pans and what each yielded this season; the *las* and why the tool has not changed; *gros sel* versus *fleur de sel* argued by where in the pan each forms; an order form for the season's harvest, since salt sells well under $5,000 and a letter would be absurd.
-- **Notes:** display face must not be a serif — 23 of 25 sites are serif and Fraunces / EB Garamond / Faustina are spent. People throughout with faces, sunburnt and bent over the rake, not one distant figure.
+*(empty)*
 
 ## Proposed — awaiting approval
 
@@ -97,4 +89,12 @@ showcase.
 
 ## Built
 
-*(empty)*
+### Guérande saltern — **Saline de Kervalet**
+
+- **Live:** https://saline-kervalet.vercel.app
+- **Built:** 2026-08-23 · [`sites/saline`](../sites/saline)
+- **Signature:** *la cascade* — scroll walks a parcel of brine through the five named ponds, 3.5 to 25 °Bé, 40 cm to 3 cm, twenty-one days. Reversible in both directions; a weather control floods the season and undoes it.
+- **Register:** bright high-summer noon. The collection's first genuinely bright site.
+- **Type:** Bricolage Grotesque — the second sans display in twenty-six sites.
+- **Notes:** first Sluice build. The instrument is drawn in SVG from numbers, not generated; only the eight plates are generated. Handoff: [`docs/2026-08-23-saline-handoff.md`](2026-08-23-saline-handoff.md).
+

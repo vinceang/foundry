@@ -130,6 +130,7 @@ are marked `?` where they were not verified in this pass.
 | velum | dossier | ? | operation / tails / legs | flight-path trace | introduction | serif (Spectral) |
 | veta | single-object study | ? | bench / line / made | **draw your board** | order form | serif (Fraunces) |
 | vicente | ? | ? | ? | ? | ? | serif (Averia Serif Libre) |
+| **saline** *(sluice)* | **cascade** — material pushed through a sequence and transformed | salinity in °Bé at display size, pond name under it | named pond + its real concentration | **la cascade** — scroll walks the brine, weather resets the season | order by weight from a named œillet, per-pan yields beside it | **sans (Bricolage Grotesque)** · bright high-summer noon |
 
 ### What the table says at a glance
 

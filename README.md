@@ -25,6 +25,24 @@ Sites share doctrine, not styling. The doctrine is
 [`docs/foundry-standard.md`](docs/foundry-standard.md). The retired per-series
 profiles remain in `docs/` for the record and for their palette calibrations.
 
+## Two phases
+
+**Foundry** takes subjects whose value is an **object** — a house, a board, a
+plate. **Sluice**, the second phase, takes subjects whose value is **duration**
+— a process, a route, a shift, a cycle — and adds one constraint: *scroll is a
+controller, never a trigger.* Every state is reversible and user-paced.
+
+The test before a subject is queued: **if you removed the passage of time,
+would it survive?** If yes, it is Foundry's. Sluice has its own standard
+([`docs/sluice-standard.md`](docs/sluice-standard.md)), its own queue
+([`docs/sluice-backlog.md`](docs/sluice-backlog.md)) and its own critic, but
+shares this repo, the tools, the imagery pipeline and the showcase.
+
+Both phases are gated by [`docs/foundry-fingerprints.md`](docs/foundry-fingerprints.md)
+before any markup is written: a new build must differ from **every** existing
+row on at least 4 of 6 dimensions. It exists because the collection kept
+varying world and holding shape constant.
+
 > This repo's original brief was three unrelated categories (ecommerce/SaaS/event) proving generic range. It pivoted after Suntoku and Shokunin — see [`docs/2026-07-12-repositioning-luxury-ateliers.md`](docs/2026-07-12-repositioning-luxury-ateliers.md) for the full history, including the two concepts (Roster, SIGNAL) retired in the move.
 
 | Site | Series | What it is | Culture / place | Project |
@@ -54,6 +72,7 @@ profiles remain in `docs/` for the record and for their palette calibrations.
 | [Hurr (حر)](https://hurr-alain.vercel.app) | Vesper | Falconry furniture — a hood cut to one bird | UAE · Al Jimi, Al Ain | [`sites/hurr`](sites/hurr) · live |
 | [Banaag](https://banaag-hulmahan.vercel.app) | Vesper | Custom jeepney body shop — the vehicle is the lamp | Philippines · Sindalan, San Fernando, Pampanga | [`sites/banaag`](sites/banaag) · live |
 | [BENT](https://bent-ten.vercel.app) | Pastorale | Wooden roller coaster works — built to move | USA · Northumberland County, Pennsylvania | [`sites/bent`](sites/bent) · live |
+| [Saline de Kervalet](https://saline-kervalet.vercel.app) | **Sluice** | Hand-worked salt marsh — three weeks of seawater | France · Guérande, Loire-Atlantique | [`sites/saline`](sites/saline) · live |
 
 ## The showcase — `wgw/`
 
