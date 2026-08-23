@@ -129,6 +129,41 @@ Three voices, strict casting: a display face, a light body face, and
 tracked-caps whisper labels (11px floor, 600 weight, `.3–.42em` tracking, set in
 the accent).
 
+**The serif display is a mannerism to avoid by default.** Surveyed across the
+built collection: 23 of 25 sites set their display in a serif. One is a sans.
+Fraunces alone carries five sites; EB Garamond and Faustina two each. Nobody ever
+decided this — the standard never asked for a serif, and every site arrived at
+one anyway, because a serif is what "crafted" reflexively looks like.
+
+That is the same failure as light-over-time, and it is worse, because it is on
+every page rather than in one section. A collection where every house speaks in
+the same voice reads as one generator with a photo library.
+
+Before setting the display face, survey what the built sites use and go
+somewhere else. Faces that are barely spent here and belong to real registers:
+
+- **Grotesques and neo-grotesques** — industrial trades, engineering, marine,
+  anything with tolerances and specifications. banaag is currently the only site
+  that took this road.
+- **Condensed and compressed** — signage, shipping, transport, anything where
+  the real-world lettering is squeezed by its surface.
+- **Slabs and Egyptians** — timber, print, ironwork, presses, agriculture.
+- **Geometric and constructivist** — anything twentieth-century, industrial
+  design, radio, aviation.
+- **Monospace as display** — instruments, measurement, logging, ledgers. A site
+  whose signature is a readout has its display face sitting right there.
+- **A vernacular face from the actual place** — the strongest answer when it
+  exists, and the hardest to fake.
+
+**Fraunces, EB Garamond and Faustina are spent.** Do not set a new site in one
+without an argument that names why this subject specifically demands that face,
+and write the argument in the site's `DESIGN.md`.
+
+A serif is still correct when the subject is genuinely bookish, ecclesiastical,
+editorial or old-world — Rosée, Schwarzwald and Hurr earn theirs. The rule is not
+"no serifs". It is that the display face must be argued from the trade, the way
+the palette already has to be.
+
 Body copy runs 55–60ch. Numbers that matter — prices, counts, indices — render
 in the display face, one size up, written out in full, never abbreviated.
 
@@ -234,9 +269,25 @@ direction, one ground.**
 - The palette *inside the frame* must match the site's tokens. Regenerate
   violations. Never correct them in CSS.
 - **No text in images, ever.** Generated lettering is always wrong.
-- **One human-presence shot per site, minimum.** The maker at the bench, hands
-  mid-process, a quiet service moment. People are makers and hosts, never
-  lifestyle models. A world nobody inhabits reads as a rendering.
+- **People throughout, not one token shot.** The maker at the bench, hands
+  mid-process, a quiet service moment, someone carrying, measuring, waiting,
+  deciding. People are makers and hosts, never lifestyle models. A world nobody
+  inhabits reads as a rendering.
+
+  One shot was the old floor and it became the target — every site shipping
+  exactly one figure, always at a respectful distance, always mid-craft. That is
+  its own mannerism, and it is a quiet cause of blandness across the collection:
+  a page of immaculate objects with a single person visiting it.
+
+  There is no cap. Faces are allowed and often better than the back of a head —
+  a face carries attention and stakes, and hands alone read as stock after the
+  second frame. Vary the distance: one close enough to read an expression, one
+  that gives the work its scale, one where the person is incidental to a larger
+  frame. Ask what the craft actually looks like when someone is doing it all day,
+  and photograph that, rather than clearing the count.
+
+  The one real restriction stands: people are here because they make the thing or
+  keep it. Nobody is posed enjoying a lifestyle.
 - One constant art-direction phrase across every prompt in a batch. This is the
   single highest-leverage rule — it is what makes a site's photography read as
   one photographer's work.
