@@ -162,6 +162,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
                     <g
                       class="pan-g"
                       data-pan={i}
+                      style={`--i:${i}`}
                       role="button"
                       tabindex="0"
                       aria-label={`${STAGES[i].name} — ${STAGES[i].be} degrés Baumé, ${STAGES[i].depth} centimètres, jour ${STAGES[i].day}`}
@@ -757,7 +758,14 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         function total() {
           const s = salt();
           const n = Math.max(+kg.value || 0, 0);
-          totalEl.textContent = `€${(n * s.perKg).toFixed(2)}`;
+          const next = `€${(n * s.perKg).toFixed(2)}`;
+          if (next === totalEl.textContent) return;
+          totalEl.textContent = next;
+          // acknowledge the recalculation: without it the figure changes
+          // silently and a buyer cannot tell their input registered
+          totalEl.classList.remove("is-tick");
+          void totalEl.offsetWidth;
+          totalEl.classList.add("is-tick");
         }
 
         function fail(name, msg) {
@@ -1008,9 +1016,15 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         stroke-opacity: 1;
         stroke: var(--fleur-deep);
       }
+      /* The focal moment: rain arrives in seconds, recovery takes six days.
+         The default (recovery) is slow and staggered down the chain; the
+         .is-rain rule below overrides it with a fast, near-simultaneous flood.
+         A transition takes the duration in effect when the value changes, so
+         adding the class floods fast and removing it dries slowly — the
+         asymmetry is the craft's actual risk profile, not a flourish. */
       .pan {
         transition:
-          fill 0.28s var(--ease),
+          fill 1100ms var(--ease) calc(var(--i, 0) * 110ms),
           filter 0.32s var(--ease);
         /* the swelling pan lifts off the ground slightly, so the bulge reads
            as volume arriving rather than a rectangle getting bigger */
@@ -1130,9 +1144,6 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         width: 100%;
         height: 100%;
         background: var(--saumure);
-        transition:
-          height 0.28s var(--ease),
-          background 0.28s var(--ease);
       }
       /* a broken crust riding the waterline, not a slab on the floor */
       .sect__crust {
@@ -1192,6 +1203,15 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         color: var(--vase-ink);
         cursor: pointer;
       }
+      .weather button {
+        transition:
+          background 140ms var(--ease),
+          color 140ms var(--ease),
+          border-color 140ms var(--ease);
+      }
+      .weather button:active {
+        transform: translateY(1px);
+      }
       .weather button[aria-pressed="true"] {
         background: var(--encre);
         border-color: var(--encre);
@@ -1206,8 +1226,39 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         min-height: 1.6em;
         margin: var(--s1) 0 0;
       }
+      .cascade.is-rain .pan {
+        transition:
+          fill 380ms cubic-bezier(0.3, 0, 0.2, 1) calc(var(--i, 0) * 22ms),
+          filter 0.32s var(--ease);
+      }
+
+      /* the flooded pan: water rises fast, falls slowly */
+      .sect__water {
+        transition:
+          height 1400ms var(--ease),
+          background 1100ms var(--ease);
+      }
+      .cascade.is-rain .sect__water {
+        transition:
+          height 520ms cubic-bezier(0.3, 0, 0.2, 1),
+          background 380ms cubic-bezier(0.3, 0, 0.2, 1);
+      }
       .cascade.is-rain .sect__pan {
         border-color: var(--fleur-deep);
+      }
+      /* the warning arrives with the water, and leaves the moment sun returns */
+      .weather__msg {
+        transition:
+          opacity 300ms var(--ease),
+          transform 300ms var(--ease);
+      }
+      .cascade:not(.is-rain) .weather__msg {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      .cascade.is-rain .weather__msg {
+        opacity: 1;
+        transform: none;
       }
 
       /* ---------- static composition (JS off) ---------- */
@@ -1515,6 +1566,20 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       }
       .order__total .mono {
         font-size: 27px;
+        display: inline-block;
+      }
+      .order__total .mono.is-tick {
+        animation: tick 260ms var(--ease);
+      }
+      @keyframes tick {
+        0% {
+          transform: translateY(-3px);
+          color: var(--fleur-deep);
+        }
+        100% {
+          transform: none;
+          color: var(--encre);
+        }
       }
       .btn {
         font-family: var(--mono);
