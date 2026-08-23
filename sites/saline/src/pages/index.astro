@@ -898,7 +898,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         grid-template-areas:
           "sect read"
           "sect plan";
-        grid-template-rows: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
         gap: var(--s3) var(--s5);
         align-items: start;
         width: min(1240px, 100% - var(--s4) * 2);
