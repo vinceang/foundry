@@ -54,14 +54,15 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       <!-- ---------------------------------------------- hero -->
       <section class="hero">
         <div class="wrap">
-          <p class="measure hero__m">
+          <p class="measure hero__m rv">
             3.5<span class="measure__unit">°Bé</span>
           </p>
-          <p class="pond-name">L'Atlantique · l'eau entre ici</p>
-          <h1 class="hero__h">
-            The water does the work.<br />We only decide how fast.
+          <p class="pond-name rv" style="--d:1">L'Atlantique · l'eau entre ici</p>
+          <h1 class="hero__h rv">
+            <span class="rv-line"><span>The water does the work.</span></span>
+            <span class="rv-line" style="--d:1"><span>We only decide how fast.</span></span>
           </h1>
-          <p class="hero__sub">
+          <p class="hero__sub rv" style="--d:2">
             Sixty œillets cut into blue clay at Guérande, worked by the same
             family since 1743. No pumps, no heat, no machinery of any kind. The
             only energy in this system is the tide that fills it and the sun
@@ -69,7 +70,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             and leaves, twenty-one days later, as salt.
           </p>
         </div>
-        <figure class="plate plate--bleed">
+        <figure class="plate plate--bleed rv" style="--d:1">
           <img
             src="/images/aerial.jpg"
             srcset="/images/aerial-800.jpg 800w, /images/aerial.jpg 1536w"
@@ -213,7 +214,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
              with JS off; the script hides it once the instrument is live. -->
         <div class="static" data-static>
           <div class="wrap">
-            <h2 class="static__h">La cascade</h2>
+            <h2 class="static__h rv">La cascade</h2>
             <p>
               Seawater takes about three weeks to cross a saline, climbing from
               3.5 to 25 degrees Baumé through five named ponds. It gets stronger
@@ -262,10 +263,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       <!-- ---------------------------------------------- la saline -->
       <section id="saline" class="ch">
         <div class="wrap">
-          <p class="measure ch__m">60<span class="measure__unit">œillets</span></p>
-          <p class="pond-name">La saline</p>
-          <div class="ch__body">
-            <h2 class="ch__h">A marsh that is also a machine.</h2>
+          <p class="measure ch__m rv">60<span class="measure__unit">œillets</span></p>
+          <p class="pond-name rv" style="--d:1">La saline</p>
+          <div class="ch__body rv" style="--d:1">
+            <h2 class="ch__h rv"><span class="rv-line"><span>A marsh that is also a</span></span><span class="rv-line" style="--d:1"><span>machine.</span></span></h2>
             <p>
               Sixty pans cut into blue clay on the marais salants of Guérande,
               worked by the Le Gall family since 1743. The whole saline runs on
@@ -281,7 +282,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             </p>
           </div>
         </div>
-        <figure class="plate plate--wide">
+        <figure class="plate plate--wide rv">
           <img
             src="/images/tremet.jpg"
             srcset="/images/tremet-800.jpg 800w, /images/tremet.jpg 1536w"
@@ -298,10 +299,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       <!-- ---------------------------------------------- le sel -->
       <section id="sel" class="ch">
         <div class="wrap">
-          <p class="measure ch__m">2<span class="measure__unit">sels</span></p>
-          <p class="pond-name">Le sel</p>
-          <div class="ch__body">
-            <h2 class="ch__h">Same pan. Same afternoon.<br />Different salt.</h2>
+          <p class="measure ch__m rv">2<span class="measure__unit">sels</span></p>
+          <p class="pond-name rv" style="--d:1">Le sel</p>
+          <div class="ch__body rv" style="--d:1">
+            <h2 class="ch__h rv"><span class="rv-line"><span>Same pan. Same afternoon.</span></span><span class="rv-line" style="--d:1"><span>Different salt.</span></span></h2>
             <p>
               The difference between the two salts this saline sells is not
               grade, or grinding, or anything done afterwards. It is&#32;
@@ -311,7 +312,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           </div>
 
           <div class="two">
-            <figure class="salt">
+            <figure class="salt rv">
               <div class="salt__dia" aria-hidden="true">
                 <span class="salt__surface"></span>
                 <span class="salt__floor salt__floor--on"></span>
@@ -334,7 +335,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
               </p>
             </figure>
 
-            <figure class="salt">
+            <figure class="salt rv" style="--d:1">
               <div class="salt__dia" aria-hidden="true">
                 <span class="salt__surface salt__surface--on"></span>
                 <span class="salt__floor"></span>
@@ -362,7 +363,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
 
       <!-- ---------------------------------------------- le las -->
       <section id="las" class="ch ch--split">
-        <figure class="plate">
+        <figure class="plate rv">
           <img
             src="/images/las.jpg"
             srcset="/images/las-800.jpg 800w, /images/las.jpg 1536w"
@@ -372,10 +373,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           />
           <figcaption class="label">The las at rest across a pan edge</figcaption>
         </figure>
-        <div class="ch__aside">
-          <p class="measure ch__m">5.2<span class="measure__unit">m</span></p>
-          <p class="pond-name">Le las</p>
-          <h2 class="ch__h ch__h--sm">One tool, and no reason to change it.</h2>
+        <div class="ch__aside rv" style="--d:1">
+          <p class="measure ch__m rv">5.2<span class="measure__unit">m</span></p>
+          <p class="pond-name rv" style="--d:1">Le las</p>
+          <h2 class="ch__h ch__h--sm rv"><span class="rv-line"><span>One tool, and no reason</span></span><span class="rv-line" style="--d:1"><span>to change it.</span></span></h2>
           <p>
             A shaft of ash a little over five metres long with a flat board at
             the end. It has no moving parts, no metal, and no version number.
@@ -394,10 +395,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       <!-- ---------------------------------------------- les paludiers -->
       <section id="paludiers" class="ch">
         <div class="wrap">
-          <p class="measure ch__m">3<span class="measure__unit">paludiers</span></p>
-          <p class="pond-name">Les paludiers</p>
-          <div class="ch__body">
-            <h2 class="ch__h">Nobody here is watching the salt.<br />They are watching the sky.</h2>
+          <p class="measure ch__m rv">3<span class="measure__unit">paludiers</span></p>
+          <p class="pond-name rv" style="--d:1">Les paludiers</p>
+          <div class="ch__body rv" style="--d:1">
+            <h2 class="ch__h rv"><span class="rv-line"><span>Nobody here is watching the salt.</span></span><span class="rv-line" style="--d:1"><span>They are watching the sky.</span></span></h2>
             <p>
               The work is ninety days long and it is mostly waiting, followed
               very suddenly by not waiting. When a pan is ready it is ready for
@@ -405,7 +406,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             </p>
           </div>
           <div class="three">
-            <figure class="plate plate--tall">
+            <figure class="plate plate--tall rv">
               <img
             src="/images/paludier-1.jpg"
             srcset="/images/paludier-1-800.jpg 800w, /images/paludier-1.jpg 1536w"
@@ -415,7 +416,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           />
               <figcaption><strong>Anne-Claire Le Gall</strong><span class="label">Fifth generation · skims the fleur</span></figcaption>
             </figure>
-            <figure class="plate plate--tall">
+            <figure class="plate plate--tall rv">
               <img
             src="/images/paludier-2.jpg"
             srcset="/images/paludier-2-800.jpg 800w, /images/paludier-2.jpg 1536w"
@@ -425,7 +426,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           />
               <figcaption><strong>Yann Le Gall</strong><span class="label">Her brother · cuts and repairs the clay</span></figcaption>
             </figure>
-            <figure class="plate plate--tall">
+            <figure class="plate plate--tall rv">
               <img
             src="/images/paludier-3.jpg"
             srcset="/images/paludier-3-800.jpg 800w, /images/paludier-3.jpg 1536w"
@@ -442,16 +443,16 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       <!-- ---------------------------------------------- la récolte -->
       <section id="recolte" class="ch ch--order">
         <div class="wrap">
-          <p class="measure ch__m">2026<span class="measure__unit">récolte</span></p>
-          <p class="pond-name">La récolte</p>
-          <h2 class="ch__h">Buy from a pan, not from a brand.</h2>
-          <p class="ch__lead">
+          <p class="measure ch__m rv">2026<span class="measure__unit">récolte</span></p>
+          <p class="pond-name rv" style="--d:1">La récolte</p>
+          <h2 class="ch__h rv"><span class="rv-line"><span>Buy from a pan,</span></span><span class="rv-line" style="--d:1"><span>not from a brand.</span></span></h2>
+          <p class="ch__lead rv" style="--d:1">
             Sixty pans do not yield the same salt. Some hold heat, some sit out
             of the wind, one drains so slowly it works a fortnight later than
             the rest. This is what each of ours gave this season.
           </p>
 
-          <table class="tbl tbl--yield">
+          <table class="tbl tbl--yield rv" style="--d:2">
             <thead>
               <tr>
                 <th scope="col">Œillet</th>
@@ -476,7 +477,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             </tbody>
           </table>
 
-          <form class="order" data-order novalidate>
+          <form class="order rv" style="--d:3" data-order novalidate>
             <h3 class="order__h">Commander</h3>
 
             <div class="field">
@@ -548,6 +549,11 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         </p>
       </div>
     </footer>
+
+    <script is:inline>
+      // set before paint so revealed elements never flash in already
+      document.documentElement.classList.add("js");
+    </script>
 
     <script>
       import {
@@ -735,6 +741,23 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         addEventListener("resize", onScroll);
         onScroll();
       }
+
+      // ---------------------------------------------- reveals
+      // The collection's house reveal, same as Shokunin: arrive once on entry
+      // and unobserve. Ordinary editorial arrival motion, deliberately not the
+      // instrument — the instrument stays a scroll-driven controller.
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => io.observe(el));
 
       // ---------------------------------------------- la récolte
       const form = document.querySelector("[data-order]");
@@ -1314,154 +1337,6 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         color: var(--vase-ink);
       }
 
-
-      /* ---------- entrances, tied to scroll position ----------
-         Fade-up-on-scroll is banned in this phase because it is a TRIGGER: it
-         fires once at a threshold and cannot be undone. These are the same idea
-         built as a CONTROLLER — every one is driven by a view() timeline, so
-         scrolling back un-resolves it exactly. Reversible, user-paced, and
-         consistent with the grammar rule rather than an exception to it.
-
-         The material idea is the subject's own: things arrive the way water
-         arrives in a pan — filling from the bottom edge, not floating up from
-         nowhere. Plates wipe upward, measures rise into place, rows fill in
-         sequence.
-
-         No JS. Where view() timelines are unsupported the default state is the
-         finished composition, so nothing is ever hidden by a missing feature. */
-      @supports (animation-timeline: view()) {
-        @media (prefers-reduced-motion: no-preference) {
-          @keyframes rise {
-            from {
-              opacity: 0;
-              transform: translateY(46px);
-              filter: blur(6px);
-            }
-            to {
-              opacity: 1;
-              transform: none;
-              filter: blur(0);
-            }
-          }
-          /* the plate fills like a pan: the image is uncovered from the bottom */
-          @keyframes fill {
-            from {
-              clip-path: inset(72% 0 0 0);
-            }
-            to {
-              clip-path: inset(0 0 0 0);
-            }
-          }
-          @keyframes settle {
-            from {
-              opacity: 0;
-              transform: translateY(28px);
-              filter: blur(4px);
-            }
-            to {
-              opacity: 1;
-              transform: none;
-              filter: blur(0);
-            }
-          }
-
-          /* the chapter measure — the trade's own figure — rises first */
-          .ch__m,
-          .ch .pond-name {
-            animation-name: rise;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 5% cover 34%;
-          }
-          .ch__body p,
-          .ch__lead,
-          .ch__aside p,
-          .plate figcaption,
-          .salt__h,
-          .salt p {
-            animation-name: settle;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 14% cover 34%;
-          }
-          .ch__h {
-            animation-name: rise;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 8% cover 38%;
-          }
-
-          /* plates fill from the bottom edge */
-          .ch .plate img,
-          .salt__img {
-            animation-name: fill;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 4% cover 24%;
-          }
-
-          /* the yield table fills row by row, because it is a record being read
-             down, and the stagger is the reading order */
-          .tbl--yield tbody tr {
-            animation-name: settle;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 6% cover 30%;
-          }
-          .tbl--yield tbody tr:nth-child(2) { animation-range: entry 9% cover 33%; }
-          .tbl--yield tbody tr:nth-child(3) { animation-range: entry 12% cover 36%; }
-          .tbl--yield tbody tr:nth-child(4) { animation-range: entry 15% cover 39%; }
-          .tbl--yield tbody tr:nth-child(5) { animation-range: entry 18% cover 42%; }
-
-          /* the two salts, one after the other, since the section argues one
-             against the other */
-          .two .salt:first-child {
-            animation-name: settle;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 6% cover 28%;
-          }
-          .two .salt:last-child  { animation: settle linear both; animation-timeline: view(); animation-range: entry 13% cover 35%; }
-
-          /* the three paludiers, left to right */
-          .three .plate:nth-child(1) {
-            animation-name: settle;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 6% cover 26%;
-          }
-          .three .plate:nth-child(2) {
-            animation-name: settle;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 10% cover 30%;
-          }
-          .three .plate:nth-child(3) {
-            animation-name: settle;
-            animation-duration: 1ms;
-            animation-timing-function: linear;
-            animation-fill-mode: both;
-            animation-timeline: view();
-            animation-range: entry 14% cover 34%;
-          }
-        }
-      }
 
       /* ---------- chapters ---------- */
       .ch {

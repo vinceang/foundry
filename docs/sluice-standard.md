@@ -59,9 +59,18 @@ watching it play.
 The forbids are the point. They are what stops a build drifting back to an
 ordinary scrolling page halfway through.
 
-- **Fade-up-on-scroll, in every form.** Fires once, cannot be reversed. This is
-  the single most recognisable machine-made motion tell and it is banned outright
-  here, not merely discouraged.
+- **Fade-up-on-scroll as the site's motion.** Fires once, cannot be reversed, and
+  a page whose only movement is sections fading up has no signature. What is
+  banned is using it *instead of* an instrument — not arrival motion as such.
+
+  **The collection's house reveal is the floor, not a violation.** `.rv` /
+  `.rv-line` (Shokunin, `src/styles/global.css`) — opacity and translate on
+  entry, staggered by `--d`, with a masked line reveal for display headings —
+  belongs on every site in both phases. It is ordinary editorial arrival, it is
+  visible without JS, and it is what makes a page feel made rather than
+  rendered. Port it first, then craft the signature on top of it. A site that
+  ships without it is unfinished, and this file previously implied the opposite,
+  which cost a build.
 - **Any state the visitor cannot scroll back out of.** If going up does not undo
   it, it is a trigger.
 - **Autoplaying sequences that ignore scroll position.** A video that runs on its
@@ -165,6 +174,12 @@ The replacement rule:
 
 > **Something is always entering, moving, or resolving.** At any scroll position
 > the visitor should be able to point at more than one thing that is changing.
+
+**Motion is the floor, not the ceiling.** The house reveal goes on every site
+before anything else is designed — it is the baseline a Foundry or Sluice page
+starts from. The signature interaction is then crafted *on top of* that floor,
+never in place of it. Treating motion as something a site earns by argument is
+backwards, and it produced a first Sluice build that read as static.
 
 Concretely, in rough order of leverage:
 

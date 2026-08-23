@@ -225,6 +225,41 @@ spent across the collection. Alternatives:
 
 ## Motion
 
+### The reveal floor — binding, and previously undocumented
+
+**Every site ships the house reveal before anything else is designed.** `.rv`
+and `.rv-line`: opacity and translate on entry via one `IntersectionObserver`,
+siblings staggered with `--d`, and a masked line reveal for display headings
+where each line rises from behind its own edge. Copy it from
+`sites/schwarzwald/src/styles/global.css` — the richest implementation — and note
+that it must be **visible by default**, with only `html.js` hiding anything, so
+a failed script can never blank a page.
+
+This section exists because the standard never wrote it down and the convention
+died. Measured across the collection by build date:
+
+| Built | Sites | Reveal elements |
+|---|---|---|
+| 12–15 Jul | kaji, vicente, schwarzwald, shokunin | 46, 58, **74**, 60 |
+| 18–24 Jul | aresta, lagar-do-sol, alla-luna, santagata, veta, tyri, dar-el-warda, lares | 7–47, uneven |
+| 26 Jul | **ibushi** | **0** — the first zero |
+| 1–21 Aug | barchetta, nipis, rosee, traccia, tsutsumiya, faire, banaag, hurr, bent | **all 0** |
+
+It was carried by copying from a sibling, so once builds began copying from
+recent siblings rather than from Schwarzwald it decayed one generation at a time
+and then stopped entirely. Nothing in this file ever required it.
+
+Note what the August zeros have in common: every one is a configurator site.
+Those builds spent the whole motion budget on the signature interaction and never
+laid the floor — treating motion as an *alternative* to the signature rather
+than the ground it stands on.
+
+**Motion is the floor, not the ceiling.** The reveal goes in first; the signature
+is crafted on top of it. A site without the reveal is unfinished no matter how
+good its signature is.
+
+### Ambient motion
+
 One easing curve for everything (`cubic-bezier(.19,1,.22,1)`-class), long
 durations (0.9–2.2s). Entrances settle. Loops breathe. Nothing bounces, snaps,
 sparkles, or performs for attention.

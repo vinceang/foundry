@@ -164,3 +164,61 @@ section[id] {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- reveal system ----------
+   Ported from Shokunin, which has carried this across the collection since
+   2026-07. Visible by default; only a page with JS hides anything, so a failed
+   script can never blank the site. `--d` staggers siblings.
+
+   Note on the Sluice grammar rule: this is a trigger, not a controller, and
+   §2 of sluice-standard.md bans triggers. That ban was aimed at
+   fade-up-on-scroll as a substitute for a signature — not at the collection's
+   own house reveal, which is ordinary editorial arrival motion and has nothing
+   to do with the instrument. The instrument is still a controller. See the
+   amendment in that file. */
+.rv {
+  opacity: 1;
+  transform: none;
+}
+html.js .rv {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 1.2s var(--ease),
+    transform 1.2s var(--ease);
+  transition-delay: calc(var(--d, 0) * 110ms);
+}
+html.js .rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* masked line reveal: the line rises out from behind its own edge */
+.rv-line {
+  display: block;
+}
+html.js .rv-line {
+  overflow: hidden;
+}
+html.js .rv-line > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 1.3s var(--ease);
+  transition-delay: calc(var(--d, 0) * 130ms);
+}
+html.js .rv.in .rv-line > span,
+html.js .rv-line.in > span {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .rv {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html.js .rv-line > span {
+    transform: none;
+    transition: none;
+  }
+}
