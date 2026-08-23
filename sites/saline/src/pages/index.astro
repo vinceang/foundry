@@ -69,7 +69,13 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             and leaves, twenty-one days later, as salt.
           </p>
         </div>
-        <figure class="plate plate--bleed">
+        <!-- The plate is frame zero of a single continuous aerial shot, and
+             scroll drives which frame is drawn. One clip holds registration by
+             construction, so this is photoreal reversible motion with no 3D
+             pipeline and no dependence on video seeking, which is unreliable
+             across browsers. The <img> is the real fallback: with JS off, or
+             until the frames arrive, the page opens on the plate. -->
+        <figure class="plate plate--bleed" data-scrub>
           <img
             src="/images/aerial.jpg"
             srcset="/images/aerial-800.jpg 800w, /images/aerial.jpg 1536w"
@@ -79,9 +85,10 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             alt="The saline from above: shallow clay pans in a hand-cut grid, the water deep green in the largest, pale sand in the middle ones and vivid rose in the smallest, with white heaps of harvested salt on the banks."
             fetchpriority="high"
           />
+          <canvas data-flight width="1200" height="803" aria-hidden="true"></canvas>
           <figcaption class="wrap">
             <span class="label">The saline from above · noon · three concentrations in one frame</span>
-            <span class="label hero__cue">Scroll to walk the water through</span>
+            <span class="label hero__cue">Scroll to fly it</span>
           </figcaption>
         </figure>
       </section>
@@ -686,6 +693,69 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         onScroll();
       }
 
+      // ---------------------------------------------- the hero flight
+      // Scroll position picks a frame from one continuous aerial shot. Frames
+      // rather than a scrubbed <video> because video seeking is unreliable
+      // across browsers and silently does nothing when it fails; an image
+      // sequence draws the same pixels everywhere.
+      const scrub = document.querySelector("[data-scrub]");
+      if (scrub && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        const cv = scrub.querySelector("[data-flight]");
+        const ctx = cv.getContext("2d");
+        const N = 24;
+        const small = matchMedia("(max-width: 820px)").matches;
+        const pre = small ? "s" : "f";
+        const frames = [];
+        let loaded = 0;
+        let shown = -1;
+        let queued = false;
+
+        for (let i = 1; i <= N; i++) {
+          const im = new Image();
+          im.decoding = "async";
+          im.src = `/flight/${pre}-${String(i).padStart(2, "0")}.jpg`;
+          im.onload = () => {
+            loaded++;
+            // only take over from the still once the whole flight is in, so
+            // scrolling never lands on a frame that has not arrived
+            if (loaded === N) {
+              cv.width = im.naturalWidth;
+              cv.height = im.naturalHeight;
+              scrub.dataset.live = "true";
+              draw();
+            }
+          };
+          frames.push(im);
+        }
+
+        function progress() {
+          const r = scrub.getBoundingClientRect();
+          const span = r.height + window.innerHeight;
+          return Math.min(Math.max((window.innerHeight - r.top) / span, 0), 1);
+        }
+
+        function draw() {
+          const i = Math.min(N - 1, Math.max(0, Math.round(progress() * (N - 1))));
+          if (i === shown) return;
+          const im = frames[i];
+          if (!im.complete) return;
+          ctx.drawImage(im, 0, 0, cv.width, cv.height);
+          shown = i;
+        }
+
+        function onScroll() {
+          if (queued) return;
+          queued = true;
+          requestAnimationFrame(() => {
+            queued = false;
+            if (loaded === N) draw();
+          });
+        }
+
+        addEventListener("scroll", onScroll, { passive: true });
+        addEventListener("resize", onScroll);
+      }
+
       // ---------------------------------------------- la récolte
       const form = document.querySelector("[data-order]");
       if (form) {
@@ -848,9 +918,30 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
         margin: var(--s5) 0 0;
         position: relative;
       }
-      .plate--bleed img {
+      /* the still and the flight occupy exactly the same box, or the canvas
+         ends short and the image shows through underneath as a seam */
+      .plate--bleed {
+        position: relative;
         height: 88vh;
         min-height: 480px;
+        overflow: hidden;
+      }
+      .plate--bleed img,
+      .plate--bleed canvas {
+        display: block;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* the flight only replaces the still once every frame has arrived */
+      .plate--bleed canvas {
+        opacity: 0;
+        transition: opacity 0.4s var(--ease);
+      }
+      .plate--bleed[data-live="true"] canvas {
+        opacity: 1;
       }
       .plate--bleed figcaption {
         position: absolute;
@@ -1562,7 +1653,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           padding-block: var(--s6) var(--s3);
           align-items: flex-start;
         }
-        .plate--bleed img {
+        .plate--bleed {
           height: 62vh;
           min-height: 340px;
         }
