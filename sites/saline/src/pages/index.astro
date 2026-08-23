@@ -67,7 +67,16 @@ const PANS = [
             and leaves, twenty-one days later, as salt.
           </p>
         </div>
-        <figure class="plate plate--bleed ph ph--aerial">
+        <figure class="plate plate--bleed">
+          <img
+            src="/images/aerial.jpg"
+            srcset="/images/aerial-800.jpg 800w, /images/aerial.jpg 1536w"
+            sizes="100vw"
+            width="1536"
+            height="1024"
+            alt="The saline from above: shallow clay pans in a hand-cut grid, the water deep green in the largest, pale sand in the middle ones and vivid rose in the smallest, with white heaps of harvested salt on the banks."
+            fetchpriority="high"
+          />
           <figcaption class="wrap">
             <span class="label">The saline from above · noon · three concentrations in one frame</span>
             <span class="label hero__cue">Scroll to walk the water through</span>
@@ -251,7 +260,14 @@ const PANS = [
             </p>
           </div>
         </div>
-        <figure class="plate plate--wide ph ph--tremet">
+        <figure class="plate plate--wide">
+          <img
+            src="/images/tremet.jpg"
+            srcset="/images/tremet-800.jpg 800w, /images/tremet.jpg 1536w"
+            sizes="(max-width: 900px) 100vw, 50vw"
+            width="1536" height="1024" loading="lazy" decoding="async"
+            alt="A narrow clay walkway running to a flat horizon between full pans, water reflecting an empty bright sky on both sides."
+          />
           <figcaption class="label wrap">
             A trémet running to the horizon between full pans
           </figcaption>
@@ -279,6 +295,11 @@ const PANS = [
                 <span class="salt__surface"></span>
                 <span class="salt__floor salt__floor--on"></span>
               </div>
+              <img class="salt__img" src="/images/gros-sel.jpg"
+                srcset="/images/gros-sel-800.jpg 800w, /images/gros-sel.jpg 1536w"
+                sizes="(max-width: 900px) 100vw, 50vw"
+                width="1536" height="1024" loading="lazy" decoding="async"
+                alt="A heap of wet coarse grey salt on the clay ladure, rake furrows drawn through it, crystals catching the sun." />
               <h3 class="salt__h">Gros sel</h3>
               <p class="label">On the floor · raked with the las</p>
               <p>
@@ -297,6 +318,11 @@ const PANS = [
                 <span class="salt__surface salt__surface--on"></span>
                 <span class="salt__floor"></span>
               </div>
+              <img class="salt__img" src="/images/fleur.jpg"
+                srcset="/images/fleur-800.jpg 800w, /images/fleur.jpg 1536w"
+                sizes="(max-width: 900px) 100vw, 50vw"
+                width="1536" height="1024" loading="lazy" decoding="async"
+                alt="A broken white lattice of fine crystals floating on the surface tension of still rose brine, raking light on every edge." />
               <h3 class="salt__h">Fleur de sel</h3>
               <p class="label">On the surface · lifted with the lousse</p>
               <p>
@@ -315,7 +341,14 @@ const PANS = [
 
       <!-- ---------------------------------------------- le las -->
       <section id="las" class="ch ch--split">
-        <figure class="plate ph ph--las">
+        <figure class="plate">
+          <img
+            src="/images/las.jpg"
+            srcset="/images/las-800.jpg 800w, /images/las.jpg 1536w"
+            sizes="(max-width: 900px) 100vw, 50vw"
+            width="1536" height="1024" loading="lazy" decoding="async"
+            alt="A long ash-shafted wooden rake with a flat board head, resting across the clay edge of a salt pan, worn smooth by use."
+          />
           <figcaption class="label">The las at rest across a pan edge</figcaption>
         </figure>
         <div class="ch__aside">
@@ -351,13 +384,34 @@ const PANS = [
             </p>
           </div>
           <div class="three">
-            <figure class="plate plate--tall ph ph--p1">
+            <figure class="plate plate--tall">
+              <img
+            src="/images/paludier-1.jpg"
+            srcset="/images/paludier-1-800.jpg 800w, /images/paludier-1.jpg 1536w"
+            sizes="(max-width: 900px) 100vw, 50vw"
+            width="1024" height="1536" loading="lazy" decoding="async"
+            alt="A woman bent over the edge of a pan, drawing a fine white crust of salt from the water surface with a long wooden skimmer."
+          />
               <figcaption><strong>Anne-Claire Le Gall</strong><span class="label">Fifth generation · skims the fleur</span></figcaption>
             </figure>
-            <figure class="plate plate--tall ph ph--p2">
+            <figure class="plate plate--tall">
+              <img
+            src="/images/paludier-2.jpg"
+            srcset="/images/paludier-2-800.jpg 800w, /images/paludier-2.jpg 1536w"
+            sizes="(max-width: 900px) 100vw, 50vw"
+            width="1024" height="1536" loading="lazy" decoding="async"
+            alt="Two salt workers on a clay walkway heaping coarse grey salt into a tall cone with long wooden rakes, caught mid-lift."
+          />
               <figcaption><strong>Yann Le Gall</strong><span class="label">Her brother · cuts and repairs the clay</span></figcaption>
             </figure>
-            <figure class="plate plate--tall ph ph--p3">
+            <figure class="plate plate--tall">
+              <img
+            src="/images/paludier-3.jpg"
+            srcset="/images/paludier-3-800.jpg 800w, /images/paludier-3.jpg 1536w"
+            sizes="(max-width: 900px) 100vw, 50vw"
+            width="1024" height="1536" loading="lazy" decoding="async"
+            alt="A weathered man in his sixties on the clay bank at the end of a shift, squinting against the sun, dried salt on his forearms."
+          />
               <figcaption><strong>Mathurin Ollivier</strong><span class="label">Forty-one seasons on this saline</span></figcaption>
             </figure>
           </div>
@@ -743,11 +797,14 @@ const PANS = [
       .hero__m {
         margin: 0;
       }
+      /* the line breaks are authored; 16ch was overriding them into four
+         lines and pushing the plate off the first screen entirely */
       .hero__h {
-        font-size: clamp(44px, 8.2vw, 116px);
+        font-size: clamp(38px, 6vw, 86px);
         font-variation-settings: "wdth" 92, "opsz" 96;
-        max-width: 16ch;
-        margin: var(--s4) 0 var(--s3);
+        max-width: 26ch;
+        text-wrap: balance;
+        margin: var(--s3) 0 var(--s3);
       }
       .hero__sub {
         font-size: 19px;
@@ -759,8 +816,7 @@ const PANS = [
         margin: var(--s5) 0 0;
         position: relative;
       }
-      .plate--bleed.ph::before {
-        aspect-ratio: auto;
+      .plate--bleed img {
         height: 88vh;
         min-height: 480px;
       }
@@ -779,16 +835,6 @@ const PANS = [
         background: color-mix(in srgb, var(--glare) 82%, transparent);
         padding: var(--s1) var(--s2);
       }
-      .ph--tremet::before {
-        background: linear-gradient(
-          8deg,
-          var(--vase) 0 38%,
-          var(--argile) 38% 46%,
-          var(--saumure) 46% 78%,
-          #b9bfc4 78% 100%
-        );
-      }
-
       /* ---------- la cascade ---------- */
       .cascade {
         position: relative;
@@ -1099,42 +1145,27 @@ const PANS = [
         font-size: 18px;
         font-weight: 400;
       }
-      .ph {
-        position: relative;
-      }
-      .ph::before {
-        content: "";
-        display: block;
-        aspect-ratio: 3 / 2;
+      .plate img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         background: var(--argile);
       }
-      .plate--wide.ph::before {
+      .plate--wide img {
         aspect-ratio: 21 / 9;
       }
-      .plate--tall.ph::before {
+      .plate--tall img {
         aspect-ratio: 2 / 3;
       }
-      .ph--aerial::before {
-        background: linear-gradient(
-          100deg,
-          var(--saumure) 0 24%,
-          #8a9083 24% 44%,
-          var(--vase) 44% 62%,
-          #b08170 62% 80%,
-          var(--fleur) 80% 100%
-        );
+      .ch--split .plate img {
+        aspect-ratio: 3 / 2;
       }
-      .ph--las::before {
-        background: linear-gradient(170deg, var(--argile) 0 62%, var(--vase) 62% 100%);
-      }
-      .ph--p1::before {
-        background: linear-gradient(200deg, var(--saumure) 0 55%, var(--argile) 55% 100%);
-      }
-      .ph--p2::before {
-        background: linear-gradient(200deg, var(--vase) 0 55%, var(--argile) 55% 100%);
-      }
-      .ph--p3::before {
-        background: linear-gradient(200deg, var(--fleur) 0 55%, var(--argile) 55% 100%);
+      .salt__img {
+        width: 100%;
+        aspect-ratio: 3 / 2;
+        object-fit: cover;
+        margin-bottom: var(--s2);
+        background: var(--argile);
       }
       .plate--wide {
         width: 100%;
@@ -1472,7 +1503,7 @@ const PANS = [
           padding-block: var(--s6) var(--s3);
           align-items: flex-start;
         }
-        .plate--bleed.ph::before {
+        .plate--bleed img {
           height: 62vh;
           min-height: 340px;
         }
