@@ -22,6 +22,12 @@ still invents the world (name, place, palette, vocabulary) in `DESIGN.md`.
 
 ---
 
+> **Two queues.** This file screens subjects whose value is an **object**.
+> Subjects whose value is **duration** — a process, a route, a shift, a cycle —
+> belong in `docs/sluice-backlog.md`, the queue for Foundry's second phase. The
+> test: *if you removed the passage of time, would the subject survive?* If not,
+> it is Sluice's.
+
 ## Approved — build queue (top first)
 
 *(empty — move entries up from Proposed to approve them)*
