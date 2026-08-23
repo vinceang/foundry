@@ -15,6 +15,9 @@
   /* derived, for hairlines and quiet fields */
   --argile-deep: #c8c1b1;
   --vase-ink: #5c584e;
+  /* the same pigment dried down. Sel on fleur is 3.51:1 and fails; on this it
+     is 4.98:1, measured. Used only where white type sits on the accent. */
+  --fleur-deep: #a85643;
 
   --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
   --body: "IBM Plex Sans", system-ui, sans-serif;
@@ -121,6 +124,11 @@ img {
 .wrap {
   width: min(1240px, 100% - var(--s4) * 2);
   margin-inline: auto;
+}
+
+/* the header is sticky, so an anchored section must clear it */
+section[id] {
+  scroll-margin-top: 76px;
 }
 
 /* ---------- floors ---------- */

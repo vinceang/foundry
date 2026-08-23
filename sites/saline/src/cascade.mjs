@@ -119,6 +119,25 @@ export function withRain(state) {
   };
 }
 
+/**
+ * The season's tally, by œillet. A saline is not one yield but sixty, and the
+ * paludier knows which pans run heavy — the ones that hold heat, sit out of the
+ * wind, or drain slowly. Buying from a named pan is not a gimmick here; it is
+ * how the salt is actually recorded.
+ */
+export const OEILLETS = [
+  { no: 7, name: "Le Grand Sept", gros: 1840, fleur: 41, note: "Holds the afternoon heat; the heaviest pan on the saline." },
+  { no: 12, name: "La Croisée", gros: 1620, fleur: 38, note: "Cut at the crossing of two trémets. Even, reliable, unremarkable." },
+  { no: 23, name: "Le Bas", gros: 1975, fleur: 29, note: "Drains slowest, so it works latest. Big on gros sel, thin on fleur." },
+  { no: 31, name: "La Sèche", gros: 1210, fleur: 57, note: "Shallow and out of the wind. Half the salt, the best fleur we cut." },
+  { no: 44, name: "Le Vent", gros: 1385, fleur: 22, note: "Exposed. A breeze ruins fleur, so this pan is raked for gros sel only." },
+];
+
+export const SALT = {
+  gros: { label: "Gros sel", perKg: 3.4, min: 5, step: 5, unit: "kg" },
+  fleur: { label: "Fleur de sel", perKg: 28, min: 1, step: 1, unit: "kg" },
+};
+
 export const fmt = {
   be: (v) => v.toFixed(1),
   depth: (v) => Math.round(v),

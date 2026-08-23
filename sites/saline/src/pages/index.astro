@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { STAGES, brineColour, CRYSTAL_BE } from "../cascade.mjs";
+import { STAGES, brineColour, CRYSTAL_BE, OEILLETS, SALT } from "../cascade.mjs";
 
 const nav = [
   ["#saline", "La saline"],
@@ -29,6 +29,7 @@ const PANS = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>Saline de Kervalet — sel de Guérande, récolté à la main depuis 1743</title>
     <meta
       name="description"
@@ -57,7 +58,7 @@ const PANS = [
           </h1>
           <p class="hero__sub">
             Sixty œillets cut into blue clay. No pumps, no heat, no machinery of
-            any kind — the only energy in this system is the tide that fills it
+            any kind. The only energy in this system is the tide that fills it
             and the sun that empties it. Seawater enters at three and a half
             degrees Baumé and leaves, twenty-one days later, as salt.
           </p>
@@ -171,7 +172,7 @@ const PANS = [
             <p>
               Seawater takes about three weeks to cross a saline, climbing from
               3.5 to 25 degrees Baumé through five named ponds. It gets stronger
-              and it gets shallower — forty centimetres at the tide gate, three
+              and it gets shallower: forty centimetres at the tide gate, three
               in the pan where salt forms. That is why one still afternoon
               finishes a harvest and one shower of rain undoes three weeks.
             </p>
@@ -212,11 +213,256 @@ const PANS = [
           </div>
         </div>
       </section>
+
+      <!-- ---------------------------------------------- la saline -->
+      <section id="saline" class="ch">
+        <div class="wrap">
+          <p class="measure ch__m">60<span class="measure__unit">œillets</span></p>
+          <p class="pond-name">La saline</p>
+          <div class="ch__body">
+            <h2 class="ch__h">A marsh that is also a machine.</h2>
+            <p>
+              Sixty pans cut into blue clay on the marais salants of Guérande,
+              worked by the Le Gall family since 1743. The whole saline runs on
+              two forces and neither of them is ours: the spring tide fills it,
+              and the sun empties it. There is no pump on this land and there
+              never has been.
+            </p>
+            <p>
+              What a paludier owns is not the salt. It is the grade of the clay
+              floors, the width of the channels, and the judgement of when to
+              let water through. A set of decisions about rate, made every day
+              for three months, in a system that cannot be paused.
+            </p>
+          </div>
+        </div>
+        <figure class="plate plate--wide ph ph--aerial">
+          <figcaption class="label">
+            The pan grid from above · noon · three concentrations in one frame
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ---------------------------------------------- le sel -->
+      <section id="sel" class="ch">
+        <div class="wrap">
+          <p class="measure ch__m">2<span class="measure__unit">sels</span></p>
+          <p class="pond-name">Le sel</p>
+          <div class="ch__body">
+            <h2 class="ch__h">Same pan. Same afternoon.<br />Different salt.</h2>
+            <p>
+              The difference between the two salts this saline sells is not
+              grade, or grinding, or anything done afterwards. It is
+              <em>where in the water each one forms</em>, and that is decided
+              by the weather in the hour they appear.
+            </p>
+          </div>
+
+          <div class="two">
+            <figure class="salt">
+              <div class="salt__dia" aria-hidden="true">
+                <span class="salt__surface"></span>
+                <span class="salt__floor salt__floor--on"></span>
+              </div>
+              <h3 class="salt__h">Gros sel</h3>
+              <p class="label">On the floor · raked with the las</p>
+              <p>
+                Crystals form through the depth of the brine and fall. The
+                paludier draws them up the slope of the pan onto the ladure,
+                grey from the clay they grew against. Two hundred kilos in a
+                good afternoon.
+              </p>
+              <p class="salt__price">
+                <span class="mono">€{SALT.gros.perKg.toFixed(2)}</span> / kg
+              </p>
+            </figure>
+
+            <figure class="salt">
+              <div class="salt__dia" aria-hidden="true">
+                <span class="salt__surface salt__surface--on"></span>
+                <span class="salt__floor"></span>
+              </div>
+              <h3 class="salt__h">Fleur de sel</h3>
+              <p class="label">On the surface · lifted with the lousse</p>
+              <p>
+                On still, hot afternoons a fine crust forms on the surface
+                tension and stays there. It is skimmed off the top before it
+                sinks, white because it never touched the clay. A breath of wind
+                and there is none at all that day.
+              </p>
+              <p class="salt__price">
+                <span class="mono">€{SALT.fleur.perKg.toFixed(2)}</span> / kg
+              </p>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------- le las -->
+      <section id="las" class="ch ch--split">
+        <figure class="plate ph ph--las">
+          <figcaption class="label">The las at rest across a pan edge</figcaption>
+        </figure>
+        <div class="ch__aside">
+          <p class="measure ch__m">5.2<span class="measure__unit">m</span></p>
+          <p class="pond-name">Le las</p>
+          <h2 class="ch__h ch__h--sm">One tool, and no reason to change it.</h2>
+          <p>
+            A shaft of ash a little over five metres long with a flat board at
+            the end. It has no moving parts, no metal, and no version number.
+            The paludier stands on the trémet and draws the salt toward himself
+            across seventy square metres of clay without ever stepping into the
+            pan, because a footprint in a clay floor is a fault that will hold
+            water wrong for years.
+          </p>
+          <p>
+            The length is not tradition. It is the reach of a pan, and pans are
+            the size they are because that is how far a person can pull.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------- les paludiers -->
+      <section id="paludiers" class="ch">
+        <div class="wrap">
+          <p class="measure ch__m">3<span class="measure__unit">paludiers</span></p>
+          <p class="pond-name">Les paludiers</p>
+          <div class="ch__body">
+            <h2 class="ch__h">Nobody here is watching the salt.<br />They are watching the sky.</h2>
+            <p>
+              The work is ninety days long and it is mostly waiting, followed
+              very suddenly by not waiting. When a pan is ready it is ready for
+              about four hours.
+            </p>
+          </div>
+          <div class="three">
+            <figure class="plate plate--tall ph ph--p1">
+              <figcaption><strong>Anne-Claire Le Gall</strong><span class="label">Fifth generation · skims the fleur</span></figcaption>
+            </figure>
+            <figure class="plate plate--tall ph ph--p2">
+              <figcaption><strong>Yann Le Gall</strong><span class="label">Her brother · cuts and repairs the clay</span></figcaption>
+            </figure>
+            <figure class="plate plate--tall ph ph--p3">
+              <figcaption><strong>Mathurin Ollivier</strong><span class="label">Forty-one seasons on this saline</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------- la récolte -->
+      <section id="recolte" class="ch ch--order">
+        <div class="wrap">
+          <p class="measure ch__m">2026<span class="measure__unit">récolte</span></p>
+          <p class="pond-name">La récolte</p>
+          <h2 class="ch__h">Buy from a pan, not from a brand.</h2>
+          <p class="ch__lead">
+            Sixty pans do not yield the same salt. Some hold heat, some sit out
+            of the wind, one drains so slowly it works a fortnight later than
+            the rest. This is what each of ours gave this season.
+          </p>
+
+          <table class="tbl tbl--yield">
+            <thead>
+              <tr>
+                <th scope="col">Œillet</th>
+                <th scope="col">Gros sel</th>
+                <th scope="col">Fleur</th>
+                <th scope="col">Le pan</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                OEILLETS.map((o) => (
+                  <tr>
+                    <th scope="row">
+                      <span class="mono">n° {o.no}</span> {o.name}
+                    </th>
+                    <td class="mono">{o.gros} kg</td>
+                    <td class="mono">{o.fleur} kg</td>
+                    <td class="yield__note">{o.note}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+
+          <form class="order" data-order novalidate>
+            <h3 class="order__h">Commander</h3>
+
+            <div class="field">
+              <span class="label" id="lbl-type">Sel</span>
+              <div class="seg" role="radiogroup" aria-labelledby="lbl-type">
+                <label><input type="radio" name="type" value="gros" checked /><span>Gros sel</span></label>
+                <label><input type="radio" name="type" value="fleur" /><span>Fleur de sel</span></label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="f-oeillet">Œillet</label>
+              <select id="f-oeillet" name="oeillet">
+                {OEILLETS.map((o) => <option value={o.no}>n° {o.no} — {o.name}</option>)}
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="label" for="f-kg">Quantité</label>
+              <input id="f-kg" name="kg" type="number" min="1" step="1" value="5" inputmode="numeric" />
+              <p class="err" data-err="kg" hidden></p>
+            </div>
+
+            <div class="field">
+              <label class="label" for="f-nom">Nom</label>
+              <input id="f-nom" name="nom" type="text" autocomplete="name" required />
+              <p class="err" data-err="nom" hidden></p>
+            </div>
+
+            <div class="field">
+              <label class="label" for="f-mail">Courriel</label>
+              <input id="f-mail" name="mail" type="email" autocomplete="email" required />
+              <p class="err" data-err="mail" hidden></p>
+            </div>
+
+            <div class="field field--wide">
+              <label class="label" for="f-note">Note</label>
+              <textarea id="f-note" name="note" rows="3"></textarea>
+            </div>
+
+            <div class="order__foot">
+              <p class="order__total">
+                <span class="label">Total</span>
+                <span class="mono" data-out="total">€17.00</span>
+              </p>
+              <button type="submit" class="btn">Envoyer la commande</button>
+            </div>
+
+            <p class="order__fine">
+              Sending opens the order in your own mail client, addressed to&#32;
+              <span class="mono">recolte@kervalet.fr</span>. No card details are
+              taken here, and none ever will be.
+            </p>
+
+            <p class="order__sent" data-sent hidden role="status">
+              Merci. Your order is in your mail client. Send it and Anne-Claire
+              will reply within two days.
+            </p>
+          </form>
+        </div>
+      </section>
     </main>
+
+    <footer class="foot">
+      <div class="wrap foot__in">
+        <p class="mono">Saline de Kervalet · Guérande, Loire-Atlantique</p>
+        <p class="label">
+          Récolte 2026 · gros sel et fleur de sel · récoltés à la main
+        </p>
+      </div>
+    </footer>
 
     <script>
       import {
         STAGES,
+        SALT,
         stateAt,
         brineColour,
         crystalAmount,
@@ -311,6 +557,102 @@ const PANS = [
         addEventListener("scroll", onScroll, { passive: true });
         addEventListener("resize", onScroll);
         onScroll();
+      }
+
+      // ---------------------------------------------- la récolte
+      const form = document.querySelector("[data-order]");
+      if (form) {
+        const kg = form.querySelector("#f-kg");
+        const totalEl = form.querySelector('[data-out="total"]');
+        const sent = form.querySelector("[data-sent]");
+        const btn = form.querySelector(".btn");
+
+        const salt = () =>
+          SALT[form.querySelector('input[name="type"]:checked').value];
+
+        function syncKg() {
+          const s = salt();
+          kg.min = String(s.min);
+          kg.step = String(s.step);
+          if (+kg.value < s.min) kg.value = String(s.min);
+          total();
+        }
+
+        function total() {
+          const s = salt();
+          const n = Math.max(+kg.value || 0, 0);
+          totalEl.textContent = `€${(n * s.perKg).toFixed(2)}`;
+        }
+
+        function fail(name, msg) {
+          const input = form.querySelector(`[name="${name}"]`);
+          const err = form.querySelector(`[data-err="${name}"]`);
+          input.setAttribute("aria-invalid", "true");
+          err.textContent = msg;
+          err.hidden = false;
+          return input;
+        }
+
+        function clearErrors() {
+          form.querySelectorAll("[aria-invalid]").forEach((i) =>
+            i.removeAttribute("aria-invalid")
+          );
+          form.querySelectorAll(".err").forEach((e) => {
+            e.hidden = true;
+            e.textContent = "";
+          });
+        }
+
+        form.addEventListener("input", (e) => {
+          if (e.target.name === "type") syncKg();
+          else if (e.target === kg) total();
+        });
+
+        form.addEventListener("submit", (e) => {
+          e.preventDefault();
+          clearErrors();
+          const s = salt();
+          let first = null;
+
+          if (!(+kg.value >= s.min))
+            first = fail("kg", `Minimum ${s.min} ${s.unit} de ${s.label.toLowerCase()}.`);
+          if (!form.querySelector("#f-nom").value.trim())
+            first = fail("nom", "Il nous faut un nom.") || first;
+          const mail = form.querySelector("#f-mail").value.trim();
+          if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail))
+            first = fail("mail", "Cette adresse ne semble pas valide.") || first;
+
+          if (first) {
+            first.focus();
+            return;
+          }
+
+          // submitting
+          btn.disabled = true;
+          btn.textContent = "Envoi…";
+
+          const o = form.querySelector("#f-oeillet");
+          const body = [
+            `${s.label} — ${kg.value} ${s.unit}`,
+            `Œillet ${o.options[o.selectedIndex].text}`,
+            `Total €${(kg.value * s.perKg).toFixed(2)}`,
+            "",
+            form.querySelector("#f-note").value,
+          ].join("\n");
+
+          setTimeout(() => {
+            location.href =
+              "mailto:recolte@kervalet.fr?subject=" +
+              encodeURIComponent(`Commande — récolte 2026`) +
+              "&body=" +
+              encodeURIComponent(body);
+            btn.disabled = false;
+            btn.textContent = "Envoyer la commande";
+            sent.hidden = false;
+          }, 420);
+        });
+
+        syncKg();
       }
     </script>
 
@@ -570,6 +912,344 @@ const PANS = [
         color: var(--vase-ink);
       }
 
+      /* ---------- chapters ---------- */
+      .ch {
+        padding: var(--s7) 0 var(--s6);
+      }
+      .ch__m {
+        margin: 0;
+      }
+      .ch__body {
+        margin-top: var(--s5);
+      }
+      .ch__h {
+        font-size: clamp(34px, 4.6vw, 68px);
+        font-variation-settings: "wdth" 94, "opsz" 72;
+        max-width: 20ch;
+        margin-bottom: var(--s3);
+      }
+      .ch__h--sm {
+        font-size: clamp(28px, 3vw, 42px);
+        max-width: 22ch;
+      }
+      .ch__lead {
+        font-size: 19px;
+        max-width: 54ch;
+        margin-bottom: var(--s4);
+      }
+      .mono {
+        font-family: var(--mono);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* placeholders: real materials from the palette, cut to the intended
+         crop, so the critique loop judges composition honestly. Replaced by
+         generated plates in the imagery pass. */
+      .plate {
+        margin: var(--s5) 0 0;
+      }
+      .plate figcaption {
+        margin-top: var(--s1);
+        display: block;
+      }
+      .plate figcaption strong {
+        display: block;
+        font-family: var(--display);
+        font-size: 18px;
+        font-weight: 400;
+      }
+      .ph {
+        position: relative;
+      }
+      .ph::before {
+        content: "";
+        display: block;
+        aspect-ratio: 3 / 2;
+        background: var(--argile);
+      }
+      .plate--wide.ph::before {
+        aspect-ratio: 21 / 9;
+      }
+      .plate--tall.ph::before {
+        aspect-ratio: 2 / 3;
+      }
+      .ph--aerial::before {
+        background: linear-gradient(
+          100deg,
+          var(--saumure) 0 24%,
+          #8a9083 24% 44%,
+          var(--vase) 44% 62%,
+          #b08170 62% 80%,
+          var(--fleur) 80% 100%
+        );
+      }
+      .ph--las::before {
+        background: linear-gradient(170deg, var(--argile) 0 62%, var(--vase) 62% 100%);
+      }
+      .ph--p1::before {
+        background: linear-gradient(200deg, var(--saumure) 0 55%, var(--argile) 55% 100%);
+      }
+      .ph--p2::before {
+        background: linear-gradient(200deg, var(--vase) 0 55%, var(--argile) 55% 100%);
+      }
+      .ph--p3::before {
+        background: linear-gradient(200deg, var(--fleur) 0 55%, var(--argile) 55% 100%);
+      }
+      .plate--wide {
+        width: 100%;
+      }
+
+      /* le sel — where in the water each salt forms */
+      .two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--s5);
+        margin-top: var(--s5);
+      }
+      .salt {
+        margin: 0;
+      }
+      .salt__dia {
+        position: relative;
+        height: 132px;
+        background: var(--argile);
+        border-bottom: 5px solid var(--vase);
+        overflow: hidden;
+      }
+      .salt__dia::after {
+        content: "";
+        position: absolute;
+        inset: 38% 0 0 0;
+        background: var(--fleur);
+        opacity: 0.9;
+      }
+      .salt__surface,
+      .salt__floor {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        height: 9px;
+        background: var(--sel);
+        opacity: 0.18;
+      }
+      .salt__surface {
+        top: 38%;
+      }
+      .salt__floor {
+        bottom: 0;
+        height: 14px;
+      }
+      .salt__surface--on,
+      .salt__floor--on {
+        opacity: 1;
+      }
+      .salt__h {
+        font-size: 27px;
+        margin: var(--s2) 0 var(--s1);
+      }
+      .salt__price {
+        font-family: var(--mono);
+        border-top: 1px solid var(--argile-deep);
+        padding-top: var(--s1);
+      }
+
+      /* le las */
+      .ch--split {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: var(--s5);
+        align-items: center;
+        width: min(1240px, 100% - var(--s4) * 2);
+        margin-inline: auto;
+        padding: var(--s6) 0;
+      }
+      .ch--split .plate {
+        margin: 0;
+      }
+
+      .three {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--s3);
+        margin-top: var(--s5);
+      }
+      .three .plate {
+        margin: 0;
+      }
+
+      /* ---------- la récolte ---------- */
+      .ch--order {
+        background: var(--argile);
+        padding-bottom: var(--s7);
+      }
+      .tbl--yield {
+        width: 100%;
+        margin-bottom: var(--s6);
+      }
+      .tbl--yield th,
+      .tbl--yield td {
+        border-bottom-color: var(--vase);
+      }
+      .yield__note {
+        color: var(--vase-ink);
+        font-family: var(--body);
+        font-size: 14px;
+      }
+
+      .order {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--s3) var(--s4);
+        max-width: 780px;
+        background: var(--glare);
+        padding: var(--s4);
+        border: 1px solid var(--vase);
+      }
+      .order__h {
+        grid-column: 1 / -1;
+        font-size: 30px;
+        margin: 0;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: var(--s1);
+      }
+      .field--wide,
+      .order__foot,
+      .order__fine,
+      .order__sent {
+        grid-column: 1 / -1;
+      }
+      .order input,
+      .order select,
+      .order textarea {
+        font-family: var(--mono);
+        font-size: 15px;
+        padding: var(--s1) var(--s2);
+        border: 1px solid var(--vase);
+        background: var(--sel);
+        color: var(--encre);
+        border-radius: 0;
+      }
+      .order textarea {
+        font-family: var(--body);
+        resize: vertical;
+      }
+      .seg {
+        display: flex;
+        gap: var(--s1);
+      }
+      .seg label {
+        flex: 1;
+      }
+      .seg input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+      }
+      .seg span {
+        display: block;
+        text-align: center;
+        font-family: var(--mono);
+        font-size: 13px;
+        padding: var(--s1) var(--s2);
+        border: 1px solid var(--vase);
+        cursor: pointer;
+      }
+      .seg input:checked + span {
+        background: var(--encre);
+        border-color: var(--encre);
+        color: var(--sel);
+      }
+      .seg input:focus-visible + span {
+        outline: 2px solid var(--fleur);
+        outline-offset: 3px;
+      }
+      .err {
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 12px;
+        color: var(--fleur);
+      }
+      .order [aria-invalid="true"] {
+        border-color: var(--fleur);
+        border-width: 2px;
+      }
+      .order__foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--s3);
+        border-top: 1px solid var(--argile-deep);
+        padding-top: var(--s3);
+        flex-wrap: wrap;
+      }
+      .order__total {
+        margin: 0;
+        display: flex;
+        align-items: baseline;
+        gap: var(--s2);
+      }
+      .order__total .mono {
+        font-size: 27px;
+      }
+      .btn {
+        font-family: var(--mono);
+        font-size: 13px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: var(--s2) var(--s4);
+        background: var(--fleur-deep);
+        color: var(--sel);
+        border: 1px solid var(--fleur-deep);
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: var(--encre);
+        border-color: var(--encre);
+      }
+      .btn[disabled] {
+        opacity: 0.55;
+        cursor: progress;
+      }
+      /* running text, never a tracked micro-label: five lines of 11px
+         uppercase at .32em is a legibility failure, not a detail */
+      .order__fine {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.65;
+        color: var(--vase-ink);
+        max-width: 62ch;
+      }
+      .order__fine .mono {
+        font-size: 12.5px;
+        color: var(--encre);
+      }
+      .order__sent {
+        margin: 0;
+        font-family: var(--body);
+        font-size: 16px;
+        border-top: 1px solid var(--argile-deep);
+        padding-top: var(--s2);
+      }
+
+      .foot {
+        border-top: 1px solid var(--argile-deep);
+        padding: var(--s4) 0;
+      }
+      .foot__in {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--s3);
+        flex-wrap: wrap;
+      }
+      .foot p {
+        margin: 0;
+        font-size: 13px;
+      }
+
       @media (max-width: 900px) {
         .cascade__grid {
           grid-template-columns: 1fr;
@@ -577,6 +1257,64 @@ const PANS = [
         }
         .cascade[data-live="true"] {
           height: 420vh;
+        }
+        .two,
+        .three,
+        .ch--split,
+        .order {
+          grid-template-columns: 1fr;
+        }
+        .ch {
+          padding: var(--s6) 0 var(--s5);
+        }
+        .yield__note {
+          display: none;
+        }
+      }
+
+      @media (max-width: 620px) {
+        /* the nav wrapped to five lines and buried the instrument under the
+           sticky header. One row that scrolls, and the header stays one line. */
+        .top__in {
+          flex-direction: column;
+          align-items: stretch;
+          gap: var(--s1);
+          padding: var(--s1) 0 0;
+        }
+        .top nav {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          gap: var(--s2);
+          padding-bottom: var(--s1);
+          scrollbar-width: none;
+        }
+        .top nav::-webkit-scrollbar {
+          display: none;
+        }
+        .top nav a {
+          white-space: nowrap;
+        }
+        section[id] {
+          scroll-margin-top: 96px;
+        }
+
+        /* a 830-unit plan at 390px is illegible. The section carries the
+           instrument here, which is the reading that matters anyway. */
+        .plan__svg {
+          display: none;
+        }
+        .plan__cap {
+          margin-top: 0;
+        }
+        .sect__pan {
+          height: 280px;
+        }
+        .cascade[data-live="true"] {
+          height: 380vh;
+        }
+        .cascade[data-live="true"] .cascade__sticky {
+          padding-block: var(--s6) var(--s3);
+          align-items: flex-start;
         }
       }
     </style>
