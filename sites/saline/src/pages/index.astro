@@ -845,13 +845,18 @@ const PANS = [
       .cascade__sticky {
         display: none;
       }
+      /* The sticky frame must never be taller than the viewport, or
+         align-items:center splits the overflow and pushes the readout up
+         under the header. It fitted at 900px and clipped at 748px — every
+         laptop. Bound the box and let the section pane take the slack. */
       .cascade[data-live="true"] .cascade__sticky {
         position: sticky;
         top: 0;
-        height: 100vh;
+        height: 100dvh;
         display: flex;
         align-items: center;
-        padding-block: var(--s5) var(--s4);
+        padding-block: 78px var(--s3);
+        overflow: hidden;
       }
       /* section large left, readout right, plan a locator beneath it */
       .cascade__grid {
@@ -860,16 +865,18 @@ const PANS = [
         grid-template-areas:
           "sect read"
           "sect plan";
-        grid-template-rows: 1fr auto;
+        grid-template-rows: minmax(0, 1fr) auto;
         gap: var(--s3) var(--s5);
         align-items: start;
         width: min(1240px, 100% - var(--s4) * 2);
+        max-height: 100%;
       }
       .cascade__grid .sect {
         grid-area: sect;
         align-self: stretch;
         display: flex;
         flex-direction: column;
+        min-height: 0;
       }
       .cascade__grid .read {
         grid-area: read;
@@ -940,7 +947,7 @@ const PANS = [
       .sect__pan {
         position: relative;
         flex: 1;
-        min-height: 300px;
+        min-height: 180px;
         width: 100%;
         border: 1px solid var(--vase);
         border-top: 0;
