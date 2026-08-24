@@ -700,8 +700,17 @@ html.fx .settle.landed {
 .rv-line {
   display: block;
 }
+/* The mask must clip the line VERTICALLY while letting it bleed horizontally.
+   overflow:hidden cannot do that — CSS has no per-axis hiding — and a display
+   heading pushes its final glyph past the content box, so Velum's hero read
+   "VELU|". Padding plus a negative margin fixed the clip but then pushed 22-29px
+   of horizontal page overflow onto Aresta and Veta.
+
+   clip-path does exactly the right thing: clip at the bottom edge so the line
+   is hidden before it rises, and extend the right edge so nothing is cut. It
+   affects no layout at all, so there is nothing to compensate for. */
 .fx .rv-line {
-  overflow: hidden;
+  clip-path: inset(-0.2em -100% 0 0);
 }
 .fx .rv-line > span {
   display: block;
