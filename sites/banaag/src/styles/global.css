@@ -795,20 +795,8 @@ html.fx .rotor-cell { animation: seq 2.4s steps(1, end) infinite; }
 .foot dt { color: var(--liwayway); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
 .foot dd { font-variant-numeric: tabular-nums; }
 
-/* ------------------------------------------------------------ entrances */
-
-html.fx .settle {
-  opacity: 0;
-  transform: translate3d(0, 18px, 0);
-  transition: opacity 0.9s var(--glide), transform 0.9s var(--glide);
-}
-html.fx .settle.landed { opacity: 1; transform: none; }
-html.fx .settle:nth-child(2) { transition-delay: 0.08s; }
-html.fx .settle:nth-child(3) { transition-delay: 0.16s; }
-
 @media (prefers-reduced-motion: reduce) {
-  html.fx .settle { opacity: 1; transform: none; transition: none; }
-}
+  }
 
 /* ---------- the reveal floor (canonical) ----------
    One system for the whole collection. See docs/foundry-standard.md § Motion.
