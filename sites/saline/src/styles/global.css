@@ -165,60 +165,55 @@ section[id] {
   }
 }
 
-/* ---------- reveal system ----------
-   Ported from Shokunin, which has carried this across the collection since
-   2026-07. Visible by default; only a page with JS hides anything, so a failed
-   script can never blank the site. `--d` staggers siblings.
+/* ---------- the reveal floor (canonical) ----------
+   One system for the whole collection. See docs/foundry-standard.md § Motion.
+   Do not fork this per site; a site needing different timing changes --rv-dur.
 
-   Note on the Sluice grammar rule: this is a trigger, not a controller, and
-   §2 of sluice-standard.md bans triggers. That ban was aimed at
-   fade-up-on-scroll as a substitute for a signature — not at the collection's
-   own house reveal, which is ordinary editorial arrival motion and has nothing
-   to do with the instrument. The instrument is still a controller. See the
-   amendment in that file. */
+   Name from the `.rv` dialect (Schwarzwald, the richest implementation).
+   Gate from the `.rise` dialect, which was better: `.fx` is added only when JS
+   is on, `?nofx` is absent, and the visitor has not asked for reduced motion —
+   one class covering all three, instead of `html.js` plus a separate
+   reduced-motion override and no ?nofx support at all. ?nofx matters because
+   the whole screenshot and critique pipeline relies on it.
+
+   Visible by default. Only `.fx` hides anything, so a failed script, a
+   screenshot run, or a reduced-motion preference all leave the finished
+   composition on screen. */
+
 .rv {
   opacity: 1;
   transform: none;
 }
-html.js .rv {
+.fx .rv {
   opacity: 0;
-  transform: translateY(34px);
+  transform: translateY(var(--rv-y, 34px));
   transition:
-    opacity 1.2s var(--ease),
-    transform 1.2s var(--ease);
-  transition-delay: calc(var(--d, 0) * 110ms);
+    opacity var(--rv-dur, 1.2s) var(--ease, cubic-bezier(0.19, 1, 0.22, 1)),
+    transform var(--rv-dur, 1.2s) var(--ease, cubic-bezier(0.19, 1, 0.22, 1));
+  transition-delay: calc(var(--d, 0) * var(--rv-stagger, 110ms));
 }
-html.js .rv.in {
+.fx .rv.in {
   opacity: 1;
   transform: none;
 }
 
-/* masked line reveal: the line rises out from behind its own edge */
+/* masked line reveal: a display line rises from behind its own edge. This is
+   the move that carries Shokunin, and it is the reason the floor reads as
+   craft rather than as a fade. */
 .rv-line {
   display: block;
 }
-html.js .rv-line {
+.fx .rv-line {
   overflow: hidden;
 }
-html.js .rv-line > span {
+.fx .rv-line > span {
   display: block;
   transform: translateY(110%);
-  transition: transform 1.3s var(--ease);
-  transition-delay: calc(var(--d, 0) * 130ms);
+  transition: transform var(--rv-line-dur, 1.3s)
+    var(--ease, cubic-bezier(0.19, 1, 0.22, 1));
+  transition-delay: calc(var(--d, 0) * var(--rv-line-stagger, 130ms));
 }
-html.js .rv.in .rv-line > span,
-html.js .rv-line.in > span {
+.fx .rv.in .rv-line > span,
+.fx .rv-line.in > span {
   transform: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html.js .rv {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  html.js .rv-line > span {
-    transform: none;
-    transition: none;
-  }
 }

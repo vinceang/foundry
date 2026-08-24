@@ -94,7 +94,7 @@ const open = c.status === 'open';
         </div>
 
         <div class="d-invite rv" style="--d:1">
-          <h2 class="display d-invite-head">{open ? d.inviteOpen : d.invitePromised}</h2>
+          <h2 class="display d-invite-head rv"><span class="rv-line"><span>{open ? d.inviteOpen : d.invitePromised}</span></span></h2>
           <p class="d-invite-body">{open ? d.inviteOpenBody : d.invitePromisedBody}</p>
           <p style="margin-top: var(--s4);">
             <a class="btn-brass" href={`${lang === 'de' ? '/de/korrespondenz/' : '/correspondence/'}?uhr=${c.status === 'open' ? c.slug : 'next'}`}>{d.cta}</a>

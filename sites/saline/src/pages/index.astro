@@ -98,7 +98,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           <div class="wrap cascade__grid">
             <!-- the section is the argument: the pan gets shallower as the
                  brine gets stronger, and that is what a caption cannot carry -->
-            <figure class="sect">
+            <figure class="sect rv">
               <div class="sect__pan">
                 <div class="sect__water" data-out="water"></div>
                 <div class="sect__crust" data-out="crust"></div>
@@ -145,7 +145,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             </div>
 
             <!-- plan locator -->
-            <figure class="plan">
+            <figure class="plan rv">
               <svg
                 viewBox="0 0 830 250"
                 role="img"
@@ -214,7 +214,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
              with JS off; the script hides it once the instrument is live. -->
         <div class="static" data-static>
           <div class="wrap">
-            <h2 class="static__h rv">La cascade</h2>
+            <h2 class="static__h">La cascade</h2>
             <p>
               Seawater takes about three weeks to cross a saline, climbing from
               3.5 to 25 degrees Baumé through five named ponds. It gets stronger
@@ -322,7 +322,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
                 sizes="(max-width: 900px) 100vw, 50vw"
                 width="1536" height="1024" loading="lazy" decoding="async"
                 alt="A heap of wet coarse grey salt on the clay ladure, rake furrows drawn through it, crystals catching the sun." />
-              <h3 class="salt__h">Gros sel</h3>
+              <h3 class="salt__h rv">Gros sel</h3>
               <p class="label">On the floor · raked with the las</p>
               <p>
                 Crystals form through the depth of the brine and fall. The
@@ -345,7 +345,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
                 sizes="(max-width: 900px) 100vw, 50vw"
                 width="1536" height="1024" loading="lazy" decoding="async"
                 alt="A broken white lattice of fine crystals floating on the surface tension of still rose brine, raking light on every edge." />
-              <h3 class="salt__h">Fleur de sel</h3>
+              <h3 class="salt__h rv">Fleur de sel</h3>
               <p class="label">On the surface · lifted with the lousse</p>
               <p>
                 On still, hot afternoons a fine crust forms on the surface
@@ -478,7 +478,7 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
           </table>
 
           <form class="order rv" style="--d:3" data-order novalidate>
-            <h3 class="order__h">Commander</h3>
+            <h3 class="order__h rv">Commander</h3>
 
             <div class="field">
               <span class="label" id="lbl-type">Sel</span>
@@ -551,6 +551,11 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
     </footer>
 
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
       // set before paint so revealed elements never flash in already
       document.documentElement.classList.add("js");
     </script>

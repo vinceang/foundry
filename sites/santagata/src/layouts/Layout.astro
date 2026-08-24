@@ -32,6 +32,25 @@ const effe = `<svg viewBox="0 0 24 44" fill="none" aria-hidden="true"><path d="M
       rel="stylesheet"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       // `?nofx` keeps everything visible & eager; `?scroll=N` jumps to an
       // offset — both exist for the screenshot critique loop only.
       if (!location.search.includes('nofx')) document.documentElement.classList.add('js');

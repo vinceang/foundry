@@ -60,7 +60,7 @@ import { works, sealedWorks } from '../data/works';
     <p class="doctrine-kanji kanji" aria-hidden="true">職人</p>
     <div class="doctrine-inner">
       <p class="label rv">The doctrine</p>
-      <h2 class="display doctrine-line">
+      <h2 class="display doctrine-line rv">
         <span class="rv-line" style="--d: 1"><span>We do not sell armor.</span></span>
         <span class="rv-line" style="--d: 2"><span>We release it.</span></span>
       </h2>
@@ -96,7 +96,7 @@ import { works, sealedWorks } from '../data/works';
 
     {works.map((w, i) => (
       <a class={`work ${w.portrait ? 'work--portrait' : 'work--wide'}`} href={`/works/${w.slug}/`}>
-        <figure class="work-media">
+        <figure class="work-media rv">
           <img src={w.image} alt={w.imageAlt} loading="lazy" data-parallax="30" />
         </figure>
         <div class="work-meta">
@@ -195,22 +195,22 @@ import { works, sealedWorks } from '../data/works';
       <ol class="rite">
         <li class="rv" style="--d: 3">
           <span class="rite-no display">01</span>
-          <div><h3 class="display">Petition</h3><p>A letter to the Register stating who you are and what you ask the house to make.</p></div>
+          <div><h3 class="display rv">Petition</h3><p>A letter to the Register stating who you are and what you ask the house to make.</p></div>
           <span class="rite-when label label--dim">One letter</span>
         </li>
         <li class="rv" style="--d: 4">
           <span class="rite-no display">02</span>
-          <div><h3 class="display">Audience</h3><p>A meeting with the three masters, in Kyōto or where you stand. Measures are taken; the crest is drawn.</p></div>
+          <div><h3 class="display rv">Audience</h3><p>A meeting with the three masters, in Kyōto or where you stand. Measures are taken; the crest is drawn.</p></div>
           <span class="rite-when label label--dim">One day</span>
         </li>
         <li class="rv" style="--d: 5">
           <span class="rite-no display">03</span>
-          <div><h3 class="display">The making</h3><p>You receive the forge record as it is written — plate by plate, ground by ground.</p></div>
+          <div><h3 class="display rv">The making</h3><p>You receive the forge record as it is written — plate by plate, ground by ground.</p></div>
           <span class="rite-when label label--dim">Fourteen months</span>
         </li>
         <li class="rv" style="--d: 6">
           <span class="rite-no display">04</span>
-          <div><h3 class="display">Investiture</h3><p>The finished work is presented, sealed into the Register, and released into your keeping.</p></div>
+          <div><h3 class="display rv">Investiture</h3><p>The finished work is presented, sealed into the Register, and released into your keeping.</p></div>
           <span class="rite-when label label--dim">One evening</span>
         </li>
       </ol>

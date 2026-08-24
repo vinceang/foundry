@@ -351,14 +351,14 @@ const bancoItems = [
         {registro.map((w) => (
           <article class={`work${w.flip ? ' work--flip' : ''}${w.wide ? ' work--wide' : ''} rv`}>
             {w.absent ? (
-              <figure class="work-media work-media--absent">
+              <figure class="work-media work-media--absent rv">
                 <span class="absent-mark" aria-hidden="true">
                   <span class="effe" set:html={effe} style="width:44px;height:82px;display:block;" />
                 </span>
                 <figcaption>Not photographed once it leaves the bench.</figcaption>
               </figure>
             ) : (
-              <figure class="work-media">
+              <figure class="work-media rv">
                 <img src={w.img} alt={w.alt} loading="lazy" width="1024" height="1536" />
               </figure>
             )}
@@ -370,7 +370,7 @@ const bancoItems = [
                 </span>
                 <span class="work-modello">{w.modello}</span>
               </div>
-              <h3 class="work-title display">{w.name}</h3>
+              <h3 class="work-title display rv">{w.name}</h3>
               <p class="work-reading reading">{w.reading}</p>
               <p class="work-body">{w.body}</p>
             </div>

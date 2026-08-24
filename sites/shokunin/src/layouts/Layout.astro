@@ -28,6 +28,11 @@ const { title, description } = Astro.props;
       rel="stylesheet"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
       // `?nofx` keeps everything visible; `?scroll=N` jumps to an offset —
       // both exist for the screenshot critique loop only.
       if (!location.search.includes('nofx')) document.documentElement.classList.add('js');

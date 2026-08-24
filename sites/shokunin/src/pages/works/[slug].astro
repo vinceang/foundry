@@ -33,7 +33,7 @@ const next = works[(idx + 1) % works.length];
         ))}
         {work.hotspots.map((h, i) => (
           <div class="spot-card" data-card={i} hidden>
-            <h3 class="display">{h.title}</h3>
+            <h3 class="display rv">{h.title}</h3>
             <p>{h.note}</p>
           </div>
         ))}
@@ -73,7 +73,7 @@ const next = works[(idx + 1) % works.length];
           ))}
         </div>
         <aside class="record-specs rv" style="--d:2">
-          <h3 class="label">Specification</h3>
+          <h3 class="label rv">Specification</h3>
           <dl>
             {work.specs.map((s) => (
               <div><dt>{s.k}</dt><dd>{s.v}</dd></div>
@@ -101,7 +101,7 @@ const next = works[(idx + 1) % works.length];
               {work.provenance.map((p, i) => (
                 <li class="rv" style={`--d:${i + 2}`}>
                   <span class="prov-dot" aria-hidden="true"></span>
-                  <h3 class="display">{p.stage}</h3>
+                  <h3 class="display rv">{p.stage}</h3>
                   <p>{p.detail}</p>
                   <span class="label label--dim">{p.when}</span>
                 </li>
