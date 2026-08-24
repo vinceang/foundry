@@ -14,6 +14,21 @@
  *   node tools/registry-add.mjs entry.json
  *   cat entry.json | node tools/registry-add.mjs -
  *   node tools/registry-add.mjs entry.json --dry-run
+ *
+ * PUBLISHING the showcase after a write. `cd wgw && vercel deploy --prebuilt`
+ * does NOT work, whatever it says elsewhere: the wintergardenweb project has
+ * Root Directory `wgw`, so from inside wgw/ the CLI looks for wgw/wgw and
+ * fails. Deploy from the REPO ROOT, pointed at that project:
+ *
+ *   cd wgw && npm run build && cd ..
+ *   WGW="VERCEL_ORG_ID=$(node -p "require('./wgw/.vercel/project.json').orgId") \
+ *        VERCEL_PROJECT_ID=$(node -p "require('./wgw/.vercel/project.json').projectId")"
+ *   env $WGW vercel build --prod --yes
+ *   env $WGW vercel deploy --prebuilt --prod --yes
+ *
+ * Then put `.vercel/project.json` back. `vercel build` rewrites it to whatever
+ * project it just built, so the repo root ends up linked to wintergardenweb
+ * instead of foundry, and the next deploy from here goes to the wrong project.
  */
 import { readFileSync, writeFileSync, existsSync, copyFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -161,4 +176,7 @@ writeFileSync(REGISTRY, JSON.stringify(registry, null, 2) + '\n');
 const byCountry = new Set(registry.sites.map((s) => s.place.country)).size;
 console.log(`  ✓ ${clean.name} added — ${registry.sites.length} sites across ${byCountry} countries`);
 console.log(`    previous registry saved to foundry.json.bak`);
-console.log(`    next: cd wgw && npm run build && vercel deploy --prebuilt --prod`);
+console.log('');
+console.log('    next, in order:');
+console.log('      1. register it in the portfolio — the add-foundry-site skill');
+console.log('      2. publish the showcase — see PUBLISHING at the top of this file');
