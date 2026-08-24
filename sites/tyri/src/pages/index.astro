@@ -62,6 +62,20 @@ const steps = [
       rel="stylesheet"
     />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       const q = new URLSearchParams(location.search);
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.documentElement.classList.add("js");
@@ -105,7 +119,7 @@ const steps = [
             </div>
           </div>
         </div>
-        <figure class="hero-figure">
+        <figure class="hero-figure rv">
           <img
             src="/images/hero-tunet.jpg"
             srcset="/images/hero-tunet-800.jpg 800w, /images/hero-tunet.jpg 1536w"
@@ -120,9 +134,9 @@ const steps = [
       <!-- ============ skogen — the forest ============ -->
       <section class="section skogen" id="skogen" aria-labelledby="skogen-h">
         <div class="skogen-grid">
-          <div class="reveal">
+          <div class="rv">
             <p class="whisper">Skogen · <span class="gloss">the forest</span></p>
-            <h2 class="statement" id="skogen-h">One pine, felled below minus five.</h2>
+            <h2 class="statement rv" id="skogen-h"><span class="rv-line"><span>One pine, felled below minus five.</span></span></h2>
             <p class="body">
               A wall begins as a standing tree, chosen in the deep cold. Malmfuru —
               the dense, resin-heavy heartwood pine of a slow-grown Numedal
@@ -136,7 +150,7 @@ const steps = [
               <div><dt>Seasoned</dt><dd>Two winters, barked</dd></div>
             </dl>
           </div>
-          <figure class="skogen-figure reveal">
+          <figure class="skogen-figure rv">
             <img src="/images/hus.jpg" srcset="/images/hus-800.jpg 800w, /images/hus.jpg 1536w" sizes="(max-width: 900px) 100vw, 42vw" alt="A finished log house with a turf roof standing alone in deep snow, dark spruce forest behind under a pale winter sky." loading="lazy" width="1536" height="1024" />
             <p class="caption-row"><span>A finished house, its timber cut two winters before</span><span>Rollag</span></p>
           </figure>
@@ -145,12 +159,12 @@ const steps = [
 
       <!-- ============ tunet — the yard ============ -->
       <section class="tunet" id="tunet" aria-labelledby="tunet-h">
-        <figure class="tunet-figure reveal">
+        <figure class="tunet-figure rv">
           <img src="/images/nov.jpg" srcset="/images/nov-800.jpg 800w, /images/nov.jpg 1536w" sizes="(max-width: 900px) 100vw, 52vw" alt="Axe-faceted crossing log heads at a laft corner, each end showing the pale ring and radial drying check, dusted with snow." loading="lazy" width="1536" height="1024" />
         </figure>
-        <div class="tunet-text reveal">
+        <div class="tunet-text rv">
           <p class="whisper">Tunet · <span class="gloss">the yard</span></p>
-          <h2 class="statement" id="tunet-h">Every log is fitted to the one below it. Only then is it lifted away.</h2>
+          <h2 class="statement rv" id="tunet-h"><span class="rv-line"><span>Every log is fitted to the one below it. Only then is it lifted away.</span></span></h2>
           <p class="body">
             The house is raised twice — once in the yard, dry-fitted course by
             course so each log is scribed to its neighbour, then struck down,
@@ -167,7 +181,7 @@ const steps = [
         <div class="novet-stage">
           <div class="novet-steps">
             <p class="whisper">Novet · <span class="gloss">the corner</span></p>
-            <h2 class="statement" id="novet-h">The corner locks without a single nail.</h2>
+            <h2 class="statement rv" id="novet-h"><span class="rv-line"><span>The corner locks without a single nail.</span></span></h2>
             <ol>
               {steps.map((s) => (
                 <li data-step={s.no}>
@@ -181,7 +195,7 @@ const steps = [
             </ol>
             <p class="novet-fact">No nails. No glue. No iron. The weight of the wall is the fastener.</p>
           </div>
-          <figure class="novet-figure" aria-hidden="false">
+          <figure class="novet-figure rv" aria-hidden="false">
             <svg viewBox="0 0 620 572" role="img" aria-label="Drawing of a laft corner: two log walls cross at the corner. One wall runs face-on as square hewn logs; the other runs into the page, showing only its round log-heads projecting past the corner. Courses alternate so each locks the wall running the other way, seated on a stone footing.">
               <rect class="sill" x="150" y="530" width="440" height="26" />
               <text class="novet-annot" x="590" y="566" text-anchor="end">GRUNNMUR — STONE FOOTING</text>
@@ -210,9 +224,9 @@ const steps = [
 
       <!-- ============ husa — the houses ============ -->
       <section class="section husa" id="husa" aria-labelledby="husa-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <p class="whisper">Husa · <span class="gloss">the houses</span></p>
-          <h2 class="statement" id="husa-h">Each house is one commission — never a model from a catalogue.</h2>
+          <h2 class="statement rv" id="husa-h"><span class="rv-line"><span>Each house is one commission — never a model from a catalogue.</span></span></h2>
           <p class="lede">
             Tyri raises a handful of houses a year: a bolighus for a family, a
             loft in the old Numedal manner, a seter high on the summer pasture.
@@ -220,11 +234,11 @@ const steps = [
           </p>
         </div>
         <div class="husa-grid">
-          <figure class="husa-figure husa-inne reveal">
+          <figure class="husa-figure husa-inne rv">
             <img src="/images/hus-inne.jpg" srcset="/images/hus-inne-800.jpg 800w, /images/hus-inne.jpg 1536w" sizes="(max-width: 900px) 100vw, 58vw" alt="Interior of a finished log room: pale timber walls, a plank floor lit by a small deep-set window, a black cast-iron wood stove and a plain bench." loading="lazy" width="1536" height="1024" />
             <figcaption class="caption-row"><span>Stova — the main room, one window to the south and a jernovn</span><span>Bolighus, 2024</span></figcaption>
           </figure>
-          <div class="husa-list reveal">
+          <div class="husa-list rv">
             <ol class="works">
               <li><span class="work-no">01</span><div><p class="work-name">Bolighus</p><p class="work-note">A dwelling house. One or two storeys, turf or slate roof, laft throughout.</p></div></li>
               <li><span class="work-no">02</span><div><p class="work-name">Loft</p><p class="work-note">The Numedal storehouse — a raised, galleried loft on posts, the region's own form.</p></div></li>
@@ -236,9 +250,9 @@ const steps = [
 
       <!-- ============ tida — the settling years ============ -->
       <section class="section tida" id="tida" aria-labelledby="tida-h">
-        <div class="tida-inner reveal">
+        <div class="tida-inner rv">
           <p class="whisper">Tida · <span class="gloss">the settling</span></p>
-          <h2 class="statement tida-statement" id="tida-h">A log house moves. Tyri says so, and hangs the doors to expect it.</h2>
+          <h2 class="statement tida-statement rv" id="tida-h"><span class="rv-line"><span>A log house moves. Tyri says so, and hangs the doors to expect it.</span></span></h2>
           <p class="body">
             Green timber gives up its water for years, and a wall of it settles
             as it dries — a three-metre wall drops about four centimetres in its
@@ -258,12 +272,12 @@ const steps = [
 
       <!-- ============ folka — the people ============ -->
       <section class="folka" id="folka" aria-labelledby="folka-h">
-        <figure class="folka-figure reveal">
+        <figure class="folka-figure rv">
           <img src="/images/folka.jpg" srcset="/images/folka-800.jpg 800w, /images/folka.jpg 1536w" sizes="(max-width: 900px) 100vw, 50vw" alt="A lafter in a dark wool jacket and knit cap swings a broadaxe along the flank of a pine log, pale chips scattered on the snow, his breath visible in the cold." loading="lazy" width="1536" height="1024" />
         </figure>
-        <div class="folka-text reveal">
+        <div class="folka-text rv">
           <p class="whisper">Folka · <span class="gloss">the people</span></p>
-          <h2 class="statement" id="folka-h">Four generations, one broadaxe grip.</h2>
+          <h2 class="statement rv" id="folka-h"><span class="rv-line"><span>Four generations, one broadaxe grip.</span></span></h2>
           <p class="body">
             The yard is worked by hand — the broadaxe, the meddrag scribe, the
             adze. What passes down the four generations is not a machine but a
@@ -277,9 +291,9 @@ const steps = [
 
       <!-- ============ tinging — commission ============ -->
       <section class="section tinging" id="tinging" aria-labelledby="tinging-h">
-        <div class="tinging-inner reveal">
+        <div class="tinging-inner rv">
           <p class="whisper">Tinging · <span class="gloss">the commission</span></p>
-          <h2 class="statement tinging-statement" id="tinging-h">Commission a house. It begins with a standing tree.</h2>
+          <h2 class="statement tinging-statement rv" id="tinging-h"><span class="rv-line"><span>Commission a house. It begins with a standing tree.</span></span></h2>
           <p class="body">
             A commission opens two winters ahead of raising day — the timber has
             to be felled and seasoned first. Tell Tyri the ground, the family,
@@ -352,9 +366,9 @@ const steps = [
           }),
           { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
         );
-        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("shown"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("shown"));
       }
     </script>
   </body>

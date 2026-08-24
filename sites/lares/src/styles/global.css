@@ -104,17 +104,7 @@ section { position: relative; }
   margin: 0;
 }
 
-/* reveal — settles once, reduced-motion safe */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.reveal.in { opacity: 1; transform: none; }
-
-html.nofx .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
 
@@ -406,4 +396,57 @@ html.nofx .reveal { opacity: 1 !important; transform: none !important; transitio
   .guard-copy { text-align: left; }
   .guard-copy .eyebrow { justify-content: flex-start; }
   .guard-copy p, .guard-copy .aside { margin-left: 0; }
+}
+
+/* ---------- the reveal floor (canonical) ----------
+   One system for the whole collection. See docs/foundry-standard.md § Motion.
+   Do not fork this per site; a site needing different timing changes --rv-dur.
+
+   Name from the `.rv` dialect (Schwarzwald, the richest implementation).
+   Gate from the `.rise` dialect, which was better: `.fx` is added only when JS
+   is on, `?nofx` is absent, and the visitor has not asked for reduced motion —
+   one class covering all three, instead of `html.js` plus a separate
+   reduced-motion override and no ?nofx support at all. ?nofx matters because
+   the whole screenshot and critique pipeline relies on it.
+
+   Visible by default. Only `.fx` hides anything, so a failed script, a
+   screenshot run, or a reduced-motion preference all leave the finished
+   composition on screen. */
+
+.rv {
+  opacity: 1;
+  transform: none;
+}
+.fx .rv {
+  opacity: 0;
+  transform: translateY(var(--rv-y, 34px));
+  transition:
+    opacity var(--rv-dur, 1.2s) var(--ease, cubic-bezier(0.19, 1, 0.22, 1)),
+    transform var(--rv-dur, 1.2s) var(--ease, cubic-bezier(0.19, 1, 0.22, 1));
+  transition-delay: calc(var(--d, 0) * var(--rv-stagger, 110ms));
+}
+.fx .rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* masked line reveal: a display line rises from behind its own edge. This is
+   the move that carries Shokunin, and it is the reason the floor reads as
+   craft rather than as a fade. */
+.rv-line {
+  display: block;
+}
+.fx .rv-line {
+  overflow: hidden;
+}
+.fx .rv-line > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform var(--rv-line-dur, 1.3s)
+    var(--ease, cubic-bezier(0.19, 1, 0.22, 1));
+  transition-delay: calc(var(--d, 0) * var(--rv-line-stagger, 130ms));
+}
+.fx .rv.in .rv-line > span,
+.fx .rv-line.in > span {
+  transform: none;
 }

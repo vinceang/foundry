@@ -141,6 +141,20 @@ const tails = [
     />
     <link rel="preload" as="image" href="/images/hero-apron.jpg" />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       const q = new URLSearchParams(location.search);
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.documentElement.classList.add("js");
@@ -175,7 +189,7 @@ const tails = [
         </div>
         <div class="hero-copy">
           <span class="whisper">Vesper · Farnborough — Le Bourget — Teterboro</span>
-          <h1 class="hero-title">Auriga</h1>
+          <h1 class="hero-title rv"><span class="rv-line"><span>Auriga</span></span></h1>
           <p class="hero-statement">A charter you are told about, never shown.</p>
           <svg class="arc-rule" viewBox="0 0 88 14" aria-hidden="true">
             <path d="M2 12 Q44 -6 86 12" />
@@ -187,10 +201,10 @@ const tails = [
       <!-- ============ protocol ============ -->
       <section class="section" id="protocol" aria-labelledby="protocol-h">
         <div class="protocol-grid">
-          <div class="reveal">
+          <div class="rv">
             <div class="section-head">
               <span class="whisper">Protocol</span>
-            <h2 class="statement" id="protocol-h">We publish no telephone number.</h2>
+            <h2 class="statement rv" id="protocol-h"><span class="rv-line"><span>We publish no telephone number.</span></span></h2>
             </div>
             <p class="body-copy">
               If Auriga flies you, you have it. There is no press page, no brochure and no
@@ -202,11 +216,11 @@ const tails = [
               What follows is the whole of the public record.
             </p>
           </div>
-          <ol class="protocol-items reveal" role="list">
+          <ol class="protocol-items rv" role="list">
             <li class="protocol-item">
               <span class="num" aria-hidden="true">01</span>
               <div>
-                <h3>The introduction</h3>
+                <h3 class="rv">The introduction</h3>
                 <p>
                   Made in writing by an existing principal. We decline more than we accept,
                   and a declined introduction is never mentioned again — to anyone.
@@ -216,7 +230,7 @@ const tails = [
             <li class="protocol-item">
               <span class="num" aria-hidden="true">02</span>
               <div>
-                <h3>The answer</h3>
+                <h3 class="rv">The answer</h3>
                 <p>
                   Every introduction is answered within one day, in writing. Once terms are
                   set, wheels-up follows within twelve hours of any request.
@@ -226,7 +240,7 @@ const tails = [
             <li class="protocol-item">
               <span class="num" aria-hidden="true">03</span>
               <div>
-                <h3>The exception</h3>
+                <h3 class="rv">The exception</h3>
                 <p>
                   Auriga does not fly to airports that require it to be seen. Some cities we
                   serve from a quieter field an hour away; the car is part of the flight.
@@ -239,9 +253,9 @@ const tails = [
 
       <!-- ============ tails ============ -->
       <section class="section" id="tails" aria-labelledby="tails-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <span class="whisper">Tails</span>
-          <h2 class="statement" id="tails-h">Three aircraft, named for the stars of the Charioteer.</h2>
+          <h2 class="statement rv" id="tails-h"><span class="rv-line"><span>Three aircraft, named for the stars of the Charioteer.</span></span></h2>
           <p class="body-copy">
             Auriga stands highest at dusk in the northern winter. The fleet keeps the
             constellation’s names and little else that could be recognised.
@@ -251,7 +265,7 @@ const tails = [
         {
           tails.map((t, i) => (
             <article class={`tail-row reveal${i % 2 === 1 ? " flip" : ""}`}>
-              <figure class="tail-media">
+              <figure class="tail-media rv">
                 <div class="tail-frame">
                   <img src={t.img} alt={t.alt} width="1536" height="1024" loading="lazy" decoding="async" />
                 </div>
@@ -261,7 +275,7 @@ const tails = [
               </figure>
               <div class="tail-copy">
                 <span class="whisper">{t.greek}</span>
-                <h3 class="tail-name">{t.star}</h3>
+                <h3 class="tail-name rv">{t.star}</h3>
                 <p class="tail-type">{t.type}</p>
                 <p>{t.line}</p>
                 <div class="tail-facts">
@@ -277,7 +291,7 @@ const tails = [
           ))
         }
 
-        <div class="crew-note reveal">
+        <div class="crew-note rv">
           <p class="statement">
             Two pilots and one steward per tail — the same three faces for the life of a
             contract.
@@ -292,9 +306,9 @@ const tails = [
 
       <!-- ============ the board ============ -->
       <section class="section board-section" id="board" aria-labelledby="board-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <span class="whisper">The Board</span>
-          <h2 class="statement" id="board-h">Four standing routes. Times in local light.</h2>
+          <h2 class="statement rv" id="board-h"><span class="rv-line"><span>Four standing routes. Times in local light.</span></span></h2>
           <p class="body-copy">
             The board keeps the sectors we fly most. Each time is set against the sky it
             belongs to — depart under one light, arrive under another. Everything else is
@@ -302,7 +316,7 @@ const tails = [
           </p>
         </div>
 
-        <div class="board reveal">
+        <div class="board rv">
           <div class="route-list" role="group" aria-label="Standing routes">
             {
               routes.map((r, i) => (
@@ -388,7 +402,7 @@ const tails = [
 
       <!-- ============ aloft ============ -->
       <section class="section" id="aloft" aria-labelledby="aloft-h">
-        <figure class="aloft-hero reveal">
+        <figure class="aloft-hero rv">
           <div class="aloft-media">
             <img
               src="/images/cabin-aloft.jpg"
@@ -402,7 +416,7 @@ const tails = [
         </figure>
 
         <div class="aloft-grid">
-          <figure class="aloft-figure reveal">
+          <figure class="aloft-figure rv">
             <img
               src="/images/material-cabin.jpg"
               alt="A folded pale wool blanket on a stitched leather armrest beside a walnut table edge, lit by one small cabin lamp, twilight in the window behind."
@@ -412,7 +426,7 @@ const tails = [
           </figure>
           <div class="aloft-copy">
             <span class="whisper">Aloft</span>
-            <h2 class="statement" id="aloft-h">Dinner over the ocean, and the same three faces.</h2>
+            <h2 class="statement rv" id="aloft-h"><span class="rv-line"><span>Dinner over the ocean, and the same three faces.</span></span></h2>
             <p class="body-copy">
               The cabin is wool, saddle leather and walnut, lit by its own small lamps once
               the horizon goes. Dinner is cooked aboard and served when you ask for it, not
@@ -422,7 +436,7 @@ const tails = [
               Tomás has kept Capella’s cabin for nine years. He will not introduce himself
               twice.
             </p>
-            <figure class="steward-figure reveal">
+            <figure class="steward-figure rv">
               <img
                 src="/images/steward.jpg"
                 alt="A steward in a plain dark suit setting the cabin table with white linen, his face lit by the warm lamp beside him, twilight held in the windows behind."
@@ -436,9 +450,9 @@ const tails = [
 
       <!-- ============ introduction ============ -->
       <section class="section intro-section" id="introduction" aria-labelledby="intro-h">
-        <div class="intro-wrap reveal">
+        <div class="intro-wrap rv">
           <span class="whisper">Introduction</span>
-          <h2 class="statement" id="intro-h">Ask the person who told you about us.</h2>
+          <h2 class="statement rv" id="intro-h"><span class="rv-line"><span>Ask the person who told you about us.</span></span></h2>
           <p class="body-copy">
             Auriga takes new principals by written introduction only. An introduction is a
             page, not a form: who you are, who is introducing you, and where you fly. It is
@@ -518,7 +532,7 @@ const tails = [
           },
           { threshold: 0.12 }
         );
-        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       })();
     </script>
   </body>

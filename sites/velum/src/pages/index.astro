@@ -20,6 +20,20 @@ import "../styles/global.css";
     />
     <link rel="preload" as="image" href="/images/hero-apron.jpg" />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       const q = new URLSearchParams(location.search);
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.documentElement.classList.add("js");
@@ -68,7 +82,7 @@ import "../styles/global.css";
         </div>
         <div class="hero-copy">
           <span class="mono">Vesper · 46°14′ N 6°06′ E · Genève Aéroport, north apron</span>
-          <h1 class="hero-title">Velum</h1>
+          <h1 class="hero-title rv"><span class="rv-line"><span>Velum</span></span></h1>
           <p class="hero-sub">The least visible way to the fields without a terminal.</p>
           <div class="hero-facts">
             <span class="mono">Est. 1987</span>
@@ -82,14 +96,12 @@ import "../styles/global.css";
 
       <!-- ============ CLIMB · the operation ============ -->
       <section class="section" id="operation" data-phase="CLIMB" aria-labelledby="operation-h">
-        <div class="chapter-head reveal">
+        <div class="chapter-head rv">
           <span class="whisper">Climb · the operation</span>
-          <h2 class="statement" id="operation-h">
-            Eleven families made the client book. Introductions still do.
-          </h2>
+          <h2 class="statement rv" id="operation-h"><span class="rv-line"><span>Eleven families made the client book. Introductions still do.</span></span></h2>
         </div>
         <div class="split">
-          <div class="reveal">
+          <div class="rv">
             <p class="body-copy">
               Velum began in 1987, when two Swissair captains left the flag carrier to fly
               privately for the families they already knew by name. The operation has never
@@ -108,7 +120,7 @@ import "../styles/global.css";
               We are not the least expensive way to fly. We are the least visible.
             </p>
           </div>
-          <div class="reveal">
+          <div class="rv">
             <p class="withheld-title">Withheld, as a matter of practice</p>
             <ul class="withheld">
               <li><span>Livery</span><span>white fuselage, grey registration</span></li>
@@ -123,7 +135,7 @@ import "../styles/global.css";
       </section>
 
       <!-- cruise interlude -->
-      <figure class="interlude" data-phase="CRUISE">
+      <figure class="interlude rv" data-phase="CRUISE">
         <img
           src="/images/cabin-cruise.jpg"
           alt="A jet cabin in near darkness at cruise: one oval window holding a deep blue sky and a thin apricot horizon, a single low reading lamp."
@@ -134,14 +146,12 @@ import "../styles/global.css";
 
       <!-- ============ CRUISE · tails ============ -->
       <section class="section" id="tails" data-phase="CRUISE" aria-labelledby="tails-h">
-        <div class="chapter-head reveal">
+        <div class="chapter-head rv">
           <span class="whisper">Cruise FL450 · the tails</span>
-          <h2 class="statement" id="tails-h">
-            Three aircraft, chosen for range, quiet, and where they can put&nbsp;down.
-          </h2>
+          <h2 class="statement rv" id="tails-h"><span class="rv-line"><span>Three aircraft, chosen for range, quiet, and where they can put&nbsp;down.</span></span></h2>
         </div>
 
-        <article class="tail reveal">
+        <article class="tail rv">
           <div class="tail-media">
             <img
               src="/images/tail-global.jpg"
@@ -151,7 +161,7 @@ import "../styles/global.css";
           </div>
           <div class="tail-spec">
             <span class="tail-reg">HB-JVL</span>
-            <h3 class="tail-name">Bombardier Global 6500</h3>
+            <h3 class="tail-name rv">Bombardier Global 6500</h3>
             <dl class="spec-rows">
               <div><dt>Range</dt><dd>6,600 nm</dd></div>
               <div><dt>Cruise</dt><dd>Mach 0.90</dd></div>
@@ -164,7 +174,7 @@ import "../styles/global.css";
           </div>
         </article>
 
-        <article class="tail flip reveal">
+        <article class="tail flip rv">
           <div class="tail-media">
             <img
               src="/images/tail-falcon.jpg"
@@ -174,7 +184,7 @@ import "../styles/global.css";
           </div>
           <div class="tail-spec">
             <span class="tail-reg">HB-JLA</span>
-            <h3 class="tail-name">Dassault Falcon 8X</h3>
+            <h3 class="tail-name rv">Dassault Falcon 8X</h3>
             <dl class="spec-rows">
               <div><dt>Range</dt><dd>6,450 nm</dd></div>
               <div><dt>Runway</dt><dd>from 1,830 m</dd></div>
@@ -187,7 +197,7 @@ import "../styles/global.css";
           </div>
         </article>
 
-        <article class="tail reveal">
+        <article class="tail rv">
           <div class="tail-media tall">
             <img
               src="/images/pc24-gravel.jpg"
@@ -197,7 +207,7 @@ import "../styles/global.css";
           </div>
           <div class="tail-spec">
             <span class="tail-reg">HB-VSK</span>
-            <h3 class="tail-name">Pilatus PC-24</h3>
+            <h3 class="tail-name rv">Pilatus PC-24</h3>
             <dl class="spec-rows">
               <div><dt>Range</dt><dd>2,000 nm</dd></div>
               <div><dt>Field</dt><dd>893 m · gravel and grass</dd></div>
@@ -213,12 +223,12 @@ import "../styles/global.css";
 
       <!-- ============ DESCENT · legs ============ -->
       <section class="section" id="legs" data-phase="DESCENT" aria-labelledby="legs-h">
-        <div class="chapter-head reveal">
+        <div class="chapter-head rv">
           <span class="whisper">Descent · the legs</span>
-          <h2 class="statement" id="legs-h">Last week, flown quietly.</h2>
+          <h2 class="statement rv" id="legs-h"><span class="rv-line"><span>Last week, flown quietly.</span></span></h2>
         </div>
-        <div class="reveal">
-          <table class="legs-table">
+        <div class="rv">
+          <table class="legs-table rv">
             <caption>Block log · week 29</caption>
             <tbody>
               <tr>
@@ -262,13 +272,11 @@ import "../styles/global.css";
 
       <!-- ============ ON BLOCKS · introduction ============ -->
       <section class="section intro-section" id="introduction" data-phase="ON BLOCKS" aria-labelledby="intro-h">
-        <div class="chapter-head reveal">
+        <div class="chapter-head rv">
           <span class="whisper">On blocks · the introduction</span>
-          <h2 class="statement" id="intro-h">
-            There is no telephone number on this page. This is not an oversight.
-          </h2>
+          <h2 class="statement rv" id="intro-h"><span class="rv-line"><span>There is no telephone number on this page. This is not an oversight.</span></span></h2>
         </div>
-        <div class="reveal">
+        <div class="rv">
           <p class="body-copy">
             Introductions come through a current client, or through the desks at Geneva
             and Farnborough that have known the operation since 1987. Write, and a
@@ -369,9 +377,9 @@ import "../styles/global.css";
               if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
             }
           }, { threshold: 0.12 });
-          document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+          document.querySelectorAll(".rv").forEach((el) => io.observe(el));
         } else {
-          document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+          document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
         }
       })();
     </script>

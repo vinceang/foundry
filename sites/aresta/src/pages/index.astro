@@ -79,6 +79,20 @@ const plans = {
     />
     <link rel="preload" as="image" href="/images/hero-west.jpg" />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       const q = new URLSearchParams(location.search);
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.documentElement.classList.add("js");
@@ -116,7 +130,7 @@ const plans = {
         </div>
         <div class="hero-copy">
           <p class="eyebrow">Aubade · 37°11′ N — 8°54′ W · Carrapateira, Portugal</p>
-          <h1 class="hero-title">Aresta</h1>
+          <h1 class="hero-title rv"><span class="rv-line"><span>Aresta</span></span></h1>
           <p class="statement">A hotel shaped by light, proportion, and silence.</p>
           <div class="hero-actions">
             <a class="text-link" href="#rooms">Rooms by light <span class="arrow">→</span></a>
@@ -129,9 +143,9 @@ const plans = {
       <!-- ============ the building ============ -->
       <section class="section" id="building" aria-labelledby="building-h">
         <div class="building-grid">
-          <div class="building-copy reveal">
+          <div class="building-copy rv">
             <p class="eyebrow">The building</p>
-            <h2 class="statement" id="building-h">Everything here is built on a bay of 3.6 metres.</h2>
+            <h2 class="statement rv" id="building-h"><span class="rv-line"><span>Everything here is built on a bay of 3.6 metres.</span></span></h2>
             <p>
               Aresta stands where the plateau breaks into the sea cliff — the edge the
               Portuguese call an <em class="aside">aresta</em>. The building repeats that edge at
@@ -148,7 +162,7 @@ const plans = {
             </dl>
           </div>
           <div class="building-figures">
-            <figure class="reveal">
+            <figure class="rv">
               <img src="/images/stair.jpg" srcset="/images/stair-800.jpg 800w, /images/stair.jpg 1024w" sizes="(max-width: 1020px) 100vw, 40vw" alt="A pale limestone stair between plaster walls, crossed by one blade of light from a high aperture." loading="lazy" />
               <figcaption class="caption-row"><span>The stair</span><span>Limestone, one aperture</span></figcaption>
             </figure>
@@ -156,22 +170,22 @@ const plans = {
         </div>
       </section>
 
-      <figure class="bay-strip" role="img" aria-label="The west elevation drawn as twenty-four bays.">
+      <figure class="bay-strip rv" role="img" aria-label="The west elevation drawn as twenty-four bays.">
         <figcaption>West elevation — twenty-four bays</figcaption>
       </figure>
 
       <!-- ============ rooms by light ============ -->
       <section class="section rooms" id="rooms" aria-labelledby="rooms-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <p class="eyebrow">Rooms by light</p>
-          <h2 class="statement" id="rooms-h">The rooms are named for what the sun does.</h2>
+          <h2 class="statement rv" id="rooms-h"><span class="rv-line"><span>The rooms are named for what the sun does.</span></span></h2>
           <p class="lede">
             There are no suites and no tiers. A room at Aresta faces east, south, or west,
             and the difference between them is the hour the light arrives.
           </p>
         </div>
 
-        <div class="room-stage reveal">
+        <div class="room-stage rv">
           <div class="orient-list" role="tablist" aria-label="Room orientations">
             {rooms.map((r, i) => (
               <button
@@ -201,7 +215,7 @@ const plans = {
                 data-o={r.o}
                 hidden={i !== 0}
               >
-                <figure class="room-media">
+                <figure class="room-media rv">
                   <img
                     src={`/images/${r.img}.jpg`}
                     srcset={`/images/${r.img}-800.jpg 800w, /images/${r.img}.jpg 1536w`}
@@ -223,7 +237,7 @@ const plans = {
                     <text x="2" y="53">W</text>
                   </svg>
                   <div class="room-desc">
-                    <h3>{r.title}</h3>
+                    <h3 class="rv">{r.title}</h3>
                     <p>{r.body}</p>
                   </div>
                   <dl class="room-facts">
@@ -240,17 +254,17 @@ const plans = {
 
       <!-- ============ water ============ -->
       <section class="section water" id="water" aria-labelledby="water-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <p class="eyebrow">Water</p>
-          <h2 class="statement" id="water-h">The pool is cut from the same limestone as the lower hall.</h2>
+          <h2 class="statement rv" id="water-h"><span class="rv-line"><span>The pool is cut from the same limestone as the lower hall.</span></span></h2>
         </div>
-        <figure class="pool-figure reveal">
+        <figure class="pool-figure rv">
           <img src="/images/pool.jpg" srcset="/images/pool-800.jpg 800w, /images/pool.jpg 1536w" sizes="100vw" alt="A long limestone pool aligned exactly with the Atlantic horizon, one plaster wall along its side." loading="lazy" />
           <figcaption class="caption-row"><span>The pool, 25 m</span><span>Aligned to the horizon</span></figcaption>
         </figure>
         <div class="bath-row">
-          <div class="bath-copy reveal">
-            <h3>Each bath is carved from a single block.</h3>
+          <div class="bath-copy rv">
+            <h3 class="rv">Each bath is carved from a single block.</h3>
             <p>
               The water arrives from a bronze spout set flush in the plaster, warmed to
               38 degrees. In the pool it is unheated from May to October — mineral, still,
@@ -258,7 +272,7 @@ const plans = {
               each afternoon.
             </p>
           </div>
-          <figure class="bath-figure reveal">
+          <figure class="bath-figure rv">
             <img src="/images/bath.jpg" srcset="/images/bath-800.jpg 800w, /images/bath.jpg 1024w" sizes="(max-width: 640px) 100vw, 440px" alt="A bath carved from a single limestone block in a plaster niche, one bronze spout, one folded linen towel." loading="lazy" />
             <figcaption class="caption-row"><span>The bath</span><span>One block, one spout</span></figcaption>
           </figure>
@@ -268,19 +282,19 @@ const plans = {
       <!-- ============ the table ============ -->
       <section class="section table-section" id="table" aria-labelledby="table-h">
         <div class="table-grid">
-          <figure class="primary reveal">
+          <figure class="primary rv">
             <img src="/images/table.jpg" srcset="/images/table-800.jpg 800w, /images/table.jpg 1536w" sizes="(max-width: 1020px) 100vw, 55vw" alt="A long white oak breakfast table set with pale ceramics, morning light laying a band along its length." loading="lazy" />
             <figcaption class="caption-row"><span>The table at 08:00</span><span>White oak, twelve seats</span></figcaption>
           </figure>
-          <div class="table-copy reveal">
+          <div class="table-copy rv">
             <p class="eyebrow">The table</p>
-            <h2 class="statement" id="table-h">Breakfast is set at eight; the light arrives first.</h2>
+            <h2 class="statement rv" id="table-h"><span class="rv-line"><span>Breakfast is set at eight; the light arrives first.</span></span></h2>
             <p>
               One long table faces the morning court. Bread comes from the wood oven in
               Aljezur, fish from the boats at Sagres, sweet potatoes and honey from the
               parish. Dinner is a single menu, written each morning after the market.
             </p>
-            <figure class="service-figure reveal">
+            <figure class="service-figure rv">
               <img src="/images/service.jpg" srcset="/images/service-800.jpg 800w, /images/service.jpg 1536w" sizes="(max-width: 640px) 100vw, 420px" alt="Hands placing a pale ceramic coffee service on a deep limestone window ledge in morning light." loading="lazy" />
               <figcaption class="caption-row"><span>Coffee to the ledge</span><span>07:30 onward</span></figcaption>
             </figure>
@@ -291,9 +305,9 @@ const plans = {
       <!-- ============ courts + materials ============ -->
       <section class="section" id="courts" aria-labelledby="courts-h">
         <div class="courts-grid">
-          <div class="courts-copy reveal">
+          <div class="courts-copy rv">
             <p class="eyebrow">The courts</p>
-            <h2 class="statement" id="courts-h">Three courts carry the light into the centre.</h2>
+            <h2 class="statement rv" id="courts-h"><span class="rv-line"><span>Three courts carry the light into the centre.</span></span></h2>
             <p>
               Cut through the bar of the building, each holds one thing and holds it
               exactly. The planting is the plateau's own — heath, grasses, lichen —
@@ -305,17 +319,17 @@ const plans = {
               <div><dt>Court III</dt><dd>The breakfast terrace</dd></div>
             </dl>
           </div>
-          <figure class="reveal">
+          <figure class="rv">
             <img src="/images/court.jpg" srcset="/images/court-800.jpg 800w, /images/court.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="A planted court between plaster walls: one strawberry tree, low heath, a still water channel." loading="lazy" />
             <figcaption class="caption-row"><span>Court II</span><span>Strawberry tree</span></figcaption>
           </figure>
-          <figure class="drop reveal">
+          <figure class="drop rv">
             <img src="/images/garden.jpg" srcset="/images/garden-800.jpg 800w, /images/garden.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="Coastal planting against a plaster wall: clipped heath, silver grasses, a low schist wall with lichen." loading="lazy" />
             <figcaption class="caption-row"><span>The plateau planting</span><span>Heath, grass, lichen</span></figcaption>
           </figure>
         </div>
 
-        <div class="materials reveal">
+        <div class="materials rv">
           <figure>
             <img src="/images/material-stone.jpg" srcset="/images/material-stone-800.jpg 800w, /images/material-stone.jpg 1024w" sizes="(max-width: 640px) 100vw, 33vw" alt="Close-up of a limestone floor meeting a plaster wall with a recessed bronze shadow gap." loading="lazy" />
             <figcaption class="caption-row"><span>Floor meets wall</span><span>Bronze shadow gap</span></figcaption>
@@ -342,20 +356,20 @@ const plans = {
 
       <!-- ============ place ============ -->
       <section class="section place" id="place" aria-labelledby="place-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <p class="eyebrow">Place</p>
-          <h2 class="statement" id="place-h">The last plateau before the sea.</h2>
+          <h2 class="statement rv" id="place-h"><span class="rv-line"><span>The last plateau before the sea.</span></span></h2>
           <p class="lede">
             Carrapateira, on the Costa Vicentina — a protected coast of schist cliffs,
             bleached grass, and Atlantic weather. The nearest lights after dark are the
             village and the lighthouse at Cabo de São Vicente.
           </p>
         </div>
-        <figure class="place-figure reveal">
+        <figure class="place-figure rv">
           <img src="/images/place.jpg" srcset="/images/place-800.jpg 800w, /images/place.jpg 1536w" sizes="100vw" alt="Dark schist cliffs breaking into the Atlantic below a plateau of dry grass and low heath." loading="lazy" />
           <figcaption class="caption-row"><span>The cliff at Carrapateira</span><span>Parque Natural do Sudoeste Alentejano</span></figcaption>
         </figure>
-        <dl class="distances reveal">
+        <dl class="distances rv">
           <div><dt>Bordeira beach</dt><dd>20 min on foot</dd></div>
           <div><dt>Aljezur market</dt><dd>15 min by road</dd></div>
           <div><dt>Faro airport</dt><dd>1 h 20</dd></div>
@@ -366,16 +380,16 @@ const plans = {
       <!-- ============ stay ============ -->
       <section class="section" id="stay" aria-labelledby="stay-h">
         <div class="stay-grid">
-          <div class="stay-copy reveal">
+          <div class="stay-copy rv">
             <p class="eyebrow">Stay</p>
-            <h2 class="statement" id="stay-h">Choose a direction, then the dates.</h2>
+            <h2 class="statement rv" id="stay-h"><span class="rv-line"><span>Choose a direction, then the dates.</span></span></h2>
             <p>
               Tell us when you are coming and which light you want to wake to. A person —
               not a system — replies within a day with what is open.
             </p>
             <p class="stay-note aside">From €340 a night, breakfast at the long table included.</p>
           </div>
-          <form class="stay-form reveal" action="mailto:estadias@aresta.pt" method="post" enctype="text/plain">
+          <form class="stay-form rv" action="mailto:estadias@aresta.pt" method="post" enctype="text/plain">
             <div class="field-pair">
               <div class="field">
                 <label for="arrive">Arrive</label>
@@ -418,7 +432,7 @@ const plans = {
           </address>
         </div>
         <div>
-          <h3>Sections</h3>
+          <h3 class="rv">Sections</h3>
           <ul>
             <li><a href="#building">The building</a></li>
             <li><a href="#rooms">Rooms by light</a></li>
@@ -428,7 +442,7 @@ const plans = {
           </ul>
         </div>
         <div>
-          <h3>The seasonal letter</h3>
+          <h3 class="rv">The seasonal letter</h3>
           <p class="aside" style="margin-top: 16px; font-size: 14.5px;">
             Four letters a year: the light, the sea, the table.
           </p>
@@ -482,9 +496,9 @@ const plans = {
           }),
           { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
         );
-        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("shown"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("shown"));
       }
     </script>
   </body>

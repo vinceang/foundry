@@ -57,14 +57,14 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
         <img src="/guitar-loop-poster.jpg" alt="Macro of a handmade Spanish classical guitar in warm light" />
         <video class="hero-video" muted loop playsinline preload="none" poster="/guitar-loop-poster.jpg" aria-hidden="true" data-src="/guitar-loop.mp4"></video>
       </div>
-      <div class="hero-est reveal" style="--i:4">
+      <div class="hero-est rv" style="--d:4">
         <span class="script">Vicente</span>
         {t.hero.est}
       </div>
       <div class="hero-content container">
-        <h1 class="reveal" style="--i:0">{t.hero.h1a}<em>{t.hero.h1accent}</em>{t.hero.h1b}</h1>
-        <p class="hero-sub reveal" style="--i:1">{t.hero.sub}</p>
-        <div class="hero-meta reveal" style="--i:2">
+        <h1 class="rv" style="--d:0">{t.hero.h1a}<em>{t.hero.h1accent}</em>{t.hero.h1b}</h1>
+        <p class="hero-sub rv" style="--d:1">{t.hero.sub}</p>
+        <div class="hero-meta rv" style="--d:2">
           {t.hero.meta.map(([k, v]) => <span>{k} <b>{v}</b></span>)}
         </div>
       </div>
@@ -75,10 +75,10 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
     <section class="manifesto">
       <span class="ghost" aria-hidden="true">{t.manifesto.ghost}</span>
       <div class="container">
-        <p class="manifesto-lead reveal">{t.manifesto.lead1}<span class="accent">{t.manifesto.leadAccent}</span>{t.manifesto.lead2}</p>
+        <p class="manifesto-lead rv">{t.manifesto.lead1}<span class="accent">{t.manifesto.leadAccent}</span>{t.manifesto.lead2}</p>
         <div class="manifesto-body">
-          <p class="reveal" style="--i:0">{t.manifesto.p1}</p>
-          <p class="reveal" style="--i:1">{t.manifesto.p2}</p>
+          <p class="rv" style="--d:0">{t.manifesto.p1}</p>
+          <p class="rv" style="--d:1">{t.manifesto.p2}</p>
         </div>
       </div>
     </section>
@@ -88,11 +88,11 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
       <div class="lineage-grid">
         <div class="lineage-media"><img src="/workshop.png" alt="The Vicente workshop in Granada, soundboards hanging from the beams" style="object-position: 30% center" /></div>
         <div class="lineage-text">
-          <p class="label reveal">{t.lineage.label}</p>
-          <h2 class="reveal" style="--i:1">{t.lineage.h2a}<em>{t.lineage.h2accent}</em>{t.lineage.h2b}</h2>
-          <blockquote class="pullquote reveal" style="--i:2">{t.lineage.quote}</blockquote>
-          <p class="reveal" style="--i:3">{t.lineage.p}</p>
-          <div class="lineage-stats reveal" style="--i:4">
+          <p class="label rv">{t.lineage.label}</p>
+          <h2 class="rv" style="--d:1">{t.lineage.h2a}<em>{t.lineage.h2accent}</em>{t.lineage.h2b}</h2>
+          <blockquote class="pullquote rv" style="--d:2">{t.lineage.quote}</blockquote>
+          <p class="rv" style="--d:3">{t.lineage.p}</p>
+          <div class="lineage-stats rv" style="--d:4">
             {t.lineage.stats.map(([num, lab]) => (
               <div class="stat"><span class="num">{num}</span><span class="lab">{lab}</span></div>
             ))}
@@ -107,14 +107,14 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
       <div class="container">
         <div class="luthiers-head">
           <div>
-            <p class="label reveal">{t.luthiers.label}</p>
-            <h2 class="reveal" style="--i:1; margin-top: var(--s3)">{t.luthiers.h2a}<em>{t.luthiers.h2accent}</em>{t.luthiers.h2b}</h2>
+            <p class="label rv">{t.luthiers.label}</p>
+            <h2 class="rv" style="--d:1; margin-top: var(--s3)">{t.luthiers.h2a}<em>{t.luthiers.h2accent}</em>{t.luthiers.h2b}</h2>
           </div>
-          <p class="reveal" style="--i:2">{t.luthiers.intro}</p>
+          <p class="rv" style="--d:2">{t.luthiers.intro}</p>
         </div>
         <div class="luthiers-grid">
           {t.luthiers.people.map((p, i) => (
-            <a class="luthier-card reveal" style={`--i:${i}`} href={`${home}luthier/${p.slug}/`}>
+            <a class="luthier-card rv" style={`--d:${i}`} href={`${home}luthier/${p.slug}/`}>
               <div class="luthier-figure"><img src={p.img} alt={p.name} loading="lazy" /></div>
               <div class="luthier-info">
                 <div class="role">{p.role}</div>
@@ -132,14 +132,14 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
       <div class="container">
         <div class="collection-head">
           <div>
-            <p class="label on-light reveal">{t.collection.label}</p>
-            <h2 class="reveal" style="--i:1; margin-top: var(--s3)">{t.collection.h2a}<em>{t.collection.h2accent}</em>{t.collection.h2b}</h2>
+            <p class="label on-light rv">{t.collection.label}</p>
+            <h2 class="rv" style="--d:1; margin-top: var(--s3)">{t.collection.h2a}<em>{t.collection.h2accent}</em>{t.collection.h2b}</h2>
           </div>
-          <p class="reveal" style="--i:2">{t.collection.intro}</p>
+          <p class="rv" style="--d:2">{t.collection.intro}</p>
         </div>
         <div class="collection-grid">
           {t.collection.guitars.map((g, i) => (
-            <article class="guitar-card reveal" style={`--i:${i}`}>
+            <article class="guitar-card rv" style={`--d:${i}`}>
               <a class="card-link" href={`${guitarsBase}${g.slug}/`} aria-label={`${g.name} — ${g.spec}`}></a>
               <div class="guitar-figure"><img src={g.img} alt={`${g.name} — ${g.spec}`} loading="lazy" /></div>
               <div class="guitar-info">
@@ -158,11 +158,11 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
     <section class="etiqueta">
       <div class="container etiqueta-grid">
         <div>
-          <p class="label on-light reveal">{t.etiqueta.label}</p>
-          <h2 class="reveal" style="--i:1">{t.etiqueta.h2a}<em>{t.etiqueta.h2accent}</em>{t.etiqueta.h2b}</h2>
-          <p class="reveal" style="--i:2">{t.etiqueta.p}</p>
+          <p class="label on-light rv">{t.etiqueta.label}</p>
+          <h2 class="rv" style="--d:1">{t.etiqueta.h2a}<em>{t.etiqueta.h2accent}</em>{t.etiqueta.h2b}</h2>
+          <p class="rv" style="--d:2">{t.etiqueta.p}</p>
         </div>
-        <div class="etiqueta-photo reveal" style="--i:1">
+        <div class="etiqueta-photo rv" style="--d:1">
           <img src="/etiqueta.png" alt={t.etiqueta.alt} loading="lazy" />
         </div>
       </div>
@@ -176,14 +176,14 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
       </svg>
       <div class="container">
         <div class="process-head">
-          <p class="label reveal" style="justify-content:center">{t.process.label}</p>
-          <h2 class="reveal" style="--i:1; margin-top: var(--s3)">{t.process.h2a}<em>{t.process.h2accent}</em>{t.process.h2b}</h2>
+          <p class="label rv" style="justify-content:center">{t.process.label}</p>
+          <h2 class="rv" style="--d:1; margin-top: var(--s3)">{t.process.h2a}<em>{t.process.h2accent}</em>{t.process.h2b}</h2>
         </div>
         <div class="process-steps">
           {t.process.steps.map((s, i) => (
-            <div class="step reveal" style={`--i:${i}`} data-ghost={String(i + 1)}>
+            <div class="step rv" style={`--d:${i}`} data-ghost={String(i + 1)}>
               <span class="n">{s.n}</span>
-              <h3>{s.jp}</h3>
+              <h3 class="rv">{s.jp}</h3>
               <div class="en">{s.en}</div>
               <p>{s.p}</p>
             </div>
@@ -195,11 +195,11 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
     <!-- COMMISSION -->
     <section class="commission" id="encargo">
       <span class="ghost" aria-hidden="true">{t.commission.ghost}</span>
-      <p class="label on-light reveal" style="justify-content:center; position:relative">{t.commission.label}</p>
-      <h2 class="reveal" style="--i:1">{t.commission.h2a}<em>{t.commission.h2accent}</em>{t.commission.h2b}</h2>
-      <p class="reveal" style="--i:2">{t.commission.p}</p>
-      <a class="btn reveal" style="--i:3" href="#"><span>{t.commission.cta} →</span></a>
-      <p class="commission-note reveal" style="--i:4">{t.commission.note}</p>
+      <p class="label on-light rv" style="justify-content:center; position:relative">{t.commission.label}</p>
+      <h2 class="rv" style="--d:1">{t.commission.h2a}<em>{t.commission.h2accent}</em>{t.commission.h2b}</h2>
+      <p class="rv" style="--d:2">{t.commission.p}</p>
+      <a class="btn rv" style="--d:3" href="#"><span>{t.commission.cta} →</span></a>
+      <p class="commission-note rv" style="--d:4">{t.commission.note}</p>
     </section>
 
     <!-- FOOTER -->
@@ -237,12 +237,12 @@ const guitarsBase = locale === "en" ? "/guitars/" : "/es/guitarras/";
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
           });
         },
         { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
       );
-      document.querySelectorAll(".reveal, .laceria").forEach((el) => io.observe(el));
+      document.querySelectorAll(".rv, .laceria").forEach((el) => io.observe(el));
 
       // hero film: only for motion-tolerant users; poster is the truth
       const hv = document.querySelector(".hero-video");

@@ -96,6 +96,25 @@ const nav = [
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
   <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
     // ?nofx disables reveals + forces eager loading (critique loop depends on it)
     if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
   </script>
@@ -162,7 +181,7 @@ const nav = [
       <div class="weather-grid" id="weather-panel" role="tabpanel" aria-live="polite">
         <!-- left: elevation profile + facts -->
         <div class="mountain-col">
-          <figure class="profile" aria-hidden="false">
+          <figure class="profile rv" aria-hidden="false">
             <figcaption class="sr-only">Elevation profile of the Sella side. Valley station 1,540 m, refuge 2,410 m, pass camp 2,680 m, showing today's snow line and weather.</figcaption>
             <svg viewBox="0 0 300 220" class="profile-svg" preserveAspectRatio="none" role="img" aria-label="Mountain elevation profile">
               <!-- sky wash -->
@@ -208,7 +227,7 @@ const nav = [
               </div>
               <div class="place-body">
                 <p class="place-alt">{p.alt}</p>
-                <h3 class="place-name">{p.name} <span class="place-gloss">{p.gloss}</span></h3>
+                <h3 class="place-name rv">{p.name} <span class="place-gloss">{p.gloss}</span></h3>
                 <p class="place-line" data-place-line>{p.line}</p>
               </div>
             </li>
@@ -226,10 +245,10 @@ const nav = [
   <!-- MATERIAL -->
   <section id="material" class="material" aria-labelledby="mat-h">
     <div class="wrap mat-grid">
-      <figure class="mat-fig reveal">
+      <figure class="mat-fig rv">
         <img src="/mat-larch-wool.jpg" alt="Close detail of weathered larch wall boards with resin knots beside rolled grey-green loden wool blankets bound with a leather strap." width="1440" height="960" loading="lazy" />
       </figure>
-      <div class="mat-copy reveal">
+      <div class="mat-copy rv">
         <p class="eyebrow">Larch & stone</p>
         <h2 id="mat-h">Built of the one tree<br />that climbs this high.</h2>
         <p>The walls are drystone below and larch above — <span class="serif-italic">larès</span> in the valley's Ladin, the last timber before the mountain gives way to rock. The wood was cut on the slope, the stone lifted from the scree. Nothing here was carried up that the mountain did not already hold.</p>
@@ -241,13 +260,13 @@ const nav = [
   <!-- STUBE / DINNER -->
   <section id="stube" class="stube" aria-labelledby="stube-h">
     <div class="wrap stube-grid">
-      <div class="stube-copy reveal">
+      <div class="stube-copy rv">
         <p class="eyebrow">The stube · one dinner a night</p>
         <h2 id="stube-h">One pot, one table,<br />whoever made it up.</h2>
         <p>Dinner is at seven and it is the same for everyone: a black pot of barley and speck broth, dark bread, a wedge of mountain cheese, water from the spring. Climbers, walkers, and the guardian's family eat at one long larch table around the stove.</p>
         <p class="stube-note">Half board — bed, dinner, and breakfast before the dawn start — is <strong>€72</strong> a person. Day guests are welcome at the table when there is room.</p>
       </div>
-      <figure class="stube-fig reveal">
+      <figure class="stube-fig rv">
         <img src="/dinner.jpg" alt="A refuge supper on a bare larch table: a black iron pot of barley and speck broth, dark bread, a wedge of cheese and enamel bowls in low evening light." width="1440" height="960" loading="lazy" />
       </figure>
     </div>
@@ -256,7 +275,7 @@ const nav = [
   <!-- GUARDIANS -->
   <section id="guardians" class="guardians" aria-labelledby="guard-h">
     <img class="guard-img" src="/host-guardian.jpg" alt="An older refuge guardian in a grey loden wool jacket crouched feeding split larch logs into the black masonry stove, firelight and cold window light on her face." width="1440" height="960" loading="lazy" />
-    <div class="wrap guard-copy reveal">
+    <div class="wrap guard-copy rv">
       <p class="eyebrow">The guardians · three generations</p>
       <h2 id="guard-h">The stove is lit<br />before you arrive.</h2>
       <p>Marta Comploj keeps Larès as her grandmother did: up before the guests, the stove drawing by five, the pot on by six. In a storm she stays awake with it. She reads the sky the way the valley taught her — which is why the forecast on this page is hers, not a satellite's.</p>
@@ -267,7 +286,7 @@ const nav = [
   <!-- WALK UP + BOOKING -->
   <section id="book" class="book" aria-labelledby="book-h">
     <div class="wrap book-grid">
-      <figure class="book-fig reveal">
+      <figure class="book-fig rv">
         <img src="/walkup.jpg" alt="A refuge drying room: worn mountaineering boots on a larch rack, shells and coiled rope on pegs, an open door to the bright stony path climbing toward the peaks." width="1440" height="960" loading="lazy" />
         <figcaption>
           <p class="eyebrow">The walk up</p>
@@ -280,7 +299,7 @@ const nav = [
         </figcaption>
       </figure>
 
-      <div class="book-form-col reveal">
+      <div class="book-form-col rv">
         <p class="eyebrow">Book a bed</p>
         <h2 id="book-h">Write to the guardian.</h2>
         <p class="book-lede">Larès takes bookings by enquiry — the mountain is small and every bed is answered by hand. <span class="serif-italic">The guardian answers by evening.</span></p>

@@ -37,7 +37,26 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet" />
     <title>Lagar do Sol — Alentejo</title>
-    <script is:inline>document.documentElement.classList.add("js");</script>
+    <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+document.documentElement.classList.add("js");</script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -76,7 +95,7 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
           <source media="(max-width: 720px)" srcset="/images/hero-estate-900.jpg" />
           <img src="/images/hero-estate.jpg" width="1536" height="1024" alt="Whitewashed Alentejo house beyond an open gate and mature olive trees" fetchpriority="high" />
         </picture>
-        <div class="hero-copy reveal">
+        <div class="hero-copy rv">
           <p class="eyebrow">Um monte entre Estremoz e Vila Viçosa</p>
           <h1>A house among<br />the olives.</h1>
           <p>Eighteen rooms gathered around an old press, a shaded courtyard, and the long Alentejo day.</p>
@@ -86,9 +105,9 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
       </section>
 
       <section class="arrival chapter section-pad" id="house" data-time="08:05">
-        <div class="arrival-copy reveal">
+        <div class="arrival-copy rv">
           <p class="eyebrow">The house · 08:05</p>
-          <h2>The gate is open.<br />Your key is waiting.</h2>
+          <h2 class="rv">The gate is open.<br />Your key is waiting.</h2>
           <p>There is no reception counter. Come through the timber doors; someone from the house will meet you by name.</p>
           <dl class="facts">
             <div><dt>Rooms</dt><dd>18</dd></div>
@@ -96,14 +115,14 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
             <div><dt>From Lisbon</dt><dd>1 hr 45</dd></div>
           </dl>
         </div>
-        <figure class="arrival-image reveal">
+        <figure class="arrival-image rv">
           <img src="/images/arrival-desk.jpg" srcset="/images/arrival-desk-900.jpg 900w, /images/arrival-desk.jpg 1448w" sizes="(max-width: 800px) 100vw, 58vw" width="1448" height="1086" alt="Oak host desk beneath a board of eighteen room keys, with a host setting the breakfast table through the open courtyard door" loading="lazy" />
           <figcaption>The host’s desk, beneath the room-key board</figcaption>
         </figure>
       </section>
 
       <section class="pattern-threshold" aria-label="The old press">
-        <div class="pattern-inner reveal">
+        <div class="pattern-inner rv">
           <p class="eyebrow">The old lagar</p>
           <blockquote>“The press stopped turning in 1964. The table has been set here ever since.”</blockquote>
           <p>The original millstone remains in the dining room, cool beneath bare feet.</p>
@@ -111,75 +130,75 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
       </section>
 
       <section class="rooms chapter section-pad" id="rooms" data-time="09:10">
-        <header class="section-heading reveal">
+        <header class="section-heading rv">
           <p class="eyebrow">The rooms · 09:10</p>
-          <h2>Private houses,<br />held within one.</h2>
+          <h2 class="rv">Private houses,<br />held within one.</h2>
           <p>Each room follows the old walls. No two windows meet the morning in quite the same way.</p>
         </header>
-        <figure class="room-thesis reveal">
+        <figure class="room-thesis rv">
           <img src="/images/living.jpg" srcset="/images/living-900.jpg 900w, /images/living.jpg 1535w" sizes="(max-width: 800px) 100vw, 72vw" width="1535" height="1024" alt={rooms[2].alt} loading="lazy" />
           <figcaption><span>Residência do Olival</span><small>The old family rooms, overlooking the grove</small></figcaption>
         </figure>
         <div class="room-list">
           {rooms.slice(0, 2).map((room, index) => (
-            <article class:list={["room-card", "reveal", { offset: index === 1 }]}>
+            <article class:list={["room-card", "rv", { offset: index === 1 }]}>
               <img src={`/images/${room.image}.jpg`} srcset={`/images/${room.image}-900.jpg 900w, /images/${room.image}.jpg 1535w`} sizes="(max-width: 800px) 100vw, 43vw" width="1535" height="1024" alt={room.alt} loading="lazy" />
-              <div><p class="eyebrow">0{index + 1}</p><h3>{room.name}</h3><p>{room.detail}</p></div>
+              <div><p class="eyebrow">0{index + 1}</p><h3 class="rv">{room.name}</h3><p>{room.detail}</p></div>
             </article>
           ))}
         </div>
-        <div class="bath-note reveal">
+        <div class="bath-note rv">
           <figure><img src="/images/bath.jpg" srcset="/images/bath-900.jpg 900w, /images/bath.jpg 1535w" sizes="(max-width: 800px) 100vw, 46vw" width="1535" height="1024" alt="Hand-carved limestone bath, antique washstand, brass fittings, and an arched stone shower" loading="lazy" /></figure>
-          <div><p class="eyebrow">Water and stone</p><h3>Baths cut from the same pale stone as the old press.</h3><p>Deep tubs, warm brass, and linen dried in the courtyard. The water is warmed by the Alentejo sun.</p></div>
+          <div><p class="eyebrow">Water and stone</p><h3 class="rv">Baths cut from the same pale stone as the old press.</h3><p>Deep tubs, warm brass, and linen dried in the courtyard. The water is warmed by the Alentejo sun.</p></div>
         </div>
       </section>
 
       <section class="breakfast chapter" id="table" data-time="10:15">
-        <figure class="breakfast-main reveal">
+        <figure class="breakfast-main rv">
           <img src="/images/breakfast-courtyard.jpg" srcset="/images/breakfast-courtyard-900.jpg 900w, /images/breakfast-courtyard.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="Host arranging a generous breakfast table in the shaded courtyard" loading="lazy" />
         </figure>
-        <div class="breakfast-copy reveal">
+        <div class="breakfast-copy rv">
           <p class="eyebrow">The table · 10:15</p>
-          <h2>Bread arrives warm.</h2>
+          <h2 class="rv">Bread arrives warm.</h2>
           <p>The oil was pressed beyond the eastern wall. Breakfast waits beneath the trees until the last cup is finished.</p>
         </div>
-        <figure class="breakfast-detail reveal">
+        <figure class="breakfast-detail rv">
           <img src="/images/breakfast-detail.jpg" srcset="/images/breakfast-detail-900.jpg 900w, /images/breakfast-detail.jpg 1536w" sizes="(max-width: 800px) 92vw, 45vw" width="1536" height="1024" alt="Hands placing a loaf among ceramics, fruit, olive oil, and linen" loading="lazy" />
         </figure>
       </section>
 
       <section class="courtyard chapter section-pad" data-time="11:30">
-        <header class="section-heading compact reveal">
+        <header class="section-heading compact rv">
           <p class="eyebrow">The courtyard · 11:30</p>
-          <h2>White walls.<br />Moving shade.</h2>
+          <h2 class="rv">White walls.<br />Moving shade.</h2>
           <p>The retained fountain is fed from the old estate cistern. Its tile is the only pattern the courtyard needs.</p>
         </header>
-        <figure class="courtyard-wide reveal">
+        <figure class="courtyard-wide rv">
           <img src="/images/courtyard-wide.jpg" srcset="/images/courtyard-wide-900.jpg 900w, /images/courtyard-wide.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="Wide view of the whitewashed courtyard with fountain, olive trees, table, and shade sail" loading="lazy" />
         </figure>
         <div class="courtyard-pair">
-          <figure class="threshold-photo reveal"><img src="/images/courtyard-threshold.jpg" srcset="/images/courtyard-threshold-900.jpg 900w, /images/courtyard-threshold.jpg 1023w" sizes="(max-width: 800px) 82vw, 31vw" width="1023" height="1537" alt="View through a shaded doorway toward the courtyard fountain" loading="lazy" /></figure>
-          <figure class="fountain-photo reveal"><img src="/images/fountain.jpg" srcset="/images/fountain-900.jpg 900w, /images/fountain.jpg 1448w" sizes="(max-width: 800px) 82vw, 43vw" width="1448" height="1086" alt="Weathered courtyard fountain with restrained geometric tile" loading="lazy" /><figcaption>Stone, water, retained tile</figcaption></figure>
+          <figure class="threshold-photo rv"><img src="/images/courtyard-threshold.jpg" srcset="/images/courtyard-threshold-900.jpg 900w, /images/courtyard-threshold.jpg 1023w" sizes="(max-width: 800px) 82vw, 31vw" width="1023" height="1537" alt="View through a shaded doorway toward the courtyard fountain" loading="lazy" /></figure>
+          <figure class="fountain-photo rv"><img src="/images/fountain.jpg" srcset="/images/fountain-900.jpg 900w, /images/fountain.jpg 1448w" sizes="(max-width: 800px) 82vw, 43vw" width="1448" height="1086" alt="Weathered courtyard fountain with restrained geometric tile" loading="lazy" /><figcaption>Stone, water, retained tile</figcaption></figure>
         </div>
       </section>
 
       <section class="estate chapter" id="grounds" data-time="15:20">
         <img src="/images/olive-estate.jpg" srcset="/images/olive-estate-900.jpg 900w, /images/olive-estate.jpg 1536w" sizes="100vw" width="1536" height="1024" alt="Lagar do Sol in the distance across mature olive and cork trees" loading="lazy" />
-        <div class="estate-copy reveal"><p class="eyebrow">Beyond the walls · 15:20</p><h2>Forty hectares<br />of working land.</h2><p>Olive, cork oak, dry grass, and the long horizon between Estremoz and Vila Viçosa.</p></div>
+        <div class="estate-copy rv"><p class="eyebrow">Beyond the walls · 15:20</p><h2 class="rv">Forty hectares<br />of working land.</h2><p>Olive, cork oak, dry grass, and the long horizon between Estremoz and Vila Viçosa.</p></div>
       </section>
 
       <section class="pool chapter section-pad" data-time="16:15">
-        <header class="section-heading compact reveal">
+        <header class="section-heading compact rv">
           <p class="eyebrow">The water · 16:15</p>
-          <h2>By four, the olives begin to shade the stone.</h2>
+          <h2 class="rv">By four, the olives begin to shade the stone.</h2>
         </header>
-        <figure class="pool-main reveal"><img src="/images/pool-intimate.jpg" srcset="/images/pool-intimate-900.jpg 900w, /images/pool-intimate.jpg 1536w" sizes="(max-width: 800px) 100vw, 78vw" width="1536" height="1024" alt="Narrow stone pool, two linen-covered loungers, and the olive estate in afternoon light" loading="lazy" /></figure>
-        <figure class="pool-wide reveal"><img src="/images/pool-estate.jpg" srcset="/images/pool-estate-900.jpg 900w, /images/pool-estate.jpg 1536w" sizes="(max-width: 800px) 92vw, 47vw" width="1536" height="1024" alt="Wide view of the quiet pool set directly within the olive grove" loading="lazy" /><figcaption>The pool, looking back toward the monte</figcaption></figure>
+        <figure class="pool-main rv"><img src="/images/pool-intimate.jpg" srcset="/images/pool-intimate-900.jpg 900w, /images/pool-intimate.jpg 1536w" sizes="(max-width: 800px) 100vw, 78vw" width="1536" height="1024" alt="Narrow stone pool, two linen-covered loungers, and the olive estate in afternoon light" loading="lazy" /></figure>
+        <figure class="pool-wide rv"><img src="/images/pool-estate.jpg" srcset="/images/pool-estate-900.jpg 900w, /images/pool-estate.jpg 1536w" sizes="(max-width: 800px) 92vw, 47vw" width="1536" height="1024" alt="Wide view of the quiet pool set directly within the olive grove" loading="lazy" /><figcaption>The pool, looking back toward the monte</figcaption></figure>
       </section>
 
       <section class="hospitality chapter section-pad" data-time="12:40">
-        <figure class="reveal"><img src="/images/human-hospitality.jpg" srcset="/images/human-hospitality-900.jpg 900w, /images/human-hospitality.jpg 1535w" sizes="(max-width: 800px) 100vw, 56vw" width="1535" height="1024" alt="The cook finishing a dish with herbs in the estate kitchen" loading="lazy" /></figure>
-        <div class="reveal"><p class="eyebrow">From the kitchen</p><h2>Nothing travels farther than it needs to.</h2><p>Herbs come through the courtyard door. Bread is baked before the rooms wake. Dinner follows what the garden and neighboring farms bring that morning.</p></div>
+        <figure class="rv"><img src="/images/human-hospitality.jpg" srcset="/images/human-hospitality-900.jpg 900w, /images/human-hospitality.jpg 1535w" sizes="(max-width: 800px) 100vw, 56vw" width="1535" height="1024" alt="The cook finishing a dish with herbs in the estate kitchen" loading="lazy" /></figure>
+        <div class="rv"><p class="eyebrow">From the kitchen</p><h2 class="rv">Nothing travels farther than it needs to.</h2><p>Herbs come through the courtyard door. Bread is baked before the rooms wake. Dinner follows what the garden and neighboring farms bring that morning.</p></div>
       </section>
 
       <section class="evening chapter" data-time="19:35">
@@ -188,9 +207,9 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
       </section>
 
       <section class="stay pattern-surface" id="stay">
-        <div class="stay-inner reveal">
+        <div class="stay-inner rv">
           <p class="eyebrow">Stay for the whole day</p>
-          <h2>Leave after breakfast.</h2>
+          <h2 class="rv">Leave after breakfast.</h2>
           <p>Eighteen rooms. Three-night weekends from April through October. Write to the house and we will arrange the rest.</p>
           <button class="primary-button" type="button" data-open-stay>Plan a stay</button>
         </div>
@@ -275,7 +294,7 @@ const times = ["07:20", "08:05", "09:10", "10:15", "11:30", "12:40", "15:20", "1
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("shown"); revealObserver.unobserve(entry.target); } });
       }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
-      document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+      document.querySelectorAll(".rv").forEach((element) => revealObserver.observe(element));
     </script>
   </body>
 </html>

@@ -57,6 +57,20 @@ const stock = [
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f2ece0'/%3E%3Cpath d='M16 3 C11 9 10 22 16 29 C22 22 21 9 16 3 Z' fill='none' stroke='%235f8177' stroke-width='1.6'/%3E%3Cline x1='16' y1='3' x2='16' y2='29' stroke='%237d5a34' stroke-width='1'/%3E%3C/svg%3E"
     />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       const q = new URLSearchParams(location.search);
       const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
       document.documentElement.classList.add("js");
@@ -96,7 +110,7 @@ const stock = [
         <p class="hero-caption">Blank No. 220<br />on the racks · 6'2" outline</p>
         <div class="hero-copy">
           <p class="eyebrow">Aubade · 15°51′ N — 97°04′ W · Puerto Escondido, Oaxaca</p>
-          <h1 class="hero-title">Veta</h1>
+          <h1 class="hero-title rv"><span class="rv-line"><span>Veta</span></span></h1>
           <p class="hero-statement">One line down the blank decides the whole board.</p>
           <div class="hero-actions">
             <a class="text-link" href="#line">Draw a board <span class="arrow">→</span></a>
@@ -108,9 +122,9 @@ const stock = [
       <!-- ============ the bench ============ -->
       <section class="section" id="bench" aria-labelledby="bench-h">
         <div class="bench-grid">
-          <div class="bench-copy reveal">
+          <div class="bench-copy rv">
             <p class="eyebrow">The bench</p>
-            <h2 class="statement" id="bench-h">One bench, one pair of hands, one board at a time.</h2>
+            <h2 class="statement rv" id="bench-h"><span class="rv-line"><span>One bench, one pair of hands, one board at a time.</span></span></h2>
             <p>
               Veta is a single shaping bay a five-minute walk from Playa Zicatela, where the
               sand-bottom point throws the heavy, line-driven waves the boards are read for.
@@ -130,7 +144,7 @@ const stock = [
               <div><dt>Lead time</dt><dd class="num">6 wks</dd></div>
             </dl>
           </div>
-          <figure class="bench-figure reveal">
+          <figure class="bench-figure rv">
             <img
               src="/images/hand-plane.jpg"
               srcset="/images/hand-plane-800.jpg 800w, /images/hand-plane.jpg 1536w"
@@ -149,9 +163,9 @@ const stock = [
 
       <!-- ================= THE LINE — signature ================= -->
       <section class="section line-section" id="line" aria-labelledby="line-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <p class="eyebrow">The line</p>
-          <h2 class="statement" id="line-h">Draw the board before it is foam.</h2>
+          <h2 class="statement rv" id="line-h"><span class="rv-line"><span>Draw the board before it is foam.</span></span></h2>
           <p class="lede">
             Tell the bench who is riding and where. The outline, the rocker, and the fins
             redraw together in one motion — the way a shaper pencils a template over the
@@ -159,7 +173,7 @@ const stock = [
           </p>
         </div>
 
-        <div class="line-stage reveal">
+        <div class="line-stage rv">
           <div class="line-draw">
             <svg id="board-svg" viewBox="0 0 900 440" role="img"
               aria-label="A live drawing of a surfboard: plan outline above, rocker profile below. Default: a 6 foot point-break board for a 6 foot 2 rider, drive style, thruster fins.">
@@ -240,24 +254,24 @@ const stock = [
       <!-- ============ made (materials) ============ -->
       <section class="section" id="made" aria-labelledby="made-h">
         <div class="made-grid">
-          <div class="made-lead reveal">
+          <div class="made-lead rv">
             <p class="eyebrow">Made</p>
-            <h2 class="statement" id="made-h">Foam, wood, cloth, resin. Nothing else.</h2>
+            <h2 class="statement rv" id="made-h"><span class="rv-line"><span>Foam, wood, cloth, resin. Nothing else.</span></span></h2>
           </div>
-          <figure class="reveal">
+          <figure class="rv">
             <img src="/images/stringer.jpg" srcset="/images/stringer-800.jpg 800w, /images/stringer.jpg 1024w" sizes="(max-width: 560px) 100vw, 30vw" alt="Close view of a basswood stringer line running down the centre of a bare white foam blank with faint pencil template marks." loading="lazy" />
             <figcaption class="caption-row"><span>The stringer</span><span>Basswood, 4 mm</span></figcaption>
           </figure>
-          <figure class="reveal">
+          <figure class="rv">
             <img src="/images/resin-tint.jpg" srcset="/images/resin-tint-800.jpg 800w, /images/resin-tint.jpg 1024w" sizes="(max-width: 560px) 100vw, 30vw" alt="Sea-green teal resin being drawn across woven fibreglass cloth on a surfboard deck, the weave visible under the wet tint." loading="lazy" />
             <figcaption class="caption-row"><span>The tint</span><span>Sea-green resin</span></figcaption>
           </figure>
-          <figure class="reveal">
+          <figure class="rv">
             <img src="/images/fin.jpg" srcset="/images/fin-800.jpg 800w, /images/fin.jpg 1024w" sizes="(max-width: 560px) 100vw, 30vw" alt="A set of three foiled surfboard fins on a workbench, sharp trailing edges catching daylight." loading="lazy" />
             <figcaption class="caption-row"><span>The fins</span><span>Foiled by hand</span></figcaption>
           </figure>
 
-          <div class="made-register reveal">
+          <div class="made-register rv">
             <dl class="register">
               <dt>Blank</dt><dd>US Blanks polyurethane, or recycled EPS for the lighter builds.</dd>
               <dt>Stringer</dt><dd>Basswood down the centre; paulownia when the board wants more spring.</dd>
@@ -277,13 +291,13 @@ const stock = [
       <!-- ============ the maker ============ -->
       <section class="section" id="maker" aria-labelledby="maker-h">
         <div class="maker-grid">
-          <figure class="maker-figure reveal">
+          <figure class="maker-figure rv">
             <img src="/images/maker.jpg" srcset="/images/maker-800.jpg 800w, /images/maker.jpg 1024w" sizes="(max-width: 900px) 100vw, 40vw" alt="A surfboard shaper in a dust-flecked apron standing beside a finished board against a plaster wall, foam dust in soft daylight." loading="lazy" />
             <figcaption class="caption-row"><span>Tomás Rivera</span><span>At the racks</span></figcaption>
           </figure>
-          <div class="maker-copy reveal">
+          <div class="maker-copy rv">
             <p class="eyebrow">The maker</p>
-            <h2 class="statement" id="maker-h">The hand that reads the rail is the whole shop.</h2>
+            <h2 class="statement rv" id="maker-h"><span class="rv-line"><span>The hand that reads the rail is the whole shop.</span></span></h2>
             <p>
               Tomás shaped his first blank in 2004 and opened the bay above Zicatela in 2011.
               He surfs the point most mornings before the bay opens, which is where the boards
@@ -301,9 +315,9 @@ const stock = [
 
       <!-- ============ the stock ============ -->
       <section class="section" id="stock" aria-labelledby="stock-h">
-        <div class="section-head reveal">
+        <div class="section-head rv">
           <p class="eyebrow">The stock</p>
-          <h2 class="statement" id="stock-h">A few boards are finished and on the rack now.</h2>
+          <h2 class="statement rv" id="stock-h"><span class="rv-line"><span>A few boards are finished and on the rack now.</span></span></h2>
           <p class="lede">
             When a build leaves foam over, or Tomás wants to try a shape, it goes on the wall
             ready to ride. These are the ones standing there this week.
@@ -311,12 +325,12 @@ const stock = [
         </div>
         <div class="stock-list">
           {stock.map((b) => (
-            <article class="stock-item reveal">
-              <figure class="stock-fig">
+            <article class="stock-item rv">
+              <figure class="stock-fig rv">
                 <img src={`/images/${b.img}.jpg`} srcset={`/images/${b.img}-800.jpg 800w, /images/${b.img}.jpg 1536w`} sizes="(max-width: 860px) 100vw, 300px" alt={`Finished surfboard: ${b.name}`} loading="lazy" />
               </figure>
               <div class="stock-body">
-                <h3 class="stock-name">{b.name}</h3>
+                <h3 class="stock-name rv">{b.name}</h3>
                 <p class="stock-desc">{b.desc}</p>
                 <div class="stock-spec">
                   <span><b>Dims</b>{b.dims}</span>
@@ -338,9 +352,9 @@ const stock = [
       <section class="order-section" id="order" aria-labelledby="order-h">
         <div class="order-inner">
           <div class="order-grid">
-            <div class="order-intro reveal">
+            <div class="order-intro rv">
               <p class="eyebrow">Order a board</p>
-              <h2 class="statement" id="order-h">Start a board drawn to you.</h2>
+              <h2 class="statement rv" id="order-h"><span class="rv-line"><span>Start a board drawn to you.</span></span></h2>
               <p>
                 This is the order, not a checkout. Fill in what you know — the fields carried
                 from <a class="link" href="#line">the line</a> are already here — and Tomás
@@ -355,7 +369,7 @@ const stock = [
               <p class="order-price">A custom board runs $850–$1,400, glassing and fins in.</p>
             </div>
 
-            <form class="order-form reveal" id="order-form" action="mailto:taller@veta.mx" method="post" enctype="text/plain">
+            <form class="order-form rv" id="order-form" action="mailto:taller@veta.mx" method="post" enctype="text/plain">
               <fieldset class="form-block">
                 <legend>The board</legend>
                 <div class="field-grid three">
@@ -522,7 +536,7 @@ const stock = [
             </address>
           </div>
           <div>
-            <h3>Sections</h3>
+            <h3 class="rv">Sections</h3>
             <ul>
               <li><a href="#bench">The bench</a></li>
               <li><a href="#line">The line</a></li>
@@ -533,7 +547,7 @@ const stock = [
             </ul>
           </div>
           <div>
-            <h3>The swell letter</h3>
+            <h3 class="rv">The swell letter</h3>
             <p class="aside" style="margin-top:14px; font-size:14px; color:rgba(242,236,224,0.72); max-width:32ch;">
               A note when boards come off the rack and when the point turns on. A few times a year, no more.
             </p>
@@ -566,9 +580,9 @@ const stock = [
           }),
           { threshold: 0.14, rootMargin: "0px 0px -40px 0px" }
         );
-        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("shown"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("shown"));
       }
 
       // ================= THE LINE — the board redraws live =================

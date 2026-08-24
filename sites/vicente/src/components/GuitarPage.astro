@@ -62,17 +62,17 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
     <!-- GUITAR HERO — body on nogal, guitar on a full-bleed marfil mat -->
     <section class="gp-hero">
       <div class="gp-hero-body">
-        <p class="label reveal">{guitar.spec}</p>
-        <h1 class="reveal" style="--i:1">{guitar.name}</h1>
-        <blockquote class="luthier-quote reveal" style="--i:2">“{page.quote}”</blockquote>
-        <p class="gp-lede reveal" style="--i:3">{page.lede}</p>
-        <div class="gp-buy reveal" style="--i:4">
+        <p class="label rv">{guitar.spec}</p>
+        <h1 class="rv" style="--d:1">{guitar.name}</h1>
+        <blockquote class="luthier-quote rv" style="--d:2">“{page.quote}”</blockquote>
+        <p class="gp-lede rv" style="--d:3">{page.lede}</p>
+        <div class="gp-buy rv" style="--d:4">
           <span class="gp-price">{guitar.price}</span>
           <a class="btn" href={`${home}#encargo`}><span>{t.guitarPages.commissionCta} →</span></a>
         </div>
-        <p class="gp-note reveal" style="--i:5">{t.guitarPages.commissionNote}</p>
+        <p class="gp-note rv" style="--d:5">{t.guitarPages.commissionNote}</p>
       </div>
-      <div class="gp-hero-media reveal">
+      <div class="gp-hero-media rv">
         <img class="gp-bleed" src={guitar.img} alt="" aria-hidden="true" />
         <img src={guitar.img} alt={`${guitar.name} — ${guitar.spec}`} />
       </div>
@@ -82,10 +82,10 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
     <section class="gp-voz">
       <span class="ghost" aria-hidden="true">voz</span>
       <div class="container">
-        <p class="label reveal">{t.guitarPages.vozLabel}</p>
+        <p class="label rv">{t.guitarPages.vozLabel}</p>
         <div class="gp-voz-body">
           {page.voz.map((p, i) => (
-            <p class="reveal" style={`--i:${i + 1}`}>{p}</p>
+            <p class="rv" style={`--d:${i + 1}`}>{p}</p>
           ))}
         </div>
       </div>
@@ -99,14 +99,14 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
       </svg>
       <div class="container gp-ficha-grid">
         <div>
-          <p class="label on-light reveal">{t.guitarPages.fichaLabel}</p>
-          <dl class="ficha-book reveal" style="--i:1">
+          <p class="label on-light rv">{t.guitarPages.fichaLabel}</p>
+          <dl class="ficha-book rv" style="--d:1">
             {page.ficha.map(([k, v]) => (
               <div class="row"><dt>{k}</dt><dd>{v}</dd></div>
             ))}
           </dl>
         </div>
-        <aside class="gp-ficha-aside reveal" style="--i:2">
+        <aside class="gp-ficha-aside rv" style="--d:2">
           <p class="ficha-note">{t.guitarPages.fichaNote}</p>
           <div class="etiqueta-arch">
             <img src="/etiqueta.png" alt={t.etiqueta.alt} loading="lazy" />
@@ -119,7 +119,7 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
     <!-- EL CONSTRUCTOR -->
     <section class="gp-maker">
       <div class="container gp-maker-grid">
-        <a class="luthier-card reveal" href={`${home}luthier/${maker.slug}/`}>
+        <a class="luthier-card rv" href={`${home}luthier/${maker.slug}/`}>
           <div class="luthier-figure"><img src={maker.img} alt={maker.name} loading="lazy" /></div>
           <div class="luthier-info">
             <div class="role">{maker.role}</div>
@@ -128,9 +128,9 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
           </div>
         </a>
         <div class="gp-maker-copy">
-          <p class="label reveal">{t.guitarPages.makerLabel}</p>
-          <blockquote class="luthier-quote reveal" style="--i:1">“{makerPage.quote}”</blockquote>
-          <p class="reveal" style="--i:2">{t.collection.madeBy} <strong>{maker.name}</strong> — {maker.spec.toLowerCase()}.</p>
+          <p class="label rv">{t.guitarPages.makerLabel}</p>
+          <blockquote class="luthier-quote rv" style="--d:1">“{makerPage.quote}”</blockquote>
+          <p class="rv" style="--d:2">{t.collection.madeBy} <strong>{maker.name}</strong> — {maker.spec.toLowerCase()}.</p>
         </div>
       </div>
     </section>
@@ -164,12 +164,12 @@ const makerPage = t.luthierPages.pages[maker.slug as keyof typeof t.luthierPages
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
           });
         },
         { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
       );
-      document.querySelectorAll(".reveal, .laceria").forEach((el) => io.observe(el));
+      document.querySelectorAll(".rv, .laceria").forEach((el) => io.observe(el));
 
       const header = document.querySelector(".site-header");
       let lastY = window.scrollY;

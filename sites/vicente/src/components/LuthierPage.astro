@@ -58,17 +58,17 @@ const guitar = t.collection.guitars.find((g) => g.maker === person.name);
 
     <!-- LUTHIER HERO -->
     <section class="luthier-hero">
-      <div class="luthier-hero-media reveal">
+      <div class="luthier-hero-media rv">
         <img src={person.img} alt={person.name} />
       </div>
       <div class="luthier-hero-body">
-        <p class="label reveal">{person.role} · {person.spec}</p>
-        <h1 class="reveal" style="--i:1">{person.name}</h1>
-        <blockquote class="luthier-quote reveal" style="--i:2">“{page.quote}”</blockquote>
-        <div class="luthier-bio reveal" style="--i:3">
+        <p class="label rv">{person.role} · {person.spec}</p>
+        <h1 class="rv" style="--d:1">{person.name}</h1>
+        <blockquote class="luthier-quote rv" style="--d:2">“{page.quote}”</blockquote>
+        <div class="luthier-bio rv" style="--d:3">
           {page.bio.map((p) => <p>{p}</p>)}
         </div>
-        <div class="luthier-facts reveal" style="--i:4">
+        <div class="luthier-facts rv" style="--d:4">
           {page.facts.map(([v, l]) => (
             <div class="f"><span class="fv">{v}</span><span class="fl">{l}</span></div>
           ))}
@@ -79,10 +79,10 @@ const guitar = t.collection.guitars.find((g) => g.maker === person.name);
     <!-- HIS WORK -->
     <section class="luthier-works">
       <div class="container">
-        <p class="label on-light reveal">{t.luthierPages.hisWork}</p>
+        <p class="label on-light rv">{t.luthierPages.hisWork}</p>
         <div class="luthier-works-grid" style="margin-top: var(--s6)">
           {guitar && (
-            <article class="guitar-card reveal">
+            <article class="guitar-card rv">
               <div class="guitar-figure"><img src={guitar.img} alt={guitar.name} loading="lazy" /></div>
               <div class="guitar-info">
                 <div class="gname">{guitar.name}</div>
@@ -92,8 +92,8 @@ const guitar = t.collection.guitars.find((g) => g.maker === person.name);
             </article>
           )}
           <div>
-            <p class="note reveal" style="--i:1">{t.luthierPages.signedLabel}</p>
-            <div class="etiqueta-img reveal" style="--i:2; margin-top: var(--s4); max-width: 560px">
+            <p class="note rv" style="--d:1">{t.luthierPages.signedLabel}</p>
+            <div class="etiqueta-img rv" style="--d:2; margin-top: var(--s4); max-width: 560px">
               <img src="/etiqueta.png" alt={t.etiqueta.alt} loading="lazy" />
             </div>
           </div>
@@ -130,12 +130,12 @@ const guitar = t.collection.guitars.find((g) => g.maker === person.name);
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
           });
         },
         { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
       );
-      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      document.querySelectorAll(".rv").forEach((el) => io.observe(el));
 
       const header = document.querySelector(".site-header");
       let lastY = window.scrollY;

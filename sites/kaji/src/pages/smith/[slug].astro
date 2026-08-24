@@ -50,14 +50,14 @@ const next = smiths[(idx + 1) % smiths.length];
       </div>
       <div class="smith-hero-body">
         <span class="jp-vert jp" aria-hidden="true">{smith.nameJp}</span>
-        <p class="eyebrow reveal">{smith.role} · {smith.roleJp} · {smith.generation}</p>
-        <h1 class="reveal" style="--i:1">{smith.nameEn}</h1>
-        <blockquote class="smith-quote reveal" style="--i:2">“{smith.quote}”</blockquote>
-        <p class="smith-quote-jp jp reveal" style="--i:3">{smith.quoteJp}</p>
-        <div class="smith-bio reveal" style="--i:4">
+        <p class="eyebrow rv">{smith.role} · {smith.roleJp} · {smith.generation}</p>
+        <h1 class="rv" style="--d:1">{smith.nameEn}</h1>
+        <blockquote class="smith-quote rv" style="--d:2">“{smith.quote}”</blockquote>
+        <p class="smith-quote-jp jp rv" style="--d:3">{smith.quoteJp}</p>
+        <div class="smith-bio rv" style="--d:4">
           {smith.bio.map((p) => <p>{p}</p>)}
         </div>
-        <div class="smith-facts reveal" style="--i:5">
+        <div class="smith-facts rv" style="--d:5">
           {smith.facts.map((f) => (
             <div class="f"><span class={`fv${f.value.length > 8 ? " long" : ""}`}>{f.value}</span><span class="fl">{f.label}</span></div>
           ))}
@@ -69,12 +69,12 @@ const next = smiths[(idx + 1) % smiths.length];
     <section class="smith-works">
       <div class="container">
         <div class="collection-head">
-          <h2 class="reveal">The work of {smith.nameEn.split(" ")[0]}.</h2>
-          <p class="reveal" style="--i:1">{smith.specialty} · signed with the {smith.slug === "goro" ? "Tanabe" : "Munetsugu"} mei.</p>
+          <h2 class="rv">The work of {smith.nameEn.split(" ")[0]}.</h2>
+          <p class="rv" style="--d:1">{smith.specialty} · signed with the {smith.slug === "goro" ? "Tanabe" : "Munetsugu"} mei.</p>
         </div>
         <div class="smith-works-grid">
           {smith.works.map((w, i) => (
-            <article class="knife-card reveal" style={`--i:${i}`}>
+            <article class="knife-card rv" style={`--d:${i}`}>
               <div class="knife-figure">
                 <span class="knife-index">{String(i + 1).padStart(2, "0")} / {String(smith.works.length).padStart(2, "0")}</span>
                 <span class="knife-tag">Made to order</span>
@@ -119,12 +119,12 @@ const next = smiths[(idx + 1) % smiths.length];
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
-            if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+            if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
           });
         },
         { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
       );
-      document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      document.querySelectorAll(".rv").forEach((el) => io.observe(el));
 
       const header = document.querySelector(".site-header");
       let lastY = window.scrollY;
