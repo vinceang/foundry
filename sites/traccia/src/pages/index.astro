@@ -48,6 +48,23 @@ const FINISHES = [
       rel="stylesheet"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       document.documentElement.classList.add("js");
       if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
     </script>
@@ -95,7 +112,7 @@ const FINISHES = [
       </section>
 
       <!-- ── La valle ─────────────────────────────────────── -->
-      <section id="valle" class="wrapper rise">
+      <section id="valle" class="wrapper rv">
         <div class="sheet">
           <span class="q">Pendenza</span>
           <span class="v">10,5 % media · 18 % max</span>
@@ -103,7 +120,7 @@ const FINISHES = [
         </div>
         <div class="split top">
           <div>
-            <h2>The road writes the specification. The bench only executes it.</h2>
+            <h2 class="rv">The road writes the specification. The bench only executes it.</h2>
             <p class="lede" style="margin-top:24px">
               Twelve kilometres at ten and a half per cent, with a kilometre at
               eighteen. That is not a detail about the scenery. It is the
@@ -144,7 +161,7 @@ const FINISHES = [
         <div class="roads">
           {ROADS.map((r) => (
             <div>
-              <h3>{r.it}</h3>
+              <h3 class="rv">{r.it}</h3>
               <div class="g">{r.gloss} · {r.tyre} mm</div>
               <p>{r.line}</p>
               <div class="where">{r.road}</div>
@@ -154,7 +171,7 @@ const FINISHES = [
       </section>
 
       <!-- ── L'acciaio ────────────────────────────────────── -->
-      <section id="acciaio" class="wrapper rise">
+      <section id="acciaio" class="wrapper rv">
         <div class="sheet">
           <span class="q">Spessore</span>
           <span class="v">0,7 – 0,4 – 0,7 mm</span>
@@ -178,7 +195,7 @@ const FINISHES = [
             </figcaption>
           </figure>
           <div>
-            <h2>Steel, because it can be drawn thin in the middle.</h2>
+            <h2 class="rv">Steel, because it can be drawn thin in the middle.</h2>
             <p class="lede" style="margin-top:24px">
               A butted tube is thick where it is brazed and thin where nothing
               happens to it. That is the whole argument, and it is a
@@ -225,13 +242,13 @@ const FINISHES = [
       </section>
 
       <!-- ── La traccia — THE SIGNATURE ───────────────────── -->
-      <section id="traccia" class="wrapper rise">
+      <section id="traccia" class="wrapper rv">
         <div class="sheet">
           <span class="q">Angolo sterzo</span>
           <span class="v">71°30′ – 73°30′</span>
           <span class="en">The range this drawing moves through</span>
         </div>
-        <h2>Your numbers, your road, drawn to scale.</h2>
+        <h2 class="rv">Your numbers, your road, drawn to scale.</h2>
         <p class="lede" style="margin-top:24px;max-width:56ch">
           Five things decide a frame, and two of them are about you. Change any
           of them and the drawing below is redrawn: angles, trail, wheelbase,
@@ -352,7 +369,7 @@ const FINISHES = [
       </section>
 
       <!-- ── La dima ──────────────────────────────────────── -->
-      <section id="dima" class="wrapper rise">
+      <section id="dima" class="wrapper rv">
         <div class="sheet">
           <span class="q">Allineamento</span>
           <span class="v">± 0,3 mm sul piano</span>
@@ -360,7 +377,7 @@ const FINISHES = [
         </div>
         <div class="split top">
           <div>
-            <h2>Mitred, brazed, and then argued with on a cast-iron table.</h2>
+            <h2 class="rv">Mitred, brazed, and then argued with on a cast-iron table.</h2>
             <p class="lede" style="margin-top:24px">
               Brazing pulls steel. Every frame comes off the jig out of true,
               and the work is knowing by how much before you measure it.
@@ -417,7 +434,7 @@ const FINISHES = [
       </section>
 
       <!-- ── Le mani ──────────────────────────────────────── -->
-      <section id="mani" class="wrapper rise">
+      <section id="mani" class="wrapper rv">
         <div class="sheet">
           <span class="q">Ore</span>
           <span class="v">34 al telaio</span>
@@ -425,7 +442,7 @@ const FINISHES = [
         </div>
         <div class="split top">
           <div>
-            <h2>One bench, and about twenty-six frames a year.</h2>
+            <h2 class="rv">One bench, and about twenty-six frames a year.</h2>
             <p class="lede" style="margin-top:24px">
               He took the shop from his father in 1994 and has not taken on a
               second builder, which is a decision about how many frames exist
@@ -468,13 +485,13 @@ const FINISHES = [
       </section>
 
       <!-- ── La commissione ───────────────────────────────── -->
-      <section id="commissione" class="wrapper rise">
+      <section id="commissione" class="wrapper rv">
         <div class="sheet">
           <span class="q">Attesa</span>
           <span class="v">14 settimane</span>
           <span class="en">Stated before you ask for it</span>
         </div>
-        <h2>Starting one.</h2>
+        <h2 class="rv">Starting one.</h2>
         <p class="lede" style="margin-top:24px;max-width:56ch">
           The specification below is the one you drew. Send it and he will write
           back once with what he would change about it and why — that reply is
@@ -525,7 +542,7 @@ const FINISHES = [
             </div>
 
             <div class="sent" id="sent" hidden>
-              <h3>Ricevuto</h3>
+              <h3 class="">Ricevuto</h3>
               <p><strong>On the sheet.</strong> The specification went across as it stood: <span id="sent-spec" class="num"></span></p>
               <p>One reply follows, within a week, saying what he would change and why. If it does not come, he did not get it — assume that rather than waiting.</p>
             </div>
@@ -533,7 +550,7 @@ const FINISHES = [
           </div>
 
           <aside class="docket" aria-label="The specification as it stands">
-            <h3>La specifica</h3>
+            <h3 class="">La specifica</h3>
             <div class="g">as it stands</div>
             <div class="spec" id="d-spec">{spec}</div>
             <div class="drow"><span>Piantone / orizzontale</span><b id="d-st">{f.st} / {f.tt}</b></div>

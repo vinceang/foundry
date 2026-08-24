@@ -80,6 +80,23 @@ const burda = [
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f2e7'/%3E%3Cg stroke='%234d6149' stroke-width='1.4' fill='none'%3E%3Cpath d='M16 4 L16 28'/%3E%3Crect x='8' y='9' width='3' height='3'/%3E%3Crect x='8' y='16' width='3' height='3'/%3E%3Crect x='8' y='23' width='3' height='3'/%3E%3Crect x='21' y='9' width='3' height='3'/%3E%3Crect x='21' y='16' width='3' height='3'/%3E%3Crect x='21' y='23' width='3' height='3'/%3E%3C/g%3E%3C/svg%3E"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       /* `js` gates the entrance animation in CSS, so a JS-off visitor gets the
          finished composition instead of content stranded at opacity 0.
          `?nofx` disables the animation outright for the critique loop. */
@@ -127,7 +144,7 @@ const burda = [
               <a class="btn-quiet" href="#hibla">Where the cloth begins</a>
             </div>
           </div>
-          <figure class="hero-fig">
+          <figure class="hero-fig rv">
             <img
               src="/images/hero-window.jpg"
               width="1536"
@@ -146,10 +163,10 @@ const burda = [
       <!-- ============ ANG HIBLA ============ -->
       <section id="hibla" class="band-jusi">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">01 — Ang hibla</p>
-              <h2 class="chapter-title">The fibre</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>The fibre</span></span></h2>
               <p class="gloss">Kalibo, Aklan · 620 km south of this bench</p>
             </div>
             <p class="lede">
@@ -162,8 +179,8 @@ const burda = [
             </p>
           </div>
 
-          <div class="grade-grid rise">
-            <figure class="grade-fig">
+          <div class="grade-grid rv">
+            <figure class="grade-fig rv">
               <img
                 src="/images/kiskis.jpg"
                 width="1536"
@@ -198,7 +215,7 @@ const burda = [
 
           <hr class="calado-rule" style="margin-block: clamp(48px, 6vw, 88px)" />
 
-          <div class="habi-grid rise">
+          <div class="habi-grid rv">
             <figure>
               <img
                 src="/images/hibla.jpg"
@@ -230,10 +247,10 @@ const burda = [
       <!-- ============ ANG PECHERA — THE SIGNATURE ============ -->
       <section id="pechera">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">02 — Ang pechera</p>
-              <h2 class="chapter-title">Draw your panel</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Draw your panel</span></span></h2>
               <p class="gloss">The embroidered front · the whole commission in one decision</p>
             </div>
             <p class="lede">
@@ -245,7 +262,7 @@ const burda = [
             </p>
           </div>
 
-          <div class="pechera-stage rise">
+          <div class="pechera-stage rv">
             <!-- ---------- the drawing ---------- -->
             <div class="pechera-draw">
               <svg
@@ -513,10 +530,10 @@ const burda = [
       <!-- ============ ANG BURDA ============ -->
       <section id="burda" class="band-jusi">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">03 — Ang burda</p>
-              <h2 class="chapter-title">Three hands, three names</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Three hands, three names</span></span></h2>
               <p class="gloss">What the needle actually does to a sheer cloth</p>
             </div>
             <p class="lede">
@@ -525,8 +542,8 @@ const burda = [
               unpicked and started again.
             </p>
           </div>
-          <div class="burda-grid rise">
-            <figure class="burda-fig">
+          <div class="burda-grid rv">
+            <figure class="burda-fig rv">
               <img
                 src="/images/burda.jpg"
                 width="1536"
@@ -556,7 +573,7 @@ const burda = [
 
       <!-- ============ ANG MANANAHI ============ -->
       <section id="mananahi">
-        <div class="wrap makers-grid rise">
+        <div class="wrap makers-grid rv">
           <figure>
             <img
               src="/images/mananahi.jpg"
@@ -568,7 +585,7 @@ const burda = [
           </figure>
           <div>
             <p class="whisper">04 — Ang mananahi</p>
-            <h2 class="chapter-title">Rodel cuts. Estrella embroiders.</h2>
+            <h2 class="chapter-title rv"><span class="rv-line"><span>Rodel cuts. Estrella embroiders.</span></span></h2>
             <p class="lede">
               They have worked the same two benches on Calle Rizal since 1998.
               Rodel was taught to cut by his father, who cut for the
@@ -595,10 +612,10 @@ const burda = [
       <!-- ============ ANG APARADOR ============ -->
       <section id="aparador" class="band-jusi">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">05 — Ang aparador</p>
-              <h2 class="chapter-title">On the rack now</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>On the rack now</span></span></h2>
               <p class="gloss">Finished, unclaimed, alterable</p>
             </div>
             <p class="lede">
@@ -622,7 +639,7 @@ const burda = [
                   </figure>
                   <div class="ap-text">
                     <p class="whisper">{a.n}</p>
-                    <h3 class="chapter-title">{a.name}</h3>
+                    <h3 class="chapter-title rv">{a.name}</h3>
                     <p>{a.desc}</p>
                     <dl class="ap-spec">
                       <div><dt>Cloth</dt><dd>{a.tela}</dd></div>
@@ -647,10 +664,10 @@ const burda = [
       <!-- ============ MAGPATAHI — THE ORDER ============ -->
       <section id="magpatahi">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">06 — Magpatahi</p>
-              <h2 class="chapter-title">Have one made</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Have one made</span></span></h2>
               <p class="gloss">Literally: to have something sewn</p>
             </div>
             <p class="lede">
@@ -661,7 +678,7 @@ const burda = [
             </p>
           </div>
 
-          <div class="order-grid rise">
+          <div class="order-grid rv">
             <form
               class="order-form"
               action="mailto:palihan@nipis.ph"
@@ -972,9 +989,9 @@ const burda = [
           (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
           { rootMargin: "0px 0px -12% 0px" },
         );
-        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
       }
     </script>
   </body>

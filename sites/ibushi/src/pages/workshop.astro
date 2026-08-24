@@ -92,7 +92,7 @@ const RECORD = [
     <div class="wrap takumi-grid">
       <div>
         <span class="kicker">The lineage · 飛騨の匠</span>
-        <h2>Hida paid its tax in carpenters.</h2>
+        <h2 class="rv">Hida paid its tax in carpenters.</h2>
         <p>
           Hida is mountains. Under the Ritsuryō system of the eighth century a
           province owed the capital rice and cloth, and Hida could produce
@@ -124,14 +124,14 @@ const RECORD = [
   <section class="people">
     <div class="wrap">
       <span class="kicker">The bench · 職人</span>
-      <h2>Who does the work.</h2>
+      <h2 class="rv">Who does the work.</h2>
       <ul class="people-list">
         {PEOPLE.map((p) => (
           <li>
             <div class="p-media">
               <Plate name={p.img} alt={p.alt} ratio="4 / 5" />
             </div>
-            <h3>{p.name} {p.jp && <span class="jp p-jp">{p.jp}</span>}</h3>
+            <h3 class="rv">{p.name} {p.jp && <span class="jp p-jp">{p.jp}</span>}</h3>
             <p class="p-role spec">{p.role}</p>
             <p class="p-line">{p.line}</p>
           </li>
@@ -149,7 +149,7 @@ const RECORD = [
       </div>
       <div>
         <span class="kicker">The kayaba · 茅場</span>
-        <h2>You cannot buy this in a hurry.</h2>
+        <h2 class="rv">You cannot buy this in a hurry.</h2>
         <p>
           A <span class="term">kayaba</span> is a grassland held and burned off
           each spring for one purpose: to grow miscanthus for thatch. Ours is
@@ -178,7 +178,7 @@ const RECORD = [
     <div class="wrap yui-grid">
       <div>
         <span class="kicker">Yui · 結い</span>
-        <h2>Forty people, one slope, one day.</h2>
+        <h2 class="rv">Forty people, one slope, one day.</h2>
         <p>
           Re-thatching is not a job you can hire your way through. One slope of
           a gasshō roof is stripped and re-laid in a single day, because a roof
@@ -209,7 +209,7 @@ const RECORD = [
   <section class="record">
     <div class="wrap">
       <span class="kicker">Since 1968 · 沿革</span>
-      <h2>The short history.</h2>
+      <h2 class="rv">The short history.</h2>
       <dl class="years">
         {RECORD.map(([y, t]) => (
           <div class="year"><dt>{y}</dt><dd>{t}</dd></div>
@@ -224,7 +224,7 @@ const RECORD = [
   <section class="cta">
     <div class="wrap cta-in">
       <div>
-        <h2>Come and see it.</h2>
+        <h2 class="rv">Come and see it.</h2>
         <p>The shed is open to visitors by arrangement, Tuesday to Friday. There is usually a frame on the ground.</p>
       </div>
       <a class="btn" href="/commission">Write to the workshop</a>

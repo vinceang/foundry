@@ -103,6 +103,23 @@ const pronte = [
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2314120e'/%3E%3Cpath d='M6 20 Q16 11 26 15' fill='none' stroke='%23c05a41' stroke-width='2'/%3E%3C/svg%3E"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       /* `js` gates the entrance animation in CSS, so a JS-off visitor gets the
          finished composition instead of content stranded at opacity 0.
          `?nofx` disables the animation outright for the critique loop. */
@@ -168,10 +185,10 @@ const pronte = [
       <!-- ============ IL TAGLIO ============ -->
       <section id="taglio" class="band-panno">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">01 — Il taglio</p>
-              <h2 class="chapter-title">Four things we take out</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Four things we take out</span></span></h2>
               <p class="gloss">And what each one costs to remove</p>
             </div>
             <p class="lede">
@@ -180,7 +197,7 @@ const pronte = [
               expensive direction.
             </p>
           </div>
-          <div class="taglio-grid rise">
+          <div class="taglio-grid rv">
             <div class="leaves-out">
               {
                 leavesOut.map((l) => (
@@ -209,7 +226,7 @@ const pronte = [
             </figure>
           </div>
 
-          <div class="namesake rise">
+          <div class="namesake rv">
             <figure>
               <img
                 src="/images/barchetta.jpg"
@@ -221,7 +238,7 @@ const pronte = [
             </figure>
             <div>
               <p class="whisper">The name</p>
-              <h3 class="chapter-title">Il taschino a barchetta</h3>
+              <h3 class="chapter-title rv">Il taschino a barchetta</h3>
               <p>
                 Every other tailoring tradition cuts the breast pocket square
                 and level. Naples cuts it as a shallow crescent that rises
@@ -243,10 +260,10 @@ const pronte = [
       <!-- ============ L'INTERNO — THE SIGNATURE ============ -->
       <section id="interno">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">02 — L'interno</p>
-              <h2 class="chapter-title">Open the coat</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Open the coat</span></span></h2>
               <p class="gloss">The strata, and the four decisions that set them</p>
             </div>
             <p class="lede">
@@ -258,7 +275,7 @@ const pronte = [
             </p>
           </div>
 
-          <div class="coat-stage rise">
+          <div class="coat-stage rv">
             <div class="coat-draw">
               <svg
                 class="coat"
@@ -485,10 +502,10 @@ const pronte = [
       <!-- ============ LE PROVE ============ -->
       <section id="prove" class="band-panno">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">03 — Le prove</p>
-              <h2 class="chapter-title">Two or three fittings</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Two or three fittings</span></span></h2>
               <p class="gloss">What actually happens in the room</p>
             </div>
             <p class="lede">
@@ -498,7 +515,7 @@ const pronte = [
               and a posture does not travel in a tape measure.
             </p>
           </div>
-          <div class="prove-grid rise">
+          <div class="prove-grid rv">
             <div class="prove-figs">
             <figure>
               <img
@@ -545,7 +562,7 @@ const pronte = [
 
       <!-- ============ IL MAESTRO ============ -->
       <section id="maestro">
-        <div class="wrap makers-grid rise">
+        <div class="wrap makers-grid rv">
           <figure>
             <img
               src="/images/maestro.jpg"
@@ -557,7 +574,7 @@ const pronte = [
           </figure>
           <div>
             <p class="whisper">04 — Il maestro</p>
-            <h2 class="chapter-title">Ciro cuts. He does not sew.</h2>
+            <h2 class="chapter-title rv"><span class="rv-line"><span>Ciro cuts. He does not sew.</span></span></h2>
             <p class="lede">
               Ciro Lanzetta has cut on this board since 1978 and has not made a
               whole coat himself since 1994. He says so before anyone asks,
@@ -582,10 +599,10 @@ const pronte = [
       <!-- ============ PRONTE ============ -->
       <section id="pronte" class="band-panno">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">05 — Pronte</p>
-              <h2 class="chapter-title">On the rail now</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>On the rail now</span></span></h2>
               <p class="gloss">Finished, unclaimed, alterable</p>
             </div>
             <p class="lede">
@@ -609,7 +626,7 @@ const pronte = [
                   </figure>
                   <div class="pr-text">
                     <p class="whisper">{a.n}</p>
-                    <h3 class="chapter-title">{a.name}</h3>
+                    <h3 class="chapter-title rv">{a.name}</h3>
                     <p>{a.desc}</p>
                     <dl class="pr-spec">
                       <div><dt>Cloth</dt><dd>{a.cloth}</dd></div>
@@ -634,10 +651,10 @@ const pronte = [
       <!-- ============ ORDINARE — THE ORDER ============ -->
       <section id="ordinare">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">06 — Ordinare</p>
-              <h2 class="chapter-title">Begin a coat</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Begin a coat</span></span></h2>
               <p class="gloss">An order request, not a checkout</p>
             </div>
             <p class="lede">
@@ -648,7 +665,7 @@ const pronte = [
             </p>
           </div>
 
-          <div class="order-grid rise">
+          <div class="order-grid rv">
             <form class="order-form" action="mailto:sartoria@barchetta.it" method="post" enctype="text/plain">
               <fieldset>
                 <legend class="whisper">La giacca</legend>
@@ -934,9 +951,9 @@ const pronte = [
           (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
           { rootMargin: "0px 0px -12% 0px" },
         );
-        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
       }
     </script>
   </body>

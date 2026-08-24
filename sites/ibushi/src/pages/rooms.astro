@@ -225,10 +225,10 @@ const PARTS = [
   {
     PARTS.map((p, i) => (
       <>
-        <section class="part rise" id={p.key}>
+        <section class="part rv" id={p.key}>
           <div class={`wrap part-grid ${i % 2 ? "flip" : ""}`}>
             <div class="part-text">
-              <h2>
+              <h2 class="rv">
                 {p.name} <span class="jp part-jp">{p.jp}</span>
               </h2>
               <p class="kicker part-gloss">{p.gloss}</p>
@@ -262,7 +262,7 @@ const PARTS = [
   <section class="seats" id="seats">
     <div class="wrap">
       <span class="kicker">The second interaction · 座順</span>
-      <h2>Four sides, four ranks.</h2>
+      <h2 class="rv">Four sides, four ranks.</h2>
       <p class="seats-lede">
         Nothing about a hearth is symmetrical except its shape. Each side of an
         irori has a name and a rank, and the arrangement held in nearly every
@@ -324,7 +324,7 @@ const PARTS = [
   <section class="next">
     <div class="wrap next-in">
       <div>
-        <h2>Now set the bays.</h2>
+        <h2 class="rv">Now set the bays.</h2>
         <p>
           These rooms sit on a grid before they are rooms at all. Snap a line
           and watch the plan take them.

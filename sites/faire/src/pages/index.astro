@@ -71,6 +71,23 @@ const FACES = [
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet" />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       document.documentElement.classList.add("js");
       if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
     </script>
@@ -121,12 +138,12 @@ const FACES = [
       </section>
 
       <!-- ── An Solas — THE SIGNATURE ─────────────────────── -->
-      <section id="solas" class="wrapper rise">
+      <section id="solas" class="wrapper rv">
         <div class="entry">
           {FIELDS.map((f) => <span class={f === "char" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
           <span class="gloss">Admiralty List of Lights — the character</span>
         </div>
-        <h2>A ship does not recognise this light. It counts it.</h2>
+        <h2 class="rv">A ship does not recognise this light. It counts it.</h2>
         <p class="lede" style="margin-top:24px;max-width:58ch">
           Every light in the world is given a rhythm nobody else nearby is
           allowed to have. Ours is two flashes every twenty seconds. That
@@ -215,12 +232,12 @@ const FACES = [
       </section>
 
       <!-- ── An Tùr — nine points ─────────────────────────── -->
-      <section id="tur" class="wrapper rise">
+      <section id="tur" class="wrapper rv">
         <div class="entry">
           {FIELDS.map((f) => <span class={f === "elev" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
           <span class="gloss">Thirty-nine metres, and ninety-six steps to them</span>
         </div>
-        <h2>The machine that makes the rhythm.</h2>
+        <h2 class="rv">The machine that makes the rhythm.</h2>
         <p class="lede" style="margin-top:24px;max-width:58ch">
           The lamp does not blink. It burns steadily and the glass goes round it,
           and everything else in the tower exists to keep that turning, keep
@@ -280,14 +297,14 @@ const FACES = [
       </section>
 
       <!-- ── An Taigh ─────────────────────────────────────── -->
-      <section id="taigh" class="wrapper rise">
+      <section id="taigh" class="wrapper rv">
         <div class="entry">
           {FIELDS.map((f) => <span class={f === "no" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
           <span class="gloss">The house is part of the station, and always was</span>
         </div>
         <div class="split top">
           <div>
-            <h2>There are no curtains in the west bedroom.</h2>
+            <h2 class="rv">There are no curtains in the west bedroom.</h2>
             <p class="lede" style="margin-top:24px">
               We will not be fitting any. Every twenty seconds a band of light
               crosses the ceiling from the window to the door, and it is the
@@ -338,12 +355,12 @@ const FACES = [
       </section>
 
       <!-- ── Na Daoine ────────────────────────────────────── -->
-      <section id="daoine" class="wrapper rise">
+      <section id="daoine" class="wrapper rv">
         <div class="entry">
           {FIELDS.map((f) => <span class={f === "name" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
           <span class="gloss">Manned 1857 – 1988 · one hundred and thirty-one years</span>
         </div>
-        <h2>Somebody was awake here every night for a hundred and thirty-one years.</h2>
+        <h2 class="rv">Somebody was awake here every night for a hundred and thirty-one years.</h2>
         <p class="lede" style="margin-top:24px;max-width:58ch">
           Then on the fourth of October 1988, at ten past three in the afternoon,
           nobody had to be. The light did not change. That is the whole of what
@@ -357,7 +374,7 @@ const FACES = [
                 <img src={`/images/${p.img}-1536.jpg`} srcset={`/images/${p.img}-800.jpg 800w, /images/${p.img}-1536.jpg 1536w`} sizes="(max-width:900px) 100vw, 31vw"
                   alt={p.alt} width="1024" height="1536" loading="lazy" decoding="async" />
               </div>
-              <h3>{p.name}</h3>
+              <h3 class="rv">{p.name}</h3>
               <div class="role">{p.role}</div>
               <p>{p.bio}</p>
               <p class="said">{p.said}</p>
@@ -367,12 +384,12 @@ const FACES = [
       </section>
 
       <!-- ── Fuireach ─────────────────────────────────────── -->
-      <section id="fuireach" class="wrapper rise">
+      <section id="fuireach" class="wrapper rv">
         <div class="entry">
           {FIELDS.map((f) => <span class={f === "pos" ? "lit" : ""}>{FIELD_TEXT[f]}</span>)}
           <span class="gloss">The position you will be driving to</span>
         </div>
-        <h2>Taking the week.</h2>
+        <h2 class="rv">Taking the week.</h2>
         <p class="lede" style="margin-top:24px;max-width:58ch">
           Saturday to Saturday. We will write back with what the track is doing
           and whether you need Dòmhnall, and that reply is worth waiting for
@@ -443,7 +460,7 @@ const FACES = [
             </div>
 
             <div class="sent" id="sent" hidden>
-              <h3>Air a chlàradh</h3>
+              <h3 class="">Air a chlàradh</h3>
               <p><strong>Written down.</strong> <span id="sent-line" class="num"></span></p>
               <p>One reply follows within two days with the track, the tides and whether that week is free. If it does not come, we did not get it — assume that rather than waiting.</p>
             </div>
@@ -451,7 +468,7 @@ const FACES = [
           </div>
 
           <aside class="docket" aria-label="The week as it stands">
-            <h3>An t-seachdain</h3>
+            <h3 class="">An t-seachdain</h3>
             <div class="g">as it stands</div>
             <div class="drow"><span>Seusan</span><b id="d-season">{season.en}</b></div>
             <div class="drow"><span>Mìosan</span><b id="d-months">{season.months}</b></div>

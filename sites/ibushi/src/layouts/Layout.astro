@@ -37,6 +37,18 @@ const links = [
       href="https://fonts.googleapis.com/css2?family=Faustina:ital,wght@0,300..700;1,300..600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Sans+JP:wght@300;400;500;600&family=Zen+Antique&display=swap"
     />
     <script is:inline>
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       // ?nofx disables entrance motion and forces eager images — the critique
       // loop depends on it. Reduced motion gets the same treatment.
       const q = new URLSearchParams(location.search);
@@ -122,16 +134,16 @@ const links = [
           (entries) => {
             for (const e of entries) {
               if (e.isIntersecting) {
-                e.target.classList.add("seen");
+                e.target.classList.add("in");
                 io.unobserve(e.target);
               }
             }
           },
           { rootMargin: "0px 0px -8% 0px", threshold: 0.06 }
         );
-        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".rise").forEach((el) => el.classList.add("seen"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
         document
           .querySelectorAll('img[loading="lazy"]')
           .forEach((img) => img.setAttribute("loading", "eager"));

@@ -20,7 +20,7 @@ const { name, alt, ratio = "3 / 2", eager = false, caption } = Astro.props;
 const has = existsSync(`./public/images/${name}.jpg`);
 ---
 
-<figure class="plate" style={`--ratio:${ratio}`}>
+<figure class="plate rv" style={`--ratio:${ratio}`}>
   {
     has ? (
       <img

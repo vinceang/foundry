@@ -67,13 +67,13 @@ const counts = TAGS.reduce((a, t) => ((a[t.house] = (a[t.house] ?? 0) + 1), a), 
     <div class="wrap">
       <ol class="tag-list">
         {TAGS.map((t) => (
-          <li class="tag rise">
+          <li class="tag rv">
             <div class="tag-plate" aria-hidden="true">
               <span class="tag-year">{t.year}</span>
               <span class="jp tag-jp">棟札</span>
             </div>
             <div class="tag-body">
-              <h2>
+              <h2 class="rv">
                 {t.place}
                 <span class="tag-house"> · {TYPOLOGIES[t.house].label} <span class="jp">{TYPOLOGIES[t.house].jp}</span></span>
               </h2>
@@ -101,7 +101,7 @@ const counts = TAGS.reduce((a, t) => ((a[t.house] = (a[t.house] ?? 0) + 1), a), 
   <section class="cta">
     <div class="wrap cta-in">
       <div>
-        <h2>Add one.</h2>
+        <h2 class="rv">Add one.</h2>
         <p>Tell us the site and the weather. If it comes off well, your name goes up inside the ridge where nobody will see it.</p>
       </div>
       <a class="btn" href="/commission">Begin a commission</a>

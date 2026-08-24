@@ -186,7 +186,7 @@ addEventListener("scroll", () => {
 }, { passive: true });
 
 /* ── entrances ───────────────────────────────────────────── */
-const rises = $$(".rise");
+const rises = $$(".rv");
 if (still) {
   rises.forEach((el) => el.classList.add("in"));
 } else {

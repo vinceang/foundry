@@ -85,7 +85,7 @@ const others = TYPOLOGY_ORDER.filter((k) => k !== slug).map((k) => ({
   <section class="draw-sec">
     <div class="wrap draw-grid">
       <div class="draw-sheet">
-        <figure class="sheet">
+        <figure class="sheet rv">
           <div class="sheet-in" set:html={svg} />
           <figcaption class="spec gloss">
             A typical {t.label} at {house.widthKen} × {house.depthKen} ken on the
@@ -97,7 +97,7 @@ const others = TYPOLOGY_ORDER.filter((k) => k !== slug).map((k) => ({
       </div>
       <div class="draw-text">
         <span class="kicker">The drawing · 図面</span>
-        <h2>Section and plan.</h2>
+        <h2 class="rv">Section and plan.</h2>
         <p>
           Drawn from the same model that runs Sumitsuke, at the size this house
           is usually built. Open it there and the bays, the site exposure, the
@@ -114,13 +114,13 @@ const others = TYPOLOGY_ORDER.filter((k) => k !== slug).map((k) => ({
   {
     page.body.map((sec, i) => (
       <>
-        <section class="chap rise">
+        <section class="chap rv">
           <div class="wrap chap-in">
             <p class="chap-num spec gloss">
               {String(i + 1).padStart(2, "0")}
             </p>
             <div class="chap-text">
-              <h2>{sec.h}</h2>
+              <h2 class="rv">{sec.h}</h2>
               {sec.p.map((para) => (
                 <p>{para}</p>
               ))}
@@ -136,14 +136,14 @@ const others = TYPOLOGY_ORDER.filter((k) => k !== slug).map((k) => ({
   <section class="others">
     <div class="wrap">
       <span class="kicker">The other three · 他の三つ</span>
-      <h2>Same valley, different weather.</h2>
+      <h2 class="rv">Same valley, different weather.</h2>
       <ul class="others-list">
         {
           others.map((o) => (
             <li>
               <a href={`/houses/${o.k}`}>
                 <div class="others-profile" set:html={o.profile} />
-                <h3>
+                <h3 class="rv">
                   {o.t.label} <span class="jp others-jp">{o.t.jp}</span>
                 </h3>
                 <p class="spec gloss">{o.t.gloss}</p>
@@ -160,7 +160,7 @@ const others = TYPOLOGY_ORDER.filter((k) => k !== slug).map((k) => ({
   <section class="cta">
     <div class="wrap cta-in">
       <div>
-        <h2>Raise one, move one, or bring one back.</h2>
+        <h2 class="rv">Raise one, move one, or bring one back.</h2>
         <p>
           Tell us the site and the weather. We answer every brief, and we will
           say plainly if we are not the right workshop for it.

@@ -95,6 +95,18 @@ const salvage = [
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 20'%3E%3Cpath d='M1 19 L13 1 L25 19 M5 13 h16' stroke='%23c98a3c' stroke-width='2' fill='none'/%3E%3C/svg%3E"
     />
     <script is:inline>
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       var r = document.documentElement;
       if (location.search.includes("nofx")) r.classList.add("nofx");
       else if (!matchMedia("(prefers-reduced-motion: reduce)").matches) r.classList.add("fx");
@@ -156,9 +168,9 @@ const salvage = [
       <!-- ------------------------------------------------------------ bent -->
       <section class="chapter wrap" id="bent">
         <div class="two two--wide-left">
-          <div class="rise">
+          <div class="rv">
             <span class="big-fig">38<small>feet — the tallest bent on the Cyclone</small></span>
-            <h2>A bent is the unit.</h2>
+            <h2 class="rv">A bent is the unit.</h2>
             <p style="margin-top:28px">
               Two raking legs, a ledger across them, an X of bracing between
               each level. Timber framers have called it a bent for four hundred
@@ -180,7 +192,7 @@ const salvage = [
               foundry.
             </p>
           </div>
-          <figure class="rise">
+          <figure class="rv">
             <img
               src="/images/bent.jpg"
               srcset="/images/bent-800.jpg 800w, /images/bent.jpg 1536w"
@@ -203,9 +215,9 @@ const salvage = [
 
       <!-- ------------------------------------------------ SIGNATURE: the sway -->
       <section class="chapter sway" id="sway">
-        <div class="sway__head wrap rise">
+        <div class="sway__head wrap rv">
           <span class="big-fig" id="sway-read">3.1<small>inches at the top chord, right now</small></span>
-          <h2>The Sway</h2>
+          <h2 class="rv">The Sway</h2>
           <p class="lede" style="margin-top:22px">
             Push the train across the bent. Watch it lean, and watch it come
             back. A wooden coaster built rigid would tear itself apart, because
@@ -213,9 +225,9 @@ const salvage = [
           </p>
         </div>
 
-        <div class="sway__stage rise">
+        <div class="sway__stage rv">
           <div class="sway__inner wrap">
-          <figure class="sway__fig">
+          <figure class="sway__fig rv">
             <svg
               id="sway-svg"
               data-timber="mid"
@@ -351,7 +363,7 @@ const salvage = [
       <!-- -------------------------------------------------------- laminate -->
       <section class="chapter wrap" id="laminate">
         <div class="two two--wide-right">
-          <figure class="rise">
+          <figure class="rv">
             <button
               class="plate"
               type="button"
@@ -389,9 +401,9 @@ const salvage = [
               replaced at least once; only 7, 8 and 9 are close to original.
             </p>
           </figure>
-          <div class="rise">
+          <div class="rv">
             <span class="big-fig">9<small>layers of pine in one running track</small></span>
-            <h2>The ride is not the wood.</h2>
+            <h2 class="rv">The ride is not the wood.</h2>
             <p style="margin-top:28px">
               Track is built up from nine layers of pine, laid one on top of the
               next and bent by hand around the curve. A steel running rail is
@@ -441,9 +453,9 @@ const salvage = [
       <!-- ------------------------------------------------------------ walk -->
       <section class="chapter wrap" id="walk">
         <div class="two">
-          <div class="rise">
+          <div class="rv">
             <span class="big-fig">2.4<small>miles walked before the gates open</small></span>
-            <h2>Somebody walks it. Every morning.</h2>
+            <h2 class="rv">Somebody walks it. Every morning.</h2>
             <p style="margin-top:28px">
               Before a single train runs, someone walks the whole circuit on the
               catwalk, in the dark end of the morning, looking at every joint
@@ -461,7 +473,7 @@ const salvage = [
               replace track.
             </p>
           </div>
-          <figure class="rise">
+          <figure class="rv">
             <img
               src="/images/walk.jpg"
               srcset="/images/walk-800.jpg 800w, /images/walk.jpg 1536w"
@@ -484,9 +496,9 @@ const salvage = [
 
       <!-- --------------------------------------------------------- salvage -->
       <section class="chapter wrap" id="salvage">
-        <div class="rise" style="max-width:62ch">
+        <div class="rv" style="max-width:62ch">
           <span class="big-fig">{salvage.length}<small>pieces in the yard this month</small></span>
-          <h2>Buy the wood that was replaced.</h2>
+          <h2 class="rv">Buy the wood that was replaced.</h2>
           <p style="margin-top:28px">
             When we retrack a ride, the old track comes back here. We cut it
             into sections, clean it, and keep its record — which ride, which
@@ -500,7 +512,7 @@ const salvage = [
           </p>
         </div>
 
-        <figure class="rise salvage__lead">
+        <figure class="rv salvage__lead">
           <img
             src="/images/salvage.jpg"
             srcset="/images/salvage-800.jpg 800w, /images/salvage.jpg 1536w"
@@ -517,7 +529,7 @@ const salvage = [
           </figcaption>
         </figure>
 
-        <ul class="ledgerlist rise">
+        <ul class="ledgerlist rv">
           {salvage.map((s) => (
             <li class="ledgerlist__row">
               <button type="button" class="ledgerlist__open" data-record={`rec-${s.id}`} aria-haspopup="dialog">
@@ -559,8 +571,8 @@ const salvage = [
           </dialog>
         ))}
 
-        <form class="order rise" id="order" novalidate>
-          <h3>Request a piece</h3>
+        <form class="order rv" id="order" novalidate>
+          <h3 class="rv">Request a piece</h3>
           <p style="margin-bottom:26px">
             This sends an order request. Nothing is charged here — we write back
             with a total including crating and freight from Pennsylvania.
@@ -611,9 +623,9 @@ const salvage = [
       <!-- ------------------------------------------------------ commission -->
       <section class="chapter chapter--tight wrap" id="commission">
         <div class="two two--wide-left">
-          <div class="rise">
+          <div class="">
             <span class="big-fig">22<small>months, drawings to first train</small></span>
-            <h2>A ride is a letter, not a form.</h2>
+            <h2 class="">A ride is a letter, not a form.</h2>
             <p style="margin-top:28px">
               We cannot quote a coaster from a web page and we are not going to
               pretend we can. A ride is a survey, a soil report, a state
@@ -628,7 +640,7 @@ const salvage = [
               <a class="btn" href="mailto:shop@bent.example?subject=Commission%20enquiry">Write to the shop</a>
             </p>
           </div>
-          <figure class="rise">
+          <figure class="">
             <img
               src="/images/timber.jpg"
               srcset="/images/timber-800.jpg 800w, /images/timber.jpg 1536w"

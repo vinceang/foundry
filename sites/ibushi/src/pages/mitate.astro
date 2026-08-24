@@ -73,7 +73,7 @@ const TESTS = [
     </div>
   </section>
 
-  <figure class="mitate-hero">
+  <figure class="mitate-hero rv">
     <Plate
       name="mitate"
       alt="A master carpenter in working clothes stands in an empty long-abandoned farmhouse with one flat hand against the great central pillar, head tilted, reading the timber. Daylight falls through a hole in the roof; fallen thatch and dust lie across the floorboards, and the massive frame overhead is intact."
@@ -91,14 +91,14 @@ const TESTS = [
   <section class="tests">
     <div class="wrap">
       <span class="kicker">The four tests · 四つの見極め</span>
-      <h2>A frame either carries another two hundred years, or it does not.</h2>
+      <h2 class="rv">A frame either carries another two hundred years, or it does not.</h2>
       <ol class="test-list">
         {
           TESTS.map((t) => (
             <li class="test">
               <span class="test-n" aria-hidden="true">{t.n}</span>
               <div class="test-body">
-                <h3>
+                <h3 class="rv">
                   {t.name} <span class="jp">{t.jp}</span>
                 </h3>
                 <p class="test-rule">{t.rule}</p>
@@ -120,7 +120,7 @@ const TESTS = [
     <div class="wrap decline-grid">
       <div>
         <span class="kicker">What we decline · 断り</span>
-        <h2>Saying no is most of the work.</h2>
+        <h2 class="rv">Saying no is most of the work.</h2>
         <p>
           Thirty-six houses a year get a written answer that Ibushi is the wrong
           workshop for them. It is not a soft letter. It says what we found,
@@ -162,7 +162,7 @@ const TESTS = [
       <div class="how-grid">
         <ol class="how-list">
           <li>
-            <h3>You write</h3>
+            <h3 class="rv">You write</h3>
             <p>
               Where the house is, roughly when it was built if you know, and how
               long it has been empty. Photographs of the roof from outside and
@@ -171,14 +171,14 @@ const TESTS = [
             </p>
           </li>
           <li>
-            <h3>We answer within the week</h3>
+            <h3 class="rv">We answer within the week</h3>
             <p>
               Sometimes the answer is already no, from the photographs, and we
               will not charge for that. Sometimes it is a date.
             </p>
           </li>
           <li>
-            <h3>One day on site</h3>
+            <h3 class="rv">One day on site</h3>
             <p>
               The tōryō and one carpenter. We sound the frame, plug the pillar,
               go into the roof, and open one section of floor. It is a physical
@@ -186,7 +186,7 @@ const TESTS = [
             </p>
           </li>
           <li>
-            <h3>A written verdict</h3>
+            <h3 class="rv">A written verdict</h3>
             <p>
               Within three weeks: the four tests answered one by one, the frame
               drawn as we found it, and either a range for the work or the
@@ -195,7 +195,7 @@ const TESTS = [
           </li>
         </ol>
         <aside class="fee">
-          <h3>The fee</h3>
+          <h3 class="rv">The fee</h3>
           <dl>
             <div><dt>Appraisal, Hida and Ōno</dt><dd>¥180,000</dd></div>
             <div><dt>Elsewhere in Gifu</dt><dd>¥240,000</dd></div>

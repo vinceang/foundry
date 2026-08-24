@@ -69,6 +69,23 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
       href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f5ef'/%3E%3Cg fill='%239c5560'%3E%3Cpath d='M16 5 C20 9 24 11 24 16 C24 20.4 20.4 23 16 23 C11.6 23 8 20.4 8 16 C8 11 12 9 16 5 Z'/%3E%3C/g%3E%3C/svg%3E"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       /* `js` gates the entrance animation in CSS, so a JS-off visitor gets the
          finished composition instead of content stranded at opacity 0. */
       document.documentElement.classList.add("js");
@@ -130,10 +147,10 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
       <!-- ============ LA CUEILLETTE ============ -->
       <section id="cueillette" class="band-rosee">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">01 — La cueillette</p>
-              <h2 class="chapter-title">Why four in the morning</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Why four in the morning</span></span></h2>
               <p class="gloss">The constraint the whole year is built around</p>
             </div>
             <p class="lede">
@@ -144,7 +161,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
               the extraction vessel.
             </p>
           </div>
-          <div class="hours rise">
+          <div class="hours rv">
             {
               hours.map((h) => (
                 <div>
@@ -154,7 +171,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
               ))
             }
           </div>
-          <div class="two-figs rise" style="margin-top: clamp(48px, 6vw, 84px)">
+          <div class="two-figs rv" style="margin-top: clamp(48px, 6vw, 84px)">
             <figure>
               <img src="/images/champ.jpg" width="1536" height="1024" loading="lazy"
                 alt="Long rows of low jasmine bushes in a Provençal field at dawn with mist lying between the rows." />
@@ -172,10 +189,10 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
       <!-- ============ DE LA FLEUR À L'ABSOLUE ============ -->
       <section id="absolue">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">02 — De la fleur à l'absolue</p>
-              <h2 class="chapter-title">What a field reduces to</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>What a field reduces to</span></span></h2>
               <p class="gloss">Concrète, then absolue</p>
             </div>
             <p class="lede">
@@ -186,7 +203,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
               numbers everything on this site is computed from.
             </p>
           </div>
-          <div class="absolue-grid rise">
+          <div class="absolue-grid rv">
             <figure>
               <img src="/images/alambic.jpg" width="1024" height="1536" loading="lazy"
                 alt="A row of tall copper extraction vessels in a whitewashed stone workshop with morning light on the polished copper." />
@@ -209,10 +226,10 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
       <!-- ============ CE QU'IL Y A DEDANS — THE SIGNATURE ============ -->
       <section id="dedans" class="band-rosee">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">03 — Ce qu'il y a dedans</p>
-              <h2 class="chapter-title">Count the field</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Count the field</span></span></h2>
               <p class="gloss">Not notes. Flowers.</p>
             </div>
             <p class="lede">
@@ -225,7 +242,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
             </p>
           </div>
 
-          <div class="dedans-stage rise">
+          <div class="dedans-stage rv">
             <div class="field-box">
               <div class="field-head">
                 <span class="field-num" id="f-plant">{F.plantLabel}</span>
@@ -335,10 +352,10 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
       <!-- ============ LA COLLECTION ============ -->
       <section id="collection">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">04 — La collection</p>
-              <h2 class="chapter-title">Three, and no fourth yet</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>Three, and no fourth yet</span></span></h2>
               <p class="gloss">No flankers, no licensing, no seasonal editions</p>
             </div>
             <p class="lede">
@@ -361,7 +378,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
                   </figure>
                   <div class="col-text">
                     <p class="whisper">{c.gloss}</p>
-                    <h3 class="chapter-title">{c.label}</h3>
+                    <h3 class="chapter-title rv">{c.label}</h3>
                     <p>{c.line}</p>
                     <dl class="notes">
                       <div><dt>Tête</dt><dd>{c.tete}</dd></div>
@@ -381,7 +398,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
 
       <!-- ============ LE NEZ ============ -->
       <section id="nez" class="band-rosee">
-        <div class="wrap nez-grid rise">
+        <div class="wrap nez-grid rv">
           <div class="nez-figs">
             <figure>
               <img src="/images/nez.jpg" width="1024" height="1536" loading="lazy"
@@ -398,7 +415,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
           </div>
           <div>
             <p class="whisper">05 — Le nez</p>
-            <h2 class="chapter-title">Margaux Estève</h2>
+            <h2 class="chapter-title rv"><span class="rv-line"><span>Margaux Estève</span></span></h2>
             <p class="lede">
               Trained in Grasse, then eleven years composing for houses that
               never printed her name on anything. She bought the plots at
@@ -421,10 +438,10 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
       <!-- ============ COMMANDER — THE ORDER ============ -->
       <section id="commander">
         <div class="wrap">
-          <div class="section-head rise">
+          <div class="section-head rv">
             <div>
               <p class="whisper">06 — Commander</p>
-              <h2 class="chapter-title">The order</h2>
+              <h2 class="chapter-title rv"><span class="rv-line"><span>The order</span></span></h2>
               <p class="gloss">An order request — no card is taken here</p>
             </div>
             <p class="lede">
@@ -435,7 +452,7 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
             </p>
           </div>
 
-          <div class="order-grid rise">
+          <div class="order-grid rv">
             <form class="order-form" action="mailto:atelier@rosee-grasse.fr" method="post" enctype="text/plain">
               <fieldset>
                 <legend class="whisper">Le parfum</legend>
@@ -709,9 +726,9 @@ const collection = Object.entries(PARFUMS).map(([key, p], i) => ({
           (es) => es.forEach((e) => e.isIntersecting && e.target.classList.add("in")),
           { rootMargin: "0px 0px -12% 0px" },
         );
-        document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+        document.querySelectorAll(".rv").forEach((el) => io.observe(el));
       } else {
-        document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+        document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
       }
     </script>
   </body>

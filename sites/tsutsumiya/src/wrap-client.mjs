@@ -175,7 +175,7 @@ addEventListener(
 );
 
 /* ── entrances ───────────────────────────────────────────── */
-const rises = $$(".rise");
+const rises = $$(".rv");
 if (nofx || matchMedia("(prefers-reduced-motion: reduce)").matches) {
   rises.forEach((el) => el.classList.add("in"));
 } else {

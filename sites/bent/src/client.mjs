@@ -24,13 +24,13 @@ addEventListener(
 /* ------------------------------------------------------- scroll reveal */
 
 if (still) {
-  document.querySelectorAll(".rise").forEach((el) => el.classList.add("in"));
+  document.querySelectorAll(".rv").forEach((el) => el.classList.add("in"));
 } else {
   const io = new IntersectionObserver(
     (es) => es.forEach((e) => e.isIntersecting && (e.target.classList.add("in"), io.unobserve(e.target))),
     { rootMargin: "0px 0px -8% 0px", threshold: 0.06 }
   );
-  document.querySelectorAll(".rise").forEach((el) => io.observe(el));
+  document.querySelectorAll(".rv").forEach((el) => io.observe(el));
 }
 
 /* ------------------------------------------------------ THE SIGNATURE */

@@ -159,6 +159,20 @@ const LEDGER = [
     />
     <meta name="theme-color" content="#0a161a" />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       // Motion is opt-in. Without this class the composition is already
       // finished, so JS-off and reduced-motion both get the whole page.
       const q = new URLSearchParams(location.search);
@@ -232,10 +246,8 @@ const LEDGER = [
         <div class="chap">
           <p class="dim"><b>22 katao</b><i>9–14 katawan a year</i></p>
           <div>
-            <h2 class="big settle">
-              A body is a hundred and forty panels, and not one of them arrives
-              the shape it needs to be.
-            </h2>
+            <h2 class="big settle rv"><span class="rv-line"><span>A body is a hundred and forty panels, and not one of them arrives
+              the shape it needs to be.</span></span></h2>
             <div class="body narrow lede settle">
               <p>
                 A chassis comes in with an engine, a cab floor and nothing
@@ -259,7 +271,7 @@ const LEDGER = [
           </div>
         </div>
 
-        <figure class="fig settle">
+        <figure class="fig settle rv">
           <img
             src="/images/hulmahan.webp"
             width="1600"
@@ -276,7 +288,7 @@ const LEDGER = [
 
         <div class="split split--wide">
           <div class="body settle">
-            <h3 class="mid">Who we take</h3>
+            <h3 class="mid rv">Who we take</h3>
             <p style="margin-block-start: var(--s-4)">
               We turn work away, but never on what you earn. Nine to fourteen
               bodies a year is what twenty-two men can do properly, so the
@@ -292,7 +304,7 @@ const LEDGER = [
             </p>
           </div>
           <div class="body settle">
-            <h3 class="mid">The rules, said out loud</h3>
+            <h3 class="mid rv">The rules, said out loud</h3>
             <p style="margin-block-start: var(--s-4)">
               We will not pretend the rules are what they used to be. A new
               traditional body on a surplus engine cannot be plated as a new
@@ -313,7 +325,7 @@ const LEDGER = [
             </p>
           </div>
           <div class="body settle">
-            <h3 class="mid">What it costs, plainly</h3>
+            <h3 class="mid rv">What it costs, plainly</h3>
             <p style="margin-block-start: var(--s-4)">
               Every price on this site is the real price, and the sheet below
               adds itself up while you change your mind. A whole body runs{" "}
@@ -347,7 +359,7 @@ const LEDGER = [
         <div class="chap">
           <p class="dim"><b>1,2 mm</b><i>stainless, 304</i></p>
           <div>
-            <h2 class="big settle">Chalk it out.</h2>
+            <h2 class="big settle rv"><span class="rv-line"><span>Chalk it out.</span></span></h2>
             <p class="body narrow lede settle">
               We chalk this out full size on the floor before a panel is cut,
               and this is that drawing. Change anything and it changes with
@@ -474,7 +486,7 @@ const LEDGER = [
           <aside class="hulma__sheet" id="ipagawa">
             <div class="sheet">
               <div class="sheet__hd">
-                <h3>Ang sheet</h3>
+                <h3 class="rv">Ang sheet</h3>
                 <span class="gloss">unit 0418</span>
               </div>
 
@@ -571,9 +583,7 @@ const LEDGER = [
         <div class="chap">
           <p class="dim"><b>₱2,400</b><i>to ₱52,000, fitted</i></p>
           <div>
-            <h2 class="big settle">
-              The parts people stop and look at.
-            </h2>
+            <h2 class="big settle rv"><span class="rv-line"><span>The parts people stop and look at.</span></span></h2>
             <p class="body narrow lede settle">
               None of this is decoration in the sense of being optional. A
               jeepney that nobody picks out of a line of six at a corner in the
@@ -639,9 +649,9 @@ const LEDGER = [
         <div class="chap">
           <p class="dim"><b>29 taon</b><i>sa brotsa</i></p>
           <div>
-            <h2 class="big settle">Nolan cuts the words to fit the board.</h2>
+            <h2 class="big settle rv"><span class="rv-line"><span>Nolan cuts the words to fit the board.</span></span></h2>
             <div class="split">
-              <figure class="fig settle" style="margin-block-start:0">
+              <figure class="fig settle rv" style="margin-block-start:0">
                 <img
                   src="/images/letrista.webp"
                   width="1200"
@@ -694,7 +704,7 @@ const LEDGER = [
         <div class="chap">
           <p class="dim"><b>1904</b><i>unang Ligligan Parul</i></p>
           <div>
-            <h2 class="big settle">The lanterns taught us the lights.</h2>
+            <h2 class="big settle rv"><span class="rv-line"><span>The lanterns taught us the lights.</span></span></h2>
             <div class="split">
               <div class="body settle">
                 <p>
@@ -742,7 +752,7 @@ const LEDGER = [
                   cells are where the tape is.
                 </p>
               </div>
-              <figure class="fig settle" style="margin-block-start:0">
+              <figure class="fig settle rv" style="margin-block-start:0">
                 <img
                   src="/images/rotor.webp"
                   width="980"
@@ -770,7 +780,7 @@ const LEDGER = [
         <div class="chap">
           <p class="dim"><b>521</b><i>katawan since 1978</i></p>
           <div>
-            <h2 class="big settle">Mga inilabas.</h2>
+            <h2 class="big settle rv"><span class="rv-line"><span>Mga inilabas.</span></span></h2>
             <p class="body narrow lede settle">
               What has left the gate, and who it went to. Tap a line and the
               sheet above goes back to that specification. It is the fastest

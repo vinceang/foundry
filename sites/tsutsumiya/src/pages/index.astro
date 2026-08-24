@@ -55,6 +55,23 @@ const NAV = [
       rel="stylesheet"
     />
     <script is:inline>
+      const r = document.documentElement;
+      if (location.search.includes("nofx")) r.classList.add("nofx");
+      else if (!matchMedia("(prefers-reduced-motion: reduce)").matches)
+        r.classList.add("fx");
+
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+
       document.documentElement.classList.add("js");
       if (location.search.includes("nofx")) document.documentElement.classList.add("nofx");
     </script>
@@ -122,7 +139,7 @@ const NAV = [
       </section>
 
       <!-- ── 店 The shop ──────────────────────────────────── -->
-      <section id="mise" class="wrapper rise">
+      <section id="mise" class="wrapper rv">
         <div class="ledger">
           <span class="folio">帳 一</span>
           <span class="era">天和二年 霜月</span>
@@ -130,7 +147,7 @@ const NAV = [
         </div>
         <div class="split">
           <div>
-            <h2>A wrapping house is the least remarkable shop on a street of iron.</h2>
+            <h2 class="rv">A wrapping house is the least remarkable shop on a street of iron.</h2>
             <p class="lede" style="margin-top:24px">
               Itachibori sells saws, chisels, nails and blade stock by the
               wharf-load. A house on that lane taking delivery of forged iron is
@@ -178,13 +195,13 @@ const NAV = [
       </section>
 
       <!-- ── 帳 The register ──────────────────────────────── -->
-      <section id="cho" class="wrapper rise">
+      <section id="cho" class="wrapper rv">
         <div class="ledger">
           <span class="folio">帳 二</span>
           <span class="era">享保九年 水無月</span>
           <span class="what">The register is first ruled into columns</span>
         </div>
-        <h2>The second ledger, as it is ruled.</h2>
+        <h2 class="rv">The second ledger, as it is ruled.</h2>
         <p class="lede" style="margin-top:24px;max-width:56ch">
           Each line carries the name the trade uses, the name the maker uses,
           what it measures, what it weighs, and what it costs in silver. There
@@ -329,13 +346,13 @@ const NAV = [
       </section>
 
       <!-- ── 包 The wrap — THE SIGNATURE ──────────────────── -->
-      <section id="tsutsumi" class="wrapper rise">
+      <section id="tsutsumi" class="wrapper rv">
         <div class="ledger">
           <span class="folio">帳 三</span>
           <span class="era">明和五年 卯月</span>
           <span class="what">The Awa indigo contract — kachi-iro from Tokushima</span>
         </div>
-        <h2>The cloth decides what you may take.</h2>
+        <h2 class="rv">The cloth decides what you may take.</h2>
         <p class="lede" style="margin-top:24px;max-width:58ch">
           Lay the goods on the board and the house will tell you three things:
           which cloth it needs, whether it can be closed at all, and, the only
@@ -476,7 +493,7 @@ const NAV = [
       </section>
 
       <!-- ── 出処 Where it comes from ─────────────────────── -->
-      <section id="dedokoro" class="wrapper rise">
+      <section id="dedokoro" class="wrapper rv">
         <div class="ledger">
           <span class="folio">帳 四</span>
           <span class="era">文化七年 神無月</span>
@@ -500,7 +517,7 @@ const NAV = [
             </figcaption>
           </figure>
           <div>
-            <h2>Four houses make it. This house only proves it.</h2>
+            <h2 class="rv">Four houses make it. This house only proves it.</h2>
             <p class="lede" style="margin-top:24px">
               Tsutsumiya has never owned a forge. It owns a beam, a mat, and a
               standing rule about what happens to work that fails.
@@ -525,7 +542,7 @@ const NAV = [
         <div class="sources">
           {Object.entries(SOURCES).map(([k, s]) => (
             <div class="source">
-              <h3>{s.ja}</h3>
+              <h3 class="rv">{s.ja}</h3>
               <div class="ro">{s.romaji} · {s.region}</div>
               <p>
                 {k === "iga" && "Field iron: hooks, claws, the grapples, the blowpipes. Small shops in the valley that have supplied this trade longer than this house has existed, and will not be named further."}
@@ -558,7 +575,7 @@ const NAV = [
       </section>
 
       <!-- ── 手 The hands ─────────────────────────────────── -->
-      <section id="te" class="wrapper rise">
+      <section id="te" class="wrapper rv">
         <div class="ledger">
           <span class="folio">帳 五</span>
           <span class="era">天保三年 長月</span>
@@ -566,7 +583,7 @@ const NAV = [
         </div>
         <div class="split">
           <div>
-            <h2>Six knots, and knowing which.</h2>
+            <h2 class="rv">Six knots, and knowing which.</h2>
             <p class="lede" style="margin-top:24px">
               The whole of the wrapper's craft is choosing between them before
               the cloth is off the shelf.
@@ -634,13 +651,13 @@ const NAV = [
       </section>
 
       <!-- ── 渡し The handover + the order ────────────────── -->
-      <section id="watashi" class="wrapper rise">
+      <section id="watashi" class="wrapper rv">
         <div class="ledger">
           <span class="folio">帳 六</span>
           <span class="era">令和七年 皐月</span>
           <span class="what">The handover terms, as they stand</span>
         </div>
-        <h2>How it reaches you.</h2>
+        <h2 class="rv">How it reaches you.</h2>
         <p class="lede" style="margin-top:24px;max-width:56ch">
           Nothing is posted and nothing is delivered to a door. A parcel is set
           down in a named ward at a named hour and is picked up by the person
@@ -725,7 +742,7 @@ const NAV = [
               </p>
             </div>
             <div class="sent" id="sent" hidden>
-              <h3>受</h3>
+              <h3 class="">受</h3>
               <p>
                 <strong>Taken down.</strong> The line has gone into the register
                 as it stood: <span id="sent-line" class="num"></span>
@@ -741,7 +758,7 @@ const NAV = [
           </div>
 
           <aside class="parcel-slip" aria-label="The parcel as it stands">
-            <h3>この包み</h3>
+            <h3 class="">この包み</h3>
             <div class="ro">THE PARCEL AS IT STANDS</div>
             <div class="slip-line" id="s-line">{slip}</div>
             <div class="slip-row"><span>包み parcel</span><b id="s-size">{sun(b.L)} × {sun(b.W)} × {sun(b.H)} 寸</b></div>

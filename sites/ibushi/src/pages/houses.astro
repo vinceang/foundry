@@ -58,7 +58,7 @@ const r1 = (v) => Math.round(v * 10) / 10;
             <a class="pf" href={`/houses/${k}`}>
               <div class="pf-draw" set:html={profile} />
               <p class="pf-kobai spec">{r1(h.kobai)} sun · {Math.round(h.deg)}°</p>
-              <h2 class="pf-name">
+              <h2 class="pf-name rv">
                 {t.label} <span class="jp pf-jp">{t.jp}</span>
               </h2>
             </a>
@@ -67,7 +67,7 @@ const r1 = (v) => Math.round(v * 10) / 10;
       </div>
 
       <div class="table-scroll">
-        <table class="cmp">
+        <table class="cmp rv">
           <caption class="spec gloss">
             Typical figures for each house at the size it is usually built, on
             the Inakama module.
@@ -136,13 +136,13 @@ const r1 = (v) => Math.round(v * 10) / 10;
   {
     rows.map(({ k, t, page }, i) => (
       <>
-        <section class="house rise">
+        <section class="house rv">
           <div class={`wrap house-grid ${i % 2 ? "flip" : ""}`}>
             <div class="house-media">
               <Plate name={page.img} alt={page.alt} ratio="3 / 2" />
             </div>
             <div class="house-text">
-              <h2>
+              <h2 class="rv">
                 {t.label} <span class="jp house-jp">{t.jp}</span>
               </h2>
               <p class="kicker house-gloss">{t.gloss} · {page.place}</p>
@@ -162,7 +162,7 @@ const r1 = (v) => Math.round(v * 10) / 10;
   <section class="cta">
     <div class="wrap cta-in">
       <div>
-        <h2>Draw one.</h2>
+        <h2 class="rv">Draw one.</h2>
         <p>
           Set the bays, the weather, and the earth floor, and watch the section
           and plan follow. The specification it makes is what we build from.

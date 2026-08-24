@@ -24,6 +24,20 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
       content="A four-bench workshop in Al Ain making hoods, gloves and jesses for falcons flown at first and last light. Every burqu' cut to one bird."
     />
     <script is:inline>
+      addEventListener("DOMContentLoaded", () => {
+      const rvIO = new IntersectionObserver(
+        (es) => {
+          for (const e of es)
+            if (e.isIntersecting) {
+              e.target.classList.add("in");
+              rvIO.unobserve(e.target);
+            }
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -6% 0px" }
+      );
+      document.querySelectorAll(".rv, .rv-line").forEach((el) => rvIO.observe(el));
+      });
+
       // Motion is opt-in. Without this class the composition is already
       // finished, so JS-off and reduced-motion both get the whole page.
       const q = new URLSearchParams(location.search);
@@ -66,9 +80,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
           <span>burqu&rsquo; size 4</span>
         </p>
 
-        <h1 class="hero__line settle">
-          Everything here is made<br />for a bird that could leave.
-        </h1>
+        <h1 class="hero__line settle rv"><span class="rv-line"><span>Everything here is made</span></span><span class="rv-line" style="--d:1"><span>for a bird that could leave.</span></span></h1>
 
         <p class="hero__sub narrow settle">
           A falcon is not owned. It is flown free at first and last light, and
@@ -91,7 +103,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
         </p>
 
         <div class="burqu__head">
-          <h2 class="burqu__title">Cut to one bird.</h2>
+          <h2 class="burqu__title rv"><span class="rv-line"><span>Cut to one bird.</span></span></h2>
           <p class="burqu__lede narrow">
             A hood that does not fit is not a lesser object; it is a cruelty.
             So it is cut to the individual bird, measured across the head and
@@ -104,7 +116,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
 
         <div class="burqu__grid">
           <!-- the drawing -->
-          <figure class="pattern">
+          <figure class="pattern rv">
             <div class="pattern__frame">
             <svg
               class="pattern__svg"
@@ -235,7 +247,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
     <!-- IV. The mangalah -->
     <section class="plate" id="mangalah">
       <div class="wrap plate__grid">
-        <figure class="plate__fig">
+        <figure class="plate__fig rv">
           <img src="/images/mangalah.webp" width="900" height="1341"
                alt="A falconer's leather gauntlet with a saker's yellow feet and dark talons gripping it, jesses trailing."
                loading="lazy" decoding="async" />
@@ -247,7 +259,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
             <span><b>kid-lined</b></span><i aria-hidden="true">·</i>
             <span>AED 1,600&ndash;2,900</span>
           </p>
-          <h2>The glove is the only thing you both hold.</h2>
+          <h2 class="rv">The glove is the only thing you both hold.</h2>
           <p class="lede">
             A falcon's grip closes at a pressure that would open a hand. The
             mangalah takes that and gives nothing back to the bird: four
@@ -270,7 +282,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
     <!-- V. The mews -->
     <section class="plate plate--flip" id="mews">
       <div class="wrap plate__grid">
-        <figure class="plate__fig">
+        <figure class="plate__fig rv">
           <img src="/images/maker.webp" width="900" height="1341"
                alt="A leatherworker saddle-stitching a falcon hood by lantern light, dusk through the open doorway behind him."
                loading="lazy" decoding="async" />
@@ -281,7 +293,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
             <span><b>four benches</b></span><i aria-hidden="true">·</i>
             <span>open 06:00 &amp; 17:00</span>
           </p>
-          <h2>Two shifts, because the birds keep them.</h2>
+          <h2 class="rv">Two shifts, because the birds keep them.</h2>
           <p class="lede">
             The bench works when the birds do, before the heat and again as it goes. Everything is stitched by hand with two needles
             and one thread; a machine seam has a single line that can be pulled
@@ -307,14 +319,14 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
           <span><b>1,148 hoods</b></span><i aria-hidden="true">·</i>
           <span>since 1979</span>
         </p>
-        <h2>Every hood is written down against a bird.</h2>
+        <h2 class="rv">Every hood is written down against a bird.</h2>
         <p class="lede narrow">
           A bird's head does not change once it is grown, so the measurements
           outlive the hood. When one wears through, the book gives the pattern
           back, and when a bird is passed on, its hood goes with it.
         </p>
 
-        <table class="book">
+        <table class="book rv">
           <caption class="visually-hidden">Recent commissions from the workshop book</caption>
           <thead>
             <tr><th scope="col">Bird</th><th scope="col">Species</th><th scope="col">Across</th><th scope="col">Size</th><th scope="col">Cut</th><th scope="col"><span class="visually-hidden">Pattern</span></th></tr>
@@ -340,7 +352,7 @@ const P = pattern({ w: d0.w, h: d0.h, blockScale: d0.block, passage: false });
           <span>four a week</span><i aria-hidden="true">·</i>
           <span><b>we write back in two days</b></span>
         </p>
-        <h2>What else leaves the bench.</h2>
+        <h2 class="rv">What else leaves the bench.</h2>
         <ul class="wares">
           <li><span class="wares__n">Burqu&rsquo;</span><span class="wares__d">Cut to the bird, above</span><span class="wares__p">AED 1,200 &ndash; 2,400</span></li>
           <li><span class="wares__n">Mangalah</span><span class="wares__d">Camel outer, kid lining</span><span class="wares__p">AED 1,600 &ndash; 2,900</span></li>
