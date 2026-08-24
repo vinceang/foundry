@@ -413,6 +413,12 @@ signature instead of polishing.
    returned a clean 200 for a *stranger's* app, and only the screenshot caught
    it. Confirm the page you get back is the page you built.
 6. Record the live URL in the README table and handoff doc; commit and push.
+7. **Register it.** A live URL in the README is not a shipped site — the
+   `foundry.json` registry, the wgw showcase, and the portfolio's atlas,
+   gallery and dossier all list the collection independently, and all four go
+   stale in silence. Hand off to the **`add-foundry-site`** skill (in
+   `vince-ang-portfolio`), which does all of them in one pass. `bent` shipped
+   without this step and sat unlisted in the portfolio for two days.
 
 **If the deploy fails** — a "genuine attempt" means: read the actual error,
 fix anything on our side (build errors, missing env, wrong root directory),
@@ -489,6 +495,8 @@ budget. Everything through Phase 5 runs for real, with these substitutions:
       this belong to another Foundry site?"
 - [ ] README table + backlog + dated handoff doc
       updated
+- [ ] Registered on every surface via `add-foundry-site` — `foundry.json`, the
+      wgw showcase, and the portfolio atlas + gallery + dossier
 - [ ] Committed and pushed; **production URL screenshot verified** — or, if
       Vercel failed after a genuine attempt, localhost verified **and** logged
       in `docs/vercel-failures.md` (skip deploy items in dry-run)

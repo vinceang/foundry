@@ -624,6 +624,28 @@
       },
       "signature": "The Sway — the bent leans, and comes back",
       "shipped": "2026-08-21"
+    },
+    {
+      "slug": "saline",
+      "name": "Saline de Kervalet",
+      "series": "pastorale",
+      "what": "Hand-worked salt marsh — three weeks of seawater becomes salt",
+      "tagline": "The water does the work. We only decide how fast.",
+      "place": {
+        "label": "Kervalet, Guérande",
+        "country": "France",
+        "lat": 47.2867,
+        "lon": -2.4256
+      },
+      "url": "https://saline-kervalet.vercel.app",
+      "hero": "images/aerial.jpg",
+      "palette": {
+        "ground": "#f4f4f0",
+        "light": "#22201c",
+        "accent": "#c2705f"
+      },
+      "signature": "La cascade — scroll walks the brine, weather resets it",
+      "shipped": "2026-08-23"
     }
   ]
 }
