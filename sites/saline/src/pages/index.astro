@@ -313,10 +313,18 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
 
           <div class="two">
             <figure class="salt rv">
-              <div class="salt__dia" aria-hidden="true">
-                <span class="salt__surface"></span>
-                <span class="salt__floor salt__floor--on"></span>
-              </div>
+              <figure class="salt__dia">
+                <svg viewBox="0 0 300 170" role="img" aria-labelledby="dgrost dgrosd">
+                  <title id="dgrost">Crystals on the floor</title>
+                  <desc id="dgrosd">Section through one œillet. Crystals grow through the depth of the brine and settle on the blue clay floor, where they are drawn up the slope with a las.</desc>
+                  <text class="d-lab d-lab--key" x="4" y="15">CRYSTALS ON THE FLOOR</text>
+                  <text class="d-lab" x="4" y="31">raked up the slope with the las</text>
+                  <path class="d-clay" d="M4 138 L26 116 L274 116 L296 138 L296 166 L4 166 Z" />
+                  <rect class="d-brine" x="26" y="78" width="248" height="38" />
+                  <g class="d-xtal"><rect x="32" y="108" width="16" height="8" rx="1" /><rect x="56" y="108" width="16" height="8" rx="1" /><rect x="80" y="108" width="16" height="8" rx="1" /><rect x="104" y="108" width="16" height="8" rx="1" /><rect x="128" y="108" width="16" height="8" rx="1" /><rect x="152" y="108" width="16" height="8" rx="1" /><rect x="176" y="108" width="16" height="8" rx="1" /><rect x="200" y="108" width="16" height="8" rx="1" /><rect x="224" y="108" width="16" height="8" rx="1" /><rect x="248" y="108" width="16" height="8" rx="1" /></g>
+                  <g class="d-tool"><line x1="250" y1="112" x2="292" y2="50" /><line x1="236" y1="112" x2="264" y2="112" /></g>
+                </svg>
+              </figure>
               <img class="salt__img" src="/images/gros-sel.jpg"
                 srcset="/images/gros-sel-800.jpg 800w, /images/gros-sel.jpg 1536w"
                 sizes="(max-width: 900px) 100vw, 50vw"
@@ -336,10 +344,18 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
             </figure>
 
             <figure class="salt rv" style="--d:1">
-              <div class="salt__dia" aria-hidden="true">
-                <span class="salt__surface salt__surface--on"></span>
-                <span class="salt__floor"></span>
-              </div>
+              <figure class="salt__dia">
+                <svg viewBox="0 0 300 170" role="img" aria-labelledby="dfleurt dfleurd">
+                  <title id="dfleurt">Crust on the surface</title>
+                  <desc id="dfleurd">Section through one œillet. A fine crust forms on the surface tension of the brine and is skimmed off before it can sink.</desc>
+                  <text class="d-lab d-lab--key" x="4" y="15">CRUST ON THE SURFACE</text>
+                  <text class="d-lab" x="4" y="31">skimmed off the top with the lousse</text>
+                  <path class="d-clay" d="M4 138 L26 116 L274 116 L296 138 L296 166 L4 166 Z" />
+                  <rect class="d-brine" x="26" y="78" width="248" height="38" />
+                  <g class="d-xtal"><rect x="32" y="74" width="17" height="6" rx="1" /><rect x="56" y="74" width="17" height="6" rx="1" /><rect x="80" y="74" width="17" height="6" rx="1" /><rect x="104" y="74" width="17" height="6" rx="1" /><rect x="128" y="74" width="17" height="6" rx="1" /><rect x="152" y="74" width="17" height="6" rx="1" /><rect x="176" y="74" width="17" height="6" rx="1" /><rect x="200" y="74" width="17" height="6" rx="1" /><rect x="224" y="74" width="17" height="6" rx="1" /><rect x="248" y="74" width="17" height="6" rx="1" /></g>
+                  <g class="d-tool"><line x1="250" y1="72" x2="292" y2="38" /><line x1="238" y1="72" x2="262" y2="72" /></g>
+                </svg>
+              </figure>
               <img class="salt__img" src="/images/fleur.jpg"
                 srcset="/images/fleur-800.jpg 800w, /images/fleur.jpg 1536w"
                 sizes="(max-width: 900px) 100vw, 50vw"
@@ -1425,40 +1441,47 @@ PANS.forEach((p) => PAN_CENTRES.push({ x: p.x + p.w / 2, y: p.y + p.h / 2 }));
       .salt {
         margin: 0;
       }
+      /* The two diagrams were a div with two spans whose only difference was
+         opacity, so they read as two colour bars and the section's entire
+         argument — WHERE in the water each salt forms — was invisible. These
+         are real sections: brine, clay floor, crystals in the deciding place,
+         and the tool at the height it actually works. */
       .salt__dia {
-        position: relative;
-        height: 132px;
-        background: var(--argile);
-        border-bottom: 5px solid var(--vase);
-        overflow: hidden;
+        margin: 0 0 var(--s2);
       }
-      .salt__dia::after {
-        content: "";
-        position: absolute;
-        inset: 38% 0 0 0;
-        background: var(--fleur);
-        opacity: 0.9;
+      .salt__dia svg {
+        width: 100%;
+        height: auto;
+        display: block;
+        background: var(--glare);
+        border: 1px solid var(--argile-deep);
       }
-      .salt__surface,
-      .salt__floor {
-        position: absolute;
-        left: 0;
-        right: 0;
-        z-index: 2;
-        height: 9px;
-        background: var(--sel);
-        opacity: 0.18;
+      .d-clay {
+        fill: var(--vase);
       }
-      .salt__surface {
-        top: 38%;
+      .d-brine {
+        fill: var(--fleur);
+        opacity: 0.85;
       }
-      .salt__floor {
-        bottom: 0;
-        height: 14px;
+      .d-xtal rect {
+        fill: var(--sel);
+        stroke: var(--vase-ink);
+        stroke-width: 0.6;
       }
-      .salt__surface--on,
-      .salt__floor--on {
-        opacity: 1;
+      .d-tool line {
+        stroke: var(--encre);
+        stroke-width: 3;
+        stroke-linecap: round;
+      }
+      .d-lab {
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        fill: var(--vase-ink);
+      }
+      .d-lab--key {
+        fill: var(--encre);
       }
       .salt__h {
         font-size: 27px;

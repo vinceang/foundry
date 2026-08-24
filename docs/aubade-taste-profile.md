@@ -141,9 +141,22 @@ interaction.
 daylight, warm practical lamps only when the time calls for them, tactile
 plaster, linen, oak, ceramic, woven fiber, and real botanical irregularity.
 
-Show the evidence of a guest without requiring a model in every frame. Human
-faces are permitted when the story is genuinely about hosting, cooking, or
-making; they are not a shortcut to warmth.
+**People, and their faces, belong here.** A hotel is a place staffed and
+inhabited, and a room nobody has entered reads as a rendering. Photograph the
+people who keep it — someone laying a table, carrying linen, working a kitchen
+at service, pausing between covers — close enough to read an expression.
+
+Vary the distance the way a real edit does: one frame near enough for a face,
+one that gives the room its scale, one where the person is incidental to a
+larger view. Hands alone read as stock after the second frame, and the back of a
+head at a respectful distance is the mannerism this collection already
+overspent.
+
+The restriction is on *staging*, not on people: nobody is posed enjoying a
+lifestyle, and a face is never a shortcut to warmth in place of a real moment.
+Empty rooms are still worth shooting — a hotel is partly about the room waiting
+for you — but the site should not be able to claim it is inhabited without
+showing anyone.
 
 Avoid blown highlights, orange grading, perfect showroom symmetry, excessive
 beige, anonymous spa photography, and generated text/signage.
